@@ -53,7 +53,7 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="main_index.html">
+                        <a class="navbar-brand" href="index.jsp">
                             <img src="/resources/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
@@ -74,9 +74,9 @@
                                 <a class="circle-image" href="/user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>
-                                <li class="nav-item"><a href="login.html">로그인</a></li>
+                                <li class="nav-item"><a href="/user/login.do">로그인</a></li>
                                 <li class="nav-item"><a>|</a></li>
-                                <li class="nav-item"><a href="registration.html">회원가입</a></li>
+                                <li class="nav-item"><a href="/user/join.do">회원가입</a></li>
                             </ul>
                         </div> <!-- navbar collapse -->
                     </nav> <!-- navbar -->

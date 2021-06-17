@@ -53,7 +53,7 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="main_index.html">
+                        <a class="navbar-brand" href="/index.jsp">
                             <img src="../assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
@@ -71,12 +71,12 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <li class="nav-item" style="margin-right: 100px;"><a href="location.html"><h5>지역</h5></a></li>
-                                <li class="nav-item" style="margin-right: 120px;"><a href="community.html"><h5>트레이너</h5></a></li>
-                                <a class="circle-image" href="mypage_main.html">
+                                <li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_list.do"><h5>홈짐</h5></a></li>
+                                <li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tr_list.do"><h5>트레이너</h5></a></li>
+                                <a class="circle-image" href="mp_main.do">
                                     <img src="https://via.placeholder.com/300x300" alt="logo">
                                 </a>
-                                <li class="nav-item"><a href="mypage_main.html"><h5>아이유님</h5></a></li>
+                                <li class="nav-item"><a href="mp_main.do"><h5>아이유님</h5></a></li>
                                 
                             </ul>
                         </div> <!-- navbar collapse -->
@@ -111,23 +111,22 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title">마이페이지</h3>
+                            <h3 class="sidebar-widget-title"><a href="mp_main.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mypage_update.html">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="mp_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="mypage_activ.html">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="mp_activ.do">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mypage_mywrite.html">글 관리</a></h6>
+                                            <h6 class="title"><a href="mp_mywrite.do">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -166,7 +165,7 @@
                             <p>이메일 | iu2021@gmail.com</p>
                             <p>주소 | 서울시 종로구 인사동</p>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="mp_update.do" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -180,7 +179,7 @@
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">3</h1>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mp_activ.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -194,7 +193,7 @@
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 댓글</p>
                             <h1 style="margin-top: 20px;">330</h1>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mp_mywrite.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
