@@ -76,11 +76,9 @@
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
 											<h5>트레이너</h5>
 										</a></li>
-										<li class="nav-item" style="margin-right: 120px;">
 									<a class="circle-image" href="mypage_main.html">
 										<img src="https://via.placeholder.com/300x300" alt="logo">
 									</a>
-									</li>
 									<li class="nav-item">
 										<a href="mypage_main.html"><h5>아이유님</h5></a>
 										</li>
