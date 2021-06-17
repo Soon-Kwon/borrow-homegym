@@ -70,14 +70,26 @@
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
 									<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
+<<<<<<< HEAD
 											<h5>지역</h5>
+=======
+											<h5>홈짐</h5>
+>>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
 											<h5>트레이너</h5>
 										</a></li>
+<<<<<<< HEAD
 									<a class="circle-image" href="mypage_main.html">
 										<img src="https://via.placeholder.com/300x300" alt="logo">
 									</a>
+=======
+										<li class="nav-item" style="margin-right: 120px;">
+									<a class="circle-image" href="mypage_main.html">
+										<img src="https://via.placeholder.com/300x300" alt="logo">
+									</a>
+									</li>
+>>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
 									<li class="nav-item">
 										<a href="mypage_main.html"><h5>아이유님</h5></a>
 										</li>
@@ -125,7 +137,11 @@
                                 aria-selected="false">회원정보</button>
                                 <button class="nav-link" id="nav-notice-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-notice" type="button" role="tab" aria-controls="nav-service"
+<<<<<<< HEAD
                                 aria-selected="false">서비스이용 및 기타</button> </button>
+=======
+                                aria-selected="false">서비스이용 및 기타</button> 
+>>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -591,7 +607,11 @@
             </div>
         </div>
         <!-- End Footer Middle -->
+<<<<<<< HEAD
     </footer>
+=======
+   
+>>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->
@@ -607,4 +627,8 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
 </html>
