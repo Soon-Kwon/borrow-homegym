@@ -123,3 +123,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,java-web
+
+# 2021/06/17 add git ignore
