@@ -311,6 +311,7 @@
 										style="float: right; background-color: #9ea9d8;">
 								</div>
 							</form>
+
 						</div>
 						<!--/ End Single Widget -->
 					</div>
