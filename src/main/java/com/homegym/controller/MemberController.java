@@ -14,7 +14,7 @@ public class MemberController {
 	//마이페이지 메인  이동
 	@GetMapping("/mp_main")
 	public String mypage() {
-		return "user/m_main";
+		return "user/mp_main";
 	}
 	
 	//마이페이지 활동내역  이동
