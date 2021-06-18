@@ -1,17 +1,16 @@
 package com.homegym.biz.member.impl;
 
-import javax.inject.Inject;
-
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.homegym.biz.member.MemberVO;
 
 @Repository
-public interface MemberDAO{
-	
-	public void updateMember(MemberVO vo) ;
-		
-
-
+public class MemberDAO {
+	@Autowired
+	private SqlSessionTemplate mybatis;
+	public void updateMember(MemberVO vo) {
+		mybatis.update("MemberDAO.updateMember", vo);
+	}
 }

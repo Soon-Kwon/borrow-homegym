@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace ="member">
+<mapper namespace ="MemberDAO">
 	<update id="updateMember" >
-		
+		UPDATE 
+			password
+			phone
+			zipcode
+			image
+			
+		FROM member
+		where memberId = #{memberId}
 	</update>
 </mapper>

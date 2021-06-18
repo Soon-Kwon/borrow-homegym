@@ -6,14 +6,16 @@ import org.springframework.stereotype.Service;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 
-@Service
+@Service//memberService
 public class MemberServiceImpl implements MemberService{
 	@Autowired
-	MemberDAO memberDao;
+	MemberDAO memberDAO;
 
+	//회원정보 수정 처리
 	@Override
 	public void updateMember(MemberVO vo) {
-		memberDao.updateMember(vo);
+		memberDAO.updateMember(vo);
+		
 		
 	}
 

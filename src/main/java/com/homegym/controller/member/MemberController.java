@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/user/*")
 public class MemberController {
 	@Autowired
-	MemberService service;
+	MemberService memberService;
 	
 
 	//마이페이지 메인  이동
@@ -39,15 +39,24 @@ public class MemberController {
 	}
 	
 
-	//마이페이지 내정보 수정  이동
+	//마이페이지 내정보 수정페이지
 	@GetMapping("/profile_update")
-	public String viewP() {
+	public String profileView() {
 		return "user/profile_update";
 	}
-	//마이페이지 글관리  이동
-	@GetMapping("/mywrite")
-	public String mywrite() {
-		return "user/mywrite";
-	}
 	
+	//마이페이지 내정보 수정
+//	@PostMapping("/update")
+//	public String UpdateMember(MemberVO vo, HttpSession session) {
+//		service.updateMember(vo);
+//		return "redirect:/user/profie_update";
+//	}
+
+	
+	//마이페이지 글관리  이동
+//	@GetMapping("/mywrite")
+//	public String mywrite() {
+//		return "user/mywrite";
+//	}
+//	
 }
