@@ -1,4 +1,4 @@
-package com.homegym.controller;
+package com.homegym.biz.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
