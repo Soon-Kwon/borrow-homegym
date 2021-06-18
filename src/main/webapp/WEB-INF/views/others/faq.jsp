@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -48,60 +46,48 @@
     <!-- /End Preloader -->
 
     <header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
-<<<<<<< HEAD
-											<h5>지역</h5>
-=======
-											<h5>홈짐</h5>
->>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
-										</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-										</a></li>
-<<<<<<< HEAD
-									<a class="circle-image" href="mypage_main.html">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-=======
-										<li class="nav-item" style="margin-right: 120px;">
-									<a class="circle-image" href="mypage_main.html">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									</li>
->>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
-									<li class="nav-item">
-										<a href="mypage_main.html"><h5>아이유님</h5></a>
-										</li>
-								</ul>
-							</div> <!-- navbar collapse -->
-						</nav> <!-- navbar -->
-					</div>
-				</div>
-			</div> <!-- row -->
-		</div> <!-- container -->
-	</header>
-	<!-- End Header Area -->
+      <div class="container">
+         <div class="row align-items-center">
+            <div class="col-lg-12">
+               <div class="nav-inner">
+                  <nav class="navbar navbar-expand-lg">
+                     <a class="navbar-brand" href="main_index.html">
+                        <img src="../Template Main/assets/images/logo/로고2.png" alt="logo">
+                     </a>
+                     <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                        <span class="toggler-icon"></span>
+                     </button>
+                     <form class="d-flex search-form">
+                        <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
+                     </form>
+                     <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                        <ul id="nav" class="navbar-nav ms-auto">
+                           <li class="nav-item" style="margin-right: 100px;"><a href="location.html">
+                                 <h5>홈짐</h5>
+                              </a></li>
+                           <li class="nav-item" style="margin-right: 120px;"><a href="community.html">
+                                 <h5>트레이너</h5>
+                              </a></li>
+                           <a class="circle-image" href="mypage_main.html">
+                              <img src="https://via.placeholder.com/300x300" alt="logo">
+                           </a>
+                           <li class="nav-item">
+                              <a href="mypage_main.html"><h5>아이유님</h5></a>
+                              </li>
+                        </ul>
+                     </div> <!-- navbar collapse -->
+                  </nav> <!-- navbar -->
+               </div>
+            </div>
+         </div> <!-- row -->
+      </div> <!-- container -->
+   </header>
+   <!-- End Header Area -->
     <!-- End Header Area -->
 
     <!-- Start Breadcrumbs -->
@@ -137,11 +123,7 @@
                                 aria-selected="false">회원정보</button>
                                 <button class="nav-link" id="nav-notice-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-notice" type="button" role="tab" aria-controls="nav-service"
-<<<<<<< HEAD
                                 aria-selected="false">서비스이용 및 기타</button> </button>
-=======
-                                aria-selected="false">서비스이용 및 기타</button> 
->>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -607,11 +589,7 @@
             </div>
         </div>
         <!-- End Footer Middle -->
-<<<<<<< HEAD
     </footer>
-=======
-   
->>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->
@@ -627,8 +605,5 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
-<<<<<<< HEAD
-=======
 
->>>>>>> ea0f2dc72531a478b2fc611cd99e13888a385784
 </html>

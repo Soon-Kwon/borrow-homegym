@@ -71,7 +71,7 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <a class="circle-image" href="/user/mp_main.do">
+                                <a class="circle-image" href="/user/profile.do?memberId=silverbi@naver.com">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>
                                 <li class="nav-item"><a href="/user/login.do">로그인</a></li>
