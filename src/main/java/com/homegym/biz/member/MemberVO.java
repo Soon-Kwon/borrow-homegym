@@ -1,5 +1,9 @@
 package com.homegym.biz.member;
 
+public class MemberVO {
+	
+}
+=======
 import lombok.Data;
 
 @Data
