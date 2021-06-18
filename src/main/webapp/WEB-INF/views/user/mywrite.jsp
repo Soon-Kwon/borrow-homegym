@@ -71,22 +71,23 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title"><a href="mp_main.do">마이페이지</a></h3>
+                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mp_update.do">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mp_activ.do">나의 활동내역</a></h6>
+                                            <h6 class="title"><a
+                                                    href="myactiv">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mp_mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
