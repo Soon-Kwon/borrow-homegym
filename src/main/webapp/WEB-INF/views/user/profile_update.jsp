@@ -256,7 +256,8 @@ document.getElementById("addrDetail").value = addrDetail;
                                             
                                             <input type="file" class="text-center center-block file-upload" style="margin-left: 150px;">
                                         </div>
-                                            <form class="form" action="##" method="post" id="profile_update">
+                                           
+                   						 <form action="/user/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="userId">
@@ -383,6 +384,7 @@ document.getElementById("addrDetail").value = addrDetail;
                                                     </div>
                                                 </div>
                                         <hr>
+                                  
                                         <div class="form-group">
                                             <div class="submit_btn">
                                                 <input type="submit" value="수정완료" class="btn btn-block btn-primary" style="margin-left:370px">
@@ -397,6 +399,7 @@ document.getElementById("addrDetail").value = addrDetail;
                             </div>
                         </div>
                 </div>
+              </form>
                 </section>
                 <!-- /End Features Area -->
 
