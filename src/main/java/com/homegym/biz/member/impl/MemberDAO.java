@@ -8,14 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.homegym.biz.member.MemberVO;
 
 @Repository
-public class MemberDAO{
+public interface MemberDAO{
 	
-	@Inject
-	private SqlSession sqlSession;
-	
-	public void updateMember(MemberVO vo) {
+	public void updateMember(MemberVO vo) ;
 		
-		
-	}
+
 
 }
