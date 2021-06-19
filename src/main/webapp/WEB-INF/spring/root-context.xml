@@ -34,4 +34,6 @@
 	
 	<context:component-scan base-package="com.homegym.controller"></context:component-scan>
 	<context:component-scan base-package="com.homegym.biz"></context:component-scan>
+	
+	<context:component-scan base-package="com.homegym.biz.trainer_board.controller"></context:component-scan>
 </beans>

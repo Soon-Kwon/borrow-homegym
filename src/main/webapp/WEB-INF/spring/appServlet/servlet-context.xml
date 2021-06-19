@@ -30,6 +30,7 @@
 	
 	<context:component-scan base-package="com.homegym.mapper" />
 	
+	<context:component-scan base-package="com.homegym.biz.trainer_board.controller"></context:component-scan>
 	
 	
 </beans:beans>
