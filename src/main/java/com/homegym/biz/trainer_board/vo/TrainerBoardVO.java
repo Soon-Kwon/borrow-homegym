@@ -2,6 +2,11 @@ package com.homegym.biz.trainer_board.vo;
 
 import java.util.Date;
 
+import com.homegym.biz.member.MemberVO;
+
+import lombok.Data;
+
+@Data
 public class TrainerBoardVO {
 	
 	private int seq;
@@ -20,6 +25,6 @@ public class TrainerBoardVO {
 	private String file;
 	private String file1;
 	private String file2;
-	private int cnt;
+	private int viewCnt;
 
 }
