@@ -304,14 +304,12 @@
 								<input type="button" value="22시 30분 ~ 23시 30분" onclick="javascript:void(0)"
 									class="btn btn-time" style="border-radius: 2rem; background-color: #9ea9d8;">
 								<br /> <br />
-								<div>
-								<div style="padding: 20px 0px">
-									<!-- <span style="font-size: 25px; color: black;">₩4,000</span>  -->
-									<input type="submit" value="예약하기" class="btn"
-										style="float: right; background-color: #9ea9d8;">
-								</div>
-							</form>
-
+									<div>
+										<div style="padding: 20px 0px">
+											<!-- <span style="font-size: 25px; color: black;">₩4,000</span>  -->
+											<input type="submit" value="예약하기" class="btn"
+												style="float: right; background-color: #9ea9d8;">
+										</div></form>
 						</div>
 						<!--/ End Single Widget -->
 					</div>

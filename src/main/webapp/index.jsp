@@ -8,7 +8,7 @@
     <title>빌려줘! 홈짐</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/images/logo/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/Template Main/assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -17,30 +17,13 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/LineIcons.2.0.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/animate.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/tiny-slider.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/glightbox.min.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/main.css" rel="stylesheet" type="text/css">
-
-	<!-- 
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/homegym/src/main/webapp/resources/assets/css/main.css" />
-     -->
-    
-    <!-- 
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
     <link rel="stylesheet" href="/assets/css/animate.css" />
     <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/assets/css/main.css" />
-	 -->
+
 </head>
 
 <body>
@@ -70,8 +53,8 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.jsp">
-                            <img src="${pageContext.request.contextPath}/resources/assets/images/logo/로고2.png" alt="logo">
+                        <a class="navbar-brand" href="main_index.html">
+                            <img src="/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -88,12 +71,12 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <a class="circle-image" href="/user/profile.do?memberId=silverbi@naver.com">
+                                <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>
-                                <li class="nav-item"><a href="/user/login.do">로그인</a></li>
+                                <li class="nav-item"><a href="user/login.do">로그인</a></li>
                                 <li class="nav-item"><a>|</a></li>
-                                <li class="nav-item"><a href="/user/join.do">회원가입</a></li>
+                                <li class="nav-item"><a href="user/registration.do">회원가입</a></li>
                             </ul>
                         </div> <!-- navbar collapse -->
                     </nav> <!-- navbar -->
@@ -134,7 +117,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/main/메인_2.jpg');">
+    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_2.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -159,7 +142,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/main/메인_3.jpg');">
+    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_3.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -184,7 +167,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/main/메인_4.jpg');">
+    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_4.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -245,14 +228,13 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/count-up.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/wow.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/tiny-slider.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/glightbox.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-    <script type="text/javascript">  
-   
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/count-up.min.js"></script>
+    <script src="../assets/js/wow.min.js"></script>
+    <script src="../assets/js/tiny-slider.js"></script>
+    <script src="../assets/js/glightbox.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script type="text/javascript">
         //========= testimonial Slider
         tns({
             container: '.testimonial-slider',
@@ -311,8 +293,6 @@
             }
         });
     </script>
-   
-    
 </body>
 
 </html>
