@@ -34,7 +34,8 @@ public class HomegymController {
 	
 	@ResponseBody
 	@RequestMapping("/register.do")
-	public String register(@ModelAttribute HomegymVO vo) {
+	//public String register(@ModelAttribute HomegymVO vo) {
+	public String register(HomegymVO vo) {
 	
 		log.info("글 등록하기: " + vo);
 		homegymService.register(vo);

@@ -88,6 +88,37 @@
 				color: black;
 				font-size: 20px;
 			}
+			
+			.uploadResult{
+				width:100%;
+				background-color: white;
+			}
+			
+			.uploadResult ul{
+				display: flex;
+				flex-flow: row;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.uploadResult ul li{
+				list-style: none;
+				padding: 10px;
+			}
+			
+			.uploadResult ul li img{
+				width: 80px;
+				heigh: 80px;
+			}
+			.uploadResult .btn {
+				padding: 1px;
+				margin: 0px;
+				border-radius: .90erm;
+				color: black;
+				background-color: white;
+				border-color: white;
+				border: 0px;
+			}
 		</style>
 		<!-- 다음 주소 api & 지도 api-->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -140,10 +171,86 @@
 								i--;
 							}
 						}
+					}				
+				});
+				
+				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+				var maxSize = 5242880;
+				
+				function checkExtension(fileName, fileSize){
+					
+					if(fileSize >= maxSize){
+						alert("파일 사이즈 초과");
+						return false;
 					}
+					
+					if(regex.test(fileName)){
+						alert("해당 종류의 파일은 업로드할 수 없습니다.");
+						return false;
+					}
+				
+					return true;
+				}
+				
+				$("input[type='file']").change(function(e){
+					
+					var formData = new FormData();
+					
+					var inputFile = $("input[name='uploadFile']");
+					
+					var files = inputFile[0].files;
+					
+					for(var i = 0; i < files.length; i++ ){
+						
+						if(!checkExtension(files[i].name, files[i].size)){
+							return false;
+						}
+					
+						formData.append("uploadFile", files[i]);
+				
+					}
+					
+					$.ajax({
+						url: '/uploadAjaxAction.do',
+						processData: false,
+						contentType: false,
+						data: formData,
+						type: 'POST',
+						dataType: 'json',
+						success: function(result){
+							console.log(result);
+							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등)
+						}, 
+						error: function(error){
+							console.log(error);
+						}
+					});
+				});
+				
+				// x를 누르면 업로드된 파일 삭제
+				$(".uploadResult").on("click", "button", function(e){
+					
+					console.log("delete file");
+					
+					var targetFile = $(this).data("file");
+					var type = $(this).data("type");
+					
+					var targetLi = $(this).closest("li");
+					
+					$.ajax({
+						url: '/deleteFile.do',
+						data: {fileName: targetFile, type: type},
+						dataType: 'text',
+						type: 'POST',
+						success: function(result){
+							alert(result);
+							targetLi.remove();
+						}
+					});
 				});
 			});
-				// 체크박스 값 여러개 받아오기
+		
+			// 체크박스 값 여러개 받아오기
 						
 			function save(){
 				var hashTag = '';
@@ -160,7 +267,7 @@
 					alert("꼭 필요한 내용들을 적어주세요");
 					return;
 				}
-			
+				
 				var data = $('#submitForm').serialize();
 					
 				$.ajax({
@@ -180,6 +287,49 @@
 						console.log(e);
 					}
 				});
+			}
+			
+			// 업로드 결과 처리 함수
+			function showUploadResult(uploadResultArr){
+				
+				if(!uploadResultArr || uploadResultArr.length == 0){ return;}
+				
+				var uploadUL = $(".uploadResult ul");
+				
+				var str = "";
+				
+				$(uploadResultArr).each(function(i, obj){
+					
+					//image type
+					if(obj.fileType){
+						
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
+								+ obj.uuid + "_" + obj.fileName);
+						str += "<li><div>";
+						str +="<span> " + obj.fileName + "</span>";
+						str +="<button type='button' data-file=\'" + fileCallPath 
+						+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+						+ "<i class='lni lni-cross-circle'></i></button><br>";
+						str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+						str += "</div>";
+						str += "</li>";
+					}else{
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid
+								+ "_" + obj.fileName);
+						var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+						
+						str += "<li><div>";
+						str +="<span> " + obj.fileName + "<span";
+						str +="<button type='button' data-file=\'" + fileCallPath 
+						+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+						+ "<i class='lni lni-cross-circle'></i></button><br>";
+						str += "<img src='/assets/images/common/attach.png'></a>";
+						str += "</div>";
+						str += "</li>";
+					}
+				});
+				
+				uploadUL.append(str);
 			}
 
 		</script>
@@ -404,9 +554,14 @@
 										<div class="form-group">
 											<label style="margin-top:10px;">이미지 첨부</label>
 										</div>
-										<div>
-											<input type="file" id="img_upload" name="file" accept="image/*"
-												style="margin-bottom: 30px;">
+										<div class="uploadDiv">
+											<input type='file' id='img_upload' name='uploadFile' multiple 
+											style="margin-bottom: 30px;">
+										</div>
+										<div class="uploadResult">
+											<ul>
+											
+											</ul>
 										</div>
 									</div>
 									<div class="col-12">

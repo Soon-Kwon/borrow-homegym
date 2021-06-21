@@ -1,6 +1,7 @@
 package com.homegym.biz.homegym;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -24,5 +25,6 @@ public class HomegymVO {
 	private String uploadFile1;
 	private String uploadFile2;
 	private String uploadFile3;
-
+	
+	private List<HomegymAttachVO> attachList; // 첨부파일 VO 자료
 }
