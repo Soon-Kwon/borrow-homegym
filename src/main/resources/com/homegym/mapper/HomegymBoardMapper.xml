@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HomegymDAO">
+
+	<select id="getBoardList" resultType="homegymVO">
+		select * from homegym_board where h_id > 0
+	</select>
+	
+	<select id="getBoardListWithPaging" resultType="homegymVO">
+		select * 
+		from (select * from homegym_board
+				order by h_id desc) R1
+		LIMIT #{cri.amount} OFFSET #{cri.skip}
+	</select>
+	
+	<select id="read" resultType="homegymVO">
+		select * from homegym_board
+		where h_id = #{hId}
+	</select>
+	
+	<insert id="insert">
+		insert into homegym_board (m_id, memberId, h_title, h_content, h_price, 
+		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag)
+		values(3, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
+		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag})	
+	</insert>
+	
+	<update id="update">
+		update homegym_board
+		set h_title = #{hTitle}, h_content = #{hContent}, h_price = #{hPrice}, h_addr = #{hAddr}
+		, h_locate_X = #{hLocateX}, h_locate_Y = #{hLocateY}, h_hashtag = #{hHashtag}, h_updatedate = DEFAULT
+		where h_id = #{hId}
+	</update>
+</mapper>

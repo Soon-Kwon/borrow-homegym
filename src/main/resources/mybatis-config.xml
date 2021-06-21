@@ -2,5 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<!-- Alias 설정: Mapping시에 별칭을 사용할 수 있다 -->
+	<typeAliases>
+		<typeAlias alias="homegymVO"
+			type="com.homegym.biz.homegym.HomegymVO" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/homegym/mapper/HomegymBoardMapper.xml"/>
+	</mappers>
 </configuration>

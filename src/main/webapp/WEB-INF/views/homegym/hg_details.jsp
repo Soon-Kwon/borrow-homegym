@@ -9,7 +9,7 @@
 	<title>빌려줘! 홈짐</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
+	<link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
 
 	<!-- Place favicon.ico in the root directory -->
 
@@ -19,15 +19,15 @@
 		rel="stylesheet">
 
 	<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
-	<link rel="stylesheet" href="assets/css/animate.css" />
-	<link rel="stylesheet" href="assets/css/tiny-slider.css" />
-	<link rel="stylesheet" href="assets/css/glightbox.min.css" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
+	<link rel="stylesheet" href="../assets/css/animate.css" />
+	<link rel="stylesheet" href="../assets/css/tiny-slider.css" />
+	<link rel="stylesheet" href="../assets/css/glightbox.min.css" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
 
 	<!--========================= 캐러셀 ================================ -->
-	<link rel="stylesheet" href="assets/css/carousel.css">
+	<link rel="stylesheet" href="../assets/css/carousel.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<!-- ======================== 달력 ================================== -->
@@ -121,7 +121,7 @@
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main/assets/images/logo/로고2.png" alt="logo">
+								<img src="../Template Main/../assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -177,15 +177,15 @@
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner" role="listbox">
 								<div class="item active">
-									<img src="assets/images/gym/homegym-image-01.jpg" alt="...">
+									<img src="../assets/images/gym/homegym-image-01.jpg" alt="...">
 									<div class="carousel-caption"></div>
 								</div>
 								<div class="item">
-									<img src="assets/images/gym/homegym-image-02.jpg" alt="...">
+									<img src="../assets/images/gym/homegym-image-02.jpg" alt="...">
 									<div class="carousel-caption"></div>
 								</div>
 								<div class="item">
-									<img src="assets/images/gym/homegym-image-03.jpg" alt="...">
+									<img src="../assets/images/gym/homegym-image-03.jpg" alt="...">
 									<div class="carousel-caption"></div>
 								</div>
 							</div>
@@ -330,7 +330,7 @@
 						<div class="col-md-6" style="text-align: start;">
 							<div class="logo">
 								<br><br>
-								<a href="main_index.html"><img src="assets/images/logo/로고1.png" alt="Logo"></a>
+								<a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
 							</div>
 						</div>
 						<div class="col-md-6" style="text-align: end;">
@@ -357,12 +357,12 @@
 	</a>
 
 	<!-- ========================= JS here ========================= -->
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/count-up.min.js"></script>
-	<script src="assets/js/wow.min.js"></script>
-	<script src="assets/js/tiny-slider.js"></script>
-	<script src="assets/js/glightbox.min.js"></script>
-	<script src="assets/js/main.js"></script>
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/count-up.min.js"></script>
+	<script src="../assets/js/wow.min.js"></script>
+	<script src="../assets/js/tiny-slider.js"></script>
+	<script src="../assets/js/glightbox.min.js"></script>
+	<script src="../assets/js/main.js"></script>
 	<!-- ========================= 카카오 지도 ========================= -->
 
 	<script type="text/javascript"

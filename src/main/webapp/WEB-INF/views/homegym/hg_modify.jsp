@@ -96,31 +96,7 @@
 		<!-- 제이쿼리 -->
 		<script src="https://code.jquery.com/jquery-3.6.0.js"
 			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-		
-		<!-- 동적으로 입력 폼 추가/삭제-->
 		<script>
-			function add_item() {
-				// append-form 에 있는 내용을 읽어와서 처리..
-				var div = document.createElement('div');
-				div.innerHTML = document.getElementById('append-form').innerHTML;
-				document.getElementById('field').appendChild(div);
-			}
-			function remove_item(obj) {
-				// obj.parentNode 를 이용하여 삭제
-				document.getElementById('field').removeChild(obj.parentNode.parentNode.parentNode);
-			}
-		</script>
-	</head>
-
-	<body>
-		<!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-    <script>
 			var chkArray = new Array();
 			$(document).ready(function () {
 				// 주소 오늘 날짜로 
@@ -156,33 +132,46 @@
 				
 				$('#hashtag').val(hashTag);
 				
-				if($('#price').val() == '' || $('#title').val() == ''){
-					alert("꼭 필요한 내용들을 적어주세요");
-					return;
-				}
-			
 				var data = $('#submitForm').serialize();
 					
 				$.ajax({
 					type: 'POST',
-					url: 'register.do',
-					dataType: 'text',
+					url: 'hg_write.do',
+					dataType: 'json',
 					data: data,
 					success: function(data) {
 						alert(data);
-						if(data == 'OK') {
-							alert('글 작성에 성공하였습니다.');
-							window.location.replace("/homegym/homegymListView.do");
-						}
 					},
 					error: function(e) {
-						alert(e);
-						console.log(e);
+						alert('글 작성에 실패하였습니다.')
 					}
 				});
 			}
 
 		</script>
+		<!-- 동적으로 입력 폼 추가/삭제-->
+		<script>
+			function add_item() {
+				// append-form 에 있는 내용을 읽어와서 처리..
+				var div = document.createElement('div');
+				div.innerHTML = document.getElementById('append-form').innerHTML;
+				document.getElementById('field').appendChild(div);
+			}
+			function remove_item(obj) {
+				// obj.parentNode 를 이용하여 삭제
+				document.getElementById('field').removeChild(obj.parentNode.parentNode.parentNode);
+			}
+		</script>
+	</head>
+
+	<body>
+		<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
 
 		<!-- Preloader -->
 		<div class="preloader">
@@ -271,7 +260,7 @@
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
-											<label>글제목</label> <input name="hTitle" type="text" id="title" placeholder=""
+											<label>글제목</label> <input name="hTitle" type="text" placeholder=""
 												required="required">
 										</div>
 									</div>
@@ -417,7 +406,7 @@
 									</div>
 									<div class="col-12">
 										<div class="form-group button">
-											<button class="btn" type="button" onclick="save();">게시물 등록</button>
+											<button class="btn" onclick="save();">게시물 등록</button>
 										</div>
 									</div>
 								</div>
