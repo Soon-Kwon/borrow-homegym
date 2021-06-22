@@ -16,8 +16,8 @@
 
 		<resources mapping="/resources/**" location="/resources/" /> 
 		
-		<resources mapping="/assets/**" location="/resources/assets/" /> 
-		<resources mapping="/ad_assets/**" location="/resources/ad_assets/" />
+		<resources mapping="/assets/**" location="resources/assets/" /> 
+		<resources mapping="/ad_assets/**" location="resources/ad_assets/" />
 
 
 
@@ -27,8 +27,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<context:component-scan base-package="com.homegym.controller" />
 	
-	<context:component-scan base-package="com.homegym.mapper" />
 	
 	
 	

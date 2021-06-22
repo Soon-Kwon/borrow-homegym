@@ -3,6 +3,8 @@
  <%
  	String memberId = session.getAttribute("memberId").toString();
  %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html class="no-js" lang="zxx">
 
 <head>
@@ -87,7 +89,7 @@
                                 <a class="circle-image" href="mp_main.do">
                                     <img src="https://via.placeholder.com/300x300" alt="logo">
                                 </a>
-                                <li class="nav-item"><a href="mp_main.do"><h5>아이유님</h5></a></li>
+                                <li class="nav-item"><a href="profile.do"><h5>${member.name} 님</h5></a></li>
                                 
                             </ul>
                         </div> <!-- navbar collapse -->
@@ -173,11 +175,10 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">프로필</a></h3>
                             <img src="https://via.placeholder.com/370x370" alt="#">
-                            <h4>아이유님<span>일반회원</span></h4>
-                            <p>이메일 | iu2021@gmail.com</p>
-                            <p>주소 | 서울시 종로구 인사동</p>
+                            <h4>${member.name}님<span>🌱${member.auth}</span> </h4><br>
+                             <span> ${member.memberId} <span>
                             <div class="button">
-                                <a href="mp_update.do" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -187,11 +188,11 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">나의 활동내역 보기</a></h3>
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌려준 홈짐</p>
-                            <h1 style="margin-top: 20px;">20</h1>
+                            <h1 style="margin-top: 20px;">${lendCnt}</h1>
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
-                            <h1 style="margin-top: 20px;">3</h1>
+                            <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-                                <a href="mp_activ.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="myactiv.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -201,11 +202,11 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">내가 쓴글 보기</a></h3>
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 게시글</p>
-                            <h1 style="margin-top: 20px;">120</h1>
+                            <h1 style="margin-top: 20px;">${myBoardCnt}</h1>
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 댓글</p>
-                            <h1 style="margin-top: 20px;">330</h1>
+                            <h1 style="margin-top: 20px;">${myReplyCnt}</h1>
                             <div class="button">
-                                <a href="mp_mywrite.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mywrite.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->

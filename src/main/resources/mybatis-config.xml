@@ -3,4 +3,20 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	<!-- 자동으로 카멜케이스 규칙으로 변환 -->	
+	<settings>
+
+	  	<setting name="mapUnderscoreToCamelCase" value="true"/>
+	 </settings> 
+	<!-- Alias 설정 -->
+	<typeAliases>
+		<typeAlias alias="member" type="com.homegym.biz.member.MemberVO" />
+		<typeAlias alias="trainer" type="com.homegym.biz.trainerboard.TrainerBoardVO" />
+	</typeAliases>
+
+	<!-- Sql Mapper 설정 -->
+	<mappers>
+		<mapper resource="com/homegym/mapper/MemberMapper.xml"/>
+	</mappers>
+	
 </configuration>

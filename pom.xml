@@ -195,7 +195,11 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.9.6</version>
 		</dependency>    
-		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.4.2</version>
+		</dependency>
 		<!-- Java 인스턴스를 JSON 타입의 문자열로 변환할 때 사용 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace ="MemberDAO">
-	<update id="updateMember" >
-		UPDATE 
-			password
-			phone
-			zipcode
-			image
-			
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace = "MemberDAO">
+
+	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
+	<select id="getInfo" resultType="member" parameterType="String">
+		SELECT * 
 		FROM member
-		where memberId = #{memberId}
+		WHERE memberId= #{memberId}
+	</select>
+	
+	<!-- 마이페이지 회원정보 수정 페이지 -->
+	<select id="getMyPageInfo" resultType="member" parameterType="String">
+		SELECT * 
+		FROM member
+		WHERE memberId= #{memberId}
+	</select>
+	
+	<!-- 회원정보 수정 처리 -->
+	<update id="memberUpdate" parameterType="member">
+		UPDATE member
+		SET
+		<choose> 
+			<!-- 새로운 비밀번호가 입력되었을때 -->
+	    	<when test="newPassword != null  || newPassword != ''">
+	     		password = ${rePassword},
+	    	</when>
+	   		 <otherwise>
+	     		password = #{password},
+	    	</otherwise>
+	  	</choose>
+  			 nickName = #{nickName},
+			 phone = #{phone},
+			 zip_code = #{zip_code},
+			 address = #{address}
+			WHERE
+				memberId = #{memberId} 
 	</update>
+	
+	<!-- 회원 탈퇴  처리-->
+	<delete id="memberDelete"  parameterType="member">
+		DELETE 
+		FROM member 
+		WHERE
+			memberId = #{memberId} AND password = #{password}
+	</delete>
+	
+	<!-- 마이페이지 비밀번호 체크 -->
+	<select id="checkPw" resultType="int">
+		SELECT 
+			count(*)
+		FROM member
+		WHERE memberId=#{memberId} AND password=#{password}
+	</select>
+	
+	<!-- 내가 빌린 홈짐 갯수 -->
+	
+	<!-- 내가 빌려준 홈짐 갯수 -->
+	
+	<!-- 내가 작성한 게시글 갯수 -->
+	
+	<!-- 내가 쓴 댓글 갯수 -->
+	
+	
+	<!-- 내가 쓴 글 갯수 아직 구현 전 -->
+	<select id="writeCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM trainer_board
+		WHERE memberId=#{memberId} 
+	</select> 
+	
+	<!-- 내가 쓴 게시물 목록  -->
+	<select id="getMyBoardList" resultType="trainer" parameterType="String">
+		SELECT *
+		FROM trainer_board
+		WHERE memberId= #{memberId}
+		ORDER BY
+			tRegDate 
+	</select>
+	
 </mapper>
