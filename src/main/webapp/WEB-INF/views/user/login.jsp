@@ -59,7 +59,7 @@
 				<div class="col-lg-12">
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="index.jsp"> <img
+							<a class="navbar-brand" href="/index.jsp"> <img
 								src="../assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button"
@@ -128,7 +128,7 @@
 						
 						<form action="/login" method="post">
 							<div class="form-group">
-								<label>아이디</label> <input type="text" name="username" class="margin-5px-bottom" 
+								<label>아이디</label> <input type="text" name="memberId" class="margin-5px-bottom" 
 									id="exampleInputEmail1" placeholder="아이디" width="" value="admin"><!-- type="email" -->
 							</div>
 							<div class="form-group">
@@ -151,7 +151,7 @@
 							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
-								<a href="/registration">회원가입 하기</a>
+								<a href="/user/registration.do">회원가입 하기</a>
 							</p>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>

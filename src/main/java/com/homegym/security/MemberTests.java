@@ -31,9 +31,9 @@ public class MemberTests {
 	
 	@Test
 	public void testInsertMember() {
-		String sql = "insert into homegymdb.member(m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into member(m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		
-		for(int i=0; i < 100; i++) {
+		for(int i=1; i <= 100; i++) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -81,9 +81,9 @@ public class MemberTests {
 		
 		@Test
 		public void testInsertAuth() {
-			String sql = "insert into homegymdb.member_auth(m_id, memberId, auth) values (?,?,?)";
+			String sql = "insert into member_auth(m_id, memberId, auth) values (?,?,?)";
 			
-			for(int i=0; i < 100; i++) {
+			for(int i=1; i <= 100; i++) {
 				Connection con = null;
 				PreparedStatement pstmt = null;
 				

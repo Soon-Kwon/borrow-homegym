@@ -53,7 +53,7 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="main_index.html">
+                        <a class="navbar-brand" href="/index.jsp">
                             <img src="/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"

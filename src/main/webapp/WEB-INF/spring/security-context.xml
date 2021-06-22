@@ -11,6 +11,7 @@
 	<bean id="customLoginSuccess" class="com.homegym.security.CustomLoginSuccessHandler"></bean>
 <!-- 	<bean id="customPasswordEncoder" class="com.homegym.security.CustomNoOpPasswordEncoder"></bean> -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="customUserDetailsService" class="com.homegym.security.CustomUserDetailsService"></bean>
 	
 	<security:http>
 		<security:intercept-url pattern="/sample/all" access="permitAll" />
@@ -21,15 +22,15 @@
 		<security:access-denied-handler ref="customAccessDenied"/>
 			
 		<!-- <security:form-login /> -->
-		<security:form-login login-page="/user/login" authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login username-parameter="memberId" password-parameter="password" login-page="/user/login" authentication-success-handler-ref="customLoginSuccess" />
 		<security:logout logout-url="/customLogout" invalidate-session="true"/>
 	</security:http>
 	 
 	<security:authentication-manager>
-		<security:authentication-provider>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
 		<!-- <security:jdbc-user-service data-source-ref="dataSource" /> -->
-		<security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled from member where memberId = ?;"
-																authorities-by-username-query="select m_id, memberId, auth from member_auth where memberId = ?" />
+		<!-- <security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select mem.m_id, mem.memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled from member mem where mem.memberId = ?;"
+																authorities-by-username-query="select auth.m_id, auth.memberId, auth from member_auth auth where authmemberId = ?"; /> -->
 	
 		<!-- <security:password-encoder ref="customPasswordEncoder" /> -->
 		<security:password-encoder ref="bcryptPasswordEncoder" />

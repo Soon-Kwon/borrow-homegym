@@ -11,9 +11,10 @@ public class MemberDAO {
    @Autowired
    private SqlSessionTemplate sqlsession;
    
+   
    //로그인시 사용자 정보 가져오기
-   public MemberVO read(String memberId) {
-	   return sqlsession.selectOne("MemberDAO.selectUserById", memberId);
+   public MemberVO read(String username) {
+	   return sqlsession.selectOne("MemberDAO.loadUserByUsername", username);
    }
    
    //마이페이지 회원 정보 수정하기
