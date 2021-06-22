@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -34,7 +36,6 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
 	<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
 	
 	<style>
@@ -82,18 +83,85 @@
 			margin: 10px 0px;
 		}
 		
+		.image-container{
+			text-align: center;
+		}
+		
+		.ic-child{
+			width: 100%;
+			padding-bottom: 20px;
+			text-align: center;
+		}
+		
 		.icon-tag{
-			
+			text-align: center;
+			background-color: ffffff;
+			color: black;
+		}
+		
+		.icon-tag .fas{
+			font-size: 40px;
 		}
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			// 달력 오늘 날짜로
-			document.getElementById('now_date').valueAsDate = new Date();
+
+			// 첨부파일 데이터를 가져오는 즉시실행함수
+			(function(){
+			
+				var hId = '<c:out value="${board.HId}"/>';
+			
+				$.getJSON("/homegym/getAttachList.do", {hId: hId}, function(arr){
+					
+					console.log(arr);
+
+					var str ="";
+					
+					$(arr).each(function(i, attach){
+						
+						var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
+								+ "_" + attach.fileName);
+						
+				
+							str += "<div class='ic-child'><img style='width:100%;' src='/display.do?fileName=" + fileCallPath  
+								+ "'></div>";   
+							
+					});					
+						$(".image-container").html(str);
+				});
+				
+			})();			
+			
+			// 해쉬태그 분리 
+			var hashtag = '<c:out value='${board.HHashtag}'/>';
+			var afterSplit = hashtag.split(', ');
+			
+			str = "";
+			
+			for(var i = 0 ; i < afterSplit.length ; i++){
+				switch(afterSplit[i]){
+				case "주차가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-parking"></i><br>주차가능</div>');
+				break;
+				case "와이파이가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-wifi"></i><br>와이파이</div>');
+				break;
+				case "정수기보유":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-tint"></i><br>정수기</div>');
+				break;
+				case "에어컨보유":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-fan"></i><br>에어컨</div>');
+				break;
+				case "샤워가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-shower"></i><br>샤워</div>');	
+				break;
+				default:
+				
+				}
+			}		
 		});
 	</script>
 </head>
-
 <body>
 	<!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -138,7 +206,7 @@
 							</form>
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -167,53 +235,23 @@
 			<div class="row">
 				<div class="col-lg-8 col-12">
 					<div class="single-inner">
-						<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-							</ol>
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner" role="listbox">
-								<div class="item active">
-									<img src="../assets/images/gym/homegym-image-01.jpg" alt="...">
-									<div class="carousel-caption"></div>
-								</div>
-								<div class="item">
-									<img src="../assets/images/gym/homegym-image-02.jpg" alt="...">
-									<div class="carousel-caption"></div>
-								</div>
-								<div class="item">
-									<img src="../assets/images/gym/homegym-image-03.jpg" alt="...">
-									<div class="carousel-caption"></div>
-								</div>
-							</div>
-							<!-- Controls -->
-							<a class="left carousel-control" href="#carousel-example-generic" role="button"
-								data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"
-									aria-hidden="true"></span>
-								<span class="sr-only"></span>
-							</a> <a class="right carousel-control" href="#carousel-example-generic" role="button"
-								data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span
-									class="sr-only"></span>
-							</a>
+						<div class="image-container">
+						
 						</div>
-						<class="post-details">
 							<div class="detail-inner">
 								<!-- post meta -->
 								<h2 class="post-title">
-									<p style="font-size: 25px;">홈짐 소개</p>
+									<p style="font-size: 25px;">${board.HTitle }</p>
 								</h2>
-								<p>홈짐 설명</p>
-								<ul class="icon-tag row" style="font-size:40px;">
-									<div class="col-lg-3 col-2"><i class="fas fa-parking"></i>주차</div>
-									<div class="col-lg-3 col-2"><i class="fas fa-wifi"></i>와이파이</div>
-									<div class="col-lg-3 col-2"><i class="fas fa-tint"></i>정수기</div>
-									<div class="col-lg-3 col-2"><i class="fas fa-fan"></i>에어컨</div>
-									<div class="col-lg-3 col-2"><i class="fas fa-shower"></i>샤워</div>
-								</ul>
+								<p>${board.HContent }</p>
+								<br>
+								<h5> 이용 가능한 시설들</h5>
+								<br>
+								
+								<div class="icon-tag row">
+									
+								</div>
+								<br><br>
 
 								<!-- <h3>
 									<span></span> 
@@ -222,6 +260,9 @@
 									<span></span>
 									<span></span>
 								</h3> -->
+								<h5> ${board.MId}님의 홈짐 위치</h5>
+								<br>
+								
 								<div id="map" style="width: 100%; height: 450px;"></div>
 
 								<!-- 댓글 -->
@@ -284,39 +325,29 @@
 						<!-- Single Widget -->
 						<div class="widget popular-feeds" style="position: relative; top: 30px;">
 							<div class="info">
-								<h3 class="date">
-									<i class="lni lni-apartment"></i> 김연아님의 홈짐
-								</h3>
-								<h6 class="title">서울시 서초구 논현동에 위치한 김하우스입니다</h6>
+								<h4 class="date">
+									<i class="lni lni-apartment"></i> ${board.MId }님의 홈짐
+								</h4>
+								<br>
+								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
 								<br>
 							</div>
-							<form action="#" method="get">
-								<h6>예약 날짜 선택</h6>
+								<h6>1시간당 가격</h6>
 								<br>
-								<input type="date" id="now_date" name="today" /> <br /> <br />
-								<h6>예약 시간 선택</h6>
+								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<input type="button" value="19시 30분 ~ 20시 30분" onclick="javascript:void(0)"
+								<input type="button" value="지금 예약하러 가기" onclick="javascript:void(0)"
 									class="btn btn-time">
-								<input type="button" value="20시 30분 ~ 21시 30분" onclick="javascript:void(0)"
-									class="btn btn-time" style="border-radius: 2rem; background-color: #9ea9d8;">
-								<input type="button" value="22시 30분 ~ 23시 30분" onclick="javascript:void(0)"
-									class="btn btn-time" style="border-radius: 2rem; background-color: #9ea9d8;">
 								<br /> <br />
-								<div>
-								<div style="padding: 20px 0px">
-									<!-- <span style="font-size: 25px; color: black;">₩4,000</span>  -->
-									<input type="submit" value="예약하기" class="btn"
-										style="float: right; background-color: #9ea9d8;">
+									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
 								</div>
-							</form>
-
 						</div>
 						<!--/ End Single Widget -->
 					</div>
 				</aside>
 			</div>
+		</div>
 	</section>
 	<!-- End Blog Singel Area -->
 
@@ -369,12 +400,30 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
 	<script>
 		var container = document.getElementById('map');
+		
 		var options = {
-			center: new kakao.maps.LatLng(37.503293, 127.024297),
+			center: new kakao.maps.LatLng(${board.HLocateY}, ${board.HLocateX}),
 			level: 3
 		};
-
+		// 맵 생성
 		var map = new kakao.maps.Map(container, options);
+
+		var imageSrc = '../assets/images/logo/logo.png' // 마커이미지의 주소입니다    
+	    imageSize = new kakao.maps.Size(54, 69), // 마커이미지의 크기입니다
+	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	      
+		// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		    markerPosition = new kakao.maps.LatLng(${board.HLocateY}, ${board.HLocateX}); // 마커가 표시될 위치입니다
+	
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition, 
+		    image: markerImage // 마커이미지 설정 
+		});
+	
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);  
 	</script>
 </body>
 

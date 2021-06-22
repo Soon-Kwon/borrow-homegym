@@ -37,7 +37,7 @@ public class UploadController {
 			.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HomegymAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile){
-		System.out.println("첨부파일");
+
 		List<HomegymAttachVO> list = new ArrayList<>();
 		String uploadFolder = "/Users/soon/Desktop/upload";
 		

@@ -63,4 +63,15 @@ public class HomegymDAO {
 		mybatis.insert("HomegymDAO.insert", vo);
 	}
 	
+	public void insertSelectKey(HomegymVO vo) {
+		
+		log.info("DAO의 insertSelectKey();");
+		mybatis.insert("HomegymDAO.insertSelectKey", vo);
+	}
+	
+	public int delete(int hId) {
+		
+		log.info("DAO의 delete();");
+		return mybatis.delete("HomegymDAO.delete", hId);
+	}
 }

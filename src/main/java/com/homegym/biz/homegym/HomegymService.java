@@ -13,4 +13,7 @@ public interface HomegymService {
 	public HomegymVO get(HomegymVO homegym, int hId);
 	
 	public boolean modify(HomegymVO homegym, int hId);
+	
+	// 첨부파일 리스트 보여주기 
+	public List<HomegymAttachVO> getAttachList(HomegymAttachVO attach, int hId);
 }

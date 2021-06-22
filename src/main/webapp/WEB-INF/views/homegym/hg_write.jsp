@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<html class="no-js" lang="zxx">
 
 	<head>
@@ -253,6 +255,8 @@
 			// 체크박스 값 여러개 받아오기
 						
 			function save(){
+				
+				// 해쉬태그 데이터 베이스 저장
 				var hashTag = '';
 				for(var i = 0; i < chkArray.length; i++) {
 					hashTag += chkArray[i];
@@ -268,7 +272,31 @@
 					return;
 				}
 				
-				var data = $('#submitForm').serialize();
+				// 첨부파일 hidden	 
+				
+				var str = "";
+				
+				$(".uploadResult ul li").each(function(i, obj){
+					
+					var jobj = $(obj);
+					
+					console.dir(jobj);
+					
+					str += "<input type='hidden' name='attachList[" + i + "].fileName' value ='" 
+							+ jobj.data("filename") +"'>";
+					str += "<input type='hidden' name='attachList[" + i + "].uuid' value ='" 
+							+ jobj.data("uuid") +"'>";
+					str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value ='" 
+							+ jobj.data("path") +"'>";
+					str += "<input type='hidden' name='attachList[" + i + "].fileType' value ='" 
+							+ jobj.data("type") +"'>";
+				});
+				
+				var formObj = $("#submitForm");
+				
+				formObj.append(str);
+							
+				var data = formObj.serialize();
 					
 				$.ajax({
 					type: 'POST',
@@ -305,7 +333,10 @@
 						
 						var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
 								+ obj.uuid + "_" + obj.fileName);
-						str += "<li><div>";
+						str += "<li data-path='" + obj.uploadPath + "'";
+						str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+								+ "'data-type='" + obj.fileType + "'";
+						str += "><div>";
 						str +="<span> " + obj.fileName + "</span>";
 						str +="<button type='button' data-file=\'" + fileCallPath 
 						+ "\'data-type='image' class='btn btn-warning btn-circle'>"
@@ -318,8 +349,11 @@
 								+ "_" + obj.fileName);
 						var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
 						
-						str += "<li><div>";
-						str +="<span> " + obj.fileName + "<span";
+						str += "<li data-path='" + obj.uploadPath + "'";
+						str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+								+ "'data-type='" + obj.fileType + "'";
+						str += "><div>";
+						str +="<span> " + obj.fileName + "<span>";
 						str +="<button type='button' data-file=\'" + fileCallPath 
 						+ "\'data-type='file' class='btn btn-warning btn-circle'>"
 						+ "<i class='lni lni-cross-circle'></i></button><br>";
@@ -369,7 +403,7 @@
 								</form>
 								<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 									<ul id="nav" class="navbar-nav ms-auto">
-										<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
+										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
 												<h5>홈짐</h5>
 											</a></li>
 										<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -581,7 +615,7 @@
 					</div>
 
 				</div>
-			</div>
+			</div> 	
 		</section>
 		<!--/ End Contact Area -->
 		<!-- Start Footer Area -->

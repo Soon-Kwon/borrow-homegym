@@ -22,7 +22,17 @@
 	<insert id="insert">
 		insert into homegym_board (m_id, memberId, h_title, h_content, h_price, 
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag)
-		values(3, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
+		values(#{mId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
+		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag})	
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="hId" order="BEFORE" resultType="int">
+			select max(h_id) + 1 from homegym_board
+		</selectKey>
+		insert into homegym_board (h_id, m_id, memberId, h_title, h_content, h_price, 
+		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag)
+		values(#{hId}, #{mId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
 		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag})	
 	</insert>
 	
@@ -32,4 +42,8 @@
 		, h_locate_X = #{hLocateX}, h_locate_Y = #{hLocateY}, h_hashtag = #{hHashtag}, h_updatedate = DEFAULT
 		where h_id = #{hId}
 	</update>
+	
+	<delete id="delete">
+		delete from homegym_board where h_id = #{hId}
+	</delete>
 </mapper>

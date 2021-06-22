@@ -72,7 +72,7 @@
 							</form>
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -108,7 +108,12 @@
                  	   </div>
                     <!-- End Google-map Area -->
                 </div>
-            </div>
+               	<div class="write" style="text-align: center;">
+               		<button  class="btn btn-primary" type="button" 
+               		onclick="location.href='/homegym/registerView.do'">
+               		내 홈짐도 등록해볼까요? 글쓰러 가기!!</button>
+               	</div> 
+         	  </div>
             <!-- End Event Details Content -->
             <!-- Start Event Details Sidebar -->
             <div class="col-lg-4 col-12">
@@ -126,7 +131,7 @@
                                 </div>
                                 <div class="info">
                                     <span class="date"><i class="lni lni-apartment"></i>${board.memberId }님의 홈짐</span>
-                                    <h6 class="title"><a href='<c:out value="hg_details.do?hId=${board.HId}"/>'>${board.HTitle}</a></h6>
+                                    <h6 class="title"><a href='<c:out value="homegymDetailView.do?hId=${board.HId}"/>'>${board.HTitle}</a></h6>
                                     <span style="font-size: 11px; padding-top: 20px">${board.HAddr}</span>
                                 </div>
                             </li>
@@ -255,23 +260,33 @@
 	 	var positions = [
 		    {
 		        title: '<c:out value="${list[0]['HTitle']}"/>', 
+		        content: '<div><c:out value="${list[0]['HTitle']}"/></div>',
 		        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['HLocateY']}"/>',
-		        		'<c:out value="${list[0]['HLocateX']}"/>')
+		        		'<c:out value="${list[0]['HLocateX']}"/>'),
+		        no: <c:out value="${list[0]['HId']}"/>
 		    },
 		    {
 		    	title: '<c:out value="${list[1]['HTitle']}"/>', 
+		        content: '<div><c:out value="${list[1]['HTitle']}"/></div>',
 		        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['HLocateY']}"/>',
-			        		'<c:out value="${list[1]['HLocateX']}"/>')
+			        		'<c:out value="${list[1]['HLocateX']}"/>'),
+	    	    no: <c:out value="${list[1]['HId']}"/>
+
 		    },
 		    {
-	    	    title: '<c:out value="${list[2]['HTitle']}"/>', 
+	    	    title: '<c:out value="${list[2]['HTitle']}"/>',
+		        content: '<div><c:out value="${list[2]['HTitle']}"/></div>',
 		        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['HLocateY']}"/>',
-			        		'<c:out value="${list[2]['HLocateX']}"/>')
+			        		'<c:out value="${list[2]['HLocateX']}"/>'),
+	        	no: <c:out value="${list[2]['HId']}"/>
+
 		    },
 		    {
 	    	    title: '<c:out value="${list[3]['HTitle']}"/>', 
-		         latlng: new kakao.maps.LatLng('<c:out value="${list[3]['HLocateY']}"/>',
-			        		'<c:out value="${list[3]['HLocateX']}"/>')
+		        content: '<div><c:out value="${list[3]['HTitle']}"/></div>',
+		        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['HLocateY']}"/>',
+			        		'<c:out value="${list[3]['HLocateX']}"/>'),
+		      	no: <c:out value="${list[3]['HId']}"/>
 		    }
 		];
 		
@@ -281,12 +296,12 @@
 		</c:forEach> */
 		
 		// 마커 이미지의 이미지 주소입니다
-		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		var imageSrc = "../assets/images/logo/logo.png"; 
 		    
 		for (var i = 0; i < positions.length; i ++) {
 		    
 		    // 마커 이미지의 이미지 크기 입니다
-		    var imageSize = new kakao.maps.Size(24, 35); 
+		    var imageSize = new kakao.maps.Size(45, 60); 
 		    
 		    // 마커 이미지를 생성합니다    
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
@@ -298,8 +313,38 @@
 		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
+		    
+		    // 마커에 표시할 인포윈도우를 생성합니다 
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content: positions[i].content // 인포윈도우에 표시할 내용		        
+		    });
+		    
+		    var index = positions[i].no;
+		    
+		    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+		    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+		    kakao.maps.event.addListener(marker, 'click', clickListener(index));
+			}
+		
+		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+		function makeOverListener(map, marker, infowindow) {
+		    return function() {
+		        infowindow.open(map, marker);
+		    };
+		}
+
+		// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+		function makeOutListener(infowindow) {
+		    return function() {
+		        infowindow.close();
+		    };
 		}
     	
+		function clickListener(index) {
+		    return function() {
+		    	location.href="/homegym/homegymDetailView.do?hId=" + index
+		 	};
+		}
     </script>
 </body>
 

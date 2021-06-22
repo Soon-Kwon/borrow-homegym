@@ -9,9 +9,12 @@
 	<typeAliases>
 		<typeAlias alias="homegymVO"
 			type="com.homegym.biz.homegym.HomegymVO" />
+		<typeAlias alias="attachVO"
+			type="com.homegym.biz.homegym.HomegymAttachVO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="com/homegym/mapper/HomegymBoardMapper.xml"/>
+		<mapper resource="com/homegym/mapper/HomegymAttachMapper.xml"/>
 	</mappers>
 </configuration>
