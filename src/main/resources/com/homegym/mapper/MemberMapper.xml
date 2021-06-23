@@ -16,25 +16,26 @@
 		WHERE memberId= #{memberId}
 	</select>
 	
+
 	<!-- 회원정보 수정 처리 -->
 	<update id="memberUpdate" parameterType="member">
 		UPDATE member
 		SET
 		<choose> 
 			<!-- 새로운 비밀번호가 입력되었을때 -->
-	    	<when test="newPassword != null  || newPassword != ''">
-	     		password = ${rePassword},
+	    	<when test="newPassword != null  and newPassword != ''">
+	     		password = #{newPassword},
 	    	</when>
 	   		 <otherwise>
 	     		password = #{password},
 	    	</otherwise>
 	  	</choose>
   			 nickName = #{nickName},
+			 zipCode = #{zipCode},
 			 phone = #{phone},
-			 zip_code = #{zip_code},
 			 address = #{address}
 			WHERE
-				memberId = #{memberId} 
+				memberId = #{memberId}
 	</update>
 	
 	<!-- 회원 탈퇴  처리-->
@@ -79,4 +80,32 @@
 			tRegDate 
 	</select>
 	
+	
+	<!-- 내가 빌려준 홈짐 -->
+	<select id="getMyLendHomegym" resultType="homegym" parameterType="String">
+		SELECT * 
+		FROM homegym_board
+		WHERE memberId= #{memberId}
+		AND status = 'ready'
+	</select>
+	
+	<!-- 수락 수락/거절 변경 -->
+	<update id="HomegymAcceptUpdate" parameterType="homegym">
+		UPDATE homegym_board
+		SET
+		<choose> 
+			<!-- -->
+	    	<when test='status== "Y"'>
+	     		acceptYN = 'Y',
+	    	</when>
+	   		 <otherwise>
+	     		acceptYN = 'N',
+	    	</otherwise>
+	  	</choose>
+
+			WHERE
+				memberId = #{memberId}
+	</update>
+	
+
 </mapper>

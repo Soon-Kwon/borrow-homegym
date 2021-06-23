@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 
@@ -63,4 +64,16 @@ public class MemberDAO {
 		return sqlsession.selectOne("MemberDAO.writeCnt",memberId);
 	}
 	
+	
+	/*마이페이지 활동 내역*/
+	
+	//내가 빌려준 홈짐
+	public List<HomegymVO> getMyLendHomegym(String memberId){
+		return sqlsession.selectList("MemberDAO.getMyLendHomegym",memberId);
+	}
+	
+	//홈짐 수락 거절 상태 변화
+	public int HomegymAcceptUpdate(String memberId,String status) {
+		return sqlsession.update("MemberDAO.HomegymAcceptUpdate",memberId,status);
+	}
 }

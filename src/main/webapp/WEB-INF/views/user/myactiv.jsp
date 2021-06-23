@@ -38,9 +38,44 @@
             justify-content: space-around;
             flex-grow: 2;
         }
+        .button .btn::before {
+       		background-color: lightsteelblue;
+       		border-radius: 30px;
+       		position: sticky;
+        }
+
     </style>
 </head>
-
+<script>
+	/*버튼 선택시 상태값 변경*/
+	function changeHomegymStatus(object) {
+		// 수락버튼을 눌렀을 때
+		if(object.id == 'acceptBtn') {
+			var data = { 
+				'status' : 'Y'	
+			};
+		} else { //거절 버튼을 눌렀을때
+			var data = {
+				'status' : 'N'	
+			};
+		}
+		
+		$.ajax({
+			type: 'post',
+			url: '/user/acceptCheck.do',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				if(data =='OK') {
+					alert()
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+</script>
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -199,23 +234,111 @@
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
+                                                
+                                                <div class="row">
                                                 <c:choose>
-                                    				<c:when test ="${fn:length(board)==0}">
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
 															<p style="margin:40px; font-weight: bold;">아직 빌려준 홈짐이 없습니다.😥</p></td>
 															<div class="flex-box">
-                                                                  <div class="button accept-btn">
-                                                                      <a href="blog-single-sidebar.html" class="btn">빌려주러 가기</a>
+                                                                  <div class="button accept-btn" >
+                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌려주러 가기</a>
                                                                    </div>
                                                             </div>
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    					<c:forEach var="board" items="${board}" varStatus="status">
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
+                                                            <div class="image">
+                                                                <a href="blog-single-sidebar.html"><img class="thumb"
+                                                                        src="https://via.placeholder.com/1050x700"
+                                                                        alt="#"></a>
+                                                            </div>
+                                                            <div class="content-body">
+                                                                <div class="meta-data">
+                                                                    <ul>
+                                                                        <li><i class="lni lni-tag"></i>
+                                                                            ${homegym.HTitle}
+                                                                        </li>
+                                                                        <li>
+                                                                            <!-- <i class="lni lni-tag"></i> -->
+                                                                            ${homegym.HAddr}
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="lni lni-calendar"></i>
+                                                                            ${homegym.status}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>    
+                                                           
+                                                                <div class="flex-box">
+                                                                    <div class="button accept-btn">
+                                                                        <button class="btn" name="acceptBtn" onclick="changeHomegymStatus(this);">수락하기</button>
+                                                                    </div>
+                                                                    <div class="button deny-btn">
+                                                                        <button class="btn" name="denyBtn" onclick="changeHomegymStatus(this);">거절하기</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+       
+                                           </c:forEach>
+                                          </c:otherwise>
+                                    </c:choose>
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+                                                        <li><a href="javascript:void(0)">Prev</a></li>
+                                                        <li class="active"><a href="javascript:void(0)">1</a></li>
+                                                        <li><a href="javascript:void(0)">2</a></li>
+                                                        <li><a href="javascript:void(0)">3</a></li>
+                                                        <li><a href="javascript:void(0)">4</a></li>
+                                                        <li><a href="javascript:void(0)">Next</a></li>
+                                                    </ul>
+                                                </div>       
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                               
+                                </section>
+                                <!-- End Blog Singel Area -->
+                            </div>
+                        </div>
+                       <!-- 빌려준 홈짐 끝 & 빌린 홈짐 시작 --> 
+                        
+                        
+                        
+                        <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
+                            <div class="course-curriculum">
+                                <!-- Start Blog Singel Area -->
+                                <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
+                                    <div class="container">
+                                        <!-- <h3 class="comment-title">Reviews</h3> -->
+                                        <div class="row">
+                                        	<div class="col-lg-12 col-md-12 col-12">
+                                                
                                                 <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+	                                    				<div style="font-size: 20px; text-align:center;">
+															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p></td>
+															<div class="flex-box">
+                                                                  <div class="button accept-btn">
+                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌리러 가기</a>
+                                                                   </div>
+                                                            </div>
+														</div>
+                                    				</c:when>
+                                    			<c:otherwise>
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
@@ -229,112 +352,22 @@
                                                                     <ul>
                                                                         <li>
                                                                             <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스</a>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-
-                                                                    <div class="button accept-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">수락하기</a>
-                                                                    </div>
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">거절하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Single News -->
-                                                    </div>
-                                           </c:forEach>
-                                          </c:otherwise>
-                                    </c:choose>
-                                                    
-                                                <!-- Pagination -->
-                                                <div class="pagination center">
-                                                    <ul class="pagination-list">
-                                                        <li><a href="javascript:void(0)">Prev</a></li>
-                                                        <li class="active"><a href="javascript:void(0)">1</a></li>
-                                                        <li><a href="javascript:void(0)">2</a></li>
-                                                        <li><a href="javascript:void(0)">3</a></li>
-                                                        <li><a href="javascript:void(0)">4</a></li>
-                                                        <li><a href="javascript:void(0)">Next</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </section>
-                                <!-- End Blog Singel Area -->
-                            </div>
-                        </div>
-                       
-                       <!-- 빌려준 홈짐 끝 & 빌린 홈짐 시작 --> 
-                        
-                        
-                        
-                        <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-                            <div class="course-curriculum">
-                                <!-- Start Blog Singel Area -->
-                                <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
-                                    <div class="container">
-                                        <!-- <h3 class="comment-title">Reviews</h3> -->
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
-                                                 <c:choose>
-                                    				<c:when test ="${fn:length(board)==0}">
-	                                    				<div style="font-size: 20px; text-align:center;">
-															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p></td>
-															<div class="flex-box">
-                                                                  <div class="button accept-btn">
-                                                                      <a href="blog-single-sidebar.html" class="btn">빌리러 가기</a>
-                                                                   </div>
-                                                            </div>
-														</div>
-                                    				</c:when>
-                                    			<c:otherwise>
-                                    					<c:forEach var="board" items="${board}" varStatus="status">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 빌린홈짐 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스1212</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                 <div class="flex-box">
-
                                                                     <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">결제하기</a>
                                                                     
@@ -349,14 +382,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 빌린홈짐 1  -->
-                                                    </div>
-                                                  </c:forEach>
+        
+                                           </c:forEach>
                                           </c:otherwise>
                                     </c:choose>
-                                                 
-                                                  
-                                                <!-- Pagination -->
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -366,47 +396,44 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
-                                
                             </div>
                         </div>
+                       
 
                         <!-- 빌린 홈짐 끝 & 진행 중 홈짐 시작 -->
                         
                         
                         <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                             <div class="course-instructor">
-                                <!-- Start Blog Singel Area -->
+     <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
-                                                  <c:choose>
-                                    				<c:when test ="${fn:length(board)==0}">
+                                        	<div class="col-lg-12 col-md-12 col-12">
+                                                
+                                                <div class="row">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
 															<p style="margin:40px; font-weight: bold;">아직 진행중인 홈짐이 없습니다.😥</p></td>
-															<div class="flex-box">
-                                                                  <div class="button accept-btn">
-                                                                      <a href="blog-single-sidebar.html" class="btn">빌려주러 가기</a>
-                                                                   </div>
-                                                            </div>
+															
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    			<c:forEach var="board" items="${board}" varStatus="status">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 진행중인 홈짐 1 -->
-                                                        <div class="single-news custom-hover">
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
                                                             <div class="image">
                                                                 <a href="blog-single-sidebar.html"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
@@ -415,35 +442,35 @@
                                                             <div class="content-body">
                                                                 <div class="meta-data">
                                                                     <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스0000</a>
+                                                                        <li><i class="lni lni-tag"></i>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-                                                                    <div class="button deny-btn">
+                                                                    <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">취소하기</a>
+                                                                    
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 진행중인 홈짐 1 끝 -->
-                                                    </div>
-                                                 </c:forEach>
+        
+                                           </c:forEach>
                                           </c:otherwise>
                                     </c:choose>
-                                                  
-                                                <!-- Pagination -->
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -453,12 +480,12 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>
@@ -469,25 +496,27 @@
                         
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="course-reviews">
+                                <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
+                                                
+                                                <div class="row">
                                                 <c:choose>
-                                    				<c:when test ="${fn:length(board)==0}">
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
-															<p style="margin:40px; font-weight: bold;">아직 완료된 홈짐이 업습니다.😥</p></td>
+															<p style="margin:40px; font-weight: bold;">아직 완료된 홈짐이 없습니다.😥</p></td>
 															
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    			<c:forEach var="board" items="${board}" varStatus="status">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 완료된 홈짐 1 -->
-                                                        <div class="single-news custom-hover">
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
                                                             <div class="image">
                                                                 <a href="blog-single-sidebar.html"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
@@ -498,35 +527,41 @@
                                                                     <ul>
                                                                         <li>
                                                                             <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">석하우스</a>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 완료</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
-                                                                 <div class="flex-box">
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
+                                                                <div class="flex-box">
                                                                     <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">리뷰쓰기</a>
+                                                                    
                                                                     </div>
+                                                                    <!--  <div class="button accept-btn">
+                                                                        <a href="blog-single-sidebar.html" class="btn">수락대기중</a>
+                                                                    
+                                                                    </div>--> 
                                                                     <div class="button deny-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">상세보기</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    </c:forEach>
+        
+                                           </c:forEach>
                                           </c:otherwise>
                                     </c:choose>
-                                                   
-                                                <!-- Pagination -->
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -536,12 +571,12 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>

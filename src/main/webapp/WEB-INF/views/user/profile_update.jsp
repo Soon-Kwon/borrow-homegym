@@ -154,7 +154,7 @@ function updateInfo() {
 				rePassword : $('input[name=rePassword]').val(),
 				nickName : $('input[name=nickName]').val(),
 				phone : $('input[name=phone]').val(),
-				zip_code : $('input[name=zip_code]').val(),
+				zipCode : $('input[name=zipCode]').val(),
 				address : $('input[name=address]').val()
 		}
 	
@@ -237,7 +237,7 @@ function execPostCode() {
                 console.log(fullRoadAddr);
                 
                 
-                $("[name=zip_code]").val(data.zonecode);
+                $("[name=zipCode]").val(data.zonecode);
                 $("[name=address]").val(fullRoadAddr);
                 
             	
@@ -504,7 +504,7 @@ function execPostCode() {
                                                 
                                                 <div class="form-group">  
                                                 <h6>주소</h6>                 
-													<input class="form-control" style="width: 30%; display: inline;  margin-bottom: 5px;" name="zip_code" value="${member.zip_code}" type="text" readonly="readonly" >
+													<input class="form-control" style="width: 30%; display: inline;  margin-bottom: 5px;" name="zipCode" value="${member.zipCode}" type="text" readonly="readonly" >
 													    <button type="button" id="zip_codeBtn" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
 													</div>
 													<div class="form-group">

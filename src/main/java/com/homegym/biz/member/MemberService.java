@@ -2,6 +2,7 @@ package com.homegym.biz.member;
 
 import java.util.List;
 
+import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 
 public interface MemberService {
@@ -26,4 +27,10 @@ public interface MemberService {
 	
 	//내가 쓴 글 갯수 조회
 	public int getMyAllBoardCnt(String memberId);
+	
+	//내가 빌려준 홈짐 조회
+	public List<HomegymVO> getMyLendHomegym(String memberId);
+	
+	//홈짐 수락 거절 변경
+	public int HomegymAcceptUpdate(String memberId,String status);
 }

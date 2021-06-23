@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
@@ -49,6 +50,7 @@ public class MemberServiceImpl implements MemberService{
 	// 회원 정보 수정 처리
 	@Override
 	public int memberUpdate(MemberVO vo) {
+		System.out.println("패스워드 확인==========================>"+vo.getPassword());
 		return memberDAO.memberUpdate(vo);
 		
 	}
@@ -69,6 +71,17 @@ public class MemberServiceImpl implements MemberService{
 	
 	/* 내 홈짐 활동 내역 */
 	
+	//내가 빌려준 홈짐 조회
+	@Override
+	public List<HomegymVO> getMyLendHomegym(String memberId) {
+		return memberDAO.getMyLendHomegym(memberId);
+	}
+	
+	@Override
+	public int HomegymAcceptUpdate(String memberId,String status) {
+		return memberDAO.HomegymAcceptUpdate(memberId,status);
+	}
+
 	
 	
 	/*  내 게시글 , 댓글, 리뷰 내역  */
@@ -77,6 +90,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<TrainerBoardVO> getMyBoardList(String memberId) {
 		return memberDAO.getMyBoardList(memberId);
 	}
+
+
+
 
 
 

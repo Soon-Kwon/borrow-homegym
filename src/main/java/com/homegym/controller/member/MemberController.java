@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
@@ -89,10 +89,10 @@ public class MemberController {
 			System.out.println("vo.getPassword" + vo.getPassword());
 			int cnt = memberService.memberUpdate(vo);
 			
-			if(cnt==1) { /* 회원 탈퇴 성공시 */
+			if(cnt==1) { /* 회원 수정 성공시 */
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "회원 정보가 수정되었습니다.");
-			}else { /*회원탈퇴 실패시 */
+			}else { /*회원수정 실패시 */
 				map.put("resultCode", "fail");
 				map.put("resultMessage", "회원수정 실패! 재시도해주세요.");
 			}
@@ -138,10 +138,45 @@ public class MemberController {
 
 	/* 마이페이지 홈짐 활동내역  이동 */
 	@GetMapping("/myactiv")
-	public String myactiv() {
+	public String myactiv(HttpServletRequest request, HttpSession session, Model model) {
+		String memberId = request.getParameter("memberId");
+		session.setAttribute("memberId", memberId);
+		
+		// 빌려준 홈짐
+		List<HomegymVO> homegymVO = memberService.getMyLendHomegym(memberId);
+		model.addAttribute("lendHomegym", homegymVO);
+		
+		System.out.println("lenfHomegym ::::::" + homegymVO);
+		// 빌린 홈짐
+		
+		//진행중인 홈짐
+		
+		//완료된 홈짐
 		
 		return "user/myactiv";
 	}
+	
+	/* 수락 거절 상태값 변화 */
+	@ResponseBody
+	@PostMapping("/acceptCheck")
+	public String acceptCheck(@RequestParam Map<String, String> paramMap,HttpServletRequest request, HttpSession session, Model model) {
+		String status = paramMap.get("status");
+		session.setAttribute("memberId", memberId);
+		
+		List<TrainerBoardVO> trainerBoardVO = memberService.HomegymAcceptUpdate(status);
+		System.out.println("boardlist" + trainerBoardVO);
+		model.addAttribute("board",trainerBoardVO);
+		
+		
+		
+
+		return map;
+		
+		
+		
+		return "user/mywrite";
+	}
+	
 	
 	/* 마이페이지 내 글 관리 페이지  이동 */
 	@GetMapping("/mywrite")
