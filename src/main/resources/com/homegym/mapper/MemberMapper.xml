@@ -29,8 +29,19 @@
 	Select mem.m_id, mem.memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled, auth FROM member mem LEFT OUTER JOIN member_auth auth on mem.memberId = auth.memberId WHERE mem.memberId= #{memberId};
 	</select>
 	
-	<!-- 회원가입 -->
-	<insert id="register">
-	insert into member(m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled) values (#{mId}, #{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{image}, #{birth}, #{gender}, #{enabled});
+	<!-- 회원가입 쿼리 -->
+	<insert id="memberJoin">
+	insert into member(memberId, password, name, nickname, phone, zip_code, address, birth, gender) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender});
     </insert>
+    
+    <!-- 회원가입 AUTH  -->
+    <insert id="insertMemberAuth">
+    insert into member_auth(memberId, auth) values (#{memberId}, "ROLE_MEMBER");
+    </insert>
+    
+    <!-- 아이디 중복 체크 -->
+	<!-- <select id="idChk" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBERID = #{memberId};
+	</select> -->
 </mapper>

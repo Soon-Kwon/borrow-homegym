@@ -129,12 +129,12 @@
 						<form action="/login" method="post">
 							<div class="form-group">
 								<label>아이디</label> <input type="text" name="memberId" class="margin-5px-bottom" 
-									id="exampleInputEmail1" placeholder="아이디" width="" value="admin"><!-- type="email" -->
+									id="memberId" placeholder="아이디" width="" value="admin"><!-- type="email" -->
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label> <input class="margin-5px-bottom"
-									type="password" name="password" id="exampleInputPassword1"
-									placeholder="Password" value="admin">
+									type="password" name="password" id="password"
+									placeholder="패스워드" value="admin">
 							</div>
 							<div class="check-and-pass">
 								<div class="row align-items-center">

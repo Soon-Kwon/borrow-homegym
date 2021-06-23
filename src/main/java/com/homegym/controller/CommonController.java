@@ -35,7 +35,7 @@ public class CommonController {
 	
 	@GetMapping("/user/registration")
 	public void registrationInput() {
-		log.info("restraition");
+		log.info("registration");
 	}
 	
 	@GetMapping("/customLogout")

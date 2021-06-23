@@ -28,6 +28,11 @@
     <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="stylesheet" href="/assets/css/board/board.css">
     <link rel="stylesheet" href="/assets/css/seok.css">
+    
+    <script
+  	src="https://code.jquery.com/jquery-3.4.1.js"
+  	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  	crossorigin="anonymous"></script>
    
 </head>
 
@@ -101,55 +106,53 @@
                 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
                     <div class="form-head">
                         <h4 class="title">회원 가입</h4>
-                        <form method="post">
+                        <form id="join_form" method="post" action="/member/join">
                             <div class="form-group">
                               <div class="form-group">
                                 <label>이름</label>
-                                <input class="margin-5px-bottom" type="text" id="mId" name="mId" id="exampleInputtext"  placeholder="이름" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="name" name="name" placeholder="이름" button style="width:80%">
                                 </div>
                                 <label>아이디</label>
                                 <input class="margin-5px-bottom" type="text" id="memberId" name="memberId" placeholder="아이디" button style="width:80%">
-                                <button type="check" class="btnjo">중복 확인</button>
+                                <button type="button" id="idChk" class="btnjo">중복 확인</button>
                             </div>
                             <div class="form-group">
                                 <label>닉네임</label>
-                                <input class="margin-5px-bottom" type="text" id="Username1" placeholder="닉네임" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="nickname" name="nickname" placeholder="닉네임" button style="width:80%">
                                 <button type="check" class="btnjo" >중복 확인</button>
                             </div>
                             <div class="form-group">
                                 <label>비밀번호</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="비밀번호" button style="width:80%">
-                            </div>
-                            <div class="form-group">
-                                <label>이메일</label>
-                                <input class="margin-5px-bottom" type="email" id="exampleInputEmail1"  placeholder="이메일" button style="width:80%"> 
+                                <input class="margin-5px-bottom" type="password" id="password" name="password" placeholder="비밀번호" button style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>전화번호</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="'-' 빼고 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="phone" name="phone" placeholder="'-' 빼고 입력해주세요" button style="width:80%">
                             </div>
                           
-                            
                             <div class="form-group">
                                 <label>생년월일</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="생년월일 6자리" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리" button style="width:80%">
+                            </div>
+                            <div class="form-group">
+                                <label>우편번호</label>
+                                <input class="margin-5px-bottom" type="text" id="zipCode" name="zipCode" placeholder="주소를 입력해주세요" button style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>주소</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="주소를 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="address" name="address" placeholder="주소를 입력해주세요" button style="width:80%">
                             </div>
                             
                             <div class="gender">
                                 <label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" name="color" value="남성" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" name="color" value="여성" > 여성</label>
-                               
+                                <label><input type="checkbox" id="gender" name="gender" value="남성" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label><input type="checkbox" id="gender" name="gender" value="여성" > 여성</label>
                             </div>
 
                             <div class="button">
-                                <button type="submit" class="btn">회원가입</button>
+                                <button type="submit" class="btn" id="join_button">회원가입</button>
                             </div>
-                            <p class="outer-link">아이디가 있으신가요?&nbsp;&nbsp; <a href="login.html">로그인</a></p>
+                            <p class="outer-link">아이디가 있으신가요?&nbsp;&nbsp; <a href="/user/login">로그인</a></p>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
                     </div>
@@ -204,6 +207,17 @@
     <script src="../assets/js/glightbox.min.js"></script>
     <script src="../assets/js/main.js"></script>
     <script type="text/javascript"></script>
+    
+    <script>
+    /* $(document).ready(function(){
+    	//회원가입 버튼(회원가입 기능 작동)
+    	$("#join_button").click(function(){
+    		$("#join_form").attr("action", "/member/join");
+    		$("#join_form").submit();
+    	});
+    }); */
+    </script>
+
 </body>
 
 </html>

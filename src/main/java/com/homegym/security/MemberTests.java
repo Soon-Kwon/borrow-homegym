@@ -33,7 +33,7 @@ public class MemberTests {
 	public void testInsertMember() {
 		String sql = "insert into member(m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		
-		for(int i=1; i <= 100; i++) {
+		for(int i=1; i <= 10; i++) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -43,7 +43,7 @@ public class MemberTests {
 				
 				pstmt.setString(3, pwencoder.encode("pw"+i));
 				
-				if (i<80) {
+				if (i<8) {
 					pstmt.setInt(1, i);
 					pstmt.setString(2, "member"+i);
 					pstmt.setString(4, "회원"+i);
@@ -54,7 +54,7 @@ public class MemberTests {
 					pstmt.setString(9, null);
 					pstmt.setString(10, "2020-"+i);
 					pstmt.setString(11, "성별");
-					pstmt.setString(12, "1");
+					pstmt.setString(12, null);
 				} else {
 					pstmt.setInt(1, i);
 					pstmt.setString(2, "admin"+i);
@@ -66,7 +66,7 @@ public class MemberTests {
 					pstmt.setString(9, null);
 					pstmt.setString(10, "2020-"+i);
 					pstmt.setString(11, "성별");
-					pstmt.setString(12, "1");
+					pstmt.setString(12, null);
 				}
 				
 				pstmt.executeUpdate();
@@ -83,7 +83,7 @@ public class MemberTests {
 		public void testInsertAuth() {
 			String sql = "insert into member_auth(m_id, memberId, auth) values (?,?,?)";
 			
-			for(int i=1; i <= 100; i++) {
+			for(int i=1; i <= 10; i++) {
 				Connection con = null;
 				PreparedStatement pstmt = null;
 				
@@ -91,7 +91,7 @@ public class MemberTests {
 					con = ds.getConnection();
 					pstmt = con.prepareStatement(sql);
 					
-					if (i<80) {
+					if (i<8) {
 						pstmt.setInt(1, i);
 						pstmt.setString(2, "member"+i);
 						pstmt.setString(3, "ROLE_MEMBER");

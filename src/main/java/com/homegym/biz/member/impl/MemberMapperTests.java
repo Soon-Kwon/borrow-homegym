@@ -19,12 +19,32 @@ public class MemberMapperTests {
 	@Setter (onMethod_ = @Autowired)
 	private MemberDAO memberDAO;
 	
+//	@Test
+//	public void testRead() {
+//		MemberVO vo = memberDAO.read("admin90");
+//		log.info(vo);
+//		
+//		vo.getAuthList().forEach(authVO -> log.info(authVO));
+//	}
+	
+	// 회원 가입 테스트 메서드
 	@Test
-	public void testRead() {
-		MemberVO vo = memberDAO.read("admin90");
-		log.info(vo);
+	public void memberJoin() throws Exception {
+		MemberVO vo = new MemberVO();
 		
-		vo.getAuthList().forEach(authVO -> log.info(authVO));
+//		vo.setMId(0);
+		vo.setMemberId("test");
+		vo.setPassword("test");
+		vo.setName("test");
+		vo.setNickname("test");
+		vo.setPhone("test");
+		vo.setZipCode("test");
+		vo.setAddress("test");
+//		vo.setImage(null);
+		vo.setBirth("test");
+		vo.setGender("1");
+//		vo.setEnabled(null);
+		
+		memberDAO.memberJoin(vo);
 	}
-
 }
