@@ -13,6 +13,7 @@
 		<typeAlias alias="trainer" type="com.homegym.biz.trainerboard.TrainerBoardVO" />
 		<typeAlias alias="homegymVO" type="com.homegym.biz.homegym.HomegymVO"/>
 		<typeAlias alias="attachVO" type="com.homegym.biz.homegym.HomegymAttachVO"/>
+		<typeAlias alias="message" type="com.homegym.biz.message.MessageVO" />
 	</typeAliases>
 
 	<!-- Sql Mapper 설정 -->
@@ -20,6 +21,7 @@
 		<mapper resource="com/homegym/mapper/HomegymBoardMapper.xml"/>
 		<mapper resource="com/homegym/mapper/HomegymAttachMapper.xml"/>
 		<mapper resource="com/homegym/mapper/MemberMapper.xml"/>
+		<mapper resource="com/homegym/mapper/MessageMapper.xml" />
 	</mappers>
 	
 </configuration>

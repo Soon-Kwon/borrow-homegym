@@ -191,54 +191,6 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
-                        <!-- <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    문의사항
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">수락 후에 알림이 따로 오나요?</div>
-                                        <div class="small text-gray-500">IU2021</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">트레이너로 등록 시, 공인 자격증만 업로드해야 하나요?</div>
-                                        <div class="small text-gray-500">YK2021</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">실수로 거절눌렀는데, 다시 승인할 방법은 없나요?</div>
-                                        <div class="small text-gray-500">WK2021</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">더보기</a>
-                            </div>
-                        </li> -->
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -355,7 +307,7 @@
                                             <td>IU2021</td>
                                             <!-- <td>아이유</td> -->
                                             <td>2021.06.01</td>
-                                            <td>안읽음</td>
+                                            <td>답변완료</td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
@@ -363,7 +315,7 @@
                                             <td>BB2021</td>
                                             <!-- <td>변요한</td> -->
                                             <td>2021.05.26</td>
-                                            <td>읽음</td>
+                                            <td>답변완료</td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -371,7 +323,11 @@
                                             <td>TR2021</td>
                                             <!-- <td>김태리</td> -->
                                             <td>2021.05.26</td>
-                                            <td>읽음</td>
+                                            <td>
+                                            	<button type="button" class="btn btn-outline-primary">
+                                            		<a href="#" data-toggle="modal" data-target="#replyModal">답변하기</a>
+                                            	</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>1</td>
@@ -379,7 +335,9 @@
                                             <td>WK2021</td>
                                             <!-- <td>운동좋아</td> -->
                                             <td>2021.05.26</td>
-                                            <td>읽음</td>
+                                            <td><button type="button" class="btn btn-outline-primary">
+                                            		<a href="#" data-toggle="modal" data-target="#replyModal">답변하기</a>
+                                            	</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -416,6 +374,26 @@
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">로그아웃버튼을 누르면 로그아웃됩니다.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                    <a class="btn btn-primary" href="adLogout.do">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- REPLY Modal-->
+    <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

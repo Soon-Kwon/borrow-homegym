@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 해당 Mapper를 MessageDAO로 쓰겠다. 이걸 serviceImpl에서 사용하면 됨-->
+<mapper namespace ="MessageDAO">
+
+	<!-- <select id="getList" resultType="com.homegym.biz.message.MessageVO" >
+		<![CDATA[
+			select * from message where msg_no > 0
+		]]>
+	</select> -->
+	
+	<!-- <insert id="insertMessage">
+		<selectKey keyProperty="msg_no" order="BEFORE" resultType="long">
+			select *from (select max(msg_no)+1 from message) next
+		</selectKey>
+		insert into message(msg_no,msg_room_no, to_id, from_id, msg_content,msg_chk)
+		values (#{msg_no}, #{msg_room_no}, #{to_id}, #{from_id}, #{msg_content}, #{msg_chk})
+	</insert> -->
+	<!-- <insert id="insertMessage">
+		insert into message(msgRoomNo, toId, fromId, msgContent,msgChk)
+		values (#{msgRoomNo}, #{toId}, #{fromId}, #{msgContent}, #{msgChk})
+	</insert>
+	
+	<insert id="insertSelectKey">
+	
+	</insert> -->
+	
+	<!-- 특정 memberId에 따라서 채팅내용 가져오기
+	public ArrayList<MessageVO> getChatListByID(String fromId, String toId, String msgNo) 
+	<select id="getChatListById" resultType="com.homegym.biz.message.MessageVO">
+		select * from message 
+		where ((fromId = #{fromId} and toId =  #{toId}) or (fromId =  #{toId} and toId = #{fromId}))
+		and msgNo > 0
+		order by #{msgSendDate}
+	</select>
+	-->
+	
+	<!--  
+	<select id="getChatListByRecent">
+		select * from message 
+		where ((fromId = #{fromId} and toId =  #{toId}) or (fromId =  #{toId} and toId = #{fromId}))
+		and msgNo > (select max(msgNo) - from message)
+		order by #{msgSendDate}
+	</select>
+	-->
+	
+	<!-- <insert id="submit">
+		insert into message 
+		values #{fromId}
+	</insert> -->
+	
+	<!-- 메세지 리스트 가져오기 -->
+	<select id="getMsgList" resultType="message">
+		SELECT * msgNo, msgRoomNo, toId, fromId, msgContent, date_format(msgSendDate, '%Y-%m-%d %H:%i') msgSendTime, msgReadTime, msgChk
+		FROM MESSAGE
+		WHERE msgNo IN
+	</select>
+	
+	<!-- 메세지 list에서 상대방 profile 가져오기 -->
+	
+	
+</mapper> 

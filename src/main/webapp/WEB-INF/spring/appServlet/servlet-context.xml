@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -31,5 +33,23 @@
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
+	
+	<!-- websocket-handler등록, 클라이언트 관리위함 -->
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping handler="webSocketHandler"
+			path="/msg.do" />
+		<!-- WebSocket Handshake : 웹소켓 핸들러 클래스(echoHandler)가 호출되기전에 HttpSession에 
+			접속하여 -->
+		<!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정, 알림 설정 위함(websocket-api) -->
+		<websocket:handshake-interceptors>
+			<beans:bean
+				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<!-- <websocket:sockjs /> -->
+	</websocket:handlers>
+
+	<!-- 이 속성을 이용해 핸들러로 처리할 클래스 참조 -->
+	<beans:bean id="webSocketHandler"
+		class="com.homegym.biz.common.WebSocketHandler"></beans:bean>
 	
 </beans:beans>
