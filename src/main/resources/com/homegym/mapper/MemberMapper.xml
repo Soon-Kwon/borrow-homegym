@@ -86,7 +86,7 @@
 	
 	
 	<!-- 내가 빌려준 홈짐 리스트-->
-	<select id="getMyLendHomegym" resultType="homegym" parameterType="String">
+	<select id="getMyLendHomegym" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board 
 		WHERE memberId = #{memberId}
@@ -95,7 +95,7 @@
 	</select>
 	
 	<!-- 내가 빌린 홈짐 리스트-->
-	<select id="getMyRentHomegym" resultType="homegym" parameterType="String">
+	<select id="getMyRentHomegym" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id

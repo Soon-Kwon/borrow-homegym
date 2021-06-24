@@ -346,7 +346,7 @@
 		</c:forEach> */
 		
 		// 마커 이미지의 이미지 주소입니다
-		var imageSrc = "../assets/images/logo/logo.png"; 
+		var imageSrc = "/resources/assets/images/logo/logo.png"; 
 		    
 		for (var i = 0; i < positions.length; i ++) {
 		    
