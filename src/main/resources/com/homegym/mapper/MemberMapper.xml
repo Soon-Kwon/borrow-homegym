@@ -39,9 +39,114 @@
     insert into member_auth(memberId, auth) values (#{memberId}, "ROLE_MEMBER");
     </insert>
     
-    <!-- 아이디 중복 체크 -->
-	<!-- <select id="idChk" resultType="int">
-		SELECT COUNT(*) FROM MEMBER
-		WHERE MEMBERID = #{memberId};
-	</select> -->
+
+	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
+	<select id="getInfo" resultType="member" parameterType="String">
+		SELECT * 
+		FROM member
+		WHERE memberId= #{memberId}
+	</select>
+	
+	<!-- 마이페이지 회원정보 수정 페이지 -->
+	<select id="getMyPageInfo" resultType="member" parameterType="String">
+		SELECT * 
+		FROM member
+		WHERE memberId= #{memberId}
+	</select>
+	
+
+	<!-- 회원정보 수정 처리 -->
+	<update id="memberUpdate" parameterType="member">
+		UPDATE member
+		SET
+		<choose> 
+			<!-- 새로운 비밀번호가 입력되었을때 -->
+	    	<when test="newPassword != null  and newPassword != ''">
+	     		password = #{newPassword},
+	    	</when>
+	   		 <otherwise>
+	     		password = #{password},
+	    	</otherwise>
+	  	</choose>
+  			 nickName = #{nickName},
+			 zipCode = #{zipCode},
+			 phone = #{phone},
+			 address = #{address}
+			WHERE
+				memberId = #{memberId}
+	</update>
+	
+	<!-- 회원 탈퇴  처리-->
+	<delete id="memberDelete"  parameterType="member">
+		DELETE 
+		FROM member 
+		WHERE
+			memberId = #{memberId} AND password = #{password}
+	</delete>
+	
+	<!-- 마이페이지 비밀번호 체크 -->
+	<select id="checkPw" resultType="int">
+		SELECT 
+			count(*)
+		FROM member
+		WHERE memberId=#{memberId} AND password=#{password}
+	</select>
+	
+	<!-- 내가 빌린 홈짐 갯수 -->
+	
+	<!-- 내가 빌려준 홈짐 갯수 -->
+	<select id="getLendHomeGymCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM homegym_board
+		WHERE memberId=#{memberId}
+	</select>
+	
+	<!-- 내가 쓴 댓글 갯수 -->
+	
+	
+	<!-- 내가 작성한 게시글 갯수 -->
+	<select id="getMyAllBoardCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM trainer_board
+		WHERE memberId=#{memberId} 
+	</select> 
+	
+	<!-- 내가 쓴 게시물 목록  -->
+	<select id="getMyBoardList" resultType="trainer" parameterType="String">
+		SELECT *
+		FROM trainer_board
+		WHERE memberId= #{memberId}
+		ORDER BY
+			tRegDate 
+	</select>
+	
+	
+	<!-- 내가 빌려준 홈짐 리스트-->
+	<select id="getMyLendHomegym" resultType="homegymVO" parameterType="String">
+		SELECT *
+		FROM homegym_board 
+		WHERE memberId = #{memberId}
+			AND status = 'ready';
+
+	</select>
+	
+	<!-- 내가 빌린 홈짐 리스트-->
+	<select id="getMyRentHomegym" resultType="homegymVO" parameterType="String">
+		SELECT *
+		FROM homegym_board b INNER JOIN homegym_detail d
+		ON b.h_id = d.h_id
+		WHERE lend_memberId= #{memberId}
+
+	</select>
+	
+	<update id="HomegymAcceptUpdate" parameterType="hashmap">
+		UPDATE homegym_board
+		SET
+	     acceptYN = #{status}
+		WHERE
+			h_id = #{hId}
+	</update>
+
 </mapper>

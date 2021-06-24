@@ -204,7 +204,7 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.9.6</version>
 		</dependency>    
-		
+
 		<!-- Java 인스턴스를 JSON 타입의 문자열로 변환할 때 사용 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -218,6 +218,13 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.0</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<!-- 이미지 섬네일 -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
 		</dependency>
 	</dependencies>
     <build>

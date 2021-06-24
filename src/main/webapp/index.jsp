@@ -188,7 +188,7 @@
                             <div class="hero-text" >
                                 <h2 class="wow fadeInLeft" data-wow-delay=".3s"><b>딱!맞는<br>
                                                                                 트레이너를 만나세요</b></h2><br>
-                                <h6 class="wow fadeInLeft" data-wow-delay=".5s">조건에 딱 맞는 트레이너를 찾으시나요? 🏋🏻‍♀️</h6>
+                                <h6 class="wow fadeInLeft" data-wow-delay=".5s">조건에 딱 맞는 트레이너를 찾으시나요? 🏋🏻 ♀️</h6>
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
                                     <a href="trainer_board.html" class="btn">찾아보러 가기</a>
                                 </div>

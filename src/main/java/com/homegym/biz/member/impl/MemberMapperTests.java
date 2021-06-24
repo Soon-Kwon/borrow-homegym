@@ -36,7 +36,7 @@ public class MemberMapperTests {
 		vo.setMemberId("test");
 		vo.setPassword("test");
 		vo.setName("test");
-		vo.setNickname("test");
+//		vo.setNickname("test");
 		vo.setPhone("test");
 		vo.setZipCode("test");
 		vo.setAddress("test");
