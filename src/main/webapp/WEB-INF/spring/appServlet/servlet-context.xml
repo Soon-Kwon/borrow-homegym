@@ -16,8 +16,8 @@
 
 		<resources mapping="/resources/**" location="/resources/" /> 
 		
-		<resources mapping="/assets/**" location="/assets/" /> 
-		<resources mapping="/ad_assets/**" location="/ad_assets/" />
+		<resources mapping="/assets/**" location="/resources/assets/" /> 
+		<resources mapping="/ad_assets/**" location="/resources/ad_assets/" />
 
 
 
