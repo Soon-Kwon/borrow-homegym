@@ -45,8 +45,8 @@ public class MemberController {
 		model.addAttribute("rentCnt","100");
 		
 		//빌려준 홈짐 수
-	//	int lendCnt = memberService.getLendHomeGymCnt(memberId);
-		model.addAttribute("lendCnt","200");
+		int lendCnt = memberService.getLendHomeGymCnt(memberId);
+		model.addAttribute("lendCnt",lendCnt);
 		
 		//내가 작성한 게시글 수
 		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
@@ -143,12 +143,15 @@ public class MemberController {
 		session.setAttribute("memberId", memberId);
 		
 		// 빌려준 홈짐
-		List<HomegymVO> homegymVO = memberService.getMyLendHomegym(memberId);
-		model.addAttribute("lendHomegym", homegymVO);
+		List<HomegymVO> lendhomegym = memberService.getMyLendHomegym(memberId);
+		model.addAttribute("lendHomegym", lendhomegym);
+		for(HomegymVO vo : lendhomegym) {
+			System.out.println(vo.toString());
+		}
 		
-		System.out.println("lenfHomegym ::::::" + homegymVO);
 		// 빌린 홈짐
-		
+		List<HomegymVO> rentHomegym = memberService.getMyRentHomegym(memberId);
+		model.addAttribute("rentHomegym", rentHomegym);
 		//진행중인 홈짐
 		
 		//완료된 홈짐
@@ -160,21 +163,19 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/acceptCheck")
 	public String acceptCheck(@RequestParam Map<String, String> paramMap,HttpServletRequest request, HttpSession session, Model model) {
-		String status = paramMap.get("status");
-		session.setAttribute("memberId", memberId);
+		/*Map에 status, ? 로 담겨*/
 		
-		List<TrainerBoardVO> trainerBoardVO = memberService.HomegymAcceptUpdate(status);
-		System.out.println("boardlist" + trainerBoardVO);
-		model.addAttribute("board",trainerBoardVO);
+		Map<String, Object> map = new HashMap<String,Object>();
 		
+		int result = memberService.HomegymAcceptUpdate(paramMap);
 		
-		
-
-		return map;
-		
-		
-		
-		return "user/mywrite";
+		if(result == 1)
+			if(paramMap.get("status").equals("Y"))
+				return "acceptok";
+			else
+				return "rejectok";
+		else
+			return "fail";
 	}
 	
 	

@@ -45,17 +45,22 @@
         }
 
     </style>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 <script>
 	/*버튼 선택시 상태값 변경*/
 	function changeHomegymStatus(object) {
-		// 수락버튼을 눌렀을 때
+		// 수락버튼(id = acceptBtn)을 눌렀을 때
 		if(object.id == 'acceptBtn') {
+			//상태(status ) 가 'Y'값을 가지게 된다.
 			var data = { 
+				'hId'	 : object.value,
 				'status' : 'Y'	
 			};
-		} else { //거절 버튼을 눌렀을때
-			var data = {
+		} else { //id가 acceptBtn이 아닌경우
+			//상태 (status) 가  'N' 값을 가지게 된다.
+			var data = { 
+				'hId'	 : object.value,
 				'status' : 'N'	
 			};
 		}
@@ -63,12 +68,17 @@
 		$.ajax({
 			type: 'post',
 			url: '/user/acceptCheck.do',
-			dataType: 'json',
+			dataType: 'text',
 			data: data,
 			success: function(data) {
-				if(data =='OK') {
-					alert()
+				//성공시에 페이지 리로드 후 
+				//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
+				if(data =='acceptok') {
+					alert("수락되었습니다.");
+				} else {
+					alert("거절되었습니다.");
 				}
+				
 			},
 			error: function(e) {
 				console.log(e);
@@ -279,10 +289,10 @@
                                                            
                                                                 <div class="flex-box">
                                                                     <div class="button accept-btn">
-                                                                        <button class="btn" name="acceptBtn" onclick="changeHomegymStatus(this);">수락하기</button>
+                                                                        <button class="btn" name="acceptBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락하기</button>
                                                                     </div>
                                                                     <div class="button deny-btn">
-                                                                        <button class="btn" name="denyBtn" onclick="changeHomegymStatus(this);">거절하기</button>
+                                                                        <button class="btn" name="denyBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절하기</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -326,9 +336,9 @@
                                                 
                                                 <div class="row">
                                                 <c:choose>
-                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+                                    				<c:when test ="${fn:length(rentHomegym)==0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
-															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p></td>
+															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p>
 															<div class="flex-box">
                                                                   <div class="button accept-btn">
                                                                       <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌리러 가기</a>
@@ -337,7 +347,7 @@
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                    		<c:forEach var="homegym" items="${rentHomegym}" varStatus="status">
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
@@ -360,7 +370,7 @@
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            ${homegym.status}
+                                                                            ${homegym.memberId}
                                                                         </li>
                                                                     </ul>
                                                                 </div>

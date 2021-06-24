@@ -1,6 +1,7 @@
 package com.homegym.biz.member.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,11 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	// 내가 빌려준 홈짐 갯수
-	
+	@Override
+	public int getLendHomeGymCnt(String memberId) {
+		return memberDAO.getLendHomeGymCnt(memberId);
+	}
+
 	
 	// 내가 쓴 게시글 갯수 
 	@Override
@@ -77,9 +82,17 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.getMyLendHomegym(memberId);
 	}
 	
+	//내가 빌린 홈짐 조회
 	@Override
-	public int HomegymAcceptUpdate(String memberId,String status) {
-		return memberDAO.HomegymAcceptUpdate(memberId,status);
+	public List<HomegymVO> getMyRentHomegym(String memberId) {
+		return memberDAO.getMyRentHomegym(memberId);
+	}
+
+	
+	/* 홈짐 수락 여부 변경*/
+	@Override
+	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
+		return memberDAO.HomegymAcceptUpdate(paramMap);
 	}
 
 	

@@ -57,14 +57,18 @@
 	<!-- 내가 빌린 홈짐 갯수 -->
 	
 	<!-- 내가 빌려준 홈짐 갯수 -->
-	
-	<!-- 내가 작성한 게시글 갯수 -->
+	<select id="getLendHomeGymCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM homegym_board
+		WHERE memberId=#{memberId}
+	</select>
 	
 	<!-- 내가 쓴 댓글 갯수 -->
 	
 	
-	<!-- 내가 쓴 글 갯수 아직 구현 전 -->
-	<select id="writeCnt" resultType="int">
+	<!-- 내가 작성한 게시글 갯수 -->
+	<select id="getMyAllBoardCnt" resultType="int">
 		SELECT 
 			count(*)
 		FROM trainer_board
@@ -81,31 +85,30 @@
 	</select>
 	
 	
-	<!-- 내가 빌려준 홈짐 -->
+	<!-- 내가 빌려준 홈짐 리스트-->
 	<select id="getMyLendHomegym" resultType="homegym" parameterType="String">
-		SELECT * 
-		FROM homegym_board
-		WHERE memberId= #{memberId}
-		AND status = 'ready'
+		SELECT *
+		FROM homegym_board 
+		WHERE memberId = #{memberId}
+			AND status = 'ready';
+
 	</select>
 	
-	<!-- 수락 수락/거절 변경 -->
-	<update id="HomegymAcceptUpdate" parameterType="homegym">
+	<!-- 내가 빌린 홈짐 리스트-->
+	<select id="getMyRentHomegym" resultType="homegym" parameterType="String">
+		SELECT *
+		FROM homegym_board b INNER JOIN homegym_detail d
+		ON b.h_id = d.h_id
+		WHERE lend_memberId= #{memberId}
+
+	</select>
+	
+	<update id="HomegymAcceptUpdate" parameterType="hashmap">
 		UPDATE homegym_board
 		SET
-		<choose> 
-			<!-- -->
-	    	<when test='status== "Y"'>
-	     		acceptYN = 'Y',
-	    	</when>
-	   		 <otherwise>
-	     		acceptYN = 'N',
-	    	</otherwise>
-	  	</choose>
-
-			WHERE
-				memberId = #{memberId}
+	     acceptYN = #{status}
+		WHERE
+			h_id = #{hId}
 	</update>
-	
 
 </mapper>

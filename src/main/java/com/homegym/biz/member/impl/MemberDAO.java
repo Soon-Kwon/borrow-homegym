@@ -59,9 +59,15 @@ public class MemberDAO {
 		return sqlsession.selectList("MemberDAO.getMyBoardList",memberId);
 	}
 	
+	//내가 빌려준 홈짐 수
+	public int getLendHomeGymCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt",memberId);
+	}
+	//내가 빌린 홈짐 수
+	
 	//내가 쓴 게시글 갯수 
 	public int getMyAllBoardCnt(String memberId) {
-		return sqlsession.selectOne("MemberDAO.writeCnt",memberId);
+		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt",memberId);
 	}
 	
 	
@@ -72,8 +78,13 @@ public class MemberDAO {
 		return sqlsession.selectList("MemberDAO.getMyLendHomegym",memberId);
 	}
 	
+	//내가 빌린 홈짐
+	public List<HomegymVO> getMyRentHomegym(String memberId){
+		return sqlsession.selectList("MemberDAO.getMyRentHomegym",memberId);
+	}
+	
 	//홈짐 수락 거절 상태 변화
-	public int HomegymAcceptUpdate(String memberId,String status) {
-		return sqlsession.update("MemberDAO.HomegymAcceptUpdate",memberId,status);
+	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
+		return sqlsession.update("MemberDAO.HomegymAcceptUpdate",paramMap);
 	}
 }
