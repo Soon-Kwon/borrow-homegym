@@ -54,7 +54,7 @@ public class MemberTests {
 					pstmt.setString(9, null);
 					pstmt.setString(10, "2020-"+i);
 					pstmt.setString(11, "성별");
-					pstmt.setString(12, null);
+					pstmt.setString(12, "1");
 				} else {
 					pstmt.setInt(1, i);
 					pstmt.setString(2, "admin"+i);
@@ -66,7 +66,7 @@ public class MemberTests {
 					pstmt.setString(9, null);
 					pstmt.setString(10, "2020-"+i);
 					pstmt.setString(11, "성별");
-					pstmt.setString(12, null);
+					pstmt.setString(12, "1");
 				}
 				
 				pstmt.executeUpdate();

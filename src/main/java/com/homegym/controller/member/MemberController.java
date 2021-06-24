@@ -1,4 +1,4 @@
-package com.homegym.controller;
+package com.homegym.controller.member;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +29,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 로그인 이동
 	@GetMapping("/login")
 	public String login() {
 		return "user/login";
@@ -52,21 +53,17 @@ public class MemberController {
 		return "redirect:/index.jsp";
 		}
 	
+	// 회원가입 이동
 	@GetMapping("/registration")
 	public String registration() {
 		return "user/registration";
 	}
 	
+	// 로그아웃 이동
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "login.jsp";
 	}
-	
-//	//회원가입 페이지 이동
-//	@RequestMapping(value="/join", method=RequestMethod.GET)
-//	public void loginGET() {
-//		logger.info("회원가입 페이지 진입");
-//	}
 	
 }
