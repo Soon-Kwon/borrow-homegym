@@ -67,9 +67,9 @@ local.properties
 # Spring Boot Tooling
 .sts4-cache/
 
-### Java ###
-# Compiled class file
-*.class
+# ### Java ###
+# # Compiled class file
+# *.class
 
 # Log file
 *.log
@@ -92,10 +92,10 @@ local.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-### Java-Web ###
-## ignoring target file
-target/
-/target
+# ### Java-Web ###
+# ## ignoring target file
+# target/
+# /target
 
 ### Windows ###
 # Windows thumbnail cache files
