@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%
+ 	String memberId = session.getAttribute("memberId").toString();
+ %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
@@ -10,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
-
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Web Font -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -46,7 +53,47 @@
     </div>
     <!-- /End Preloader -->
 
-   
+    <!-- Start Header Area -->
+    <header class="header style2 navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                <div class="nav-inner">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="main_index.html">
+                            <img src="/assets/images/logo/로고2.png" alt="logo">
+                        </a>
+                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <form class="d-flex search-form">
+                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i
+                                    class="lni lni-search-alt"></i></button>
+                        </form>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ms-auto">
+                                <li class="nav-item" style="margin-right: 100px;"><a href="location.html"><h5>홈짐</h5></a></li>
+                                <li class="nav-item" style="margin-right: 120px;"><a href="community.html"><h5>트레이너</h5></a></li>
+                                <a class="circle-image" href="mypage_main.html">
+                                    <img src="https://via.placeholder.com/300x300" alt="logo">
+                                </a>
+                                <li class="nav-item"><a href="mypage_main.html"><h5>아이유님</h5></a></li>
+                                
+                            </ul>
+                        </div> <!-- navbar collapse -->
+                    </nav> <!-- navbar -->
+                </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </header>
+    <!-- End Header Area -->
 
     <!-- Start Breadcrumbs -->
     <div class="breadcrumbs overlay">
@@ -62,7 +109,8 @@
     </div>
     <!-- End Breadcrumbs -->
 
-        <!-- Course Details Section Start -->
+    <!-- Course Details Section Start -->
+    
     <div class="course-details section">
         <div class="container">
             <div class="row">
@@ -71,23 +119,23 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
+                            <h3 class="sidebar-widget-title">마이페이지</h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="course-details.html">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
                                             <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                                    href="course-details.html">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="course-details.html">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -128,6 +176,8 @@
                                 aria-selected="false">리뷰</button>
                         </li>
                     </ul>
+                    
+                  <!-- 게시글 탭 -->
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="overview" role="tabpanel"
                             aria-labelledby="overview-tab">
@@ -142,37 +192,35 @@
                                             <th>작성일</th>
                                         </tr>
                                         </thead>
-                                        <tr> 
-                                            <td>4</td>
-                                            <td><a href="course-details.html">신논현역 홈짐 대여</a></td>
-                                            <td>김영광</td>
-                                            <td>2021.05.24</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td><a href="course-details.html">전신 스트레칭 끝판왕</a></td>
-                                            <td>선미</td>
-                                            <td>2021.05.23</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><a href="course-details.html">나홀로 즐길 수 있는 홈트레이닝</a></td>
-                                            <td>제이비</td>
-                                            <td>2021.05.22</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><a href="course-details.html">학동역 홈짐 대여</a></td>
-                                            <td>비티에스</td>
-                                            <td>2021.05.21</td>
-                                        </tr>
+                                      <tbody>
+                                    <c:choose>
+                                    	<c:when test ="${fn:length(board)==0}">
+                                    	<div style="font-size: 20px">
+                                    		<tr>
+												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 게시글이 없습니다.😥</p></td>
+											</tr>
+											
+										</div>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<c:forEach var="board" items="${board}" varStatus="status">
+		                                    	<tr>
+		                                            <td>${board.tno}</td>
+		                                            <td><a href="course-details.html">${board.TContent}</a></td>
+		                                            <td>${board.memberId}</td>
+		                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
+		                                        </tr>
+                                    		</c:forEach>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                </tbody>
                                     </table>
                                 </div> 
                                   <!-- <div class="bottom-content"> -->
                                     <div class="row align-items-center">
                                         <div class="col-lg-12 col-md-12 col-12">
                                             <div class="button" style="width: 200px; margin: 20px auto 0 auto; col">
-                                                <a href="#0" class="btn">게시글 쓰러가기</a>
+                                                <a href="" class="btn">게시글 쓰러가기</a>
                                             </div>
                                         </div>
                                     </div>
@@ -192,30 +240,29 @@
                                                     <th>작성일</th>
                                                 </tr>
                                                 </thead>
-                                                <tr> 
-                                                    <td>4</td>
-                                                    <td><a href="course-details.html">혼자 운동하기 딱이예요</a></td>
-                                                    <td>유재석</td>
-                                                    <td>2021.05.24</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td><a href="course-details.html">프로그램 상세 내용 알려주세요!</a></td>
-                                                    <td>아이유</td>
-                                                    <td>2021.05.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td><a href="course-details.html">너무 즐거워요</a></td>
-                                                    <td>박서준</td>
-                                                    <td>2021.05.22</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><a href="course-details.html">최고예요</a></td>
-                                                    <td>정유미</td>
-                                                    <td>2021.05.21</td>
-                                                </tr>
+                                                  <tbody>
+                                    <c:choose>
+                                    	<c:when test ="${fn:length(borad)==0}">
+                                    	<div style="font-size: 20px">
+                                    		<tr>
+												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 댓글이 없습니다.😥</p></td>
+											</tr>
+											
+										</div>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<c:forEach var="board" items="${board}" varStatus="status">
+		                                    	<tr>
+		                                            <td>4</td>
+		                                            <td><a href="course-details.html">${board.tbTitle}</a></td>
+		                                            <td>김영광</td>
+		                                            <td>${board.tRegDate}</td>
+		                                        </tr>
+                                    		</c:forEach>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                </tbody>
+                                                
                                             </table>
                                         </div>            
                                     </div>
@@ -243,30 +290,28 @@
                                                 <th>작성일</th>
                                             </tr>
                                             </thead>
-                                            <tr> 
-                                                <td>4</td>
-                                                <td><a href="course-details.html">혼자 운동하기 딱이예요</a></td>
-                                                <td>버터</td>
-                                                <td>2021.05.24</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td><a href="course-details.html">너무 좋아요</a></td>
-                                                <td>굿모닝</td>
-                                                <td>2021.05.23</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td><a href="course-details.html">최고입니다</a></td>
-                                                <td>로제</td>
-                                                <td>2021.05.22</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><a href="course-details.html">시설이 너무 좋아요</a></td>
-                                                <td>라일락</td>
-                                                <td>2021.05.21</td>
-                                            </tr>
+                                              <tbody>
+                                    <c:choose>
+                                    	<c:when test ="${fn:length(borad)==0}">
+                                    	<div style="font-size: 20px">
+                                    		<tr>
+												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
+											</tr>
+											
+										</div>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<c:forEach var="board" items="${board}" varStatus="status">
+		                                    	<tr>
+		                                            <td>4</td>
+		                                            <td><a href="course-details.html">${board.tbTitle}</a></td>
+		                                            <td>김영광</td>
+		                                            <td>${board.tRegDate}</td>
+		                                        </tr>
+                                    		</c:forEach>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                </tbody>
                                         </table>
                                     </div>            
                                 </div>
@@ -302,7 +347,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="index.jsp"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -339,4 +384,5 @@
     <script src="../assets/js/glightbox.min.js"></script>
     <script src="../assets/js/main.js"></script>
 </body>
+
 </html>

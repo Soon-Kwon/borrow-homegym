@@ -3,9 +3,11 @@ package com.homegym.biz.homegym;
 import java.util.Date;
 import java.util.List;
 
+
 import lombok.Data;
 
 @Data
+
 public class HomegymVO {
 	private int hId;
 	private int mId;
@@ -28,3 +30,4 @@ public class HomegymVO {
 	
 	private List<HomegymAttachVO> attachList; // 첨부파일 VO 자료
 }
+

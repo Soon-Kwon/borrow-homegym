@@ -54,7 +54,7 @@
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="index.jsp">
-                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
+                            <img src="/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -71,7 +71,7 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <a class="circle-image" href="/user/profile.do?memberId=silverbi@naver.com">
+                                <a class="circle-image" href="/user/profile.do?memberId=silverbi99@naver.com">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>
                                 <li class="nav-item"><a href="/user/login.do">로그인</a></li>

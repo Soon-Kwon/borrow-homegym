@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <%
+ 	String memberId = session.getAttribute("memberId").toString();
+ %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,9 +38,54 @@
             justify-content: space-around;
             flex-grow: 2;
         }
-    </style>
-</head>
+        .button .btn::before {
+       		background-color: lightsteelblue;
+       		border-radius: 30px;
+       		position: sticky;
+        }
 
+    </style>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+</head>
+<script>
+	/*버튼 선택시 상태값 변경*/
+	function changeHomegymStatus(object) {
+		// 수락버튼(id = acceptBtn)을 눌렀을 때
+		if(object.id == 'acceptBtn') {
+			//상태(status ) 가 'Y'값을 가지게 된다.
+			var data = { 
+				'hId'	 : object.value,
+				'status' : 'Y'	
+			};
+		} else { //id가 acceptBtn이 아닌경우
+			//상태 (status) 가  'N' 값을 가지게 된다.
+			var data = { 
+				'hId'	 : object.value,
+				'status' : 'N'	
+			};
+		}
+		
+		$.ajax({
+			type: 'post',
+			url: '/user/acceptCheck.do',
+			dataType: 'text',
+			data: data,
+			success: function(data) {
+				//성공시에 페이지 리로드 후 
+				//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
+				if(data =='acceptok') {
+					alert("수락되었습니다.");
+				} else {
+					alert("거절되었습니다.");
+				}
+				
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+</script>
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -193,11 +244,23 @@
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
                                                 
                                                 <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+	                                    				<div style="font-size: 20px; text-align:center;">
+															<p style="margin:40px; font-weight: bold;">아직 빌려준 홈짐이 없습니다.😥</p></td>
+															<div class="flex-box">
+                                                                  <div class="button accept-btn" >
+                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌려주러 가기</a>
+                                                                   </div>
+                                                            </div>
+														</div>
+                                    				</c:when>
+                                    			<c:otherwise>
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
@@ -209,153 +272,36 @@
                                                             <div class="content-body">
                                                                 <div class="meta-data">
                                                                     <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스</a>
+                                                                        <li><i class="lni lni-tag"></i>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
+                                                            </div>    
+                                                           
                                                                 <div class="flex-box">
-
                                                                     <div class="button accept-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">수락하기</a>
+                                                                        <button class="btn" name="acceptBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락하기</button>
                                                                     </div>
                                                                     <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">거절하기</a>
+                                                                        <button class="btn" name="denyBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절하기</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- End Single News -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- Single News -->
-                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">김하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-calendar"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 서초구 서초동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="flex-box">
-
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">수락하기</a>
-                                                                    </div>
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">거절하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Single News -->
-                                                    </div>
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- Single News -->
-                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">윤하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-calendar"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 강남구 반포동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="flex-box">
-
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">수락하기</a>
-                                                                    </div>
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">거절하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Single News -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- Single News -->
-                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">석하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-calendar"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 강남구 신사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="flex-box">
-
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">수락하기</a>
-                                                                    </div>
-                                                                    <div class="button">
-                                                                        <a href="blog-single-sidebar.html" class="btn">거절하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Single News -->
-                                                    </div>
-                                                <!-- Pagination -->
+       
+                                           </c:forEach>
+                                          </c:otherwise>
+                                    </c:choose>
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -365,16 +311,20 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                               
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>
                         </div>
+                       <!-- 빌려준 홈짐 끝 & 빌린 홈짐 시작 --> 
+                        
+                        
+                        
                         <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                             <div class="course-curriculum">
                                 <!-- Start Blog Singel Area -->
@@ -382,13 +332,26 @@
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
                                                 
                                                 <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 빌린홈짐 -->
-                                                        <div class="single-news custom-hover">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(rentHomegym)==0}">
+	                                    				<div style="font-size: 20px; text-align:center;">
+															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p>
+															<div class="flex-box">
+                                                                  <div class="button accept-btn">
+                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌리러 가기</a>
+                                                                   </div>
+                                                            </div>
+														</div>
+                                    				</c:when>
+                                    			<c:otherwise>
+                                    		<c:forEach var="homegym" items="${rentHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
                                                             <div class="image">
                                                                 <a href="blog-single-sidebar.html"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
@@ -399,21 +362,22 @@
                                                                     <ul>
                                                                         <li>
                                                                             <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스</a>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청대기</a>
+                                                                            ${homegym.memberId}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
-                                                                 <div class="flex-box">
-
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
+                                                                <div class="flex-box">
                                                                     <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">결제하기</a>
                                                                     
@@ -428,119 +392,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 빌린홈짐 1  -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 빌린홈짐2 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">권하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-
-                                                                    <div class="button deny-btn">
-                                                                        <a href="#" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--빌린홈짐2 -->
-                                                    </div>
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 빌린홈짐3 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">석하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-
-                                                                    <div class="button deny-btn">
-                                                                        <a href="#" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--빌린홈짐2 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 빌린홈짐3 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">윤하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-
-                                                                    <div class="button deny-btn">
-                                                                        <a href="#" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--빌린홈짐3 -->
-                                                    </div>
-                                                    
-                                                <!-- Pagination -->
+        
+                                           </c:forEach>
+                                          </c:otherwise>
+                                    </c:choose>
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -550,33 +406,44 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
-                                
                             </div>
                         </div>
+                       
 
-                        <!-- 진행 중 홈짐 시작 -->
+                        <!-- 빌린 홈짐 끝 & 진행 중 홈짐 시작 -->
+                        
+                        
                         <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                             <div class="course-instructor">
-                                <!-- Start Blog Singel Area -->
+     <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
                                                 
                                                 <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 진행중인 홈짐 1 -->
-                                                        <div class="single-news custom-hover">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+	                                    				<div style="font-size: 20px; text-align:center;">
+															<p style="margin:40px; font-weight: bold;">아직 진행중인 홈짐이 없습니다.😥</p></td>
+															
+														</div>
+                                    				</c:when>
+                                    			<c:otherwise>
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
                                                             <div class="image">
                                                                 <a href="blog-single-sidebar.html"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
@@ -585,137 +452,35 @@
                                                             <div class="content-body">
                                                                 <div class="meta-data">
                                                                     <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">임하우스</a>
+                                                                        <li><i class="lni lni-tag"></i>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-                                                                    <div class="button deny-btn">
+                                                                    <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">취소하기</a>
+                                                                    
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 진행중인 홈짐 1 끝 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 진행중인 홈짐 2 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">권하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">취소하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--진행중인 홈짐 2 끝 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 진행중인 홈짐 3 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">윤하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">취소하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 진행중인 홈짐 3 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 진행중인 홈짐 4 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">석하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 대기</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">취소하기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 진행중인 홈짐 4 -->
-                                                    </div>
-                                                    
-                                                <!-- Pagination -->
+        
+                                           </c:forEach>
+                                          </c:otherwise>
+                                    </c:choose>
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -725,31 +490,43 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>
                             
                         </div>
+                     
+                     <!-- 진행중인 홈짐 끝 & 완료된 홈짐 시작 -->   
+                        
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="course-reviews">
-                                <!-- 완료된 홈짐 시작 -->
+                                <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-12">
+                                        	<div class="col-lg-12 col-md-12 col-12">
                                                 
                                                 <div class="row">
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 완료된 홈짐 1 -->
-                                                        <div class="single-news custom-hover">
+                                                <c:choose>
+                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+	                                    				<div style="font-size: 20px; text-align:center;">
+															<p style="margin:40px; font-weight: bold;">아직 완료된 홈짐이 없습니다.😥</p></td>
+															
+														</div>
+                                    				</c:when>
+                                    			<c:otherwise>
+                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                                 <div class="col-lg-6 col-12">
+                                                        <!-- Single News -->
+                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+                                                            data-wow-delay=".4s">
                                                             <div class="image">
                                                                 <a href="blog-single-sidebar.html"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
@@ -760,139 +537,41 @@
                                                                     <ul>
                                                                         <li>
                                                                             <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">석하우스</a>
+                                                                            ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
                                                                             <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
+                                                                            ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
                                                                             <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 완료</a>
+                                                                            ${homegym.status}
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                
-                                                                 <div class="flex-box">
+                                                            </div>    
+                                                            
+                                                            <!-- 버튼 시작 -->
+                                                                <div class="flex-box">
                                                                     <div class="button accept-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">리뷰쓰기</a>
+                                                                    
                                                                     </div>
+                                                                    <!--  <div class="button accept-btn">
+                                                                        <a href="blog-single-sidebar.html" class="btn">수락대기중</a>
+                                                                    
+                                                                    </div>--> 
                                                                     <div class="button deny-btn">
                                                                         <a href="blog-single-sidebar.html" class="btn">상세보기</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- 완료된 홈짐 1 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 완료된 홈짐 2 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">김하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 완료</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 완료된 홈짐 2 -->
-                                                    </div>
-                                                    
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 완료된 홈짐 3 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">윤하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 완료</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 완료된 홈짐 3 -->
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
-                                                        <!-- 완료된 홈짐 4 -->
-                                                        <div class="single-news custom-hover">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            <a href="javascript:void(0)">권하우스</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            <a href="javascript:void(0)">서울시 종로구 인사동</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            <a href="javascript:void(0)">요청 완료</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                                <div class="flex-box">
-                                                                    <div class="button deny-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">상세보기</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- 완료된 홈짐 4 -->
-                                                    </div>
-                                                    
-                                                <!-- Pagination -->
+        
+                                           </c:forEach>
+                                          </c:otherwise>
+                                    </c:choose>
+                                               <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
                                                         <li><a href="javascript:void(0)">Prev</a></li>
@@ -902,12 +581,12 @@
                                                         <li><a href="javascript:void(0)">4</a></li>
                                                         <li><a href="javascript:void(0)">Next</a></li>
                                                     </ul>
-                                                </div>
-                                                <!--/ End Pagination -->
+                                                </div>       
                                             </div>
-
-                                        </div>
-                                    </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                                
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>

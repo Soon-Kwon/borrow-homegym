@@ -2,19 +2,24 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings> 
+
+	<!-- 자동으로 카멜케이스 규칙으로 변환 -->	
+	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-	<!-- Alias 설정: Mapping시에 별칭을 사용할 수 있다 -->
+	<!-- Alias 설정 -->
 	<typeAliases>
-		<typeAlias alias="homegymVO"
-			type="com.homegym.biz.homegym.HomegymVO" />
-		<typeAlias alias="attachVO"
-			type="com.homegym.biz.homegym.HomegymAttachVO"/>
+		<typeAlias alias="memberVO" type="com.homegym.biz.member.MemberVO" />
+		<typeAlias alias="trainerVO" type="com.homegym.biz.trainerboard.TrainerBoardVO" />
+		<typeAlias alias="homegymVO" type="com.homegym.biz.homegym.HomegymVO"/>
+		<typeAlias alias="attachVO" type="com.homegym.biz.homegym.HomegymAttachVO"/>
 	</typeAliases>
-	
+
+	<!-- Sql Mapper 설정 -->
 	<mappers>
 		<mapper resource="com/homegym/mapper/HomegymBoardMapper.xml"/>
 		<mapper resource="com/homegym/mapper/HomegymAttachMapper.xml"/>
+		<mapper resource="com/homegym/mapper/MemberMapper.xml"/>
 	</mappers>
+	
 </configuration>
