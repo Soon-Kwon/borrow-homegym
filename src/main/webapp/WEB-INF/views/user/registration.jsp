@@ -32,8 +32,21 @@
     <script
   	src="https://code.jquery.com/jquery-3.4.1.js"
   	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  	crossorigin="anonymous"></script>
-   
+  	crossorigin="anonymous">
+    </script>
+    
+    <!-- 체크박스 하나만 선택하게 하기(성별) -->
+    <script>
+    function doOpenCheck(chk){
+        var obj = document.getElementsByName("gender");
+        for(var i=0; i<obj.length; i++){
+            if(obj[i] != chk){
+                obj[i].checked = false;
+            }
+        }
+    }
+    </script>
+
 </head>
 
 <body>
@@ -145,8 +158,8 @@
                             
                             <div class="gender">
                                 <label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" id="gender" name="gender" value="남성" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" id="gender" name="gender" value="여성" > 여성</label>
+                                <label><input type="checkbox" id="gender" name="gender" value="남성" onclick="doOpenCheck(this);" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label><input type="checkbox" id="gender" name="gender" value="여성" onclick="doOpenCheck(this);" > 여성</label>
                             </div>
 
                             <div class="button">

@@ -147,7 +147,7 @@
 								</div>
 							</div>
 							<div class="button">
-								<button type="submit" class="btn" href="index">LogIn</button>
+								<button type="submit" class="btn" href="/index">LogIn</button>
 							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 

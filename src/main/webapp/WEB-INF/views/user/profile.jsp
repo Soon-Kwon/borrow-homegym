@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%
+ 	String memberId = session.getAttribute("memberId").toString();
+ %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html class="no-js" lang="zxx">
 
 <head>
@@ -23,6 +28,14 @@
     <link rel="stylesheet" href="../assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="../assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    
+    <script>
+    	var memberId = '<%=memberId %>';
+    	
+    	document.addEventListener("DOMContentLoaded", function(){
+    		// Handler when the DOM is fully loaded
+   		});
+    </script>
 
 </head>
 
@@ -53,7 +66,7 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="main_index.html">
+                        <a class="navbar-brand" href="/index.jsp">
                             <img src="../assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
@@ -71,12 +84,12 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <li class="nav-item" style="margin-right: 100px;"><a href="location.html"><h5>지역</h5></a></li>
-                                <li class="nav-item" style="margin-right: 120px;"><a href="community.html"><h5>트레이너</h5></a></li>
-                                <a class="circle-image" href="mypage_main.html">
+                                <li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_list.do"><h5>홈짐</h5></a></li>
+                                <li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tr_list.do"><h5>트레이너</h5></a></li>
+                                <a class="circle-image" href="mp_main.do">
                                     <img src="https://via.placeholder.com/300x300" alt="logo">
                                 </a>
-                                <li class="nav-item"><a href="mypage_main.html"><h5>아이유님</h5></a></li>
+                                <li class="nav-item"><a href="profile.do"><h5>${member.name} 님</h5></a></li>
                                 
                             </ul>
                         </div> <!-- navbar collapse -->
@@ -106,28 +119,28 @@
     <div class="course-details section">
         <div class="container">
             <div class="row">
-                <!-- Start Course Sidebar -->
+               <!-- Start Course Sidebar -->
                 <div class="col-lg-3 col-8">
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title">마이페이지</h3>
+                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mypage_update.html">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
                                             <h6 class="title"><a
-                                                    href="mypage_activ.html">나의 활동내역</a></h6>
+                                                    href="myactiv">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mypage_mywrite.html">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -162,11 +175,10 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">프로필</a></h3>
                             <img src="https://via.placeholder.com/370x370" alt="#">
-                            <h4>아이유님<span>일반회원</span></h4>
-                            <p>이메일 | iu2021@gmail.com</p>
-                            <p>주소 | 서울시 종로구 인사동</p>
+                            <h4>${member.name}님<span>🌱${member.auth}</span> </h4><br>
+                             <span> ${member.memberId} <span>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -176,11 +188,11 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">나의 활동내역 보기</a></h3>
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌려준 홈짐</p>
-                            <h1 style="margin-top: 20px;">20</h1>
+                            <h1 style="margin-top: 20px;">${lendCnt}</h1>
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
-                            <h1 style="margin-top: 20px;">3</h1>
+                            <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="myactiv.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -190,11 +202,11 @@
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">내가 쓴글 보기</a></h3>
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 게시글</p>
-                            <h1 style="margin-top: 20px;">120</h1>
+                            <h1 style="margin-top: 20px;">${myBoardCnt}</h1>
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 댓글</p>
-                            <h1 style="margin-top: 20px;">330</h1>
+                            <h1 style="margin-top: 20px;">${myReplyCnt}</h1>
                             <div class="button">
-                                <a href="javascript:void(0)" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mywrite.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
