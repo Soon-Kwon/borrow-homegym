@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Registration - EduGrids Education & Online Course HTML Template.</title>
+    <title>빌려줘! 홈짐 - 회원가입</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -18,15 +20,32 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="assets/css/animate.css" />
-    <link rel="stylesheet" href="assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/board/board.css">
-    <link rel="stylesheet" href="assets/css/seok.css">
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/board/board.css">
+    <link rel="stylesheet" href="/resources/assets/css/seok.css">
     
+    <script
+  	src="https://code.jquery.com/jquery-3.4.1.js"
+  	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  	crossorigin="anonymous">
+    </script>
+    
+    <!-- 체크박스 하나만 선택하게 하기(성별) -->
+    <script>
+    function doOpenCheck(chk){
+        var obj = document.getElementsByName("gender");
+        for(var i=0; i<obj.length; i++){
+            if(obj[i] != chk){
+                obj[i].checked = false;
+            }
+        }
+    }
+    </script>
 
 </head>
 
@@ -56,8 +75,8 @@
 				<div class="col-lg-12">
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main/assets/images/logo/로고2.png" alt="logo">
+							<a class="navbar-brand" href="/index.jsp">
+								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -78,7 +97,7 @@
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
 											<h5>트레이너</h5>
 										</a></li>
-									<a class="circle-image" href="mypage_main.html">
+									<a class="circle-image" href="/index">
 										<img src="https://via.placeholder.com/300x300" alt="logo">
 									</a>
 									<li class="nav-item">
@@ -100,58 +119,54 @@
                 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
                     <div class="form-head">
                         <h4 class="title">회원 가입</h4>
-                        <form action="#!" method="post">
+                        <form id="join_form" method="post" action="/member/join">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label>이름</label>
-                                    <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="이름" button style="width:80%">
-                                   
+                              <div class="form-group">
+                                <label>이름</label>
+                                <input class="margin-5px-bottom" type="text" id="name" name="name" placeholder="이름" button style="width:80%">
                                 </div>
                                 <label>아이디</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputId"  placeholder="아이디" button style="width:80%">
-                                <button type="check" class="btnjo">중복 확인</button>
+                                <input class="margin-5px-bottom" type="text" id="memberId" name="memberId" placeholder="아이디" button style="width:80%">
+                                <button type="button" id="idChk" class="btnjo">중복 확인</button>
                             </div>
                             <div class="form-group">
                                 <label>닉네임</label>
-                                <input class="margin-5px-bottom" type="text" id="Username1" placeholder="닉네임" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="nickname" name="nickname" placeholder="닉네임" button style="width:80%">
                                 <button type="check" class="btnjo" >중복 확인</button>
                             </div>
                             <div class="form-group">
                                 <label>비밀번호</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="비밀번호" button style="width:80%">
-                            </div>
-                            <div class="form-group">
-                                <label>이메일</label>
-                                <input class="margin-5px-bottom" type="email" id="exampleInputEmail1"  placeholder="이메일" button style="width:80%"> 
+                                <input class="margin-5px-bottom" type="password" id="password" name="password" placeholder="비밀번호" button style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>전화번호</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="'-' 빼고 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="phone" name="phone" placeholder="'-' 빼고 입력해주세요" button style="width:80%">
                             </div>
                           
-                            
                             <div class="form-group">
                                 <label>생년월일</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="생년월일 6자리" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리" button style="width:80%">
+                            </div>
+                            <div class="form-group">
+                                <label>우편번호</label>
+                                <input class="margin-5px-bottom" type="text" id="zipCode" name="zipCode" placeholder="주소를 입력해주세요" button style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>주소</label>
-                                <input class="margin-5px-bottom" type="text" id="exampleInputtext"  placeholder="주소를 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="address" name="address" placeholder="주소를 입력해주세요" button style="width:80%">
                             </div>
                             
                             <div class="gender">
                                 <label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" name="color" value="남성" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" name="color" value="여성" > 여성</label>
-                               
+                                <label><input type="checkbox" id="gender" name="gender" value="남성" onclick="doOpenCheck(this);" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label><input type="checkbox" id="gender" name="gender" value="여성" onclick="doOpenCheck(this);" > 여성</label>
                             </div>
 
                             <div class="button">
-                                <button type="submit" class="btn">회원가입</button>
+                                <button type="submit" class="btn" id="join_button">회원가입</button>
                             </div>
-                            
-                            
-                            <p class="outer-link">아이디가 있으신가요?&nbsp;&nbsp; <a href="login.html">로그인</a></p>
+                            <p class="outer-link">아이디가 있으신가요?&nbsp;&nbsp; <a href="/user/login">로그인</a></p>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
                     </div>
                 </div>
@@ -170,7 +185,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -198,12 +213,18 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/count-up.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/tiny-slider.js"></script>
-    <script src="assets/js/glightbox.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
+    <script type="text/javascript"></script>
+    
+    <script>
+
+    </script>
+
 </body>
 
 </html>

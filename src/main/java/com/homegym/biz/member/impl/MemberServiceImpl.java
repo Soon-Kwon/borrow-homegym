@@ -11,11 +11,24 @@ import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 
-@Service//memberService
-public class MemberServiceImpl implements MemberService{
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class MemberServiceImpl implements MemberService {
+	
 	@Autowired
 	MemberDAO memberDAO;
 
+	@Override
+	public void memberJoin(MemberVO member) throws Exception {
+		memberDAO.memberJoin(member);
+	}
+	
+	@Override
+	public void insertMemberAuth(MemberVO member) throws Exception {
+		memberDAO.insertMemberAuth(member);
+	}
 	/*  마이페이지 메인 프로필 정보*/
 	
 	// 내 프로필 조회
@@ -103,10 +116,5 @@ public class MemberServiceImpl implements MemberService{
 	public List<TrainerBoardVO> getMyBoardList(String memberId) {
 		return memberDAO.getMyBoardList(memberId);
 	}
-
-
-
-
-
 
 }

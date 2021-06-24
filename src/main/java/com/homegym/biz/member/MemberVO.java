@@ -1,6 +1,6 @@
 package com.homegym.biz.member;
 
-
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -19,9 +19,6 @@ public class MemberVO {
 	   private String image;
 	   private String birth;
 	   private String gender;
-	   private String auth;
-	   
-	   
-	   
+	   private Boolean enabled;
+	   private List<AuthVO> authList;
 }
-

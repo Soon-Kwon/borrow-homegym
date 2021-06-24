@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+   
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 <head>
@@ -53,7 +56,7 @@
                 <div class="col-lg-12">
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.jsp">
+                        <a class="navbar-brand" href="/index.jsp">
                             <img src="/resources/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
@@ -71,12 +74,45 @@
                         </form>
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
-                                <a class="circle-image" href="/user/profile.do?memberId=silverbi99@naver.com">
+                           		<sec:authorize access="isAnonymous()">
+                                <!-- <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
-                                </a>
-                                <li class="nav-item"><a href="/user/login.do">로그인</a></li>
+                                </a>  -->
+                                <li class="nav-item"><a href="/user/login">로그인</a></li>
                                 <li class="nav-item"><a>|</a></li>
-                                <li class="nav-item"><a href="/user/join.do">회원가입</a></li>
+                                <li class="nav-item"><a href="/user/registration">회원가입</a></li>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_MEMBER')">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">
+											<h5>홈짐</h5>
+									</a></li>
+									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
+											<h5>트레이너</h5>
+									</a></li>
+									<a class="circle-image" href="mp_main.jsp"> <img
+										src="https://via.placeholder.com/300x300" alt="logo">
+									</a>
+									<li class="nav-item"><a href="/mp_main.jsp">
+											<h5><sec:authentication property="principal.username"/>님</h5>
+									</a></li>
+								
+								</sec:authorize>
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">
+											<h5>홈짐</h5>
+									</a></li>
+									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
+											<h5>트레이너</h5>
+									</a></li>
+									<a class="circle-image" href="mp_main.jsp"> <img
+										src="https://via.placeholder.com/300x300" alt="logo">
+									</a>
+									<li class="nav-item"><a href="/mp_main.jsp">
+											<h5><sec:authentication property="principal.username"/>님</h5>
+									</a></li>
+								</ul>
+								</sec:authorize>
+							</div>
                             </ul>
                         </div> <!-- navbar collapse -->
                     </nav> <!-- navbar -->

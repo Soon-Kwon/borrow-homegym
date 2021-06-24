@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="zxx">
 
 <head>
@@ -22,12 +24,13 @@
 	rel="stylesheet">
 
 <!-- ========================= CSS here ========================= -->
-<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
-<link rel="stylesheet" href="assets/css/animate.css" />
-<link rel="stylesheet" href="assets/css/tiny-slider.css" />
-<link rel="stylesheet" href="assets/css/glightbox.min.css" />
-<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+ 	<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
+
 
 </head>
 
@@ -56,8 +59,8 @@
 				<div class="col-lg-12">
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html"> <img
-								src="../assets/images/logo/로고2.png" alt="logo">
+							<a class="navbar-brand" href="/index.jsp"> <img
+								src="/resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button"
 								data-bs-toggle="collapse"
@@ -85,10 +88,10 @@
 										href="community.html">
 											<h5>트레이너</h5>
 									</a></li>
-									<a class="circle-image" href="mypage_main.html"> <img
+									<a class="circle-image" href="mp_main.jsp"> <img
 										src="https://via.placeholder.com/300x300" alt="logo">
 									</a>
-									<li class="nav-item"><a href="mypage_main.html">
+									<li class="nav-item"><a href="mp_main.jsp">
 											<h5>아이유님</h5>
 									</a></li>
 								</ul>
@@ -120,15 +123,18 @@
 				<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
 					<div class="form-head">
 						<h4 class="title">로그인</h4>
-						<form action="#!" method="post">
+						<h6><c:out value="${error}"/></h6>
+						<h6><c:out value="${logout}"/></h6> <br/>
+						
+						<form action="/login" method="post">
 							<div class="form-group">
-								<label>아이디</label> <input class="margin-5px-bottom" type="email"
-									id="exampleInputEmail1" placeholder="아이디" width="">
+								<label>아이디</label> <input type="text" name="memberId" class="margin-5px-bottom" 
+									id="memberId" placeholder="아이디" width="" value="admin"><!-- type="email" -->
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label> <input class="margin-5px-bottom"
-									type="password" id="exampleInputPassword1"
-									placeholder="Password">
+									type="password" name="password" id="password"
+									placeholder="패스워드" value="admin">
 							</div>
 							<div class="check-and-pass">
 								<div class="row align-items-center">
@@ -141,12 +147,13 @@
 								</div>
 							</div>
 							<div class="button">
-								<button type="submit" class="btn">Log In</button>
+								<button type="submit" class="btn" href="/index">LogIn</button>
 							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
-								<a href="registration.html">회원가입 하기</a>
+								<a href="/user/registration.do">회원가입 하기</a>
 							</p>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</div>
 				</div>
@@ -161,11 +168,69 @@
 
 	<!-- ========================= JS here ========================= -->
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
-	<script src="/resources/assets/js/count-up.min.js"></script>
-	<script src="/resources/assets/js/wow.min.js"></script>
-	<script src="/resources/assets/js/tiny-slider.js"></script>
-	<script src="/resources/assets/js/glightbox.min.js"></script>
-	<script src="/resources/assets/js/main.js"></script>
-</body>
-
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
+    <script type="text/javascript">
+        //========= testimonial Slider
+        tns({
+            container: '.testimonial-slider',
+            items: 3,
+            slideBy: 'page',
+            autoplay: false,
+            mouseDrag: true,
+            gutter: 0,
+            nav: true,
+            controls: false,
+            controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 1,
+                },
+                768: {
+                    items: 2,
+                },
+                992: {
+                    items: 2,
+                },
+                1170: {
+                    items: 3,
+                }
+            }
+        });
+        //====== Clients Logo Slider
+        tns({
+            container: '.client-logo-carousel',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 15,
+            nav: false,
+            controls: false,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 3,
+                },
+                768: {
+                    items: 4,
+                },
+                992: {
+                    items: 4,
+                },
+                1170: {
+                    items: 6,
+                }
+            }
+        });
+    </script>
+  </body>
 </html>

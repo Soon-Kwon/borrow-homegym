@@ -1,13 +1,21 @@
 package com.homegym.biz.member;
 
 import java.util.List;
+
 import java.util.Map;
 
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 
 public interface MemberService {
-	
+
+	//회원가입
+    public void memberJoin(MemberVO member) throws Exception;
+    
+    public void insertMemberAuth(MemberVO member) throws Exception;
+    
+
+
 	//프로필 정보가져오기
 	public MemberVO getUser(String memberId);
 	
