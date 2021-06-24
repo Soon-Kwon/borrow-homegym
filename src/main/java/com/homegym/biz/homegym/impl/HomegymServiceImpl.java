@@ -50,10 +50,10 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.getBoardList(vo);
 	}
 	
-	public List<HomegymVO> getBoardListWithPaging(HomegymVO vo, Criteria cri){
+	public List<HomegymVO> getBoardListWithPaging(HomegymVO vo, Criteria cri, HomegymAttachVO attach){
 		
 		log.info("글 목록 보여주기.......(페이징 O)" + vo);
-		return homegymDAO.getBoardListWithPaging(vo, cri);
+		return homegymDAO.getBoardListWithPaging(vo, cri, attach);
 	}
 	
 	public HomegymVO get(HomegymVO vo, int hId) {
@@ -62,10 +62,10 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.read(vo, hId);
 	}
 	
-	public boolean modify(HomegymVO vo, int hId) {
+	public boolean modify(HomegymVO vo) {
 		
 		log.info("글 수정하기.........");
-		return homegymDAO.update(vo, hId) == 1 ;
+		return homegymDAO.update(vo) == 1 ;
 	}
 	
 	public boolean remove(int hId) {
@@ -77,9 +77,16 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.delete(hId) == 1;
 	}
 	
+	public int getTotal(Criteria cri) {
+		
+		return homegymDAO.getTotalCount(cri);
+	}
+	
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO vo, int hId){
 		
 		log.info("게시글 번호로 해당되는 첨부파일 가져오기........");
 		return attachDAO.findByHId(vo, hId);
 	}
+
+	
 }

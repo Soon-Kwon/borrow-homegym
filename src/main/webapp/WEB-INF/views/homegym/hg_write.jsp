@@ -156,9 +156,7 @@
     <script>
 			var chkArray = new Array();
 			$(document).ready(function () {
-				// 주소 오늘 날짜로 
-				document.getElementById('now_date').valueAsDate = new Date();
-
+				
 				// 체크박스 색 조정
 				$("input[name=homegym_options]").click(function () {
 					//this.checked = true; //checked 처리
@@ -252,120 +250,6 @@
 				});
 			});
 		
-			// 체크박스 값 여러개 받아오기
-						
-			function save(){
-				
-				// 해쉬태그 데이터 베이스 저장
-				var hashTag = '';
-				for(var i = 0; i < chkArray.length; i++) {
-					hashTag += chkArray[i];
-					if(i < chkArray.length - 1) {
-						hashTag += ', ';
-					}
-				}
-				
-				$('#hashtag').val(hashTag);
-				
-				if($('#price').val() == '' || $('#title').val() == ''){
-					alert("꼭 필요한 내용들을 적어주세요");
-					return;
-				}
-				
-				// 첨부파일 hidden	 
-				
-				var str = "";
-				
-				$(".uploadResult ul li").each(function(i, obj){
-					
-					var jobj = $(obj);
-					
-					console.dir(jobj);
-					
-					str += "<input type='hidden' name='attachList[" + i + "].fileName' value ='" 
-							+ jobj.data("filename") +"'>";
-					str += "<input type='hidden' name='attachList[" + i + "].uuid' value ='" 
-							+ jobj.data("uuid") +"'>";
-					str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value ='" 
-							+ jobj.data("path") +"'>";
-					str += "<input type='hidden' name='attachList[" + i + "].fileType' value ='" 
-							+ jobj.data("type") +"'>";
-				});
-				
-				var formObj = $("#submitForm");
-				
-				formObj.append(str);
-							
-				var data = formObj.serialize();
-					
-				$.ajax({
-					type: 'POST',
-					url: 'register.do',
-					dataType: 'text',
-					data: data,
-					success: function(data) {
-						alert(data);
-						if(data == 'OK') {
-							alert('글 작성에 성공하였습니다.');
-							window.location.replace("/homegym/homegymListView.do");
-						}
-					},
-					error: function(e) {
-						alert(e);
-						console.log(e);
-					}
-				});
-			}
-			
-			// 업로드 결과 처리 함수
-			function showUploadResult(uploadResultArr){
-				
-				if(!uploadResultArr || uploadResultArr.length == 0){ return;}
-				
-				var uploadUL = $(".uploadResult ul");
-				
-				var str = "";
-				
-				$(uploadResultArr).each(function(i, obj){
-					
-					//image type
-					if(obj.fileType){
-						
-						var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
-								+ obj.uuid + "_" + obj.fileName);
-						str += "<li data-path='" + obj.uploadPath + "'";
-						str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
-								+ "'data-type='" + obj.fileType + "'";
-						str += "><div>";
-						str +="<span> " + obj.fileName + "</span>";
-						str +="<button type='button' data-file=\'" + fileCallPath 
-						+ "\'data-type='image' class='btn btn-warning btn-circle'>"
-						+ "<i class='lni lni-cross-circle'></i></button><br>";
-						str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
-						str += "</div>";
-						str += "</li>";
-					}else{
-						var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid
-								+ "_" + obj.fileName);
-						var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
-						
-						str += "<li data-path='" + obj.uploadPath + "'";
-						str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
-								+ "'data-type='" + obj.fileType + "'";
-						str += "><div>";
-						str +="<span> " + obj.fileName + "<span>";
-						str +="<button type='button' data-file=\'" + fileCallPath 
-						+ "\'data-type='file' class='btn btn-warning btn-circle'>"
-						+ "<i class='lni lni-cross-circle'></i></button><br>";
-						str += "<img src='/assets/images/common/attach.png'></a>";
-						str += "</div>";
-						str += "</li>";
-					}
-				});
-				
-				uploadUL.append(str);
-			}
-
 		</script>
 
 		<!-- Preloader -->
@@ -494,6 +378,7 @@
 											</div>
 										</div>
 									</div>
+									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
 									<div class="row">
 										<div class="col-lg-3 col-12">
 											<div class="form-group">
@@ -546,14 +431,16 @@
 											</div>
 										</div>
 									</div>
-
-									<!-- 추가되는 공간-->
+									
+									
+									추가 공간
 									<div class="row" id="field">
 									</div>
+									-->
 									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
-												<labal style="color:black; font-size: 13px;">활동 범위를 체크해주세요.</label>
+												<labal style="color:black; font-size: 13px;">사용 가능한 시설을 체크해주세요</label>
 											</p>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
@@ -703,6 +590,127 @@
 					}
 				}).open();
 			}
+		</script>
+		<script>
+		
+		// 제출시 실행되는 save()함수
+		
+		function save(){
+			
+			// 해쉬태그 데이터 베이스 저장
+			var hashTag = '';
+			for(var i = 0; i < chkArray.length; i++) {
+				hashTag += chkArray[i];
+				if(i < chkArray.length - 1) {
+					hashTag += ', ';
+				}
+			}
+			
+			$('#hashtag').val(hashTag);
+			
+			if($('#price').val() == '' || $('#title').val() == ''){
+				alert("꼭 필요한 내용들을 적어주세요");
+				return;
+			}
+			
+			// 첨부파일 hidden	 
+			
+			var str = "";
+			
+			$(".uploadResult ul li").each(function(i, obj){
+				
+				var jobj = $(obj);
+				
+				console.dir(jobj);
+				
+				str += "<input type='hidden' name='attachList[" + i + "].fileName' value ='" 
+						+ jobj.data("filename") +"'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uuid' value ='" 
+						+ jobj.data("uuid") +"'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value ='" 
+						+ jobj.data("path") +"'>";
+				str += "<input type='hidden' name='attachList[" + i + "].fileType' value ='" 
+						+ jobj.data("type") +"'>";
+			});
+			
+			if(str == null || str == ""){
+				alert("최소 한 장 이상의 사진을 올려주세요!");
+				return;
+			}
+			
+			var formObj = $("#submitForm");
+			
+			formObj.append(str);
+						
+			var data = formObj.serialize();
+				
+			$.ajax({
+				type: 'POST',
+				url: 'register.do',
+				dataType: 'text',
+				data: data,
+				success: function(data) {
+					alert(data);
+					if(data == 'OK') {
+						alert('글 작성에 성공하였습니다.');
+						window.location.replace("/homegym/homegymListView.do");
+					}
+				},
+				error: function(e) {
+					alert(e);
+					console.log(e);
+				}
+			});
+		}
+		
+		// 업로드 결과 처리 함수
+		function showUploadResult(uploadResultArr){
+			
+			if(!uploadResultArr || uploadResultArr.length == 0){ return;}
+			
+			var uploadUL = $(".uploadResult ul");
+			
+			var str = "";
+			
+			$(uploadResultArr).each(function(i, obj){
+				
+				//image type
+				if(obj.fileType){
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
+							+ obj.uuid + "_" + obj.fileName);
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+							+ "'data-type='" + obj.fileType + "'";
+					str += "><div>";
+					str +="<span> " + obj.fileName + "</span>";
+					str +="<button type='button' data-file=\'" + fileCallPath 
+					+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+					+ "<i class='lni lni-cross-circle'></i></button><br>";
+					str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+					str += "</div>";
+					str += "</li>";
+				}else{
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid
+							+ "_" + obj.fileName);
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+					
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+							+ "'data-type='" + obj.fileType + "'";
+					str += "><div>";
+					str +="<span> " + obj.fileName + "<span>";
+					str +="<button type='button' data-file=\'" + fileCallPath 
+					+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+					+ "<i class='lni lni-cross-circle'></i></button><br>";
+					str += "<img src='/assets/images/common/attach.png'></a>";
+					str += "</div>";
+					str += "</li>";
+				}
+			});
+			
+			uploadUL.append(str);
+		}
 		</script>
 
 		<!-- ========================= scroll-top ========================= -->

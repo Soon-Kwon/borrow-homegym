@@ -26,6 +26,43 @@
     <link rel="stylesheet" href="../assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="../assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="../assets/css/main.css" />
+	
+	<style>
+		.image{
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+	<!-- jquery -->    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!-- 페이징 관련 자바스크립트 -->
+    <script>
+		$(document).ready(function(){
+			
+			// 페이지 버튼 클릭했을 때 이동
+			var actionForm = $("#actionForm");
+			
+			$(".paginate_button a").on("click", function(e){
+				
+				e.preventDefault();
+				
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
+			});
+			
+			// 제목 클릭시 해당 글로 이동하는 form
+			$(".move").on("click", function(e){
+				
+				e.preventDefault();
+				
+				actionForm.append("<input type='hidden' name='hId' value='" 
+						+ $(this).attr("href") + "'>");
+				actionForm.attr("action", "/homegym/homegymDetailView.do");
+				actionForm.submit();
+			});
+		
+		});
+    </script>
 </head>
 
 <body>
@@ -124,15 +161,17 @@
                         <div style="margin: 30px 0px;"></div>
                         <ul class="other-event">
                         	<c:forEach items="${list }" var="board">
+                        		
                         		<li class="single-event">
                                 <div class="thumbnail">
                                     <a href="javascript:void(0)" class="image"><img
-                                            src="https://via.placeholder.com/170x170" alt="Event Image"></a>
+                                             src='/display.do?fileName=${board.uploadPath }/${board.uuid }_${board.fileName }' alt="Event Image"></a>
                                 </div>
                                 <div class="info">
                                     <span class="date"><i class="lni lni-apartment"></i>${board.memberId }님의 홈짐</span>
-                                    <h6 class="title"><a href='<c:out value="homegymDetailView.do?hId=${board.HId}"/>'>${board.HTitle}</a></h6>
-                                    <span style="font-size: 11px; padding-top: 20px">${board.HAddr}</span>
+                                    <h6 class="title"><a class='move' 
+                                    href='<c:out value="${board.h_id}"/>'><c:out value="${board.h_title}"/></a></h6>
+                                    <span style="font-size: 11px; padding-top: 20px">${board.h_addr}</span>
                                 </div>
                             </li>
                         	</c:forEach>
@@ -174,15 +213,26 @@
                      <div class="row">
                 <div class="col-12">
                     <!-- Pagination -->
-                    <div class="pagination right" style="margin: 0px 50px 0px 0px;">
+                    <div class="pagination center" style="margin: 0px;">
                         <ul class="pagination-list">
-                            <li><a href="javascript:void(0)">이전</a></li>
-                            <li class="active"><a href="javascript:void(0)">1</a></li>
-                            <li><a href="javascript:void(0)">2</a></li>
-                            <li><a href="javascript:void(0)">3</a></li>
-                            <li><a href="javascript:void(0)">4</a></li>
-                            <li><a href="javascript:void(0)">다음</a></li>
+                        	<c:if test="${pageMaker.prev }">
+                        		<li class="paginate_button previous"><a href="${pageMaker.startPage -1 }">이전</a></li>
+                        	</c:if>
+                        
+                        	<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+                        		<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
+                        		<a href="${num }">${num }</a></li>
+                        	</c:forEach>
+                        	
+                        	<c:if test="${pageMaker.next }">
+                        		<li class="paginate_button next"><a href="${pageMaker.endPage + 1 }">다음</a>
+                        	</c:if>
                         </ul>
+                        <!-- 페이지 번호 클릭했을 때 전송되는 form -->
+                        <form id="actionForm" action="/homegym/homegymListView.do" method="get">
+                        	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
+                        	<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+                        </form>
                     </div>
                     <!--/ End Pagination -->
                 </div>
@@ -249,8 +299,8 @@
     <script>
 	   	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	    mapOption = { 
-	        center: new kakao.maps.LatLng('<c:out value="${list[0]['HLocateY']}"/>',
-	        		'<c:out value="${list[0]['HLocateX']}"/>'), // 지도의 중심좌표
+	        center: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
+	        		'<c:out value="${list[0]['h_locate_X']}"/>'), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };
 	
@@ -259,34 +309,34 @@
 		// 마커를 표시할 위치와 title 객체 배열입니다 
 	 	var positions = [
 		    {
-		        title: '<c:out value="${list[0]['HTitle']}"/>', 
-		        content: '<div><c:out value="${list[0]['HTitle']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['HLocateY']}"/>',
-		        		'<c:out value="${list[0]['HLocateX']}"/>'),
-		        no: <c:out value="${list[0]['HId']}"/>
+		        title: '<c:out value="${list[0]['h_title']}"/>', 
+		        content: '<div><c:out value="${list[0]['h_title']}"/></div>',
+		        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[0]['h_locate_X']}"/>'),
+		        no: <c:out value="${list[0]['h_id']}"/>
 		    },
 		    {
-		    	title: '<c:out value="${list[1]['HTitle']}"/>', 
-		        content: '<div><c:out value="${list[1]['HTitle']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['HLocateY']}"/>',
-			        		'<c:out value="${list[1]['HLocateX']}"/>'),
-	    	    no: <c:out value="${list[1]['HId']}"/>
+		    	title: '<c:out value="${list[1]['h_title']}"/>', 
+		        content: '<div><c:out value="${list[1]['h_title']}"/></div>',
+		        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['h_locate_Y']}"/>',
+			        		'<c:out value="${list[1]['h_locate_X']}"/>'),
+	    	    no: <c:out value="${list[1]['h_id']}"/>
 
 		    },
 		    {
-	    	    title: '<c:out value="${list[2]['HTitle']}"/>',
-		        content: '<div><c:out value="${list[2]['HTitle']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['HLocateY']}"/>',
-			        		'<c:out value="${list[2]['HLocateX']}"/>'),
-	        	no: <c:out value="${list[2]['HId']}"/>
+	    	    title: '<c:out value="${list[2]['h_title']}"/>',
+		        content: '<div><c:out value="${list[2]['h_title']}"/></div>',
+		        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['h_locate_Y']}"/>',
+			        		'<c:out value="${list[2]['h_locate_X']}"/>'),
+	        	no: <c:out value="${list[2]['h_id']}"/>
 
 		    },
 		    {
-	    	    title: '<c:out value="${list[3]['HTitle']}"/>', 
-		        content: '<div><c:out value="${list[3]['HTitle']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['HLocateY']}"/>',
-			        		'<c:out value="${list[3]['HLocateX']}"/>'),
-		      	no: <c:out value="${list[3]['HId']}"/>
+	    	    title: '<c:out value="${list[3]['h_title']}"/>', 
+		        content: '<div><c:out value="${list[3]['h_title']}"/></div>',
+		        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['h_locate_Y']}"/>',
+			        		'<c:out value="${list[3]['h_locate_X']}"/>'),
+		      	no: <c:out value="${list[3]['h_id']}"/>
 		    }
 		];
 		
@@ -346,6 +396,7 @@
 		 	};
 		}
     </script>
+    
 </body>
 
 </html>

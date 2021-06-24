@@ -3,15 +3,55 @@
 
 <mapper namespace="HomegymDAO">
 
+<!-- 	<resultMap type="com.homegym.biz.homegym.HomegymVO" id="HomegymVO">
+		<result column="h_id" property="hId"></result>
+		<result column="memberId" property="memberId"></result>
+		<result column="h_title" property="hTitle"></result>
+		<result column="h_price" property="hPrice"></result>
+		<result column="h_addr" property="hAddr"></result>
+		<result column="h_locate_X" property="hLocateX"></result>
+		<result column="h_locate_Y" property="hLocateY"></result>
+		<result column="h_cnt" property="hCnt"></result>
+	</resultMap> 
+	
+	<resultMap type="com.homegym.biz.homegym.HomegymAttachVO" id="HomegymAttachVO">
+		<result column="h_id" property="hId"></result>
+		<result column="uuid" property="uuid"></result>
+		<result column="uploadPath" property="uploadPath"></result>
+		<result column="fileName" property="fileName"></result>
+	</resultMap> -->
+	
 	<select id="getBoardList" resultType="homegymVO">
 		select * from homegym_board where h_id > 0
 	</select>
 	
-	<select id="getBoardListWithPaging" resultType="homegymVO">
+<!-- 	<select id="getBoardListWithPaging" resultType="homegymVO">
 		select * 
 		from (select * from homegym_board
 				order by h_id desc) R1
 		LIMIT #{cri.amount} OFFSET #{cri.skip}
+	</select> -->
+	
+	<select id="getBoardListWithPaging" resultType="Hashmap">
+		select * 
+		from (
+				select distinct(hb.h_id), 
+					   ha.uuid, 
+					   ha.fileName, 
+					   ha.uploadPath, 
+					   hb.memberId, 
+					   hb.h_title,
+					   hb.h_price, 
+					   hb.h_addr, 
+					   hb.h_locate_X, 
+					   hb.h_locate_Y, 
+					   hb.h_cnt
+					from homegym_board as hb 
+                		 join homegym_attach as ha
+                		 on hb.h_id = ha.h_id
+					order by hb.h_id desc
+			  ) R1
+		LIMIT #{cri.amount} OFFSET #{cri.skip};
 	</select>
 	
 	<select id="read" resultType="homegymVO">
@@ -20,9 +60,9 @@
 	</select>
 	
 	<insert id="insert">
-		insert into homegym_board (m_id, memberId, h_title, h_content, h_price, 
+		insert into homegym_board (memberId, h_title, h_content, h_price, 
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag)
-		values(#{mId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
+		values(#{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
 		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag})	
 	</insert>
 	
@@ -30,9 +70,9 @@
 		<selectKey keyProperty="hId" order="BEFORE" resultType="int">
 			select max(h_id) + 1 from homegym_board
 		</selectKey>
-		insert into homegym_board (h_id, m_id, memberId, h_title, h_content, h_price, 
+		insert into homegym_board (h_id, memberId, h_title, h_content, h_price, 
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag)
-		values(#{hId}, #{mId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
+		values(#{hId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
 		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag})	
 	</insert>
 	
@@ -46,4 +86,8 @@
 	<delete id="delete">
 		delete from homegym_board where h_id = #{hId}
 	</delete>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from homegym_board where h_id > 0
+	</select>
 </mapper>

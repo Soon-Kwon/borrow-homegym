@@ -12,11 +12,11 @@ import lombok.ToString;
 public class Criteria {
 	
 	private int pageNum;
-	private int amount;
+	private int amount; // 한 페이지당 보여줄 게시글 수 
 	private int skip; // 스킵할 게시물 수(pageNum - 1) * amount
 	
 	public Criteria() {
-		this(1, 10);
+		this(1, 4);
 		this.skip = 0;
 	}
 	

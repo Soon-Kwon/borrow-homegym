@@ -102,6 +102,10 @@
 		.icon-tag .fas{
 			font-size: 40px;
 		}
+		
+		#manipulateBtn{
+			text-align: right;
+		}
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -263,8 +267,18 @@
 								<h5> ${board.MId}님의 홈짐 위치</h5>
 								<br>
 								
+								<!-- 홈짐 위치 나오는 div -->
 								<div id="map" style="width: 100%; height: 450px;"></div>
-
+								<br>
+								<!-- 집주인일 경우 나오는 수정/삭제버튼 
+								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
+								<div id="manipulateBtn">
+									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
+									class="btn btn-time">
+									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do?pageNum=${cri.pageNum}&amount=${cri.amount }'"
+									class="btn btn-time">
+								</div>	
+								
 								<!-- 댓글 -->
 								<div class="post-comments">
 									<h2>리뷰 💌</h2>
@@ -337,7 +351,7 @@
 								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<input type="button" value="지금 예약하러 가기" onclick="javascript:void(0)"
+								<input type="button" value="지금 예약하러 가기" onclick="location.href='/homegym/reservationView.do'"
 									class="btn btn-time">
 								<br /> <br />
 									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
