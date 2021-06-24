@@ -9,8 +9,8 @@
 	</settings>
 	<!-- Alias 설정 -->
 	<typeAliases>
-		<typeAlias alias="memberVO" type="com.homegym.biz.member.MemberVO" />
-		<typeAlias alias="trainerVO" type="com.homegym.biz.trainerboard.TrainerBoardVO" />
+		<typeAlias alias="member" type="com.homegym.biz.member.MemberVO" />
+		<typeAlias alias="trainer" type="com.homegym.biz.trainerboard.TrainerBoardVO" />
 		<typeAlias alias="homegymVO" type="com.homegym.biz.homegym.HomegymVO"/>
 		<typeAlias alias="attachVO" type="com.homegym.biz.homegym.HomegymAttachVO"/>
 	</typeAliases>

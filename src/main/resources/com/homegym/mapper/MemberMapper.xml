@@ -3,14 +3,14 @@
 <mapper namespace = "MemberDAO">
 
 	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
-	<select id="getInfo" resultType="member" parameterType="String">
+	<select id="getInfo" resultType="memberVO" parameterType="String">
 		SELECT * 
 		FROM member
 		WHERE memberId= #{memberId}
 	</select>
 	
 	<!-- 마이페이지 회원정보 수정 페이지 -->
-	<select id="getMyPageInfo" resultType="member" parameterType="String">
+	<select id="getMyPageInfo" resultType="memberVO" parameterType="String">
 		SELECT * 
 		FROM member
 		WHERE memberId= #{memberId}
@@ -18,7 +18,7 @@
 	
 
 	<!-- 회원정보 수정 처리 -->
-	<update id="memberUpdate" parameterType="member">
+	<update id="memberUpdate" parameterType="memberVO">
 		UPDATE member
 		SET
 		<choose> 
@@ -39,7 +39,7 @@
 	</update>
 	
 	<!-- 회원 탈퇴  처리-->
-	<delete id="memberDelete"  parameterType="member">
+	<delete id="memberDelete"  parameterType="memberVO">
 		DELETE 
 		FROM member 
 		WHERE
@@ -76,7 +76,7 @@
 	</select> 
 	
 	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardList" resultType="trainer" parameterType="String">
+	<select id="getMyBoardList" resultType="trainerVO" parameterType="String">
 		SELECT *
 		FROM trainer_board
 		WHERE memberId= #{memberId}
@@ -86,7 +86,7 @@
 	
 	
 	<!-- 내가 빌려준 홈짐 리스트-->
-	<select id="getMyLendHomegym" resultType="homegym" parameterType="String">
+	<select id="getMyLendHomegym" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board 
 		WHERE memberId = #{memberId}
@@ -95,7 +95,7 @@
 	</select>
 	
 	<!-- 내가 빌린 홈짐 리스트-->
-	<select id="getMyRentHomegym" resultType="homegym" parameterType="String">
+	<select id="getMyRentHomegym" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id

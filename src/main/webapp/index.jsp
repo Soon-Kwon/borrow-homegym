@@ -8,7 +8,7 @@
     <title>빌려줘! 홈짐</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="/Template Main/assets/images/logo/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -17,12 +17,12 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/assets/css/animate.css" />
-    <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 </head>
 
@@ -54,7 +54,7 @@
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="index.jsp">
-                            <img src="/assets/images/logo/로고2.png" alt="logo">
+                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -117,7 +117,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_2.jpg');">
+    <section class="hero-area style2" style="background-image: url('/resources/assets/images/main/메인_2.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -142,7 +142,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_3.jpg');">
+    <section class="hero-area style2" style="background-image: url('/resources/assets/images/main/메인_3.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -152,7 +152,7 @@
                             <div class="hero-text" >
                                 <h2 class="wow fadeInLeft" data-wow-delay=".3s"><b>딱!맞는<br>
                                                                                 트레이너를 만나세요</b></h2><br>
-                                <h6 class="wow fadeInLeft" data-wow-delay=".5s">조건에 딱 맞는 트레이너를 찾으시나요? 🏋🏻‍♀️</h6>
+                                <h6 class="wow fadeInLeft" data-wow-delay=".5s">조건에 딱 맞는 트레이너를 찾으시나요? 🏋🏻 ♀️</h6>
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
                                     <a href="trainer_board.html" class="btn">찾아보러 가기</a>
                                 </div>
@@ -167,7 +167,7 @@
     <!--/ End Hero Area -->
 
     <!-- Start Hero Area -->
-    <section class="hero-area style2" style="background-image: url('../assets/images/main/메인_4.jpg');">
+    <section class="hero-area style2" style="background-image: url('/resources/assets/images/main/메인_4.jpg');">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="container">
@@ -228,12 +228,12 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
     <script type="text/javascript">
         //========= testimonial Slider
         tns({
