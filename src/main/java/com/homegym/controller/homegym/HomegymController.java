@@ -31,17 +31,20 @@ public class HomegymController {
 	@Autowired
 	private HomegymService homegymService;
 	
+	// 글쓰기 페이지로 이동
 	@RequestMapping("/registerView.do")
-	public String registerView(){
-	
+	public String registerView(Model model, Criteria cri){
+
 		log.info("글쓰기 폼 보여주기");
+		model.addAttribute("cri", cri);
 		return "homegym/hg_write";
 	}
 	
+	// 글작성 완료시 작동
 	@ResponseBody
 	@RequestMapping("/register.do")
 	//public String register(@ModelAttribute HomegymVO vo) {
-	public String register(HomegymVO vo) {
+	public String register(HomegymVO vo, Criteria cri) {
 		
 		log.info("글 등록하기: " + vo);
 		
@@ -53,7 +56,8 @@ public class HomegymController {
 		//rttr.addFlashAttribute("result", homegym.getHId());
 		return "OK";
 	}
-		
+	
+	// 게시글 리스트 보여주기
 	@GetMapping("/homegymListView.do")
 	public String listView(Model model, HomegymVO vo, Criteria cri, HomegymAttachVO attach) {
 		
@@ -67,6 +71,7 @@ public class HomegymController {
 		return "/homegym/hg_list";
 	}
 	
+	// 상세 게시글 보여주기
 	@GetMapping("/homegymDetailView.do")
 	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
 			@RequestParam("hId") int hId ) {
@@ -76,6 +81,7 @@ public class HomegymController {
 		return "/homegym/hg_details";
 	}
 	
+	// 수정 페이지 보여주기
 	@GetMapping("/homegymModifyView.do")
 	public String modifyView(Model model, HomegymVO vo, @ModelAttribute("cri") Criteria cri,
 			@RequestParam("hId") int hId) {
@@ -85,6 +91,7 @@ public class HomegymController {
 		return "/homegym/hg_modify";
 	}
 	
+	// 수정 완료 요청시 작동
 	@ResponseBody
 	@PostMapping("/homegymModify.do")
 	public String modify(HomegymVO vo, @ModelAttribute("cri") Criteria cri) {
@@ -98,6 +105,7 @@ public class HomegymController {
 		return "ERROR";
 	}
 	
+	// 삭제 완료 요청시 작동
 	@ResponseBody
 	@PostMapping("/homegymRemove.do")
 	public String remove(@RequestParam("hId") int hId, @ModelAttribute("cri") Criteria cri) {
@@ -111,6 +119,7 @@ public class HomegymController {
 		return "ERROR";
 	}
 	
+	// 예약 페이지 보여주기
 	@GetMapping("/reservationView.do")
 	public String reservationView(Model model, @ModelAttribute("cri") Criteria cri, @RequestParam("hId") int hid) {
 		
@@ -118,6 +127,7 @@ public class HomegymController {
 		return "/homegym/hg_reservation";
 	}
 	
+	// 첨부파일 리스트 요청시 작동 
 	@GetMapping(value = "/getAttachList.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HomegymAttachVO>> getAttachList(HomegymAttachVO vo, @RequestParam("hId") int hId){

@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
+
 <html class="no-js" lang="zxx">
 
 <head>
@@ -11,7 +14,7 @@
 	<title>빌려줘! 홈짐</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
 
 	<!-- Place favicon.ico in the root directory -->
 
@@ -21,15 +24,15 @@
 		rel="stylesheet">
 
 	<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-	<link rel="stylesheet" href="../assets/css/animate.css" />
-	<link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-	<link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-	<link rel="stylesheet" href="../assets/css/main.css" />
+	<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+	<link rel="stylesheet" href="/resources/assets/css/animate.css" />
+	<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+	<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+	<link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 	<!--========================= 캐러셀 ================================ -->
-	<link rel="stylesheet" href="../assets/css/carousel.css">
+	<link rel="stylesheet" href="/resources/assets/css/carousel.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<!-- ======================== 달력 ================================== -->
@@ -193,7 +196,7 @@
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main/../assets/images/logo/로고2.png" alt="logo">
+								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -210,7 +213,7 @@
 							</form>
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -275,7 +278,7 @@
 								<div id="manipulateBtn">
 									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
 									class="btn btn-time">
-									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do?pageNum=${cri.pageNum}&amount=${cri.amount }'"
+									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
 									class="btn btn-time">
 								</div>	
 								
@@ -375,7 +378,7 @@
 						<div class="col-md-6" style="text-align: start;">
 							<div class="logo">
 								<br><br>
-								<a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+								<a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
 							</div>
 						</div>
 						<div class="col-md-6" style="text-align: end;">
@@ -402,12 +405,12 @@
 	</a>
 
 	<!-- ========================= JS here ========================= -->
-	<script src="../assets/js/bootstrap.min.js"></script>
-	<script src="../assets/js/count-up.min.js"></script>
-	<script src="../assets/js/wow.min.js"></script>
-	<script src="../assets/js/tiny-slider.js"></script>
-	<script src="../assets/js/glightbox.min.js"></script>
-	<script src="../assets/js/main.js"></script>
+	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	<script src="/resources/assets/js/count-up.min.js"></script>
+	<script src="/resources/assets/js/wow.min.js"></script>
+	<script src="/resources/assets/js/tiny-slider.js"></script>
+	<script src="/resources/assets/js/glightbox.min.js"></script>
+	<script src="/resources/assets/js/main.js"></script>
 	<!-- ========================= 카카오 지도 ========================= -->
 
 	<script type="text/javascript"
@@ -422,7 +425,7 @@
 		// 맵 생성
 		var map = new kakao.maps.Map(container, options);
 
-		var imageSrc = '../assets/images/logo/logo.png' // 마커이미지의 주소입니다    
+		var imageSrc = '/resources/assets/images/logo/logo.png' // 마커이미지의 주소입니다    
 	    imageSize = new kakao.maps.Size(54, 69), // 마커이미지의 크기입니다
 	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 	      

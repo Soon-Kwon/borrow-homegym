@@ -9,7 +9,7 @@
     <title>빌려줘! 홈짐 - 홈짐 예약</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -18,12 +18,12 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="../assets/css/animate.css" />
-    <link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 </head>
 
@@ -55,7 +55,7 @@
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main/../assets/images/logo/로고2.png" alt="logo">
+								<img src="../Template Main//resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -104,7 +104,7 @@
                         <h3 class="title" ><span style="color: #2f3e83;">집에서 만나는 헬스장!</span>
                             홈짐 예약하기😊
                         </h3>
-                        <form class="form" method="post" action="../assets/mail/mail.php">
+                        <form class="form" method="post" action="/resources/assets/mail/mail.php">
                             <div class="row">
                                 <div class="col-lg-6 col-12">
                                     <div class="form-group">
@@ -178,7 +178,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -206,12 +206,12 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
 </body>
 
 </html>

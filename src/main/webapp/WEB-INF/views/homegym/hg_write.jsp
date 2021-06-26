@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<html class="no-js" lang="zxx">
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 	<head>
 		<meta charset="utf-8" />
@@ -10,7 +11,7 @@
 		<title>빌려줘! 홈짐 - 홈짐 등록</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
+		<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
 		<!-- Place favicon.ico in the root directory -->
 
 		<!-- Web Font -->
@@ -20,16 +21,16 @@
 
 		<!-- ========================= CSS here ========================= -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-		<link rel="stylesheet" href="../assets/css/animate.css" />
-		<link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-		<link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+		<link rel="stylesheet" href="/resources/assets/css/animate.css" />
+		<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+		<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 		<style>
 			.intro {
-				background-image: url("../assets/images/gym/homegym-image-01.jpg");
+				background-image: url("/resources/assets/images/gym/homegym-image-01.jpg");
 				background-size: cover;
 				background-position: center;
 				background-repeat: no-repeat;
@@ -192,6 +193,10 @@
 					return true;
 				}
 				
+				// 스프링 시큐리티 csrf 토큰
+				var csrfHeaderName = "${_csrf.headerName}";
+				var csrfTokenValue = "${_csrf.token}";
+				
 				$("input[type='file']").change(function(e){
 					
 					var formData = new FormData();
@@ -214,12 +219,15 @@
 						url: '/uploadAjaxAction.do',
 						processData: false,
 						contentType: false,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 						data: formData,
 						type: 'POST',
 						dataType: 'json',
 						success: function(result){
 							console.log(result);
-							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등)
+							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일)
 						}, 
 						error: function(error){
 							console.log(error);
@@ -240,6 +248,9 @@
 					$.ajax({
 						url: '/deleteFile.do',
 						data: {fileName: targetFile, type: type},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 						dataType: 'text',
 						type: 'POST',
 						success: function(result){
@@ -270,7 +281,7 @@
 						<div class="nav-inner">
 							<nav class="navbar navbar-expand-lg">
 								<a class="navbar-brand" href="main_index.html">
-									<img src="../Template Main/../assets/images/logo/로고2.png" alt="logo">
+									<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 								</a>
 								<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 									data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -287,7 +298,8 @@
 								</form>
 								<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 									<ul id="nav" class="navbar-nav ms-auto">
-										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
+										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?
+										pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
 												<h5>홈짐</h5>
 											</a></li>
 										<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -515,7 +527,7 @@
 							<div class="col-md-6" style="text-align: start;">
 								<div class="logo">
 									<br><br>
-									<a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+									<a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
 								</div>
 							</div>
 							<div class="col-md-6" style="text-align: end;">
@@ -643,21 +655,25 @@
 			formObj.append(str);
 						
 			var data = formObj.serialize();
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
 				
 			$.ajax({
 				type: 'POST',
 				url: 'register.do',
 				dataType: 'text',
 				data: data,
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				success: function(data) {
-					alert(data);
 					if(data == 'OK') {
 						alert('글 작성에 성공하였습니다.');
-						window.location.replace("/homegym/homegymListView.do");
+						window.location.replace("/homegym/homegymListView.do${cri.getListLink() }");
 					}
 				},
 				error: function(e) {
-					alert(e);
+					alert('글 작성에 실패하였습니다.');
 					console.log(e);
 				}
 			});
@@ -703,7 +719,7 @@
 					str +="<button type='button' data-file=\'" + fileCallPath 
 					+ "\'data-type='file' class='btn btn-warning btn-circle'>"
 					+ "<i class='lni lni-cross-circle'></i></button><br>";
-					str += "<img src='/assets/images/common/attach.png'></a>";
+					str += "<img src='/resources/assets/images/common/attach.png'></a>";
 					str += "</div>";
 					str += "</li>";
 				}
@@ -718,12 +734,12 @@
 		</a>
 
 		<!-- ========================= JS here ========================= -->
-		<script src="../assets/js/bootstrap.min.js"></script>
-		<script src="../assets/js/count-up.min.js"></script>
-		<script src="../assets/js/wow.min.js"></script>
-		<script src="../assets/js/tiny-slider.js"></script>
-		<script src="../assets/js/glightbox.min.js"></script>
-		<script src="../assets/js/main.js"></script>
+		<script src="/resources/assets/js/bootstrap.min.js"></script>
+		<script src="/resources/assets/js/count-up.min.js"></script>
+		<script src="/resources/assets/js/wow.min.js"></script>
+		<script src="/resources/assets/js/tiny-slider.js"></script>
+		<script src="/resources/assets/js/glightbox.min.js"></script>
+		<script src="/resources/assets/js/main.js"></script>
 	</body>
 
 	</html>
