@@ -62,6 +62,7 @@ public class HomegymController {
 	public String listView(Model model, HomegymVO vo, Criteria cri, HomegymAttachVO attach) {
 		
 		// getBoardListWithPaging은 resultType이 hashmap인 객체들을 담은 List이다. 
+		// 첨부파일, vo, 페이징을 모두 보여줘야 되기 때문이다.
 		model.addAttribute("list", homegymService.getBoardListWithPaging(vo, cri, attach));
 
 		int total = homegymService.getTotal(cri);

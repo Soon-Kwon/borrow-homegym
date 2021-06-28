@@ -61,7 +61,7 @@ public class UploadController {
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
-			// IE has file path
+			// IE has file path (익스플로어에서는 경로가 붙어있어서 제거해야함)
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("only file name: " + uploadFileName);
 			attachVO.setFileName(uploadFileName);

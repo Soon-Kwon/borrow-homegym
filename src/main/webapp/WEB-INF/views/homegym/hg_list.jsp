@@ -111,7 +111,7 @@
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
 									<li class="nav-item" style="margin-right: 100px;">
-									<a href="/homegym/homegymListView.do?pageNum=${pageMaker.cri.pageNum }&amount=${pageMaker.cri.amount}&keyword=">
+									<a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -204,7 +204,7 @@
 										<c:forEach items="${list }" var="board">
 											<li class="single-event">
 												<div class="thumbnail">
-													<a href="javascript:void(0)" class="image"><img
+													<a href='<c:out value="${board.h_id}"/>' class="image move"><img
 														src='/display.do?fileName=${board.uploadPath }/${board.uuid }_${board.fileName }'
 														alt="Event Image"></a>
 												</div>

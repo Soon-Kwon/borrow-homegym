@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HomegymReviewDAO">
+	
+	<insert id="insert">
+		insert into homegym_review (h_id, memberId, borrowerId, hr_score, hr_content)
+		values (#{hId}, #{memberId}, #{borrowerId}, #{hrScore}, #{hrContent})
+	</insert>
+	
+	<select id="read" resultType="com.homegym.biz.homegym.HomegymReviewVO">
+		select * 
+		from homegym_review 
+		where review_id = #{reviewId}
+	</select>
+	
+	<select id="getList" resultType="com.homegym.biz.homegym.HomegymReviewVO">
+		select * from 
+		homegym_review 
+		where h_id = #{hId} 
+		order by review_id asc
+	</select>
+	
+	<delete id="delete">
+		delete 
+		from homegym_review 
+		where review_id = #{reviewId}
+	</delete>
+	
+	<update id="update">
+		update homegym_review 
+		set hr_score = #{hrScore}, hr_content = #{hrContent}, hr_updatedate = DEFAULT
+		where review_id = #{reviewId}
+	</update>
+</mapper>

@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class HomegymReplyVO {
+public class HomegymReviewVO {
 	
 	private int reviewId;
 	private int hId;	

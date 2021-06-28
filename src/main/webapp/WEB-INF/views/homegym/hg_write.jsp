@@ -194,8 +194,8 @@
 				}
 				
 				// 스프링 시큐리티 csrf 토큰
-				var csrfHeaderName = "${_csrf.headerName}";
-				var csrfTokenValue = "${_csrf.token}";
+				/* var csrfHeaderName = "${_csrf.headerName}";
+				var csrfTokenValue = "${_csrf.token}"; */
 				
 				$("input[type='file']").change(function(e){
 					
@@ -219,9 +219,9 @@
 						url: '/uploadAjaxAction.do',
 						processData: false,
 						contentType: false,
-						beforeSend: function(xhr){
+						/* beforeSend: function(xhr){
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						},
+						}, */
 						data: formData,
 						type: 'POST',
 						dataType: 'json',
@@ -248,9 +248,9 @@
 					$.ajax({
 						url: '/deleteFile.do',
 						data: {fileName: targetFile, type: type},
-						beforeSend: function(xhr){
+						/* beforeSend: function(xhr){
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						},
+						}, */
 						dataType: 'text',
 						type: 'POST',
 						success: function(result){
@@ -663,9 +663,9 @@
 				url: 'register.do',
 				dataType: 'text',
 				data: data,
-				beforeSend: function(xhr){
+				/* beforeSend: function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
+				}, */
 				success: function(data) {
 					if(data == 'OK') {
 						alert('글 작성에 성공하였습니다.');
