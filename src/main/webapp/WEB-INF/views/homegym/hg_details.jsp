@@ -74,8 +74,7 @@
 			color: white;
 			font-weight: bold;
 			position: relative;
-			left: 300px;
-			top: 20px;
+			margin-top: 30px;
 		}
 
 		.sidebar {
@@ -176,12 +175,24 @@
 			var memberId = '<c:out value="${board.memberId}"/>';
 			var borrowerId = "임시: 로그인 된 유저";
 			var reviewUL = $(".comments-list");
+		
+			var viewMoreReviewBtn = $("#re_plus"); // 더보기 버튼 
+			var index = 1; // 더보기 1페이지
+			var amount = 3; // 한번에 리뷰를 세개씩 로딩
 			
-			showList(1);
+			showList(1); // 리뷰 목록 호출
 			
 			function showList(page){
 				
-				reviewService.getList({hId: hIdValue, page: page || 1}, function(list){
+				// getList로부터 넘어오는 값은 리뷰 갯수와 리스트로 데이터가 구성되어있다 . 
+				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
+					
+					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
+					if(page == 99999){
+						reviewUL.empty();
+						showList(1);
+						return;
+					}
 					
 					var str = '';
 					
@@ -206,10 +217,23 @@
 						str += "</div><p>" + list[i].hrContent + "</p></div></li>";
 					}
 					
-					reviewUL.html(str);
+					$(str).appendTo($(".comments-list")).slideDown();
+					
+					if(reviewCnt <= amount * page){
+						viewMoreReviewBtn.remove();
+					}
+					//reviewUL.html(str);
+					
 				});
 			}
 			
+			// 더보기 버튼 눌렀을 때 작동
+	
+			viewMoreReviewBtn.on("click", function(e){
+				index++
+				showList(index);
+			});
+						
 			// 모달창 제어
 			var modal = $(".modal")
 			var modalInputReview = modal.find("input[name='hrContent']");
@@ -253,11 +277,11 @@
 					
 					alert("리뷰가 등록되었습니다");
 					
-					// input의 값들을 모두 지운다.
+					// input의 값들을 모두 지운다. 
 					//modal.find("input").val(""); 
 					modal.modal("hide");
 					
-					showList(1); // 새로 등록된 리뷰들을 불러낸다.
+					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
 				});
 			});
 			
@@ -293,7 +317,7 @@
 					
 					alert("수정되었습니다");
 					modal.modal("hide");
-					showList(1);
+					showList(99999);
 				});
 			});
 			
@@ -306,9 +330,10 @@
 					
 					alert("삭제되었습니다");
 					modal.modal("hide");
-					showList(1);
+					showList(99999);
 				});
 			});
+						
 		});
 	</script>
 </head>
@@ -472,7 +497,9 @@
 									</ul>
 								</div>								
 							</div>
+							<div style="text-align: center;">
 							<button type="button" class="btn btn-outline-info" id="re_plus">더보기</button>
+							</div>
 						</div>
 				</div>
 				<aside class="col-lg-4 col-md-12 col-12">
@@ -492,8 +519,8 @@
 								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<input type="button" value="지금 예약하러 가기" onclick="location.href='/homegym/reservationView.do'"
-									class="btn btn-time">
+								<input type="button" value="지금 예약하러 가기"
+								 onclick="location.href='/homegym/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
 								<br /> <br />
 									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
 								</div>
@@ -518,8 +545,8 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>리뷰내용</label> <input class="form-control" name="hrContent"
-							value="" placeholder="리뷰를 남겨주세요">
+						<label>한줄리뷰</label> <input class="form-control" name="hrContent"
+							value="" placeholder="간단한 한줄 후기를 남겨주세요">
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
@@ -660,9 +687,9 @@
 				, function(result){
 					alert("수정완료");
 				}); */
-		reviewService.get(9, function(data){
+	/* 	reviewService.get(9, function(data){
 			console.log(data);
-		})
+		}) */
 		
 	</script>
 </body>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymReviewService;
 import com.homegym.biz.homegym.HomegymReviewVO;
+import com.homegym.biz.homegym.ReviewDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -47,5 +48,9 @@ public class HomegymReviewServiceImpl implements HomegymReviewService {
 		
 		return reviewDAO.getList(cri, hId);
 	}
-
+	
+	public ReviewDTO getListWithPaging(Criteria cri, int hId) {
+		
+		return new ReviewDTO(reviewDAO.getCount(hId), reviewDAO.getListWithPaging(cri, hId));
+	}
 }

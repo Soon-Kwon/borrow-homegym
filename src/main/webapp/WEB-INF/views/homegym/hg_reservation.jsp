@@ -24,9 +24,44 @@
     <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
-
+	
+	<style>
+	/*라디오 버튼 CSS*/
+	.select {
+    	padding: 15px 10px;
+	}
+	.select input[type=radio]{
+	    display: none;
+	}
+	.select input[type=radio]+label{
+	    display: inline-block;
+	    cursor: pointer;
+	    height: 24px;
+	    width: 90px;
+	    border: 1px solid #333;
+	    line-height: 24px;
+	    text-align: center;
+	    font-weight:bold;
+	    font-size:13px;
+	}
+	.select input[type=radio]+label{
+	    background-color: #fff;
+	    color: #333;
+	}
+	.select input[type=radio]:checked+label{
+	    background-color: #333;
+	    color: #fff;
+	}
+	
+	label{
+		display: block;
+	    margin-bottom: .5rem;
+	    color: #081828;
+	    font-size: 13px;
+	    font-weight: 500;
+	}
+	</style>
 </head>
-
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -55,7 +90,7 @@
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="main_index.html">
-								<img src="../Template Main//resources/assets/images/logo/로고2.png" alt="logo">
+								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -70,7 +105,7 @@
 							</form>
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -92,9 +127,6 @@
 	</header>
     <!-- End Header Area -->
 
-   
-    <!-- End Breadcrumbs -->
-
     <!-- Start Contact Area -->
     <section id="contact-us" class="contact-us section">
         <div class="container">
@@ -105,44 +137,47 @@
                             홈짐 예약하기😊
                         </h3>
                         <form class="form" method="post" action="/resources/assets/mail/mail.php">
-                            <div class="row">
-                                <div class="col-lg-6 col-12">
-                                    <div class="form-group">
-                                        <label>예약자 이름</label>
-                                        <input name="name" type="text" placeholder="이름을 입력해주세요." required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-12">
-                                    <div class="form-group">
-                                        <label>성별</label>
-                                        <input name="name" type="text" placeholder="성별을 입력해주세요." required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-12">
-                                    <div class="form-group">
-                                        <label>이메일 주소</label>
-                                        <input name="email" type="email" placeholder="이메일을 입력해주세요." required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-12">
-                                    <div class="form-group">
-                                        <label>전화번호</label>
-                                        <input name="phone" type="text" placeholder="전화번호를 입력해주세요." required="required">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group message">
-                                        <label>메세지📣</label>
-                                        <textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group button">
-                                        <button type="submit" class="btn " style="margin-left: 290px;">전송하기</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+							<div class="row">
+								<div class="col-lg-8 col-8 select">
+									<label>성별</label> 
+									<input type="radio" id='male' name='sex' value='M' ><label for="male">남</label>
+									<input type="radio" id='female' name='sex' value='F'><label for="female">여</label>
+								</div>
+								<div class="col-lg-10 col-10">
+									<div class="form-group">
+										<label>전화번호</label> <input name="phoneNum" type="text"
+											placeholder="전화번호를 입력해주세요." required="required">
+									</div>
+								</div>
+								<div class="col-lg-10 col-12">
+									<div class="form-group">
+										<label>예약가능날짜</label> <input type='date' id="rentalDate"
+											name='rentalDate' />
+									</div>
+								</div>
+								<div class="col-lg-5 col-12">
+									<div class="form-group">
+										<label>시작 시간 : </label> <input type='time' name='startTime' />
+									</div>
+								</div>
+								<div class="col-lg-5 col-12">
+									<div class="form-group">
+										<label>종료 시간 : </label> <input type='time' name='endTime'/><br>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group message">
+										<label>메세지📣</label>
+										<textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?"></textarea>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group button">
+										<button type="submit" class="btn" style="margin-left: 290px;">전송하기</button>
+									</div>
+								</div>
+							</div>
+						</form>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
@@ -154,8 +189,6 @@
                             <p class="no-margin-bottom">서울시 종로구 인사동
                             아이유하우스
                         </div>
-                        
-                   
                         <!-- End Single Info -->
                     </div>
                 </div>

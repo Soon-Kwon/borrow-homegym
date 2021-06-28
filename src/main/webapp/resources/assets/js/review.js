@@ -35,7 +35,8 @@
 		$.getJSON("/reviews/pages/" + hId + "/" + page + ".do",
 				function(data){
 			if(callback){
-				callback(data);
+				// 댓글 목록만 가져올 경우에 사용 callback(data);
+				callback(data.reviewCnt, data.list);
 			}
 		}).fail(function(xhr, status, err){
 			if(error){

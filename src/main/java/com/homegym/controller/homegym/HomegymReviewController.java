@@ -1,7 +1,5 @@
 package com.homegym.controller.homegym;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymReviewService;
 import com.homegym.biz.homegym.HomegymReviewVO;
+import com.homegym.biz.homegym.ReviewDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -46,8 +45,8 @@ public class HomegymReviewController {
 	
 	// 특정 게시물의 댓글목록 확인
 	@RequestMapping(value="/pages/{hId}/{page}.do", produces = {
-			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.GET)
-	public ResponseEntity<List<HomegymReviewVO>> getList
+			MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.GET)
+	public ResponseEntity<ReviewDTO> getList
 			(@PathVariable("page") int page, @PathVariable("hId") int hId){
 			
 		log.info("----------댓글 목록 가져오기-----------");
@@ -56,7 +55,7 @@ public class HomegymReviewController {
 		Criteria cri = new Criteria(page, 3);
 		log.info(cri);
 		
-		return new ResponseEntity<>(service.getList(cri, hId), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListWithPaging(cri, hId), HttpStatus.OK);
 	}
 	
 	// 댓글 정보 한 개만 가져오기

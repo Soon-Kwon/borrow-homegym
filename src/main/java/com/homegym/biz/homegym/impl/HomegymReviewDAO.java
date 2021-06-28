@@ -3,7 +3,6 @@ package com.homegym.biz.homegym.impl;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,4 +52,20 @@ public class HomegymReviewDAO {
 		
 		return mybatis.selectList("HomegymReviewDAO.getList", params);
 	}
+	
+	// 게시물에 등록된 리뷰 전체 리스트 조회 
+	public List<HomegymReviewVO> getListWithPaging(Criteria cri, int hId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("cri", cri);
+		params.put("hId", hId);
+		
+		return mybatis.selectList("HomegymReviewDAO.getListWithPaging", params);
+	}
+	
+	public int getCount(int hId) {
+		
+		return mybatis.selectOne("HomegymReviewDAO.getCount", hId);
+	}
+
 }

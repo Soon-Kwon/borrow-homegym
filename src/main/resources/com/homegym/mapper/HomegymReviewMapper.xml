@@ -15,10 +15,18 @@
 	</select>
 	
 	<select id="getList" resultType="com.homegym.biz.homegym.HomegymReviewVO">
-		select * from 
-		homegym_review 
+		select *
+		from homegym_review 
 		where h_id = #{hId} 
 		order by review_id asc
+	</select>
+	
+	<select id="getListWithPaging" resultType="com.homegym.biz.homegym.HomegymReviewVO">
+		select *
+		from homegym_review
+		where h_id = ${hId}
+		order by hr_updatedate desc 
+		LIMIT #{cri.amount} OFFSET #{cri.skip}
 	</select>
 	
 	<delete id="delete">
@@ -32,4 +40,10 @@
 		set hr_score = #{hrScore}, hr_content = #{hrContent}, hr_updatedate = DEFAULT
 		where review_id = #{reviewId}
 	</update>
+	
+	<select id="getCount" resultType="int">
+		select count(review_id)
+		from homegym_review
+		where h_id = #{hId}
+	</select>
 </mapper>
