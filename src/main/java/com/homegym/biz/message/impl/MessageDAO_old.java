@@ -14,18 +14,22 @@ import lombok.extern.log4j.Log4j;
 
 @Repository
 @Log4j
-public class MessageDAO {
+public class MessageDAO_old {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+	/* 로그인한 멤버 정보가져오기 */
+	public MemberVO getUser(String memberId) {
+		return sqlSession.selectOne("MemberDAO.getInfo", memberId);
+	}
 
 	/* 메세지 리스트(list) 가져오기 */
 	public ArrayList<MessageVO> getMessageAll(MessageVO vo) {
 		log.info("DAO의 getMessageAll();");
 
 		String curId = vo.getCurId();
-		System.out.println("curId : " + curId); // fromId
-
+		System.out.println("curId : " + curId);
 		// 메세지 리스트에 나타낼 정보들 가져오기 - 가장 최근 메세지, 보낸사람 프로필image, 보낸사람 id
 		ArrayList<MessageVO> list = (ArrayList) sqlSession.selectList("MessageDAO.getMessageAll", vo);
 
@@ -59,28 +63,21 @@ public class MessageDAO {
 	/* 채팅방별 메세지 내용 가져오기 */
 	public ArrayList<MessageVO> getMsgContentByRoom(MessageVO vo) {
 		log.info("DAO의 getMsgContentByRoom();");
-		String curId = vo.getCurId(); // fromId
 		System.out.println("msgRoomNo : " + vo.getMsgRoomNo());
 		System.out.println("recvId : " + vo.getRecvId()); // null
-		System.out.println("curId : " + curId);
+		System.out.println("curId : " + vo.getCurId()); // admin
+		String curId = vo.getCurId();
 
 		// 메세지 내역 가져오기
 		ArrayList<MessageVO> clist = (ArrayList) sqlSession.selectList("MessageDAO.getMsgContentByRoom", vo);
-		for (MessageVO mVo : clist) {
-			// 현재 로그인한 아이디set
-			mVo.setCurId(curId);
-			// 현재 사용자가 메세지를 주고받는 상대의 프로필 image가져오기
-			String image = sqlSession.selectOne("MessageDAO.getOtherImage", mVo);
-			// 상대방 프로필 이미지 set
-			mVo.setImage(image);
-
+		for (MessageVO cl : clist) {
 			// 현재 사용자와 메세지 주고받는 상대id set
-			if (curId.equals(mVo.getSendId())) {
-				mVo.setOtherId(mVo.getRecvId());
+			if (curId.equals(cl.getSendId())) {
+				cl.setOtherId(cl.getRecvId());
 			} else {
-				mVo.setOtherId(mVo.getSendId());
+				cl.setOtherId(cl.getSendId());
 			}
-			System.out.println("MessageDAO의 getMsgContentByRoom의 messageVO : " + mVo);
+			System.out.println("MessageDAO의 getMsgContentByRoom의 messageVO : " + cl);
 		}
 
 		// 해당 방의 메세지들 중 받는 사람이 현재 사용자의 curId인 메세지를 모두 읽음 처리
@@ -112,13 +109,6 @@ public class MessageDAO {
 
 		int flag = sqlSession.insert("MessageDAO.sendMsgInList", vo);
 		return flag;
-	}
-	
-	/* navbar에서 보여줄 안읽은 메세지 총 카운트 unread 세주기*/
-	public String msgCntAll(String curId) {
-		log.info("DAO의 msgCntAll();");
-		return sqlSession.selectOne("MessageDAO.countUnreadAll", curId);
-		
 	}
 
 }

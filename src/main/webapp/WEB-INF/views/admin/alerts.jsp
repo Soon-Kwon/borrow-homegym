@@ -24,7 +24,15 @@
     <!-- Custom styles for this page -->
     <link href="../../../resources/ad_assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	// 팝업창띄우기 
+	function winPopup() {
+		var popUrl = "../message/chat.do";
+		var popOption = "width=650px, height=550px, resizable=no, location=no, top=300px, left=300px;"
 
+		window.open(popUrl, "타이틀들어갈제목 ", popOption);
+	}
+</script>
 </head>
 
 <body id="page-top">
@@ -323,11 +331,9 @@
                                             <td>TR2021</td>
                                             <!-- <td>김태리</td> -->
                                             <td>2021.05.26</td>
-                                            <td>
-                                            	<button type="button" class="btn btn-outline-primary">
-                                            		<a href="#" data-toggle="modal" data-target="#replyModal">답변하기</a>
-                                            	</button>
-                                            </td>
+                                            <td><button type="button"
+													class="btn btn-outline-primary" onclick="winPopup();" data-toggle="modal"
+													data-target="#">답변하기</button></td>
                                         </tr>
                                         <tr>
                                             <td>1</td>

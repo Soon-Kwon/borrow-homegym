@@ -47,20 +47,20 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">관리자 로그인</h1>
                                     </div>
-                                    <form class="user" action="adIndex.do" method="post">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                    <form class="user" action="/message/msgMain.do" method="post">
+                                        <!-- <div class="form-group">
+                                            <input type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail1" aria-describedby="emailHelp"
                                                 placeholder="이메일을 입력해주세요">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="exampleInputText" aria-describedby="emailHelp"
+                                                name="memberId" aria-describedby="emailHelp"
                                                 placeholder="아이디를 입력해주세요">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="비밀번호를 입력해주세요">
+                                                name="password" placeholder="비밀번호를 입력해주세요">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
