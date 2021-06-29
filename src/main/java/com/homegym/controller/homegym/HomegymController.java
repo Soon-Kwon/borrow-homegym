@@ -53,7 +53,6 @@ public class HomegymController {
 		}
 		
 		homegymService.register(vo);
-		//rttr.addFlashAttribute("result", homegym.getHId());
 		return "OK";
 	}
 	
@@ -76,7 +75,6 @@ public class HomegymController {
 	@GetMapping("/homegymDetailView.do")
 	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
 			@RequestParam("hId") int hId ) {
-		
 		model.addAttribute("board", homegymService.get(vo, hId));
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";
@@ -118,14 +116,6 @@ public class HomegymController {
 		}
 		
 		return "ERROR";
-	}
-	
-	// 예약 페이지 보여주기
-	@GetMapping("/reservationView.do")
-	public String reservationView(Model model, @ModelAttribute("cri") Criteria cri, @RequestParam("hId") int hid) {
-		
-		log.info("예약하기: " + model);
-		return "/homegym/hg_reservation";
 	}
 	
 	// 첨부파일 리스트 요청시 작동 

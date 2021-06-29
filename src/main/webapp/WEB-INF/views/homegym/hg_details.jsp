@@ -520,7 +520,7 @@
 								<br>
 								<div class="row">
 								<input type="button" value="지금 예약하러 가기"
-								 onclick="location.href='/homegym/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
+								 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
 								<br /> <br />
 									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
 								</div>

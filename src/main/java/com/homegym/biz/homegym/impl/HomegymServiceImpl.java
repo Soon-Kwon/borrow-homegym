@@ -23,7 +23,7 @@ public class HomegymServiceImpl implements HomegymService{
 	@Autowired
 	private HomegymAttachDAO attachDAO;
 	
-	@Transactional // 첨부파일 + 게시글 등록 트랜잭션
+	@Transactional // 첨부파일 + 게시글 등록 트랜잭션 처리
 	public void register(HomegymVO vo) { 
 		
 		log.info("글 등록........(서비스 단계)" + vo);

@@ -136,7 +136,8 @@
                         <h3 class="title" ><span style="color: #2f3e83;">집에서 만나는 헬스장!</span>
                             홈짐 예약하기😊
                         </h3>
-                        <form class="form" method="post" action="/resources/assets/mail/mail.php">
+                        <form class="form" method="post" action="/details/reservation.do">
+                        <input type="hidden" name="hId" value="${hId }"/>
 							<div class="row">
 								<div class="col-lg-8 col-8 select">
 									<label>성별</label> 
@@ -157,7 +158,7 @@
 								</div>
 								<div class="col-lg-5 col-12">
 									<div class="form-group">
-										<label>시작 시간 : </label> <input type='time' name='startTime' />
+										<label>시작 시간 : </label> <input type='time' name='startTime' step='3600' />
 									</div>
 								</div>
 								<div class="col-lg-5 col-12">
