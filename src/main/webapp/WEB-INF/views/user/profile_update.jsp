@@ -23,16 +23,60 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/assets/css/animate.css" />
-    <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
 <style>
 /* 프로필 사진 */
+
+#uploadBtn{
+	position: absolute;
+    left: 200px;
+    width: 80px;
+}
+
+#delImg{
+    margin-left:270px;
+}
+#editImgBtn{
+    position: absolute;
+    width: 45px;
+    left: 300px;
+    top: 115px;
+}
+}
+.userphoto_menu label { 
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #999;
+	font-size: inherit;
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #fdfdfd;
+	cursor: pointer; 
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+ } 
+
+.userphoto_menu input[type="file"] { 
+/* 파일 필드 숨기기 */ 
+position: absolute;
+	 width: 1px; 
+	 height: 1px;
+	  padding: 0;
+	   margin: -1px; 
+	   overflow: hidden; 
+	   clip:rect(0,0,0,0);
+	    border: 0; 
+}
+
+
 
 .img {
   vertical-align: middle;
@@ -88,26 +132,29 @@
 <!-- 프로필 사진 업로드 -->
 <script>
 $(document).ready(function () {
-
     var readURL = function (input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 $('.avatar').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
     $(".file-upload").on('change', function () {
         readURL(this);
     });
     
-
 });
+/*  $("#imgFile").change(function(){
+	 readURL(this);
+ });  */
+ 
+ function delImg(){
+	 $("#img_section").removeAttr("src");
+ }
+ 
+
    
 </script>
 <!-- 회원 정보 수정 ajax -->
@@ -127,7 +174,7 @@ function deleteInfo() {
         $.ajax({
             type:'POST',
             data: JSON.stringify(data),
-            url:"/user/delete.do",
+            url:"/user/mypage/delete.do",
             dataType: "json",
             contentType: "application/json",
             success : function(data) {   
@@ -148,6 +195,7 @@ function deleteInfo() {
 }
 
 function updateInfo() {
+
 	var data = {memberId : $('input[name=memberId]').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
@@ -158,16 +206,38 @@ function updateInfo() {
 				address : $('input[name=address]').val()
 		}
 	
+	 var pw = $("#newPassword").val();
+	 var num = pw.search(/[0-9]/g);
+	 var eng = pw.search(/[a-z]/ig);
+	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	 var phone = /^\d{3}-\d{3,4}-\d{4}$/;
+
+
 	console.log(JSON.stringify(data));
 	
+	 if($('#phone').val() == '')  {
+	        alert("전화번호를 입력해주세요");
+	        $('#phone').focus();
+	        return false;
+	    }  
     if($('#password').val() == '')  {
         alert("정보 수정시 현재 비밀번호 입력은 필수입니다.");
         $('#password').focus();
         return false;
     }    
     if($('#newPassword').val() !=''){
-    	if($('#newPassword').val() != $('#rePassword').val() ) {
-    		alert("새 비밀번호가 서로 일치 하지 않습니다.다시 입력해주세요");
+	   	 if(pw.length < 8 || pw.length > 15){
+	   	  alert("8자리 ~ 15자리 이내로 입력해주세요.");
+	   	  return false;
+	   	 }else if(pw.search(/\s/) != -1){
+	   	  alert("비밀번호는 공백 없이 입력해주세요.");
+	   	  return false;
+	   	 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+	   	  alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+	   	  return false;
+	   	
+	   	 }else if($('#newPassword').val() != $('#rePassword').val() ) {
+    		alert("새 비밀번호가 서로 일치 하지 않습니다. 다시 입력해주세요");
     		$('#newPassword').val('');
     		$('#rePassword').val('');
     		$('#rePassword').focus();
@@ -175,17 +245,18 @@ function updateInfo() {
 
     	}
     }
+
     $.ajax({
         type:'POST',
         accept : "application/json",
         data: JSON.stringify(data),
-        url:"/user/update.do",
+        url:"/user/mypage/userImgDelete.do",
         dataType: "json",
         contentType : "application/json; charset:UTF-8",
         success : function(json) {   
         	if(json.resultCode=="Success"){
         		alert(json.resultMessage);
-
+				
         	}else{
         		alert(json.resultMessage);
         	}
@@ -197,6 +268,43 @@ function updateInfo() {
     })
        
 }
+$("#uploadBtn").click(function(e) {
+	e.preventDefault();
+	
+	var userImg = $("#userImg"). val();
+	
+	if(userImg == null || userImg ==""){
+		alert("업로드할 사진이 없습니다. 사진을 등록해주세요.");
+	}else{
+		$('#uploadBtn').submit();
+	}
+	
+});
+
+	function delImg(){
+
+		
+	    $.ajax({
+	        type:'POST',
+	        accept : "application/json",
+	        data: JSON.stringify(data),
+	        url:"/user/mypage/update.do",
+	        dataType: "json",
+	        contentType : "application/json; charset:UTF-8",
+	        success : function(json) {   
+	        	if(json.resultCode=="Success"){
+	        		alert(json.resultMessage);
+					
+	        	}else{
+	        		alert(json.resultMessage);
+	        	}
+	        },
+	        error: function(e) {
+	            //alert("ERROR : " + textStatus + " : " + errorThrown);
+	            console.log(e);
+	        }        
+	    })
+	}
 </script>
 
 <!-- 다음 우편번호 API -->
@@ -385,16 +493,36 @@ function execPostCode() {
                                 <div class="row" style="position: relative; right: 80px;">
                                     <div class="col-lg-15 " style="margin-left: 280px;">
                                         <!-- Start Single Feature -->
-                                        <div class="single-feature" style="padding: 20px">
-                                            <img src="../assets/images/mypage/2.jpg"
-                                                class="avatar img-circle img-thumbnail" alt="avatar" style="margin-left: 190px;">
-                                            <br>
-                                            <div style="text-align: center;">
-                                           		 <input type="file" class="text-center center-block file-upload" style="margin-left: 150px;">
-                                        	</div>
-                                        	
+                                      
+                                      
+                            		<div class="single-feature" style="padding: 20px">
+                            			<c:if test="${empty member.imagePath}">
+				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px;"></div>
+				                    	</c:if>
+				                    	<c:if test="${not empty member.imagePath}">
+				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 150px;"></div>
+				                    	</c:if>
+                            		
+                            		
+                            		<!-- 프로필이미지  -->
+                             <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
+	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
+	                        	<input name="memberId" type="hidden" value="silverbi99@naver.com"/>
+	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
+	                            <input type="file" name="file"  id="userImg" class="text-center center-block file-upload" id="userImg" style="margin-left: 150px; display:none;" > 
+	                            
+	                            <button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()" >업로드</button>
+	                            <button class="btn btn-outline-secondary" onclick="delImg()" id="delImg" type="button">삭제</button>
+	                            
+	                        </div>
+	                       
+	                        
+                        </form>
+                       
+                     
+                                     
                                      <!-- 폼 전송 -->      
-                   						 <form name="memberUpdate" id="memberUpdate" action="/user/update.do" method="post">
+                   						 <form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="userId">
@@ -535,485 +663,7 @@ function execPostCode() {
                 <!-- /End Features Area -->
 
 
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                        <div class="course-overview">
-
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-                        <div class="course-curriculum">
-                            <ul class="curriculum-sections">
-                                <li class="single-curriculum-section">
-                                    <div class="section-header">
-                                        <div class="section-left">
-
-                                            <h5 class="title">jQuery Effects</h5>
-
-                                        </div>
-                                    </div>
-                                    <ul class="section-content">
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">jQuery Effects: Hide and Show</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">30 min</span>
-                                                    <span class="item-meta item-meta-icon video">
-                                                        <i class="lni lni-video"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Live meeting about Infotech
-                                                    Strategies</span>
-                                                <div class="course-item-meta">
-                                                    <i class="lni lni-lock"></i>
-                                                    <span class="item-meta item-meta-icon zoom-meeting">
-                                                        <i class="lni lni-users"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 1: Yes or No?</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">3 questions</span>
-                                                    <span class="item-meta duration">15 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 2: A simple simulation game</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">0 question</span>
-                                                    <span class="item-meta duration">50 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 02: A/B Testing</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">02 hour</span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 3: Role-play game</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">1 question</span>
-                                                    <span class="item-meta duration">01 hour</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 4: Short Interview</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">9 questions</span>
-                                                    <span class="item-meta duration">10 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 03: Wrap up about A/B
-                                                    testing</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">30 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 5: 15 mins of Yes/No
-                                                    questions</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">3 questions</span>
-                                                    <span class="item-meta duration">10 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Quiz 6: Quick answers</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">0 question</span>
-                                                    <span class="item-meta duration">10 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="single-curriculum-section">
-                                    <div class="section-header">
-                                        <div class="section-left">
-
-                                            <h5 class="title">Customer Advisory Board</h5>
-                                            <p class="section-desc">Learn about the basics of Customer Advisory
-                                                Board</p>
-
-                                        </div>
-                                    </div>
-                                    <ul class="section-content">
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 04: Customer Advisory
-                                                    Board</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">30 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 05: The role of Customer Advisory
-                                                    Board</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">45 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 06: Customer Advisory Board
-                                                    Institutions</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">3 questions</span>
-                                                    <span class="item-meta duration">15 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Mid-term test : 60-min writing
-                                                    test</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">5 question</span>
-                                                    <span class="item-meta duration">01 hour</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li class="single-curriculum-section">
-                                    <div class="section-header">
-                                        <div class="section-left">
-
-                                            <h5 class="title">Feedback survey</h5>
-                                            <p class="section-desc">The major things about conducting a survey
-                                                and manage feedback</p>
-
-                                        </div>
-                                    </div>
-                                    <ul class="section-content">
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 07: The importance of customer
-                                                    feedback</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">30 min</span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 08: Customers’ roles</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">45 min</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link lesson" href="JavaScript:Void(0);">
-                                                <span class="item-name">Lesson 09: How to conduct the
-                                                    survey</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta duration">01 hour</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="course-item">
-                                            <a class="section-item-link" href="JavaScript:Void(0);">
-                                                <span class="item-name">Discussion: How to write good survey and
-                                                    poll questions?</span>
-                                                <div class="course-item-meta">
-                                                    <span class="item-meta count-questions">0 question</span>
-                                                    <span class="item-meta duration">01 hour</span>
-                                                    <span class="item-meta item-meta-icon">
-                                                        <i class="lni lni-lock"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="bottom-content">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="button">
-                                            <a href="#0" class="btn">Buy this course</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <ul class="share">
-                                            <li><span>Share this course:</span></li>
-                                            <li><a href="javascript:void(0)"><i
-                                                        class="lni lni-facebook-original"></i></a>
-                                            </li>
-                                            <li><a href="javascript:void(0)"><i
-                                                        class="lni lni-twitter-original"></i></a>
-                                            </li>
-                                            <li><a href="javascript:void(0)"><i
-                                                        class="lni lni-linkedin-original"></i></a>
-                                            </li>
-                                            <li><a href="javascript:void(0)"><i class="lni lni-google"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
-                        <div class="course-instructor">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="profile-image">
-                                        <img src="https://via.placeholder.com/270x340" alt="#">
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="profile-info">
-                                        <h5><a href="javascript:void(0)">Maggie Strickland</a></h5>
-                                        <p class="author-career">/Advanced Educator</p>
-                                        <p class="author-bio">Maggie is a brilliant educator, whose life was
-                                            spent for computer science and love of nature. Being a female, she
-                                            encountered a lot of obstacles and was forbidden to work in this
-                                            field by her family. With a true spirit and talented gift, she was
-                                            able to succeed and set an example for others.</p>
-
-
-                                        <ul class="author-social-networks">
-                                            <li class="item">
-                                                <a href="JavaScript:Void(0);" target="_blank" class="social-link">
-                                                    <i class="lni lni-facebook-original"></i> </a>
-                                            </li>
-                                            <li class="item">
-                                                <a href="JavaScript:Void(0);" target="_blank" class="social-link">
-                                                    <i class="lni lni-twitter-original"></i> </a>
-                                            </li>
-                                            <li class="item">
-                                                <a href="JavaScript:Void(0);" target="_blank" class="social-link">
-                                                    <i class="lni lni-instagram"></i> </a>
-                                            </li>
-                                            <li class="item">
-                                                <a href="JavaScript:Void(0);" target="_blank" class="social-link">
-                                                    <i class="lni lni-linkedin-original"></i> </a>
-                                            </li>
-                                            <li class="item">
-                                                <a href="JavaScript:Void(0);" target="_blank" class="social-link">
-                                                    <i class="lni lni-youtube"></i> </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom-content">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="button">
-                                        <a href="#0" class="btn">Buy this course</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <ul class="share">
-                                        <li><span>Share this course:</span></li>
-                                        <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a>
-                                        </li>
-                                        <li><a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a>
-                                        </li>
-                                        <li><a href="javascript:void(0)"><i class="lni lni-linkedin-original"></i></a>
-                                        </li>
-                                        <li><a href="javascript:void(0)"><i class="lni lni-google"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                        <div class="course-reviews">
-                            <div class="course-rating">
-                                <div class="course-rating-content">
-                                    <!-- Comments -->
-                                    <div class="post-comments">
-                                        <h3 class="comment-title">Reviews</h3>
-                                        <ul class="comments-list">
-                                            <li>
-                                                <div class="comment-img">
-                                                    <img src="https://via.placeholder.com/100x100" alt="img">
-                                                </div>
-                                                <div class="comment-desc">
-                                                    <div class="desc-top">
-                                                        <h6 class="name"><a href="JavaScript:Void(0);">Rosalina
-                                                                Kelian</a>
-                                                        </h6>
-                                                        <ul class="rating-star">
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                        </ul>
-                                                        <p class="time">1 days ago</p>
-                                                    </div>
-                                                    <p>
-                                                        Donec aliquam ex ut odio dictum, ut consequat leo interdum.
-                                                        Aenean nunc
-                                                        ipsum, blandit eu enim sed, facilisis convallis orci. Etiam
-                                                        commodo
-                                                        lectus
-                                                        quis vulputate tincidunt. Mauris tristique velit eu magna
-                                                        maximus
-                                                        condimentum.
-                                                    </p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="comment-img">
-                                                    <img src="https://via.placeholder.com/100x100" alt="img">
-                                                </div>
-                                                <div class="comment-desc">
-                                                    <div class="desc-top">
-                                                        <h6 class="name"><a href="JavaScript:Void(0);">Arista
-                                                                Williamson</a>
-                                                        </h6>
-                                                        <ul class="rating-star">
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                            <li><i class="lni lni-star-filled"></i></li>
-                                                        </ul>
-                                                        <p class="time">5 days ago</p>
-                                                    </div>
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                        sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                        ad minim
-                                                        veniam.
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="comment-form">
-                                        <h3 class="comment-reply-title">Add a review</h3>
-                                        <form action="#" method="POST">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-12 col-12">
-                                                    <div class="form-box form-group">
-                                                        <input type="text" name="#"
-                                                            class="form-control form-control-custom"
-                                                            placeholder="Your Name" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-box form-group">
-                                                        <input type="email" name="#"
-                                                            class="form-control form-control-custom"
-                                                            placeholder="Your Email" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-box form-group">
-                                                        <textarea name="#" rows="6"
-                                                            class="form-control form-control-custom"
-                                                            placeholder="Your Comments"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="button">
-                                                        <button type="submit" class="btn">Submit review<span
-                                                                class="dir-part"></span></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+               
             <!-- End Course Details Wrapper -->
 
         </div>
@@ -1059,11 +709,13 @@ function execPostCode() {
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources./assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
+    
+
 </body>
 </html>

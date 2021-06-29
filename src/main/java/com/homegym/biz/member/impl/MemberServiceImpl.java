@@ -1,5 +1,6 @@
 package com.homegym.biz.member.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.homegym.biz.homegym.HomegymVO;
+import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
@@ -26,6 +28,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 내가 빌린 홈짐 갯수 
+	@Override
+	public int getRentHomeGymCnt(String memberId) {
+		return memberDAO.getRentHomeGymCnt(memberId);
+	}
+
 	
 	
 	// 내가 빌려준 홈짐 갯수
@@ -60,6 +67,19 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	//회원이미지 업로드
+	@Override
+	public void userImgUpload(HashMap<String, Object> paramMap) {
+		memberDAO.userImgUpload(paramMap);
+	}
+	
+	//프로필 이미지 삭제
+	@Override
+	public int userImgDelete(String memberId) {
+		return memberDAO.userImgDelete(memberId);
+		
+	}
+
 	// 회원 탈퇴 처리
 	@Override
 	public int memberDelete(MemberVO vo) {
@@ -76,17 +96,37 @@ public class MemberServiceImpl implements MemberService{
 	
 	/* 내 홈짐 활동 내역 */
 	
-	//내가 빌려준 홈짐 조회
+	
+	//수락 대기중인 홈짐
 	@Override
-	public List<HomegymVO> getMyLendHomegym(String memberId) {
-		return memberDAO.getMyLendHomegym(memberId);
+	public List<HomegymVO> getMyWaitingHG(String memberId,Criteria cri) {
+		return memberDAO.getMyWaitingHG(memberId, cri);
 	}
 	
-	//내가 빌린 홈짐 조회
+	//내가 빌려준 홈짐 조회 (페이징)
 	@Override
-	public List<HomegymVO> getMyRentHomegym(String memberId) {
-		return memberDAO.getMyRentHomegym(memberId);
+	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri) {
+		return memberDAO.getLendHGPaging(memberId,cri);
 	}
+
+	//내가 빌린 홈짐 조회 (페이징)
+	@Override
+	public List<Map<String, String>> getRentdHGPaging(String memberId,Criteria cri) {
+		return memberDAO.getRentdHGPaging(memberId,cri);
+	}
+	
+	//진행중인 홈짐 조회
+	@Override
+	public List<HomegymVO> getMyProgressHomegym(String memberId,Criteria cri) {
+		return memberDAO.getMyProgressHomegym(memberId,cri);
+	}
+	
+	//완료된 홈짐 조회
+//	@Override
+//	public List<HomegymVO> getMyFinishedHomegym(String memberId) {
+//		return memberDAO.getMyFinishedHomegym(memberId);
+//	}
+
 
 	
 	/* 홈짐 수락 여부 변경*/
@@ -103,6 +143,20 @@ public class MemberServiceImpl implements MemberService{
 	public List<TrainerBoardVO> getMyBoardList(String memberId) {
 		return memberDAO.getMyBoardList(memberId);
 	}
+
+
+
+
+
+
+
+//	@Override
+//	public List<HomegymVO> getMyFinishedHomegym(String memberId) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
 
 
 

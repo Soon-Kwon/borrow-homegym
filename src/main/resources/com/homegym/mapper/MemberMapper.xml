@@ -3,22 +3,36 @@
 <mapper namespace = "MemberDAO">
 
 	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
-	<select id="getInfo" resultType="memberVO" parameterType="String">
-		SELECT * 
+	<select id="getInfo" resultType="member" parameterType="String">
+		SELECT memberId,
+			   auth,
+			   name,
+			   image as imagePath
 		FROM member
 		WHERE memberId= #{memberId}
 	</select>
 	
 	<!-- 마이페이지 회원정보 수정 페이지 -->
-	<select id="getMyPageInfo" resultType="memberVO" parameterType="String">
-		SELECT * 
+	<select id="getMyPageInfo" resultType="member" parameterType="String">
+		SELECT memberId,
+			   password, 
+			   name,
+		       phone,
+		       zipCode,
+		       nickName,
+		       address,
+		       image as imagePath,
+		       birth,
+		       gender,
+		       auth,
+		       userThumbImg
 		FROM member
 		WHERE memberId= #{memberId}
 	</select>
 	
 
 	<!-- 회원정보 수정 처리 -->
-	<update id="memberUpdate" parameterType="memberVO">
+	<update id="memberUpdate" parameterType="member">
 		UPDATE member
 		SET
 		<choose> 
@@ -38,8 +52,26 @@
 				memberId = #{memberId}
 	</update>
 	
+	<!-- 마이페이지 프로필 이미지 등록 -->
+	<update id="userImgUpload" parameterType="HashMap">
+		UPDATE member
+		SET
+	     IMAGE = #{imagePath}, 
+	     userThumbImg = #{userThumbImg}
+	    WHERE 
+	    	memberId=#{memberId}
+	</update>
+	
+	<!-- 마이페이지 프로필 이미지 삭제-->
+	<update id="userImgDelete">
+		UPDATE member
+		SET
+			IMAGE = null
+		WHERE 
+			memberId =#{memberId}
+	</update>
 	<!-- 회원 탈퇴  처리-->
-	<delete id="memberDelete"  parameterType="memberVO">
+	<delete id="memberDelete"  parameterType="member">
 		DELETE 
 		FROM member 
 		WHERE
@@ -55,6 +87,12 @@
 	</select>
 	
 	<!-- 내가 빌린 홈짐 갯수 -->
+	<select id="getRentHomeGymCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM homegym_detail
+		WHERE lend_memberId= #{memberId}
+	</select>
 	
 	<!-- 내가 빌려준 홈짐 갯수 -->
 	<select id="getLendHomeGymCnt" resultType="int">
@@ -76,7 +114,7 @@
 	</select> 
 	
 	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardList" resultType="trainerVO" parameterType="String">
+	<select id="getMyBoardList" resultType="trainer" parameterType="String">
 		SELECT *
 		FROM trainer_board
 		WHERE memberId= #{memberId}
@@ -85,30 +123,103 @@
 	</select>
 	
 	
-	<!-- 내가 빌려준 홈짐 리스트-->
-	<select id="getMyLendHomegym" resultType="homegymVO" parameterType="String">
+	<!-- 수락 대기중인 홈짐 -->
+	<select id="getMyWaitingHG" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board 
 		WHERE memberId = #{memberId}
-			AND status = 'ready';
+			AND status = 'ready' ;
 
 	</select>
 	
-	<!-- 내가 빌린 홈짐 리스트-->
-	<select id="getMyRentHomegym" resultType="homegymVO" parameterType="String">
+	<!-- 내가 빌려준 홈짐 리스트 -->
+	<select id="getMyLendHG" resultType="homegymVO" parameterType="String">
 		SELECT *
+		FROM homegym_board
+		WHERE memberId = #{memberId}
+	</select>
+	
+	<!-- 내가 빌린 홈짐 리스트-->
+	<select id="getMyRentHG" resultType="hashmap" parameterType="String">
+		SELECT b.*, d.*
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
 		WHERE lend_memberId= #{memberId}
 
 	</select>
 	
-	<update id="HomegymAcceptUpdate" parameterType="hashmap">
-		UPDATE homegym_board
+	<!-- 진행중인 홈짐 리스트 -->
+	<select id="getMyProgressHomegym" resultType="homegymVO" parameterType="String">
+		SELECT *
+		FROM homegym_board b INNER JOIN homegym_detail d
+		ON b.h_id = d.h_id
+		WHERE memberId = #{memberId} OR lend_memberId = #{memberId} 
+			AND status = 'ing'
+	</select>
+	
+	<!-- 완료된 홈짐 리스트 -->
+<!-- 	<select id="getMyFinishedHomegym" resultType="homegymVO" parameterType="String">
+		SELECT
+		FROM
+		ON
+		WHERE
+	</select> -->
+	
+	<!-- 홈짐 수락여부 상태값 변경 -->
+	<update id="HomegymAcceptUpdate" parameterType="HashMap" >
+		UPDATE 
+			homegym_board
 		SET
-	     acceptYN = #{status}
+	    	acceptYN = #{status}
 		WHERE
 			h_id = #{hId}
 	</update>
+	
+	<!-- 활동내역 수락한 홈짐 리스트 페이징 -->
+	<select id="getHomegymWithPaging" resultType="homegymVO">
+  	<![CDATA[
+  		SELECT *
+  		FROM (
+  				SELECT *
+				FROM homegym_board 
+				WHERE memberId = #{memberId}
+					AND status = 'ready'
+				ORDER BY h_id desc
+			)as h1
+  		LIMIT #{cri.skip},#{cri.amount}
+  				
+  ]]>
+	
+	</select>
 
+	<!-- 빌려준 홈짐 리스트 페이징   -->
+	<select id="getLendHGPaging" resultType="homegymVO">
+  	<![CDATA[
+  		SELECT *
+  		FROM (
+  				SELECT *
+				FROM homegym_board
+				WHERE memberId = #{memberId}
+				ORDER BY h_id desc
+			)as h1
+  		LIMIT #{cri.skip}, #{cri.amount}
+  				
+  ]]>
+	</select>
+	
+	<!-- 빌린 홈짐 리스트 페이징 -->
+		<select id="getRentdHGPaging" resultType="HashMap">
+  	<![CDATA[
+  		SELECT *
+  		FROM (
+  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN
+				FROM homegym_board b INNER JOIN homegym_detail d
+				ON b.h_id = d.h_id
+				WHERE lend_memberId= #{memberId}
+			)as h2
+  		LIMIT #{cri.skip}, #{cri.amount}
+  				
+  ]]>
+	</select>
+	
 </mapper>
