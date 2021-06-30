@@ -64,17 +64,19 @@ public class NoticeHandler extends TextWebSocketHandler { // text방식
 	}
 
 	// 연결 해제 
-	@Override
-	public void afterConnectionClosed(WebSocke+tSession session, CloseStatus status) throws Exception{
-		
-	}
-	
-	// 소켓에 메시지 전송시
-	@Override
-	protected void handleTextMessage(WebSocketSession session, CloseStatus status) throws Exception{
-		System.out.println("afterConnectionClosed" + session + ", " + status);
-		userSessionsMap
-	}
+	/*
+	 * @Override public void afterConnectionClosed(WebSocke+tSession session,
+	 * CloseStatus status) throws Exception{
+	 * 
+	 * }
+	 * 
+	 * // 소켓에 메시지 전송시
+	 * 
+	 * @Override protected void handleTextMessage(WebSocketSession session,
+	 * CloseStatus status) throws Exception{
+	 * System.out.println("afterConnectionClosed" + session + ", " + status);
+	 * userSessionsMap }
+	 */
 	
 	// 웹소켓 email(id)가져오기
 	private String getEmail(WebSocketSession session) {
