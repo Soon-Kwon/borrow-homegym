@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.homegym.biz.homegym.HomegymVO;
+import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 
@@ -37,6 +38,16 @@ public class MemberDAO {
 	//마이페이지 회원 정보 수정하기
 	public int memberUpdate(MemberVO vo) {
 		return sqlsession.update("MemberDAO.memberUpdate", vo);
+	}
+	
+	//프로필 이미지 등록
+	public void userImgUpload(HashMap<String, Object> paramMap) {
+		 sqlsession.update("MemberDAO.userImgUpload",paramMap);
+	}
+	
+	//프로필 이미지 삭제
+	public int userImgDelete(String memberId) {
+		return sqlsession.delete("MemberDAO.userImgDelete",memberId);
 	}
 	
 	//회원 탈퇴
@@ -80,7 +91,11 @@ public class MemberDAO {
 	public int getLendHomeGymCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt",memberId);
 	}
+	
 	//내가 빌린 홈짐 수
+	public int getRentHomeGymCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getRentHomeGymCnt",memberId);
+	}
 	
 	//내가 쓴 게시글 갯수 
 	public int getMyAllBoardCnt(String memberId) {
@@ -90,16 +105,48 @@ public class MemberDAO {
 	
 	/*마이페이지 활동 내역*/
 	
+	//수락 대기중인 홈짐 수 
+	public int getWaingHomegymCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getWaingHomegymCnt",memberId);
+	}
+	
+	// 수락 대기중인 홈짐 페이징
+	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri){
+		Map<String,Object> map = new HashMap<String,Object>();
+
+			map.put("memberId",memberId);
+			map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getWaitingHGPaging",map);
+	}
+	
 	//내가 빌려준 홈짐
-	public List<HomegymVO> getMyLendHomegym(String memberId){
-		return sqlsession.selectList("MemberDAO.getMyLendHomegym",memberId);
+	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri){
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("memberId",memberId);
+		map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getLendHGPaging",map);
 	}
 	
 	//내가 빌린 홈짐
-	public List<HomegymVO> getMyRentHomegym(String memberId){
-		return sqlsession.selectList("MemberDAO.getMyRentHomegym",memberId);
+	public List<Map<String, String>> getRentdHGPaging(String memberId,Criteria cri){
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("memberId",memberId);
+		map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getRentdHGPaging",map);
 	}
 	
+	//진행중인 홈짐
+	public List<HomegymVO> getMyProgressHomegym(String memberId,Criteria cri){
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("memberId",memberId);
+		map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getMyProgressHomegym",map);
+	}
+	
+
 	//홈짐 수락 거절 상태 변화
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate",paramMap);

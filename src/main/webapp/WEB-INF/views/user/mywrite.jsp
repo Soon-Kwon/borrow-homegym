@@ -24,12 +24,12 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/assets/css/animate.css" />
-    <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 </head>
 
@@ -61,7 +61,7 @@
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="main_index.html">
-                            <img src="/assets/images/logo/로고2.png" alt="logo">
+                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -165,11 +165,7 @@
                                 data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
                                 aria-selected="true">게시글</button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
-                                data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum"
-                                aria-selected="false">댓글</button>
-                        </li>
+                      
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
                                 data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
@@ -185,98 +181,39 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover" style="text-align: center; line-height: 35px;">
                                         <thead class="thead-light">
-                                        <tr>
-                                            <th>게시글번호</th>
-                                            <th>게시글제목</th>
-                                            <th>작성자</th>
-                                            <th>작성일</th>
-                                        </tr>
+	                                        <tr>
+	                                            <th>게시글번호</th>
+	                                            <th>게시글제목</th>
+	                                            <th>작성자</th>
+	                                            <th>작성일</th>
+	                                        </tr>
                                         </thead>
-                                      <tbody>
-                                    <c:choose>
-                                    	<c:when test ="${fn:length(board)==0}">
-                                    	<div style="font-size: 20px">
-                                    		<tr>
-												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 게시글이 없습니다.😥</p></td>
-											</tr>
-											
-										</div>
-                                    	</c:when>
-                                    	<c:otherwise>
-                                    		<c:forEach var="board" items="${board}" varStatus="status">
-		                                    	<tr>
-		                                            <td>${board.tno}</td>
-		                                            <td><a href="course-details.html">${board.TContent}</a></td>
-		                                            <td>${board.memberId}</td>
-		                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
-		                                        </tr>
-                                    		</c:forEach>
-                                    	</c:otherwise>
-                                    </c:choose>
-                                </tbody>
+                                      	<tbody>
+                                   		<c:choose>
+                                    		<c:when test ="${fn:length(board)==0}">
+                                    			<div style="font-size: 20px">
+                                    				<tr>
+														<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 게시글이 없습니다.😥</p></td>
+													</tr>
+												</div>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<c:forEach var="board" items="${board}" varStatus="status">
+			                                    	<tr>
+			                                            <td>${board.tno}</td>
+			                                            <td><a href="course-details.html">${board.TContent}</a></td>
+			                                            <td>${board.memberId}</td>
+			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
+			                                        </tr>
+                                    			</c:forEach>
+                                    		</c:otherwise>
+                                    	</c:choose>
+                                		</tbody>
                                     </table>
                                 </div> 
-                                  <!-- <div class="bottom-content"> -->
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <div class="button" style="width: 200px; margin: 20px auto 0 auto; col">
-                                                <a href="" class="btn">게시글 쓰러가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <!-- </div> -->
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-                            <div class="course-curriculum">
-            
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" style="text-align: center; line-height: 35px;">
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    <th>댓글번호</th>
-                                                    <th>댓글제목</th>
-                                                    <th>작성자</th>
-                                                    <th>작성일</th>
-                                                </tr>
-                                                </thead>
-                                                  <tbody>
-                                    <c:choose>
-                                    	<c:when test ="${fn:length(borad)==0}">
-                                    	<div style="font-size: 20px">
-                                    		<tr>
-												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 댓글이 없습니다.😥</p></td>
-											</tr>
-											
-										</div>
-                                    	</c:when>
-                                    	<c:otherwise>
-                                    		<c:forEach var="board" items="${board}" varStatus="status">
-		                                    	<tr>
-		                                            <td>4</td>
-		                                            <td><a href="course-details.html">${board.tbTitle}</a></td>
-		                                            <td>김영광</td>
-		                                            <td>${board.tRegDate}</td>
-		                                        </tr>
-                                    		</c:forEach>
-                                    	</c:otherwise>
-                                    </c:choose>
-                                </tbody>
-                                                
-                                            </table>
-                                        </div>            
-                                    </div>
-                                    <!-- <div class="bottom-content"> -->
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-12 col-md-12 col-12">
-                                                    <div class="button" style="width: 200px; margin: 20px auto 0 auto; col">
-                                                        <a href="href="course-details.html" class="btn">댓글 쓰러 가기</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <!-- </div> -->
-                            
-                        </div>
+       
                         <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                             <div class="course-instructor">
                                 <div class="row">
@@ -285,14 +222,14 @@
                                             <thead class="thead-light">
                                             <tr>
                                                 <th>리뷰번호</th>
-                                                <th>리뷰제목</th>
+                                                <th>리뷰내용</th>
                                                 <th>작성자</th>
                                                 <th>작성일</th>
                                             </tr>
                                             </thead>
                                               <tbody>
                                     <c:choose>
-                                    	<c:when test ="${fn:length(borad)==0}">
+                                    	<c:when test ="${fn:length(review)==0}">
                                     	<div style="font-size: 20px">
                                     		<tr>
 												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
@@ -304,9 +241,9 @@
                                     		<c:forEach var="board" items="${board}" varStatus="status">
 		                                    	<tr>
 		                                            <td>4</td>
-		                                            <td><a href="course-details.html">${board.tbTitle}</a></td>
+		                                            <td><a href="course-details.html">너무 좋아요!!</a></td>
 		                                            <td>김영광</td>
-		                                            <td>${board.tRegDate}</td>
+		                                            <td>날짜</td>
 		                                        </tr>
                                     		</c:forEach>
                                     	</c:otherwise>
@@ -377,12 +314,12 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
 </body>
 
 </html>
