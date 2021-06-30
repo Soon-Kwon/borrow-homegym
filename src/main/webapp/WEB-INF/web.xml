@@ -29,12 +29,12 @@
 		<!-- 웹소켓을 위한 설정(비동기지원), 동시에데이터 전송받기위함, 1대 다통신 -->
 		<async-supported>true</async-supported>
 		
-		<multipart-config>
+	<!-- 	<multipart-config>
 			<location>/Users/soon/Desktop/upload</location>
 			<max-file-size>20971520</max-file-size>
 			<max-request-size>41943040</max-request-size>
 			<file-size-threshold>20971520</file-size-threshold>
-		</multipart-config>
+		</multipart-config> -->
 	</servlet>
 		
 	<servlet-mapping>

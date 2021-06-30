@@ -32,9 +32,15 @@
 	
 	<context:component-scan base-package="com.homegym.controller" />
 	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+<!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean> -->
+	
+	 <!-- 업로드 패스 설정 (eunbi)-->
+	<beans:bean class="java.lang.String" id="uploadPath">
+		<beans:constructor-arg value="C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources"/>
 	</beans:bean>
 	
+
 	<!-- websocket-handler등록, 클라이언트 관리위함 -->
 	<websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="webSocketHandler"
@@ -52,5 +58,15 @@
 	<!-- 이 속성을 이용해 핸들러로 처리할 클래스 참조 -->
 	<beans:bean id="webSocketHandler"
 		class="com.homegym.biz.common.WebSocketHandler"></beans:bean>
+
+	<!-- 일반 파일 업로드 -->
+	<resources mapping="/imgUpload/**" location="/resources/imgUpload/"/>
+	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <beans:property name="maxUploadSize" value="10485760"/>
+  	</beans:bean>
+
+	
+
 	
 </beans:beans>
