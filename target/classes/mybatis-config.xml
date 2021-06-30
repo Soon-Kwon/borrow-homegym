@@ -24,10 +24,7 @@
 		<mapper resource="com/homegym/mapper/HomegymDetailMapper.xml"/>
 		<mapper resource="com/homegym/mapper/MemberMapper.xml"/>
 		<mapper resource="com/homegym/mapper/MessageMapper.xml" />
-<<<<<<< HEAD
 		<mapper resource="com/homegym/mapper/TrainerBoardMapper.xml"/>
-=======
->>>>>>> 9e45ed2 (6월 26일 오후 1시 / 홈짐 게시판 페이지 이동 연결 완료)
 	</mappers>
 	
 </configuration>
