@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,25 +32,43 @@ import lombok.Setter;
 
 
 @Controller
-@RequestMapping("/member/*")
+@RequestMapping("/user/*")
 public class MemberController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder pwencoder;
 	
+	// 로그
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private MemberService memberService;
 	
-	// 로그인 이동
-	@GetMapping("/login")
-	public String login() {
-		return "user/login";
+	// 로그인 접속 
+	@GetMapping("/loginpage")
+	public String loginInput(String error, String logout, Model model) {
+		logger.info("error: " + error);
+		logger.info("logout: " + logout);
+		
+		if (error != null) {
+			model.addAttribute("error", "등록되지 않은 아이디나 비밀번호 입니다. 다시 입력해주세요.");
+		}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "로그아웃 되었습니다!");
+		}
+		
+		return "user/loginpage";
+	}
+	
+	// 회원가입 이동
+	@GetMapping("/registration")
+	public String registration() {
+		return "user/registration";
 	}
 
-	//회원가입
-	@RequestMapping(value="/join", method=RequestMethod.POST)
+	// 회원가입 진행
+	@RequestMapping(value="/join", method=RequestMethod.POST, produces="text/plain; charset=UTF-8")
 	public String joinPOST(MemberVO member) throws Exception{
 			
 		logger.info("join 진입");
@@ -60,24 +79,65 @@ public class MemberController {
 		member.setPassword(password);
 		
 		memberService.memberJoin(member);
-		memberService.insertMemberAuth(member);
 		
 		logger.info("join Service 성공");
 		return "redirect:/index.jsp";
 		}
 	
-	// 회원가입 이동
-	@GetMapping("/registration")
-	public String registration() {
-		return "user/registration";
-	}
+	// 아이디 중복 체크
+	@ResponseBody
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	//메시지 전달을 위해 리턴 타입 String으로 변환
 	
-	// 로그아웃 이동
-	@RequestMapping("/logout.do")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "login.jsp";
-	}
+	public String idCheck(@RequestBody String memberId) throws Exception {
+		
+		//이메일 확인
+		System.out.println(memberId);
+		/* email 확인 후 email일 null 일 때는 paramMap으로 매개변수 수정하시고
+		String email = paramMap.get("email");
+		*/
+        
+        int count = 0;
+        count = memberService.idCheck(memberId);
+        System.out.println(count);
+		
+		if(count == 0) {
+			return "OK";
+		} else {
+			return "FAIL";
+		} 
+    }
+	
+	// 닉네임 중복 체크
+		@ResponseBody
+		@RequestMapping(value = "/nickCheck", method = RequestMethod.POST)
+		//메시지 전달을 위해 리턴 타입 String으로 변환
+		
+		public String nickCheck(@RequestBody String nickname) throws Exception {
+			
+			//이메일 확인
+			System.out.println(nickname);
+			/* email 확인 후 email일 null 일 때는 paramMap으로 매개변수 수정하시고
+			String email = paramMap.get("email");
+			*/
+	        
+	        int count = 0;
+	        count = memberService.nickCheck(nickname);
+	        System.out.println(count);
+			
+			if(count == 0) {
+				return "OK";
+			} else {
+				return "FAIL";
+			} 
+	    }
+
+//	// 로그아웃 이동
+//	@RequestMapping("/logout.do")
+//	public String logout(HttpSession session) {
+//		session.invalidate();
+//		return "login.jsp";
+//	}
 	
 
 	/* 마이페이지 메인  이동 */

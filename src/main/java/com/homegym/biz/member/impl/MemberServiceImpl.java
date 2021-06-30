@@ -10,25 +10,37 @@ import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
 import lombok.AllArgsConstructor;
 
-@Service
+@Service//memberService
 @AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberDAO memberDAO;
-
+	
+	// 회원가입
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
 		memberDAO.memberJoin(member);
 	}
 	
+	// 아이디 중복 체크
 	@Override
-	public void insertMemberAuth(MemberVO member) throws Exception {
-		memberDAO.insertMemberAuth(member);
+	public int idCheck(String memberId) throws Exception {
+		int result = memberDAO.idCheck(memberId);
+		return result;
 	}
+	
+	// 닉네임 중복 체크
+	@Override
+	public int nickCheck(String nickname) throws Exception {
+		int result = memberDAO.nickCheck(nickname);
+		return result;
+	}
+	
 	/*  마이페이지 메인 프로필 정보*/
 	
 	// 내 프로필 조회
@@ -107,8 +119,6 @@ public class MemberServiceImpl implements MemberService {
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return memberDAO.HomegymAcceptUpdate(paramMap);
 	}
-
-	
 	
 	/*  내 게시글 , 댓글, 리뷰 내역  */
 	// 내가 쓴 게시글 조회 

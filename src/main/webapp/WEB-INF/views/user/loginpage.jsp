@@ -53,65 +53,9 @@
 	</div>
 	<!-- /End Preloader -->
 
-	<header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="/index.jsp"> <img
-								src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span> <span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search"
-									placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="lni lni-search-alt"></i>
-								</button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar"
-								id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a
-										href="location.html">
-											<h5>홈짐</h5>
-									</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a
-										href="community.html">
-											<h5>트레이너</h5>
-									</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img
-										src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="mp_main.jsp">
-											<h5>아이유님</h5>
-									</a></li>
-								</ul>
-							</div>
-							<!-- navbar collapse -->
-						</nav>
-						<!-- navbar -->
-					</div>
-				</div>
-			</div>
-			<!-- row -->
-		</div>
-		<!-- container -->
-	</header>
-	<!-- End Header Area -->
-	<!-- End Header Area -->
+	<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
-	<!-- Start Breadcrumbs -->
-
-	<!-- End Breadcrumbs -->
 
 	<!-- start login section -->
 	<section class="blacnk">
@@ -146,14 +90,14 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<div class="button">
-								<button type="submit" class="btn" href="/index">LogIn</button>
+								<button type="submit" class="btn">LogIn</button>
 							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
 								<a href="/user/registration.do">회원가입 하기</a>
 							</p>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</div>
 				</div>

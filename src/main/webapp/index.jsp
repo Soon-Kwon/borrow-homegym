@@ -48,80 +48,9 @@
         </div>
     </div>
     <!-- /End Preloader -->
-
-    <!-- Start Header Area -->
-    <header class="header style2 navbar-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                <div class="nav-inner">
-                    <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="/index.jsp">
-                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
-                        </a>
-                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-                        <form class="d-flex search-form">
-                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i
-                                    class="lni lni-search-alt"></i></button>
-                        </form>
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                            <ul id="nav" class="navbar-nav ms-auto">
-                           		<sec:authorize access="isAnonymous()">
-                                <!-- <a class="circle-image" href="user/mp_main.do">
-                                    <img src="https://via.placeholder.com/500x500" alt="logo">
-                                </a>  -->
-                                <li class="nav-item"><a href="/user/login">로그인</a></li>
-                                <li class="nav-item"><a>|</a></li>
-                                <li class="nav-item"><a href="/user/registration">회원가입</a></li>
-                                </sec:authorize>
-                                <sec:authorize access="hasRole('ROLE_MEMBER')">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">
-											<h5>홈짐</h5>
-									</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-									</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img
-										src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="/mp_main.jsp">
-											<h5><sec:authentication property="principal.username"/>님</h5>
-									</a></li>
-								
-								</sec:authorize>
-								<sec:authorize access="hasRole('ROLE_ADMIN')">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">
-											<h5>홈짐</h5>
-									</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-									</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img
-										src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="/mp_main.jsp">
-											<h5><sec:authentication property="principal.username"/>님</h5>
-									</a></li>
-								</ul>
-								</sec:authorize>
-							</div>
-                            </ul>
-                        </div> <!-- navbar collapse -->
-                    </nav> <!-- navbar -->
-                </div>
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </header>
-    <!-- End Header Area -->
+	
+	<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Hero Area -->
     <section class="hero-area style2">

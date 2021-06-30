@@ -12,9 +12,11 @@ public interface MemberService {
 	//회원가입
     public void memberJoin(MemberVO member) throws Exception;
     
-    public void insertMemberAuth(MemberVO member) throws Exception;
-    
-
+    //아이디 중복 체크
+  	public int idCheck(String memberId) throws Exception;
+  	
+    //닉네임 중복 체크
+  	public int nickCheck(String nickname) throws Exception;
 
 	//프로필 정보가져오기
 	public MemberVO getUser(String memberId);
