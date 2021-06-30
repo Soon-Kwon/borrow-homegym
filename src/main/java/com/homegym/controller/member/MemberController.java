@@ -37,7 +37,7 @@ import lombok.Setter;
 
 
 @Controller
-@RequestMapping("/member/*")
+@RequestMapping("/user/*")
 public class MemberController {
 	
 	@Setter(onMethod_ = @Autowired)
