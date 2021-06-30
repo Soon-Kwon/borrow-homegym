@@ -153,17 +153,17 @@
 								<div class="col-lg-10 col-12">
 									<div class="form-group">
 										<label>예약가능날짜</label> <input type='date' id="rentalDate"
-											name='rentalDate' />
+											name='rentalDate' required />
 									</div>
 								</div>
 								<div class="col-lg-5 col-12">
 									<div class="form-group">
-										<label>시작 시간 : </label> <input type='time' name='startTime' step='3600' />
+										<label>시작 시간 : </label> <input type='time' name='startTime' required/>
 									</div>
 								</div>
 								<div class="col-lg-5 col-12">
 									<div class="form-group">
-										<label>종료 시간 : </label> <input type='time' name='endTime'/><br>
+										<label>종료 시간 : </label> <input type='time' name='endTime' required/><br>
 									</div>
 								</div>
 								<div class="col-12">

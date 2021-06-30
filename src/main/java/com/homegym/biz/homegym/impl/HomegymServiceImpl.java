@@ -65,7 +65,25 @@ public class HomegymServiceImpl implements HomegymService{
 	public boolean modify(HomegymVO vo) {
 		
 		log.info("글 수정하기.........");
-		return homegymDAO.update(vo) == 1 ;
+		
+		// 첨부파일 전체 삭제(데이터베이스에서만)	
+		attachDAO.deleteAll(vo.getHId());
+		
+		// 글 수정이 되었는가?
+		boolean modifyResult = homegymDAO.update(vo) == 1 ;
+		
+		// 글 수정이 되었고, 첨부파일이 존재하면
+		if(modifyResult && vo.getAttachList() != null && vo.getAttachList().size() > 0) {
+			
+			// forEach문을 돌면서 hid 값을 넣어주고 첨부파일을 새로 insert를 해준다.
+			vo.getAttachList().forEach(attach -> {
+				
+				attach.setHId(vo.getHId());
+				attachDAO.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 	}
 	
 	public boolean remove(int hId) {

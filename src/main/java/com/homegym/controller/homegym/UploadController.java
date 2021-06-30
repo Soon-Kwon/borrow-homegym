@@ -34,21 +34,26 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class UploadController {
 	
+	// 파일 업로드
 	@PostMapping(value= "/uploadAjaxAction.do",  produces = MediaType
 			.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HomegymAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile){
-
+		
+		// 최종 결과를 담을 list
 		List<HomegymAttachVO> list = new ArrayList<>();
+		
 		String uploadFolder = "/Users/soon/Desktop/upload";
 		
+		// getFolder 메서드는 년/월/일 형식의 폴더 구조를 만들어낸다. 
 		String uploadFolderPath = getFolder();
-		// make folder ---------
+		
+		// uploadFolder의 폴더경로에 uploadFolerPath라는 파일에 대한 객체를 생성한다. 경로설정
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		log.info("upload path: " + uploadPath);
 		
 		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs();
+			uploadPath.mkdirs(); // 해당경로에 폴더를 만든다
 		}
 		
 		for(MultipartFile multipartFile : uploadFile) {
@@ -61,46 +66,53 @@ public class UploadController {
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
-			// IE has file path (익스플로어에서는 경로가 붙어있어서 제거해야함)
+			//익스플로어에서는 파일 이름 앞에 경로가 붙어있어서 제거해야함
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("only file name: " + uploadFileName);
 			attachVO.setFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID();
 			
+			// 업로드 파일 이름은 uuid_파일이름이 된다. 
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
-			
 			
 			try {
 				// File saveFile = new File(uploadFolder, uploadFileName);
+				// uploadPath(파일경로)에 uploadFileName(파일이름)의 파일 객체를 생성
 				File saveFile = new File(uploadPath, uploadFileName);
+				
+				// **업로드한 파일을 특정 파일로 저장한다**
 				multipartFile.transferTo(saveFile);
 				
+				// 데이터베이스에 uuid와 uploadPath(파일경로) 저장
 				attachVO.setUuid(uuid.toString());
 				attachVO.setUploadPath(uploadFolderPath);
 				
-				// check image type file
+				// 이미지 파일인지 확인
 				if(checkImageType(saveFile)) {
 					
 					attachVO.setFileType(true);
 					
+					// 주어진 File 객체가 가르키는 파일을 쓰기위한 FileOutputStream 생성
 					FileOutputStream thumbnail = new FileOutputStream(
 							new File(uploadPath, "s_" + uploadFileName));
 					
+					// 섬네일 생성
 					Thumbnailator.createThumbnail(multipartFile.getInputStream()
 							, thumbnail, 100, 100);
 					
+					// 닫아주어야한다. 
 					thumbnail.close();
 					
 				}
 				
-				// add to List
+				// list에 최종 결과를 담아준다.
 				list.add(attachVO);
 				
 			}catch(Exception e) {
 				log.error(e.getMessage());
-			} // end try
-		} // end for
+			} // try문 종료
+		} // for문 종료
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
@@ -142,10 +154,14 @@ public class UploadController {
 		File file;
 		
 		try {
+			
+			// 한글이름의 파일일 경우를 위해서 URLDecoder.decode 메서드 활용한다
 			file = new File("/Users/soon/Desktop/upload/" + URLDecoder.decode(fileName, "UTF-8"));
 			
+			// 파일 삭제
 			file.delete();
 			
+			// 이미지 파일일 경우 섬네일의 원본파일도 제거해주어야 한다.
 			if(type.equals("image")) {
 				
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
@@ -164,6 +180,7 @@ public class UploadController {
 		return new ResponseEntity<String> ("deleted", HttpStatus.OK);
 	}
 	
+	// 저장될 파일 경로 만들기
 	private String getFolder() {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -175,6 +192,7 @@ public class UploadController {
 		return str.replace("-", File.separator);
 	}
 	
+	// 이미지파일인지 체크 
 	private boolean checkImageType(File file) {
 		
 		try {

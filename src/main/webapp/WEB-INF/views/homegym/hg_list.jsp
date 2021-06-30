@@ -332,43 +332,62 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		 
 		// 마커를 표시할 위치와 title 객체 배열입니다 
-	 	var positions = [
-		    {
-		        title: '<c:out value="${list[0]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[0]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
-		        		'<c:out value="${list[0]['h_locate_X']}"/>'),
-		        no: <c:out value="${list[0]['h_id']}"/> + ""
-		    },
-		    {
-		    	title: '<c:out value="${list[1]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[1]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[1]['h_locate_X']}"/>'),
-	    	    no: <c:out value="${list[1]['h_id']}"/> + ""
-
-		    },
-		    {
-	    	    title: '<c:out value="${list[2]['h_title']}"/>',
-		        content: '<div><c:out value="${list[2]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[2]['h_locate_X']}"/>'),
-	        	no: <c:out value="${list[2]['h_id']}"/> + ""
-
-		    },
-		    {
-	    	    title: '<c:out value="${list[3]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[3]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[3]['h_locate_X']}"/>'),
-		      	no: <c:out value="${list[3]['h_id']}"/> + ""
-		    }
-		];
+	 	
+		//	var list = <c:out value="${list}"/>;
+		//console.log(list.length);		
+		var positions = [];
 		
-	/* 	var positions = new Array();
-		<c:forEach items="${list}" var="board">
-			positions.push({title: '${board.HTitle}', latlng: new kakao.maps.LatLng('${board.HLocateY}', '${board.HLocateX}')});
-		</c:forEach> */
+		for (var i = 0 ; i < 4 ; i++){
+			var temp = {
+			title: "'" + '<c:out value="${list[' + i + "]['h_title']}" + '"/>' + "'"
+			//title: "'<c:out value=\"${list[" + i + "]['h_title']}\"/>'"
+
+		   /*  content: "'" + '<div style="text-align: center;"><c:out value="${list[' + i + 
+	        	"]['h_title']}" + '"/></div>' + "'",
+	        latlng: new kakao.maps.LatLng("'" + '<c:out value="${list[' + i + "]['h_locate_Y']}" +  '"/>' + "'" ,
+	        		"'" + '<c:out value="${list[' + i + "]['h_locate_X']}" + '"/>' + "'"),
+	        no: '<c:out value="${list[' + i + "]['h_id']}" +  '"/>' + "",
+	        thumbnail: "'" + '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[' 
+	        	+ i + "]['uploadPath'] }/${list[" + i + "]['uuid']}_${list[i]['fileName']}" + '"alt="Event Image"></a></div>' + "'" */
+			}
+			
+			positions.push(temp);
+		}  
+		
+	/* var positions = [
+	    {
+	        title: '<c:out value="${list[0]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[0]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
+	        		'<c:out value="${list[0]['h_locate_X']}"/>'),
+	        no: <c:out value="${list[0]['h_id']}"/> + "",
+	        thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[0]['uploadPath'] }/${list[0]['uuid']}_${list[0]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+	    	title: '<c:out value="${list[1]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[1]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[1]['h_locate_X']}"/>'),
+    	    no: <c:out value="${list[1]['h_id']}"/> + "",
+    	    thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[1]['uploadPath'] }/${list[1]['uuid']}_${list[1]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+    	    title: '<c:out value="${list[2]['h_title']}"/>',
+	        content: '<div style="text-align: center;"><c:out value="${list[2]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[2]['h_locate_X']}"/>'),
+        	no: <c:out value="${list[2]['h_id']}"/> + "",
+        	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[2]['uploadPath'] }/${list[2]['uuid']}_${list[2]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+    	    title: '<c:out value="${list[3]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[3]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[3]['h_locate_X']}"/>'),
+	      	no: <c:out value="${list[3]['h_id']}"/> + "",
+	      	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[3]['uploadPath'] }/${list[3]['uuid']}_${list[3]['fileName']}" alt="Event Image"></a></div>'  
+	    }
+	]; */
 		
 		// 마커 이미지의 이미지 주소입니다
 		var imageSrc = "/resources/assets/images/logo/logo.png"; 
@@ -391,7 +410,8 @@
 		    
 		    // 마커에 표시할 인포윈도우를 생성합니다 
 		    var infowindow = new kakao.maps.InfoWindow({
-		        content: positions[i].content // 인포윈도우에 표시할 내용		        
+		      	
+		        content: positions[i].content + positions[i].thumbnail // 인포윈도우에 표시할 제목 + 사진
 		    });
 		    
 		    var index = positions[i].no;

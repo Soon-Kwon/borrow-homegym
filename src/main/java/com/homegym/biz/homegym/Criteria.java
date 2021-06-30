@@ -21,6 +21,7 @@ public class Criteria {
 	public Criteria() {
 		this(1, 4);
 		this.skip = 0;
+		this.keyword = "";
 	}
 	
 	public Criteria(int pageNum, int amount) {

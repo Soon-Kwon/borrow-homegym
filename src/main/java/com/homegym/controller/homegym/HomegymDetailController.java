@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymDetailService;
@@ -32,11 +31,11 @@ public class HomegymDetailController {
 	
 	// 홈짐 예약 신청시 동작(POST)
 	@RequestMapping("/reservation.do")
-	public String reservation(HomegymDetailVO vo) {
-		System.out.println(vo.getRentalDate());
+	public String reservation(HomegymDetailVO vo, Criteria cri) {
+	
 		vo.setBorrowerId("임시: 로그인된 유저(세션)");
 
 		service.register(vo);
-		return "homegym/homegymListView.do";
+		return "redirect: /homegym/homegymDetailView.do" + cri.getListLink() + "&hId=" + vo.getHId();
 	}
 }

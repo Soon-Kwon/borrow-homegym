@@ -18,7 +18,7 @@ public class HomegymDetailServiceImpl implements HomegymDetailService {
 	// 글 작성
 	public void register(HomegymDetailVO vo) {
 		
-		log.info("홈짐디테일 글작성 SERVICE:" + vo);
+		log.info("홈짐예약 글작성 SERVICE:" + vo);
 		detailDAO.insert(vo);
 	}
 }

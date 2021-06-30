@@ -132,19 +132,6 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"
 			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 		
-		<!-- 동적으로 입력 폼 추가/삭제-->
-		<script>
-			function add_item() {
-				// append-form 에 있는 내용을 읽어와서 처리..
-				var div = document.createElement('div');
-				div.innerHTML = document.getElementById('append-form').innerHTML;
-				document.getElementById('field').appendChild(div);
-			}
-			function remove_item(obj) {
-				// obj.parentNode 를 이용하여 삭제
-				document.getElementById('field').removeChild(obj.parentNode.parentNode.parentNode);
-			}
-		</script>
 	</head>
 
 	<body>
@@ -199,6 +186,56 @@
 					return true;
 				}
 				
+				// (수정하려는 양식에 원래 업로드된 글정보 보여주기)
+				
+				var hid = '<c:out value="${board.HId}"/>';
+				
+				// hid값을 활용하여 첨부파일 리스트를 보여주는 ajax를 호출하고, 데이터에 hid 값을 넣어서 보내준다.  
+				$.getJSON("/homegym/getAttachList.do?hId=" + hid, {hid: hid}, function(arr){
+					
+					var str = "";
+					
+					$(arr).each(function(i, attach){
+						
+						// 이미지 타입일때 
+						if(attach.fileType){
+							
+							var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" 
+									+ attach.uuid + "_" + attach.fileName);
+							str += "<li data-path='" + attach.uploadPath + "'";
+							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
+									+ "'data-type='" + attach.fileType + "'";
+							str += "><div>";
+							str +="<span> " + attach.fileName + "</span>";
+							str +="<button type='button' data-file=\'" + fileCallPath 
+							+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+							+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+							str += "</div>";
+							str += "</li>";
+						}else{ // 파일일 때 
+							var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
+									+ "_" + attach.fileName);
+							var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+							
+							str += "<li data-path='" + attach.uploadPath + "'";
+							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
+									+ "'data-type='" + attach.fileType + "'";
+							str += "><div>";
+							str +="<span> " + attach.fileName + "<span>";
+							str +="<button type='button' data-file=\'" + fileCallPath 
+							+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+							+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/assets/images/common/attach.png'></a>";
+							str += "</div>";
+							str += "</li>";
+						}
+					});
+					
+					$(".uploadResult ul").html(str);
+				});
+				
+				// 수정시 업로드한 파일 보여주기
 				$("input[type='file']").change(function(e){
 					
 					var formData = new FormData();
@@ -222,9 +259,9 @@
 						processData: false,
 						contentType: false,
 						data: formData,
-						beforeSend: function(xhr){
+						/* beforeSend: function(xhr){
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						},
+						}, */
 						type: 'POST',
 						dataType: 'json',
 						success: function(result){
@@ -237,16 +274,21 @@
 					});
 				});
 				
-				// x를 누르면 업로드된 파일 삭제
+				// (기존 글쓰기랑 달라진점 주의*) x를 누르면 업로드된 파일 자체가 아니라 화면에서만 사라지게 한다.
+				// 또한 서버에 존재하는 사진을 직접 삭제하는 것이 아니기 때문에 원래 사진을 삭제하고 수정하면 
+				// 서버에 남아있게 된다. 이에 대한 처리는 추후에.
 				$(".uploadResult").on("click", "button", function(e){
 					
 					console.log("delete file");
 					
-					var targetFile = $(this).data("file");
-					var type = $(this).data("type");
+					/* var targetFile = $(this).data("file");
+					var type = $(this).data("type"); */
 					
+					if(confirm("사진을 삭제하시겠습니까?")){
 					var targetLi = $(this).closest("li");
-					
+					targetLi.remove();
+					}
+			/* 		서버에서는 나중에 삭제
 					$.ajax({
 						url: '/deleteFile.do',
 						data: {fileName: targetFile, type: type},
@@ -259,9 +301,10 @@
 							alert(result);
 							targetLi.remove();
 						}
-					});
+					}); */
 				});
 			});
+		
 		
 		</script>
 
@@ -607,6 +650,7 @@
 				}).open();
 			}
 		</script>
+		
 		<script>
 		
 		// 글 수정시 실행되는 update	()함수
@@ -628,7 +672,7 @@
 			$('#hashtag').val(hashTag);
 			
 			if($('#price').val() == '' || $('#title').val() == ''){
-				alert("꼭 필요한 내용들을 적어주세요");
+				alert("필수 내용들을 적어주세요");
 				return;
 			}
 			
@@ -654,6 +698,7 @@
 			
 			if(str == null || str == ""){
 				alert("최소 한 장 이상의 사진을 올려주세요!");
+				return;
 			}
 			
 			var formObj = $("#submitForm");
@@ -667,9 +712,9 @@
 				url: 'homegymModify.do',
 				dataType: 'text',
 				data: data,
-				beforeSend: function(xhr){
+				/* beforeSend: function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
+				}, */
 				success: function(data) {
 					alert(data);
 					if(data == 'OK') {
@@ -695,9 +740,9 @@
 					type: 'POST',
 					url: 'homegymRemove.do',
 					dataType: 'text',
-					beforeSend: function(xhr){
+					/* beforeSend: function(xhr){
 						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					},
+					}, */
 					data: {hId: hId},
 					success: function(data){
 						alert('글 삭제에 성공하였습니다.');

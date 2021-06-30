@@ -17,20 +17,8 @@ public class HomegymDetailDAO {
 	
 	// 글 작성 
 	public void insert(HomegymDetailVO vo) {
-//		String rentalDate = vo.getRentalDate();
-//		rentalDate = rentalDate.replace("-", "");
-//		vo.setRentalDate(rentalDate);
-//		
-//		String startTime = vo.getStartTime();
-//		startTime = startTime.replace(":", "");
-//		vo.setStartTime(startTime);
-//		
-//		String endTime = vo.getEndTime();
-//		endTime = endTime.replace(":", "");
-//		vo.setEndTime(endTime);
 		
-		
-		log.info("홈짐디테일 글작성 DAO: " + vo);
-		mybatis.insert("HomegymDetailDAO", vo);
+		log.info("홈짐예약 글작성 DAO: " + vo);
+		mybatis.insert("HomegymDetailDAO.insert", vo);
 	}
 }

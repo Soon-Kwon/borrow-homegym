@@ -1,5 +1,8 @@
 package com.homegym.controller.homegym;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +96,7 @@ public class HomegymController {
 	// 수정 완료 요청시 작동
 	@ResponseBody
 	@PostMapping("/homegymModify.do")
-	public String modify(HomegymVO vo, @ModelAttribute("cri") Criteria cri) {
+	public String modify(HomegymVO vo, @ModelAttribute("cri") Criteria cri) { //ModelAttribute가 없어도 된다.
 		
 		log.info("수정하기 POST :" + vo);
 		
@@ -107,11 +110,18 @@ public class HomegymController {
 	// 삭제 완료 요청시 작동
 	@ResponseBody
 	@PostMapping("/homegymRemove.do")
-	public String remove(@RequestParam("hId") int hId, @ModelAttribute("cri") Criteria cri) {
+	public String remove(@RequestParam("hId") int hId, @ModelAttribute("cri") Criteria cri //ModelAttribute가 없어도 된다.
+			, HomegymAttachVO attach) {
 		
 		log.info("삭제하기 POST: " + hId);
 		
+		// 첨부파일 리스트 획득
+		List<HomegymAttachVO> attachList = homegymService.getAttachList(attach, hId);
+		
 		if(homegymService.remove(hId)) {
+			
+			// deleteFiles 메서드를 이용해서 해당 게시물에 속하는 첨부파일을 삭제해준다.
+			deleteFiles(attachList);
 			return "OK";
 		}
 		
@@ -125,5 +135,40 @@ public class HomegymController {
 		
 		log.info("첨부파일 가져오기: " + hId);
 		return new ResponseEntity<List<HomegymAttachVO>>(homegymService.getAttachList(vo, hId), HttpStatus.OK);
+	}
+	
+	// 첨부파일 데이터 삭제 메서드
+	private void deleteFiles(List<HomegymAttachVO> attachList) {
+		
+		// 첨부파일 존재 유무 확인
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("첨부파일 삭제.....");
+		
+		attachList.forEach(attach -> {
+			
+			try {
+				
+				// java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근)
+				// attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다.
+				Path file = Paths.get("/Users/soon/Desktop/upload/" + attach.getUploadPath()
+				+ "/" + attach.getUuid() + "_" + attach.getFileName());
+				
+				// java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다.
+				Files.deleteIfExists(file);
+				
+				// 이미지 파일이면 섬네일도 지워준다.	
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("/Users/soon/Desktop/upload/" + attach.getUploadPath()
+				+ "/s_" + attach.getUuid() + "_" + attach.getFileName());
+					
+				Files.delete(thumbNail);
+				}
+			}catch(Exception e) {
+				log.error("첨부파일 삭제 오류" + e.getMessage())	;
+			}
+		});
 	}
 }

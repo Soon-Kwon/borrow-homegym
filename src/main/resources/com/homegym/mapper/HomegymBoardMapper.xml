@@ -46,6 +46,7 @@
 		LIMIT #{cri.amount} OFFSET #{cri.skip};
 	</select>
 	
+	<!-- <select id="getAllInfoByKeyword" resultType -->
 	<select id="read" resultType="homegymVO">
 		select * from homegym_board
 		where h_id = #{hId}

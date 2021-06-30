@@ -178,6 +178,7 @@
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				var maxSize = 5242880;
 				
+				// 파일 사이즈, 형식 체크 
 				function checkExtension(fileName, fileSize){
 					
 					if(fileSize >= maxSize){
@@ -197,12 +198,14 @@
 				/* var csrfHeaderName = "${_csrf.headerName}";
 				var csrfTokenValue = "${_csrf.token}"; */
 				
+				// 업로드된 파일 보여주기
 				$("input[type='file']").change(function(e){
 					
 					var formData = new FormData();
 					
 					var inputFile = $("input[name='uploadFile']");
 					
+					// 파일 목록을 보는 .files (jQuery)
 					var files = inputFile[0].files;
 					
 					for(var i = 0; i < files.length; i++ ){
@@ -240,6 +243,7 @@
 					
 					console.log("delete file");
 					
+					/* data속성을 이용해 파일 이름과 타입을 구한다*/
 					var targetFile = $(this).data("file");
 					var type = $(this).data("type");
 					
