@@ -227,7 +227,7 @@
                             <span id="auth">🌱${member.auth}</span> <br>
                             <span id="memberId"> ${member.memberId} <span>
                             <div class="button">
-                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn" style="margin-top:13px;">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->

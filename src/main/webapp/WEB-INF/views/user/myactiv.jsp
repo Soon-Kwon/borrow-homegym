@@ -34,6 +34,9 @@
      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
      
     <style>
+    
+
+    	
         .latest-news-area {
             background-color: #fff;
         }
@@ -49,11 +52,17 @@
         }
         
 		.button .btn{
-			background-color: #495487;
+			background-color: #616c9c;
 		} 
 		
-		#reject{
+		#reject {
 			background-color: #414141;
+			bottom: 10px;
+			border-radius: 40px;
+		}
+		
+		#accept{
+			background-color: #8192d9;
 			bottom: 10px;
 			border-radius: 40px;
 		}
@@ -70,7 +79,7 @@
 	    }
 	    
 	    
-	    #detailBtn, #payOK{
+	    #detailBtn, #payOK, #acceptBtn{
 		    bottom: 10px;
 		    left: 30px;
 		    border-radius: 40px;
@@ -280,7 +289,7 @@
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
                                 
-                                <!-- 수락 대기중인 홈짐 시작  -->
+                                <!-- 홈짐관리 시작  -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
                                     <div class="container">
                                         <!-- <h3 class="comment-title">Reviews</h3> -->
@@ -326,19 +335,26 @@
                                                               
                                                              <div class="flex-box">
                                                                     <c:choose>
+                                                                    <c:when test="${homegym.acceptYN == 'Y' and homegym.status == 'ready'}"> 
+                                                           			 	 <div class="button accept">
+			                                                                        <button class="btn" id="accept" value="${homegym.HId}" >수락됨</button>
+			                                                                 </div>
+			                                                                  
+																		</c:when>
                                                            			 <c:when test="${homegym.acceptYN == 'N'}"> 
-                                                           			 	<div class="button rejectBtn">
+                                                           			 		<div class="button rejectBtn">
 			                                                                        <button class="btn" id="reject" value="${homegym.HId}" >취소됨</button>
-			                                                                    </div>
+			                                                                 </div>
 			                                                                  
 																		</c:when>
 																		<c:otherwise> 
 																			<div class="button accept-btn">
-			                                                                        <button class="btn" id="detailBtn" value="${homegym.HId} ">상세보기</button>
-			                                                                    </div>
-			                                                                    <div class="button deny-btn">
-			                                                                        <button class="btn" id="rejectBtn" value="${homegym.HId}" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="changeHomegymStatus(this);">거절하기</button>
-			                                      								 </div>
+                                                                        		<button class="btn" id="acceptBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락하기</button>
+                                                                   		 	</div>
+			                                                               <div class="button deny-btn">
+                                                                        		<button class="btn" id="rejectBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);" data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
+                                                                    		</div>
+			                                                                  
 																		 </c:otherwise>
 																	</c:choose>
                                                                    
@@ -422,7 +438,7 @@
                                                                             ${homegym.HTitle}
                                                                         </li>
                                                                         <li>
-                                                                            <!-- <i class="lni lni-tag11"></i> -->
+                                                                            <!--  <i class="lni lni-tag11"></i>  -->
                                                                             ${homegym.HAddr}
                                                                         </li>
                                                                         <li>
@@ -674,85 +690,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 거절 모달 -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">식당 정보를 입력해주세요</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group" id="title_save">
-              <label for="restaurant" class="col-form-label">영상 제목 : </label>
-              <input type="text" class="form-control" name="title">
-            </div>
-            <div class="form-group">
-              <label for="restaurant" class="col-form-label">식당 이름 : </label>
-              <input type="text" class="form-control" name="restaurant">
-            </div>
-            <div class="form-group">
-              <label for="food_catg" class="col-form-label">분류 : </label> &nbsp;&nbsp;
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="food_catg" id="ko" value="한식">
-                <label class="form-check-label" for="ko">한식</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="food_catg" id="chi" value="중식">
-                <label class="form-check-label" for="chi">중식</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="food_catg" id="itali" value="양식">
-                <label class="form-check-label" for="itali">양식</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="food_catg" id="japn" value="일식">
-                <label class="form-check-label" for="japn">일식</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="food_catg" id="ko_sub" value="분식">
-                <label class="form-check-label" for="ko_sub">분식</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">위치 : </label> &nbsp;&nbsp;
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="location" id="shinchon" value="신촌,홍대">
-                <label class="form-check-label" for="shinchon">신촌,홍대</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="location" id="gangnam" value="강남,역삼">
-                <label class="form-check-label" for="gangnam">강남,역삼</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="location" id="ilsan" value="일산,화정">
-                <label class="form-check-label" for="ilsan">일산,화정</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="location" id="etc" value="기타">
-                <label class="form-check-label" for="etc">기타</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">메모 : </label>
-              <textarea class="form-control" id="message-text" placeholder="메모를 남겨보세요"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" onclick="getInputValue()">저장</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- 모달 끝 -->
-
-
 
 
 
@@ -809,13 +746,7 @@
     <script type="text/javascript">
     	$(document).ready(function(){
     		var actionForm= $("#actionForm");
-    		
-    	/* 	$(".move").on("click",function(e){
-    			e.preventDefault();
-    			
-    			moveForm.append("<input type='hidden' name="")
-    		})
-    		var actionForm = $("#actionForm"); */
+
     		
     		$(".pagination-list a").on("click",function(e){
     			e.preventDefault();
@@ -824,7 +755,7 @@
     			actionForm.submit();
     		});
     	});
-    
+
     </script>
 </body>
 </html>

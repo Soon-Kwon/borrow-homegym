@@ -23,6 +23,7 @@ public interface MemberService {
 
 	//프로필 이미지 삭제
 	public int userImgDelete(String memberId);
+	
 	//회원 탈퇴 처리
 	public int memberDelete(MemberVO vo);
 	
@@ -31,6 +32,9 @@ public interface MemberService {
 
 	//내가 쓴 게시글 리스트 조회
 	public List<TrainerBoardVO> getMyBoardList(String memberId);
+	
+	// 수락 대기중인 홈짐 수 조회
+	public int getMyWaitngHomegymCnt(String memberId);
 	
 	//내가 빌려준 홈짐 수 조회
 	public int getLendHomeGymCnt(String memberId);
@@ -45,7 +49,7 @@ public interface MemberService {
 	
 	
 	//수락 대기중인 홈짐
-	public List<HomegymVO> getMyWaitingHG(String memberId,Criteria cri);
+	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri);
 	
 	//내가 빌려준 홈짐 조회
 	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri);

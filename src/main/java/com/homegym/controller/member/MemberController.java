@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
@@ -28,7 +27,6 @@ import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.member.PageMakerDTO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
-import com.homegym.utils.UploadFileUtils;
 
 import lombok.extern.log4j.Log4j;
 
@@ -117,69 +115,69 @@ public class MemberController {
 
 	}
 
-	/* 1-3. 회원 이미지 등록 */
+	/* 1-3. 프로필 이미지 등록 */
 	
 	  @PostMapping("mypage/userImgUpload") 
 	  public String userImgUpload(MultipartFile file,MemberVO vo, HttpServletRequest request) throws IOException, Exception {
 	  HashMap<String,Object> paramMap = new HashMap<String,Object>();
 	  String attachPath = "/resources/imgUpload/";
-	  //getRealPath("/") : webapp 폴더
+	  //getRealPath("/") : webapp 폴더까지
 	  String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
-	  //String imgUploadPath = uploadPath + File.separator + "imgUpload";
-	  //System.out.println(imgUploadPath);
-	  //String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 	  String fileName = null;
 
-	  
 	  if(file != null) {
-	   //fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
 		  //getOriginalFilename() : 파일이름을 String 값으로 반환
 		  File uploadFile = new File(imgUploadPath + attachPath + file.getOriginalFilename());
 		  //transfertTo : 파일 저장
 		  file.transferTo(uploadFile);
-	   System.out.println("이미지 등록");
 	  } else {
-	   fileName = uploadPath + File.separator + "images" + File.separator + "basicImg.png";
-	   System.out.println("기본이미지 등록");
+		  fileName = uploadPath + File.separator + "images" + File.separator + "basicImg.png";
 	  }
 
-	  //vo.setImagePath(File.separator + "imgUpload" + File.separator + fileName);
+	  // imagepath : /resources/imgUpload/파일명 
 	  vo.setImagePath(attachPath + file.getOriginalFilename());
-	  //vo.setUserThumbImg(File.separator + "imgUpload" + File.separator + "s" + File.separator + "s_" + fileName);
-	  //vo.setUserThumbImg(File.separator + "imgUpload" + File.separator + "s" + File.separator + "s_" + fileName);
+	
 	  paramMap.put("memberId", vo.getMemberId());
 	  paramMap.put("imagePath", vo.getImagePath());
-	  paramMap.put("userThumbImg", vo.getUserThumbImg());
+	 // paramMap.put("userThumbImg", vo.getUserThumbImg());
 	  
 	  memberService.userImgUpload(paramMap);
 	  
-	  System.out.println("vo ::::" + vo.getImagePath());
 	  return "redirect:/user/mypage/profile_update.do?memberId=silverbi99@naver.com";
 	  }
 	  
-	/* 1-4.회원 이미지 삭제 (DB)*/
-	  @PostMapping("mypage/userImgDelete") 
-	  public String userImgDelete(MultipartFile file,MemberVO vo, HttpServletRequest request) throws IOException, Exception {
-	  
-		  Map<String, Object> map = new HashMap<String, Object>();
-		  String memberId = vo.getMemberId();
-		  
-		  int result = memberService.userImgDelete(memberId);
-		  
-		  if(result==1) {
-			  vo.setImagePath("");
-			  map.put("resultCode", "Success");
-			  map.put("resultMessage", "이미지가 삭제되었습니다.");
-			  
-		  }else {
-			  map.put("resultCode", "fail");
-			  map.put("resultMessage", "이미지 삭제 실패! 다시 시도해주세요.");
-			  
-		  }
-	 
-		  return "redirect:/user/mypage/profile_update.do?memberId=silverbi99@naver.com";
-	  }
-	  
+	/* 1-4.프로필 이미지 삭제 (DB + 서버)*/
+		
+		 @PostMapping("mypage/userImgDelete")
+		 @ResponseBody
+		 public Map<String, Object> userImgDelete(HttpServletRequest request, @RequestBody Map<String, String> paramMap ) throws IOException, Exception {
+		 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 
+		 String memberId = paramMap.get("memberId");
+		 String imagePath = paramMap.get("imagePath");
+		 String realPath = request.getSession().getServletContext().getRealPath("/");
+		 System.out.println(realPath);
+	
+		 //서버에서 삭제
+		 File file = new File(realPath + imagePath);
+		 //폴더 및 파일 삭제
+		 file.delete();
+		 
+		 //DB에서 삭제
+		 int result = memberService.userImgDelete(memberId);
+		 
+		 if(result==1) {  //삭제 성공시
+			 map.put("resultCode", "Success");
+		 	 map.put("resultMessage", "이미지가 삭제되었습니다.");
+		 } else { //삭제 실패시
+			 map.put("resultCode", "fail"); 
+			 map.put("resultMessage", "이미지 삭제 실패! 다시 시도해주세요.");
+		 }
+		 
+		 return map;
+	}
+		 
 	/* 1-5. 마이페이지 회원 탈퇴 요청 */
 	@ResponseBody
 	@PostMapping("mypage/delete")
@@ -187,21 +185,21 @@ public class MemberController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		/* id, password 체크 */
+		// id, password 체크 
 		boolean result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
 
-		/* id,password 일치 */
+		// id,password 일치
 		if (result) {
 			int cnt = memberService.memberDelete(vo);
 
-			if (cnt == 1) { /* 회원 탈퇴 성공시 */
+			if (cnt == 1) { // 회원 탈퇴 성공시 
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "탈퇴가 완료되었습니다.");
-			} else { /* 회원탈퇴 실패시 */
+			} else { // 회원탈퇴 실패시 
 				map.put("resultCode", "fail");
 				map.put("resultMessage", "회원탈퇴 실패! 재시도해주세요.");
 			}
-		} else { /* id, password 불일치 */
+		} else { // id, password 불일치
 			map.put("resultCode", "fail");
 			map.put("resultMessage", "Id 혹은 Password 가 일치하지 않습니다.");
 		}
@@ -217,8 +215,14 @@ public class MemberController {
 		session.setAttribute("memberId", memberId);
 
 		/* 수락 대기중 */
-		List<HomegymVO> waitingHG = memberService.getMyWaitingHG(memberId, cri);
+		List<HomegymVO> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		model.addAttribute("waitingHomegym", waitingHG);
+		
+		int wait_total = memberService.getMyWaitngHomegymCnt(memberId);
+		PageMakerDTO wait_pageMaker = new PageMakerDTO(cri,wait_total);
+		model.addAttribute("wait_pageMaker", wait_pageMaker);
+		
+		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
 
 		/* 빌려준 홈짐 */
 		List<HomegymVO> lendHG = memberService.getLendHGPaging(memberId, cri);
@@ -283,9 +287,13 @@ public class MemberController {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
 
+		//내가 쓴글 리스트
 		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardList(memberId);
 		model.addAttribute("board", trainerBoardVO);
 
+		
+		//내가 쓴 리뷰 리스트
+		
 		return "user/mywrite";
 	}
 

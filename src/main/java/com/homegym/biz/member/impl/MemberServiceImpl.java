@@ -27,6 +27,12 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	
+	//수락 대기중인 홈짐 갯수
+	@Override
+	public int getMyWaitngHomegymCnt(String memberId) {
+		return memberDAO.getWaingHomegymCnt(memberId);
+	}
+	
 	// 내가 빌린 홈짐 갯수 
 	@Override
 	public int getRentHomeGymCnt(String memberId) {
@@ -99,8 +105,8 @@ public class MemberServiceImpl implements MemberService{
 	
 	//수락 대기중인 홈짐
 	@Override
-	public List<HomegymVO> getMyWaitingHG(String memberId,Criteria cri) {
-		return memberDAO.getMyWaitingHG(memberId, cri);
+	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri) {
+		return memberDAO.getWaitingHGPaging(memberId, cri);
 	}
 	
 	//내가 빌려준 홈짐 조회 (페이징)
@@ -143,6 +149,8 @@ public class MemberServiceImpl implements MemberService{
 	public List<TrainerBoardVO> getMyBoardList(String memberId) {
 		return memberDAO.getMyBoardList(memberId);
 	}
+
+
 
 
 

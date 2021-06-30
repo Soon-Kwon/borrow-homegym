@@ -66,7 +66,7 @@
 	<update id="userImgDelete">
 		UPDATE member
 		SET
-			IMAGE = null
+			IMAGE = ''
 		WHERE 
 			memberId =#{memberId}
 	</update>
@@ -84,6 +84,14 @@
 			count(*)
 		FROM member
 		WHERE memberId=#{memberId} AND password=#{password}
+	</select>
+	
+	<!-- 수락 대기중인 홈짐 갯수 -->
+	<select id="getWaingHomegymCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM homegym_board
+		WHERE memberId = #{memberId} 
 	</select>
 	
 	<!-- 내가 빌린 홈짐 갯수 -->
@@ -123,13 +131,13 @@
 	</select>
 	
 	
-	<!-- 수락 대기중인 홈짐 -->
+	<!-- 홈짐 관리 리스트 -->
 	<select id="getMyWaitingHG" resultType="homegymVO" parameterType="String">
 		SELECT *
-		FROM homegym_board 
-		WHERE memberId = #{memberId}
-			AND status = 'ready' ;
-
+		FROM homegym_board hb INNER JOIN homegym_detail hd
+		ON hb.h_id = hd.h_id
+		WHERE memberId = #{memberId} AND
+			  lend_memberId IS NOT NULL
 	</select>
 	
 	<!-- 내가 빌려준 홈짐 리스트 -->
@@ -192,6 +200,22 @@
 	
 	</select>
 
+
+	<!-- 홈짐 관리 리스트 페이징 -->
+	<select id="getWaitingHGPaging" resultType="homegymVO">
+	<![CDATA[
+		SELECT *
+		FROM (
+				SELECT *
+				FROM homegym_board 
+				WHERE memberId = #{memberId}
+				
+			)as wh
+		LIMIT #{cri.skip}, #{cri.amount}
+	]]>
+	</select>
+	
+	
 	<!-- 빌려준 홈짐 리스트 페이징   -->
 	<select id="getLendHGPaging" resultType="homegymVO">
   	<![CDATA[
@@ -201,7 +225,7 @@
 				FROM homegym_board
 				WHERE memberId = #{memberId}
 				ORDER BY h_id desc
-			)as h1
+			)as lh
   		LIMIT #{cri.skip}, #{cri.amount}
   				
   ]]>
@@ -216,7 +240,7 @@
 				FROM homegym_board b INNER JOIN homegym_detail d
 				ON b.h_id = d.h_id
 				WHERE lend_memberId= #{memberId}
-			)as h2
+			)as rh
   		LIMIT #{cri.skip}, #{cri.amount}
   				
   ]]>

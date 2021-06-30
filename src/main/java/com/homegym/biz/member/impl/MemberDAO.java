@@ -30,7 +30,7 @@ public class MemberDAO {
 	
 	//프로필 이미지 삭제
 	public int userImgDelete(String memberId) {
-		return sqlsession.delete("MemberDAO.useImgDelete",memberId);
+		return sqlsession.delete("MemberDAO.userImgDelete",memberId);
 	}
 	
 	//회원 탈퇴
@@ -88,13 +88,18 @@ public class MemberDAO {
 	
 	/*마이페이지 활동 내역*/
 	
-	// 수락 대기중인 홈짐 
-	public List<HomegymVO> getMyWaitingHG(String memberId,Criteria cri){
+	//수락 대기중인 홈짐 수 
+	public int getWaingHomegymCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getWaingHomegymCnt",memberId);
+	}
+	
+	// 수락 대기중인 홈짐 페이징
+	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 			map.put("memberId",memberId);
 			map.put("cri",cri);
-		return sqlsession.selectList("MemberDAO.getHomegymWithPaging",map);
+		return sqlsession.selectList("MemberDAO.getWaitingHGPaging",map);
 	}
 	
 	//내가 빌려준 홈짐

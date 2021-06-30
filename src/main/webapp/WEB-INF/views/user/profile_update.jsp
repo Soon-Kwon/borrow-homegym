@@ -129,7 +129,7 @@ position: absolute;
 
 </style>
 
-<!-- 프로필 사진 업로드 -->
+<!-- 프로필 사진 미리보기 -->
 <script>
 $(document).ready(function () {
     var readURL = function (input) {
@@ -145,26 +145,28 @@ $(document).ready(function () {
         readURL(this);
     });
     
+    //프로필사진 업로드를 안했을때 업로드 버튼 비활성화
+    var file = $('#userImg').val();
+    if(file == null || file == '') {
+    	$('#uploadBtn').attr('disabled', true);
+    }
+    
 });
 /*  $("#imgFile").change(function(){
 	 readURL(this);
  });  */
  
- function delImg(){
-	 $("#img_section").removeAttr("src");
+ //
+ // 업로드 버튼 활성화
+ function btnAbled() {
+	 $('#uploadBtn').attr('disabled', false);
  }
  
 
-   
-</script>
-<!-- 회원 정보 수정 ajax -->
-<script>
- 
 /* ajax를 통한 비밀번호 수정처리 */
 
-
 function deleteInfo() {
-
+	//회원아이디와 비밀번호를 data에 담는다.
 	var data = {memberId : $('input[name=memberId]').val(),
 				password : $('input[name=password]').val()
 			};
@@ -194,6 +196,7 @@ function deleteInfo() {
     
 }
 
+/*ajax를 통한 회원정보 수정*/
 function updateInfo() {
 
 	var data = {memberId : $('input[name=memberId]').val(),
@@ -211,9 +214,6 @@ function updateInfo() {
 	 var eng = pw.search(/[a-z]/ig);
 	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 	 var phone = /^\d{3}-\d{3,4}-\d{4}$/;
-
-
-	console.log(JSON.stringify(data));
 	
 	 if($('#phone').val() == '')  {
 	        alert("전화번호를 입력해주세요");
@@ -245,58 +245,47 @@ function updateInfo() {
 
     	}
     }
-
     $.ajax({
         type:'POST',
         accept : "application/json",
         data: JSON.stringify(data),
-        url:"/user/mypage/userImgDelete.do",
+        url:"/user/mypage/update.do",
         dataType: "json",
         contentType : "application/json; charset:UTF-8",
-        success : function(json) {   
-        	if(json.resultCode=="Success"){
-        		alert(json.resultMessage);
-				
+        success : function(data) {   
+        	if(data.resultCode=="Success"){
+        		alert(data.resultMessage);
+        		location.reload();
         	}else{
-        		alert(json.resultMessage);
+        		alert(data.resultMessage);
         	}
         },
         error: function(e) {
-            //alert("ERROR : " + textStatus + " : " + errorThrown);
             console.log(e);
         }        
     })
        
 }
-$("#uploadBtn").click(function(e) {
-	e.preventDefault();
-	
-	var userImg = $("#userImg"). val();
-	
-	if(userImg == null || userImg ==""){
-		alert("업로드할 사진이 없습니다. 사진을 등록해주세요.");
-	}else{
-		$('#uploadBtn').submit();
-	}
-	
-});
 
-	function delImg(){
-
-		
+/*ajax를 통한 프로필 이미지 삭제*/
+function deleteImg(){
+	//회원아이디와 이미지경로를 받는다.
+	 	var data = {
+	 			'memberId' : $('#memberId2').val(),
+	 			'imagePath' : $('#imagePath').val()
+	 	};
 	    $.ajax({
 	        type:'POST',
-	        accept : "application/json",
 	        data: JSON.stringify(data),
-	        url:"/user/mypage/update.do",
+	        url:"/user/mypage/userImgDelete.do",
 	        dataType: "json",
 	        contentType : "application/json; charset:UTF-8",
-	        success : function(json) {   
-	        	if(json.resultCode=="Success"){
-	        		alert(json.resultMessage);
-					
+	        success : function(data) {   
+	        	if(data.resultCode=="Success"){
+	        		alert(data.resultMessage);
+	        		location.reload();
 	        	}else{
-	        		alert(json.resultMessage);
+	        		alert(data.resultMessage);
 	        	}
 	        },
 	        error: function(e) {
@@ -304,7 +293,7 @@ $("#uploadBtn").click(function(e) {
 	            console.log(e);
 	        }        
 	    })
-	}
+	} 
 </script>
 
 <!-- 다음 우편번호 API -->
@@ -497,22 +486,22 @@ function execPostCode() {
                                       
                             		<div class="single-feature" style="padding: 20px">
                             			<c:if test="${empty member.imagePath}">
-				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px;"></div>
+				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px; width: 140px; height: 140px"></div>
 				                    	</c:if>
 				                    	<c:if test="${not empty member.imagePath}">
-				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 150px;"></div>
+				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 140px;"></div>
 				                    	</c:if>
                             		
                             		
                             		<!-- 프로필이미지  -->
                              <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
 	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
-	                        	<input name="memberId" type="hidden" value="silverbi99@naver.com"/>
+	                        	<input name="memberId" id="memberId2" type="hidden" value="silverbi99@naver.com"/>
+	                        	<input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }"/>
 	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
-	                            <input type="file" name="file"  id="userImg" class="text-center center-block file-upload" id="userImg" style="margin-left: 150px; display:none;" > 
-	                            
-	                            <button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()" >업로드</button>
-	                            <button class="btn btn-outline-secondary" onclick="delImg()" id="delImg" type="button">삭제</button>
+	                            <input type="file" name="file"  id="userImg"onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display:none;" > 
+                            	<button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()" >업로드</button>
+	                            <button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
 	                            
 	                        </div>
 	                       
@@ -711,7 +700,7 @@ function execPostCode() {
     <!-- ========================= JS here ========================= -->
     <script src="/resources/assets/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/count-up.min.js"></script>
-    <script src="/resources./assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
