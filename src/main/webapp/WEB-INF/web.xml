@@ -26,13 +26,15 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 웹소켓을 위한 설정(비동기지원), 동시에데이터 전송받기위함, 1대 다통신 -->
+		<async-supported>true</async-supported>
 		
 		<multipart-config>
-			<location>/Users/soon/Desktop/upload</location>
+			<!-- <location>/Users/soon/Desktop/upload</location> -->
 			<max-file-size>20971520</max-file-size>
 			<max-request-size>41943040</max-request-size>
 			<file-size-threshold>20971520</file-size-threshold>
-		</multipart-config>
+		</multipart-config> -->
 	</servlet>
 		
 	 <filter>
@@ -70,7 +72,7 @@
 	</filter-mapping>
 
 	 <!-- Spring Security Filter start-->
-	<filter>
+	<!-- <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
 		</filter-class>
@@ -79,6 +81,6 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	<!-- Spring Security Filter end-->
 </web-app>

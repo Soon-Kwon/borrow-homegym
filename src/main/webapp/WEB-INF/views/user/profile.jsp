@@ -23,12 +23,12 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="../assets/css/animate.css" />
-    <link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
     
     <script>
     	var memberId = '<%=memberId %>';
@@ -37,7 +37,48 @@
     		// Handler when the DOM is fully loaded
    		});
     </script>
+<style>
+#auth{
+    margin-right: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 17px;
+    margin-top: 10px;
+}
+.userphoto_menu label { 
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #999;
+	font-size: inherit;
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #fdfdfd;
+	cursor: pointer; 
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+ } 
 
+.img {
+  vertical-align: middle;
+}
+
+.img-img-thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  transition: all .2s ease-in-out;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+
+</style>
 </head>
 
 <body>
@@ -68,7 +109,7 @@
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="/index.jsp">
-                            <img src="../assets/images/logo/로고2.png" alt="logo">
+                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -171,15 +212,23 @@
                     <div class="container-fluid" style="padding-bottom: 80px;">
                         <div class="single-head">
                         <div class="row">
+                        <h3><a href="javascript:void(0)">MY PROFILE</a></h3>
                         <div class="col-lg-4 col-md-6 col-12 padding-zero">
                         <!-- Start Single Feature -->
+                        
                         <div class="single-feature">
-                            <h3><a href="javascript:void(0)">프로필</a></h3>
-                            <img src="https://via.placeholder.com/370x370" alt="#">
-                            <h4>${member.name}님<span>🌱${member.auth}</span> </h4><br>
-                             <span> ${member.memberId} <span>
+                            
+                            <c:if test="${empty member.imagePath}">
+				                   <div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
+				             </c:if>
+				            <c:if test="${not empty member.imagePath}">
+				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
+				            </c:if>
+                            <h4 style="margin-left:30px;">${member.name}님</h4>
+                            <span id="auth">🌱${member.auth}</span> <br>
+                            <span id="memberId"> ${member.memberId} <span>
                             <div class="button">
-                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -713,7 +762,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -741,12 +790,12 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
 </body>
 
 </html>

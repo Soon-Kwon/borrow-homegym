@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -13,12 +15,11 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" /> 
 
-		<resources mapping="/resources/**" location="/resources/" /> 
-		
-		<resources mapping="/assets/**" location="resources/assets/" /> 
-		<resources mapping="/ad_assets/**" location="resources/ad_assets/" />
+	<resources mapping="/resources/**" location="/resources/" /> 
+	
+	<resources mapping="/assets/**" location="resources/assets/" /> 
+	<resources mapping="/ad_assets/**" location="resources/ad_assets/" />
 
 
 
@@ -31,7 +32,41 @@
 	
 	<context:component-scan base-package="com.homegym.controller" />
 	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	 <!-- 업로드 패스 설정 (eunbi)-->
+	<beans:bean class="java.lang.String" id="uploadPath">
+		<beans:constructor-arg value="C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources"/>
 	</beans:bean>
+	
+
+	<!-- websocket-handler등록, 클라이언트 관리위함 -->
+	<websocket:handlers>
+		<websocket:mapping handler="noticeHandler" path="/chat-ws" />
+		<websocket:handshake-interceptors>
+			<beans:bean
+				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs /> 
+	</websocket:handlers> 
+	
+
+	<!-- 이 속성을 이용해 핸들러로 처리할 클래스 참조 -->
+	<beans:bean id="noticeHandler"
+		class="com.homegym.biz.common.NoticeHandler"></beans:bean>
+		
+	<!-- websocket:handlers>
+		<websocket:mapping handler="myHandler" path="/include/msgCntAll.do"/>
+	</websocket:handlers>
+	<beans:bean id="myHandler" class="com.homegym.biz.common.NoticeHandler"/> -->
+
+	<beans:bean id="webSocketHandler"
+		class="com.homegym.biz.common.NoticeHandler"></beans:bean>
+
+	<!-- 일반 파일 업로드 -->
+	<resources mapping="/imgUpload/**" location="/resources/imgUpload/"/>
+	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <beans:property name="maxUploadSize" value="10485760"/>
+  	</beans:bean>
+
 	
 </beans:beans>

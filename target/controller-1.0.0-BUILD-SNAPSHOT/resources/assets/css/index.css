@@ -1,0 +1,130 @@
+body, input, select, textarea, button {
+    font-family: noto sans,malgun gothic,AppleGothic,dotum;
+}
+/* 비트컬리 로고 색 */
+header .fh5co-navbar-brand .fh5co-logo:after{
+   background: white;
+   colofr:#fff;
+}
+
+#footer a{
+    color: #378bb3;
+}
+/* header위의 header(회원가입, 로그인, 고객센터) */
+#userMenu {
+    margin:5px 150px 0 150px;
+    display:flex;
+    justify-content: space-between;
+}
+
+
+.list_menu{
+    display: flex;
+    justify-content: space-evenly;
+    
+
+    font-size: 13px;
+    color:black;
+    list-style: none;
+}
+
+#userMenu .menu_join .link_menu {
+    color: #1f6fc4 ;
+    font-weight: bold;
+    
+}
+
+.list_menu>li>a{
+    color:black;
+    padding: 5px;
+}
+
+
+/* bar */
+
+.bar{
+    float: left;
+    width: 1px;
+    height: 15px;
+    margin: 3px 6px 0;
+    background-color: black;
+}
+
+/* 고객센터 hover시 dropdown 메뉴 생성*/
+.dropbtn {
+    background-color: #fff;
+    color: black;
+    border: none;
+    cursor: pointer;
+    padding-top: 0;
+    margin-left:0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    /* background-color: #f9f9f9; */
+    min-width: 160px;
+    /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    z-index: 9999;
+    background-color: #fff;
+}
+
+.dropdown-content a:hover {
+    background-color: #378bb3;
+    color:#fff;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* .dropdown:hover .dropbtn {
+    background-color: #378bb3 ;
+} */
+
+/* 상단바 고정 */
+
+/* carousel - 아이템을 하나 더 놓고 싶은데*/
+
+/* .owl-carousel2 .item{
+    height:500px;
+    width:auto;
+} */
+
+.item> img{
+    height:100%;
+}
+div.desc h3,
+div.desc .price
+{
+    font-weight: bold;
+}
+
+/* 로고 뒤의 네모 색상 변경*/
+header #fh5co-main-nav > ul li a.active:before {
+    background: #378bb3;
+}
+
+.heading-section h2:before {
+    background: #378bb3;
+}
+
+/* 금주혜택 이미지 */
+.benefit_img img{
+    width:100%;
+    margin-bottom: 40px;
+}
+

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -11,7 +13,7 @@
     <title>빌려줘! 홈짐 - 홈짐 찾기</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -20,12 +22,12 @@
         rel="stylesheet">
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="../assets/css/animate.css" />
-    <link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
 	
 	<style>
 		.image{
@@ -86,15 +88,14 @@
     <!-- /End Preloader -->
 
     <!-- Start Header Area -->
-   
-    <header class="header style2 navbar-area">
+    <header class="header style navbar-area"> 
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-12">
 					<div class="nav-inner">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="main_index.html">
-								<img src="../assets/images/logo/로고2.png" alt="logo">
+								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 							</a>
 							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -109,7 +110,8 @@
 							</form>
 							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
+									<li class="nav-item" style="margin-right: 100px;">
+									<a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">
 											<h5>홈짐</h5>
 										</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -132,119 +134,142 @@
 	<!-- End Header Area -->
     <!-- End Header Area -->
     <!-- Start Event Details -->
-    <div class="event-details section">
-        <div class="container">
-            <div class="row">
-                <!-- Start Event Details Content -->
-                <div class="col-lg-8 col-12">
-                  <div id="map" style="width:100%;height:650px;"></div>
-                    <div class="details-content">
-                        <!-- Start Google-map Area -->
-                        <div class="map-section">
-            			  <p class="location"> <i class="lni lni-map-marker"></i> 홈짐 주소 나오는 곳</p>
-                 	   </div>
-                    <!-- End Google-map Area -->
-                </div>
-               	<div class="write" style="text-align: center;">
-               		<button  class="btn btn-primary" type="button" 
-               		onclick="location.href='/homegym/registerView.do'">
-               		내 홈짐도 등록해볼까요? 글쓰러 가기!!</button>
-               	</div> 
-         	  </div>
-            <!-- End Event Details Content -->
-            <!-- Start Event Details Sidebar -->
-            <div class="col-lg-4 col-12">
-                <div class="event-sidebar">
-                    <!-- Start Single Widget -->
-                    <div class="single-widget other-event-wedget">
-                        <h3 class="sidebar-widget-title" style="margin-bottom: 0px;"> 플레이스🏠</h3>
-                        <div style="margin: 30px 0px;"></div>
-                        <ul class="other-event">
-                        	<c:forEach items="${list }" var="board">
-                        		
-                        		<li class="single-event">
-                                <div class="thumbnail">
-                                    <a href="javascript:void(0)" class="image"><img
-                                             src='/display.do?fileName=${board.uploadPath }/${board.uuid }_${board.fileName }' alt="Event Image"></a>
-                                </div>
-                                <div class="info">
-                                    <span class="date"><i class="lni lni-apartment"></i>${board.memberId }님의 홈짐</span>
-                                    <h6 class="title"><a class='move' 
-                                    href='<c:out value="${board.h_id}"/>'><c:out value="${board.h_title}"/></a></h6>
-                                    <span style="font-size: 11px; padding-top: 20px">${board.h_addr}</span>
-                                </div>
-                            </li>
-                        	</c:forEach>
-                            <!-- <li class="single-event">
-                                <div class="thumbnail">
-                                    <a href="javascript:void(0)" class="image"><img
-                                            src="https://via.placeholder.com/170x170" alt="Event Image"></a>
-                                </div>
-                                <div class="info">
-                                    <span class="date"><i class="lni lni-apartment"></i>임윤아님의 홈짐</span>
-                                    <h6 class="title"><a href="homegym-details.html">각종 헬스기구들을 보유한 임하우스입니다</a></h6>
-                                    <span style="font-size: 11px; padding-top: 20px">서울시 종로구 인사동</span>
-                                </div>
-                            </li>
-                            <li class="single-event">
-                                <div class="thumbnail">
-                                    <a href="javascript:void(0)" class="image"><img
-                                            src="https://via.placeholder.com/170x170" alt="Event Image"></a>
-                                </div>
-                                <div class="info">
-                                    <span class="date"><i class="lni lni-apartment"></i> 김연아님의 홈짐</span>
-                                    <h6 class="title"><a href="homegym-details.html">각종 헬스기구들을 보유한 김하우스입니다</a></h6>
-                                    <span style="font-size: 11px; padding-top: 20px">서울시 서초구 논현동</span>
-                                </div>
-                            </li>
-                            <li class="single-event">
-                                <div class="thumbnail">
-                                    <a href="javascript:void(0)" class="image"><img
-                                            src="https://via.placeholder.com/170x170" alt="Event Image"></a>
-                                </div>
-                                <div class="info">
-                                    <span class="date"><i class="lni lni-apartment"></i> 권지용님의 홈짐</span>
-                                    <h6 class="title"><a href="homegym-details.html">각종 헬스기구들을 보유한 권하우스입니다</a></h6>
-                                    <span style="font-size: 11px; padding-top: 20px">서울시 강서구 화곡동</span>
-                                </div>
-                            </li> -->
-                        </ul>
-                    </div>
-                     <div class="row">
-                <div class="col-12">
-                    <!-- Pagination -->
-                    <div class="pagination center" style="margin: 0px;">
-                        <ul class="pagination-list">
-                        	<c:if test="${pageMaker.prev }">
-                        		<li class="paginate_button previous"><a href="${pageMaker.startPage -1 }">이전</a></li>
-                        	</c:if>
-                        
-                        	<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-                        		<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
-                        		<a href="${num }">${num }</a></li>
-                        	</c:forEach>
-                        	
-                        	<c:if test="${pageMaker.next }">
-                        		<li class="paginate_button next"><a href="${pageMaker.endPage + 1 }">다음</a>
-                        	</c:if>
-                        </ul>
-                        <!-- 페이지 번호 클릭했을 때 전송되는 form -->
-                        <form id="actionForm" action="/homegym/homegymListView.do" method="get">
-                        	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
-                        	<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-                        </form>
-                    </div>
-                    <!--/ End Pagination -->
-                </div>
-            </div>
-                    <!-- End Single Widget -->
-                </div>
-            </div>
-            <!-- End Event Details Sidebar -->
-        </div>
-    </div>
-    </div>
-    <!-- Start Event Details -->
+	<div class="event-details section" style="padding-top: 60px;">
+		<c:choose>
+			<c:when test="${empty list}">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-12">
+							<h3>검색 결과가 없습니다. 우리동네 홈짐을 등록해보세요!🏠</h3>
+							<br> <br>
+							<form class="d-flex search-form" action="homegymListView.do"
+								method="get">
+								<input class="form-control me-2" type="search" name="keyword"
+									placeholder="동네 이름을 검색해보세요!" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit">
+									<i class="lni lni-search-alt"></i>
+								</button>
+							</form>
+							<br>
+							<div class="write" style="text-align: center;">
+								<button class="btn btn-primary" type="button"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
+									홈짐을 등록해볼까요? 글쓰러 가기!</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-12">
+							<!-- Start Event Details Content -->
+
+							<form class="d-flex search-form" action="homegymListView.do"
+								method="get">
+								<input class="form-control me-2" type="search" name="keyword"
+									placeholder="동네 이름을 검색해보세요!" aria-label="Search"> 
+								<button class="btn btn-outline-success" type="submit">
+									<i class="lni lni-search-alt"></i>
+								</button>
+							</form>
+							<br>
+							<div id="map" style="width: 100%; height: 650px;"></div>
+							<div class="details-content">
+								<!-- Start Google-map Area -->
+								<!-- <div class="map-section">
+									<p class="location">
+										<i class="lni lni-map-marker"></i> 홈짐 주소 나오는 곳
+									</p>
+								</div> -->
+								<!-- End Google-map Area -->
+							</div>
+							<div class="write" style="text-align: center;  margin-top: 30px;">
+								<button class="btn btn-primary" type="button"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
+									홈짐도 등록해볼까요? 글쓰러 가기!!</button>
+							</div>
+						</div>
+						<!-- End Event Details Content -->
+						<!-- Start Event Details Sidebar -->
+						<div class="col-lg-4 col-12">
+							<div class="event-sidebar">
+								<!-- Start Single Widget -->
+								<div class="single-widget other-event-wedget">
+									<h3 class="sidebar-widget-title" style="margin-bottom: 0px;">
+										플레이스🏠</h3>
+									<div style="margin: 30px 0px;"></div>
+									<ul class="other-event">
+										<c:forEach items="${list }" var="board">
+											<li class="single-event">
+												<div class="thumbnail">
+													<a href='<c:out value="${board.h_id}"/>' class="image move"><img
+														src='/display.do?fileName=${board.uploadPath }/${board.uuid }_${board.fileName }'
+														alt="Event Image"></a>
+												</div>
+												<div class="info">
+													<span class="date"><i class="lni lni-apartment"></i>${board.memberId }님의
+														홈짐</span>
+													<h6 class="title">
+														<a class='move' href='<c:out value="${board.h_id}"/>'><c:out
+																value="${board.h_title}" /></a>
+													</h6>
+													<span style="font-size: 11px; padding-top: 20px">${board.h_addr}</span>
+												</div>
+											</li>
+
+										</c:forEach>
+									</ul>
+								</div>
+								<div class="row">
+									<div class="col-12">
+										<!-- Pagination -->
+										<div class="pagination center" style="margin: 0px;">
+											<ul class="pagination-list">
+												<c:if test="${pageMaker.prev }">
+													<li class="paginate_button previous"><a
+														href="${pageMaker.startPage -1 }">이전</a></li>
+												</c:if>
+
+												<c:forEach var="num" begin="${pageMaker.startPage }"
+													end="${pageMaker.endPage }">
+													<li
+														class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
+														<a href="${num }">${num }</a>
+													</li>
+												</c:forEach>
+
+												<c:if test="${pageMaker.next }">
+													<li class="paginate_button next"><a
+														href="${pageMaker.endPage + 1 }">다음</a>
+												</c:if>
+											</ul>
+											<!-- 페이지 번호 클릭했을 때 전송되는 form -->
+											<form id="actionForm" action="/homegym/homegymListView.do"
+												method="get">
+												<input type='hidden' name='pageNum'
+													value='${pageMaker.cri.pageNum }'> <input
+													type='hidden' name='amount'
+													value='${pageMaker.cri.amount }'> <input
+													type='hidden' name='keyword'
+													value='${pageMaker.cri.keyword }'>
+											</form>
+										</div>
+										<!--/ End Pagination -->
+									</div>
+								</div>
+								<!-- End Single Widget -->
+							</div>
+						</div>
+						<!-- End Event Details Sidebar -->
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+	<!-- Start Event Details -->
 
 
     <!-- Start Footer Area -->
@@ -257,7 +282,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -285,12 +310,12 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/count-up.min.js"></script>
-    <script src="../assets/js/wow.min.js"></script>
-    <script src="../assets/js/tiny-slider.js"></script>
-    <script src="../assets/js/glightbox.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="/resources/assets/js/bootstrap.min.js"></script>
+    <script src="/resources/assets/js/count-up.min.js"></script>
+    <script src="/resources/assets/js/wow.min.js"></script>
+    <script src="/resources/assets/js/tiny-slider.js"></script>
+    <script src="/resources/assets/js/glightbox.min.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
     
     <!-- ========================= 카카오 지도 ========================= -->
 
@@ -307,43 +332,62 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		 
 		// 마커를 표시할 위치와 title 객체 배열입니다 
-	 	var positions = [
-		    {
-		        title: '<c:out value="${list[0]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[0]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
-		        		'<c:out value="${list[0]['h_locate_X']}"/>'),
-		        no: <c:out value="${list[0]['h_id']}"/>
-		    },
-		    {
-		    	title: '<c:out value="${list[1]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[1]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[1]['h_locate_X']}"/>'),
-	    	    no: <c:out value="${list[1]['h_id']}"/>
-
-		    },
-		    {
-	    	    title: '<c:out value="${list[2]['h_title']}"/>',
-		        content: '<div><c:out value="${list[2]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[2]['h_locate_X']}"/>'),
-	        	no: <c:out value="${list[2]['h_id']}"/>
-
-		    },
-		    {
-	    	    title: '<c:out value="${list[3]['h_title']}"/>', 
-		        content: '<div><c:out value="${list[3]['h_title']}"/></div>',
-		        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['h_locate_Y']}"/>',
-			        		'<c:out value="${list[3]['h_locate_X']}"/>'),
-		      	no: <c:out value="${list[3]['h_id']}"/>
-		    }
-		];
+	 	
+		//	var list = <c:out value="${list}"/>;
+		//console.log(list.length);		
+		var positions = [];
 		
-	/* 	var positions = new Array();
-		<c:forEach items="${list}" var="board">
-			positions.push({title: '${board.HTitle}', latlng: new kakao.maps.LatLng('${board.HLocateY}', '${board.HLocateX}')});
-		</c:forEach> */
+		for (var i = 0 ; i < 4 ; i++){
+			var temp = {
+			title: "'" + '<c:out value="${list[' + i + "]['h_title']}" + '"/>' + "'"
+			//title: "'<c:out value=\"${list[" + i + "]['h_title']}\"/>'"
+
+		   /*  content: "'" + '<div style="text-align: center;"><c:out value="${list[' + i + 
+	        	"]['h_title']}" + '"/></div>' + "'",
+	        latlng: new kakao.maps.LatLng("'" + '<c:out value="${list[' + i + "]['h_locate_Y']}" +  '"/>' + "'" ,
+	        		"'" + '<c:out value="${list[' + i + "]['h_locate_X']}" + '"/>' + "'"),
+	        no: '<c:out value="${list[' + i + "]['h_id']}" +  '"/>' + "",
+	        thumbnail: "'" + '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[' 
+	        	+ i + "]['uploadPath'] }/${list[" + i + "]['uuid']}_${list[i]['fileName']}" + '"alt="Event Image"></a></div>' + "'" */
+			}
+			
+			positions.push(temp);
+		}  
+		
+	/* var positions = [
+	    {
+	        title: '<c:out value="${list[0]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[0]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[0]['h_locate_Y']}"/>',
+	        		'<c:out value="${list[0]['h_locate_X']}"/>'),
+	        no: <c:out value="${list[0]['h_id']}"/> + "",
+	        thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[0]['uploadPath'] }/${list[0]['uuid']}_${list[0]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+	    	title: '<c:out value="${list[1]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[1]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[1]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[1]['h_locate_X']}"/>'),
+    	    no: <c:out value="${list[1]['h_id']}"/> + "",
+    	    thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[1]['uploadPath'] }/${list[1]['uuid']}_${list[1]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+    	    title: '<c:out value="${list[2]['h_title']}"/>',
+	        content: '<div style="text-align: center;"><c:out value="${list[2]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[2]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[2]['h_locate_X']}"/>'),
+        	no: <c:out value="${list[2]['h_id']}"/> + "",
+        	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[2]['uploadPath'] }/${list[2]['uuid']}_${list[2]['fileName']}" alt="Event Image"></a></div>'
+	    },
+	    {
+    	    title: '<c:out value="${list[3]['h_title']}"/>', 
+	        content: '<div style="text-align: center;"><c:out value="${list[3]['h_title']}"/></div>',
+	        latlng: new kakao.maps.LatLng('<c:out value="${list[3]['h_locate_Y']}"/>',
+		        		'<c:out value="${list[3]['h_locate_X']}"/>'),
+	      	no: <c:out value="${list[3]['h_id']}"/> + "",
+	      	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[3]['uploadPath'] }/${list[3]['uuid']}_${list[3]['fileName']}" alt="Event Image"></a></div>'  
+	    }
+	]; */
 		
 		// 마커 이미지의 이미지 주소입니다
 		var imageSrc = "/resources/assets/images/logo/logo.png"; 
@@ -366,7 +410,8 @@
 		    
 		    // 마커에 표시할 인포윈도우를 생성합니다 
 		    var infowindow = new kakao.maps.InfoWindow({
-		        content: positions[i].content // 인포윈도우에 표시할 내용		        
+		      	
+		        content: positions[i].content + positions[i].thumbnail // 인포윈도우에 표시할 제목 + 사진
 		    });
 		    
 		    var index = positions[i].no;

@@ -84,7 +84,7 @@
                                        	 <li class="nav-item"><a href="/user/mywrite">&nbsp 글 관리</a></li>
                                         <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();">로그아웃</a></li>
                                         </ul>
-                                  		</li>
+                                    </li>
 										<form id="logout" action="/logout" method="POST">
    										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 										</form>
