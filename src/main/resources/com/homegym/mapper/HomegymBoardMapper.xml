@@ -3,7 +3,7 @@
 
 <mapper namespace="HomegymDAO">
 
-<!-- 	<resultMap type="com.homegym.biz.homegym.HomegymVO" id="HomegymVO">
+	<resultMap type="com.homegym.biz.homegym.HomegymVO" id="HomegymVO">
 		<result column="h_id" property="hId"></result>
 		<result column="memberId" property="memberId"></result>
 		<result column="h_title" property="hTitle"></result>
@@ -19,7 +19,7 @@
 		<result column="uuid" property="uuid"></result>
 		<result column="uploadPath" property="uploadPath"></result>
 		<result column="fileName" property="fileName"></result>
-	</resultMap> -->
+	</resultMap>
 	
 	<select id="getBoardList" resultType="homegymVO">
 		select * from homegym_board where h_id > 0
@@ -32,28 +32,21 @@
 		LIMIT #{cri.amount} OFFSET #{cri.skip}
 	</select> -->
 	
-	<select id="getBoardListWithPaging" resultType="Hashmap">
-		select * 
-		from (
-				select distinct(hb.h_id), 
-					   ha.uuid, 
-					   ha.fileName, 
-					   ha.uploadPath, 
-					   hb.memberId, 
-					   hb.h_title,
-					   hb.h_price, 
-					   hb.h_addr, 
-					   hb.h_locate_X, 
-					   hb.h_locate_Y, 
-					   hb.h_cnt
+	<select id="getBoardListWithPaging" resultType="HashMap">
+		  select hb.h_id, max(ha.uuid) as uuid, max(ha.fileName) as fileName, max(ha.uploadPath) as uploadPath
+			, max(hb.memberId) as memberId, max(hb.h_title) as h_title, max(hb.h_price) as h_price
+			, max(hb.h_addr) as h_addr, max(hb.h_locate_X) as h_locate_X, max(hb.h_locate_Y) as h_locate_Y, max(hb.h_cnt) as h_cnt  
 					from homegym_board as hb 
                 		 join homegym_attach as ha
                 		 on hb.h_id = ha.h_id
+                	where
+                		h_addr like concat('%', #{cri.keyword}, '%') 
+                          group by hb.h_id
 					order by hb.h_id desc
-			  ) R1
 		LIMIT #{cri.amount} OFFSET #{cri.skip};
 	</select>
 	
+	<!-- <select id="getAllInfoByKeyword" resultType -->
 	<select id="read" resultType="homegymVO">
 		select * from homegym_board
 		where h_id = #{hId}
@@ -88,6 +81,7 @@
 	</delete>
 	
 	<select id="getTotalCount" resultType="int">
-		select count(*) from homegym_board where h_id > 0
+		select count(*) from homegym_board where h_id > 0 and
+                		h_addr like concat('%', #{keyword}, '%') 
 	</select>
 </mapper>

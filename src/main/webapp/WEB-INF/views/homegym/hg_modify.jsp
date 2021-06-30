@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<html class="no-js" lang="zxx">
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+	
 
 	<head>
 		<meta charset="utf-8" />
@@ -10,7 +12,7 @@
 		<title>빌려줘! 홈짐 - 홈짐 등록</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/logo.png" />
+		<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
 		<!-- Place favicon.ico in the root directory -->
 
 		<!-- Web Font -->
@@ -20,16 +22,16 @@
 
 		<!-- ========================= CSS here ========================= -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../assets/css/LineIcons.2.0.css" />
-		<link rel="stylesheet" href="../assets/css/animate.css" />
-		<link rel="stylesheet" href="../assets/css/tiny-slider.css" />
-		<link rel="stylesheet" href="../assets/css/glightbox.min.css" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+		<link rel="stylesheet" href="/resources/assets/css/animate.css" />
+		<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+		<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+		<link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 		<style>
 			.intro {
-				background-image: url("../assets/images/gym/homegym-image-01.jpg");
+				background-image: url("/resources/assets/images/gym/homegym-image-01.jpg");
 				background-size: cover;
 				background-position: center;
 				background-repeat: no-repeat;
@@ -130,19 +132,6 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"
 			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 		
-		<!-- 동적으로 입력 폼 추가/삭제-->
-		<script>
-			function add_item() {
-				// append-form 에 있는 내용을 읽어와서 처리..
-				var div = document.createElement('div');
-				div.innerHTML = document.getElementById('append-form').innerHTML;
-				document.getElementById('field').appendChild(div);
-			}
-			function remove_item(obj) {
-				// obj.parentNode 를 이용하여 삭제
-				document.getElementById('field').removeChild(obj.parentNode.parentNode.parentNode);
-			}
-		</script>
 	</head>
 
 	<body>
@@ -156,6 +145,10 @@
     <script>
 			var chkArray = new Array();
 			$(document).ready(function () {
+				
+				// 스프링 시큐리티 csrf 토큰 
+				var csrfHeaderName = "${_csrf.headerName}";
+				var csrfTokenValue = "${_csrf.token}";
 				
 				// 체크박스 색 조정
 				$("input[name=homegym_options]").click(function () {
@@ -193,6 +186,56 @@
 					return true;
 				}
 				
+				// (수정하려는 양식에 원래 업로드된 글정보 보여주기)
+				
+				var hid = '<c:out value="${board.HId}"/>';
+				
+				// hid값을 활용하여 첨부파일 리스트를 보여주는 ajax를 호출하고, 데이터에 hid 값을 넣어서 보내준다.  
+				$.getJSON("/homegym/getAttachList.do?hId=" + hid, {hid: hid}, function(arr){
+					
+					var str = "";
+					
+					$(arr).each(function(i, attach){
+						
+						// 이미지 타입일때 
+						if(attach.fileType){
+							
+							var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" 
+									+ attach.uuid + "_" + attach.fileName);
+							str += "<li data-path='" + attach.uploadPath + "'";
+							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
+									+ "'data-type='" + attach.fileType + "'";
+							str += "><div>";
+							str +="<span> " + attach.fileName + "</span>";
+							str +="<button type='button' data-file=\'" + fileCallPath 
+							+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+							+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+							str += "</div>";
+							str += "</li>";
+						}else{ // 파일일 때 
+							var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
+									+ "_" + attach.fileName);
+							var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+							
+							str += "<li data-path='" + attach.uploadPath + "'";
+							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
+									+ "'data-type='" + attach.fileType + "'";
+							str += "><div>";
+							str +="<span> " + attach.fileName + "<span>";
+							str +="<button type='button' data-file=\'" + fileCallPath 
+							+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+							+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/assets/images/common/attach.png'></a>";
+							str += "</div>";
+							str += "</li>";
+						}
+					});
+					
+					$(".uploadResult ul").html(str);
+				});
+				
+				// 수정시 업로드한 파일 보여주기
 				$("input[type='file']").change(function(e){
 					
 					var formData = new FormData();
@@ -216,6 +259,9 @@
 						processData: false,
 						contentType: false,
 						data: formData,
+						/* beforeSend: function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						}, */
 						type: 'POST',
 						dataType: 'json',
 						success: function(result){
@@ -228,28 +274,37 @@
 					});
 				});
 				
-				// x를 누르면 업로드된 파일 삭제
+				// (기존 글쓰기랑 달라진점 주의*) x를 누르면 업로드된 파일 자체가 아니라 화면에서만 사라지게 한다.
+				// 또한 서버에 존재하는 사진을 직접 삭제하는 것이 아니기 때문에 원래 사진을 삭제하고 수정하면 
+				// 서버에 남아있게 된다. 이에 대한 처리는 추후에.
 				$(".uploadResult").on("click", "button", function(e){
 					
 					console.log("delete file");
 					
-					var targetFile = $(this).data("file");
-					var type = $(this).data("type");
+					/* var targetFile = $(this).data("file");
+					var type = $(this).data("type"); */
 					
+					if(confirm("사진을 삭제하시겠습니까?")){
 					var targetLi = $(this).closest("li");
-					
+					targetLi.remove();
+					}
+			/* 		서버에서는 나중에 삭제
 					$.ajax({
 						url: '/deleteFile.do',
 						data: {fileName: targetFile, type: type},
 						dataType: 'text',
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 						type: 'POST',
 						success: function(result){
 							alert(result);
 							targetLi.remove();
 						}
-					});
+					}); */
 				});
 			});
+		
 		
 		</script>
 
@@ -271,7 +326,7 @@
 						<div class="nav-inner">
 							<nav class="navbar navbar-expand-lg">
 								<a class="navbar-brand" href="main_index.html">
-									<img src="../Template Main/../assets/images/logo/로고2.png" alt="logo">
+									<img src="/resources/assets/images/logo/로고2.png" alt="logo">
 								</a>
 								<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
 									data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -288,7 +343,7 @@
 								</form>
 								<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 									<ul id="nav" class="navbar-nav ms-auto">
-										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do">
+										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
 												<h5>홈짐</h5>
 											</a></li>
 										<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
@@ -519,7 +574,7 @@
 							<div class="col-md-6" style="text-align: start;">
 								<div class="logo">
 									<br><br>
-									<a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+									<a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
 								</div>
 							</div>
 							<div class="col-md-6" style="text-align: end;">
@@ -595,9 +650,13 @@
 				}).open();
 			}
 		</script>
+		
 		<script>
 		
 		// 글 수정시 실행되는 update	()함수
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		
 		function update(){
 			
@@ -613,7 +672,7 @@
 			$('#hashtag').val(hashTag);
 			
 			if($('#price').val() == '' || $('#title').val() == ''){
-				alert("꼭 필요한 내용들을 적어주세요");
+				alert("필수 내용들을 적어주세요");
 				return;
 			}
 			
@@ -639,6 +698,7 @@
 			
 			if(str == null || str == ""){
 				alert("최소 한 장 이상의 사진을 올려주세요!");
+				return;
 			}
 			
 			var formObj = $("#submitForm");
@@ -652,6 +712,9 @@
 				url: 'homegymModify.do',
 				dataType: 'text',
 				data: data,
+				/* beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				}, */
 				success: function(data) {
 					alert(data);
 					if(data == 'OK') {
@@ -677,10 +740,13 @@
 					type: 'POST',
 					url: 'homegymRemove.do',
 					dataType: 'text',
+					/* beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					}, */
 					data: {hId: hId},
 					success: function(data){
 						alert('글 삭제에 성공하였습니다.');
-						window.location.replace("/homegym/homegymListView.do");
+						window.location.replace("/homegym/homegymListView.do${cri.getListLink() }");
 					},
 					error: function(e, data){
 						alert(data);
@@ -746,12 +812,12 @@
 		</a>
 
 		<!-- ========================= JS here ========================= -->
-		<script src="../assets/js/bootstrap.min.js"></script>
-		<script src="../assets/js/count-up.min.js"></script>
-		<script src="../assets/js/wow.min.js"></script>
-		<script src="../assets/js/tiny-slider.js"></script>
-		<script src="../assets/js/glightbox.min.js"></script>
-		<script src="../assets/js/main.js"></script>
+		<script src="/resources/assets/js/bootstrap.min.js"></script>
+		<script src="/resources/assets/js/count-up.min.js"></script>
+		<script src="/resources/assets/js/wow.min.js"></script>
+		<script src="/resources/assets/js/tiny-slider.js"></script>
+		<script src="/resources/assets/js/glightbox.min.js"></script>
+		<script src="/resources/assets/js/main.js"></script>
 	</body>
 
 </html>
