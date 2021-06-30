@@ -115,7 +115,7 @@ public class MessageDAO {
 	}
 	
 	/* navbar에서 보여줄 안읽은 메세지 총 카운트 unread 세주기*/
-	public String msgCntAll(String curId) {
+	public int unReadCntAll(String curId) {
 		log.info("DAO의 msgCntAll();");
 		return sqlSession.selectOne("MessageDAO.countUnreadAll", curId);
 		

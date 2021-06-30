@@ -118,8 +118,8 @@
 		LIMIT 0,1
 	</select>
 	
-	<!-- navbar에서 보여줄 안읽은 메세지 총 카운트 unread 세주기 -->
-	<select id="countUnreadAll" parameterType="string"
+	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
+	<select id="unReadCntAll" parameterType="string"
 		resultType="int">
 		SELECT COUNT(MSGNO) FROM MESSAGE
 		WHERE RECVID=#{curId}

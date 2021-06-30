@@ -3,17 +3,20 @@ package com.homegym.biz.common;
 
 
 
-import org.apache.ibatis.session.SqlSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.homegym.biz.message.MessageVO;
+import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.message.impl.MessageDAO;
  
 @Repository
@@ -22,7 +25,7 @@ import com.homegym.biz.message.impl.MessageDAO;
  * 
  * @Component
  */
-public class WebSocketHandler extends TextWebSocketHandler { // text방식
+public class NoticeHandler extends TextWebSocketHandler { // text방식
 	/*
 	 * private List<WebSocketSession> sessions = new ArrayList<>();
 	 * 
@@ -42,29 +45,46 @@ public class WebSocketHandler extends TextWebSocketHandler { // text방식
 	 */
 	
 	@Autowired
-	private SqlSession sqlSession;
+	private MessageDAO messageDAO;
+	
+	// 로그인한 세션 전체
+	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+	
+	// 1대1
+	private Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
 	
 	private final Logger logger = LogManager.getLogger(getClass());
 	
+	// 서버접속 성공시
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
+		sessions.add(session);
 		
+		String senderId = getEmail(session);
 	}
 
+	// 연결 해제 
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
+	public void afterConnectionClosed(WebSocke+tSession session, CloseStatus status) throws Exception{
 		
 	}
 	
-	// jsp 파일에서 클라이언트가 현재 접속중인 아이디를 웹소켓을 통해 서버로 보내면 해당 메소드 실행
+	// 소켓에 메시지 전송시
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-		MessageDAO messageDAO = sqlSession.getMapper(MessageDAO.class);
-		this.logger.info(message.getPayload());
-		// 현재 수신자에게 몇 개의 메세지가 와있는지 디비에서 검색
-		// session.sendMessage() : 데이터를 클라이언트에 전송할 때 사용
-		session.sendMessage(new TextMessage(messageDAO.msgCntAll(message.getPayload())));
-		
+	protected void handleTextMessage(WebSocketSession session, CloseStatus status) throws Exception{
+		System.out.println("afterConnectionClosed" + session + ", " + status);
+		userSessionsMap
 	}
 	
+	// 웹소켓 email(id)가져오기
+	private String getEmail(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		MemberVO loginUser = (MemberVO)httpSession.get("memberVO");
+		
+		if(loginUser == null) {
+			return session.getId();
+		} else {
+			return loginUser.getMemberId();
+		}
+	}
 }

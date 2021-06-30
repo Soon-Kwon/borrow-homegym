@@ -120,7 +120,7 @@ public class MessageController {
 	/* 임시 */
 	@RequestMapping("/msg.do")
 	public String msg(HttpServletRequest request, HttpSession session, Model model) {
-		return "message/message_main_origin";
+		return "message/websocket_connectionTest";
 	}
 
 	@GetMapping("/chat.do")

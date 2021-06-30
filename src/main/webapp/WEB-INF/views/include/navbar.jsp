@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<% String memberId = request.getParameter("memberId");
-session.setAttribute("memberId", memberId); %>
-    
+	pageEncoding="UTF-8"%>
+<%
+	String memberId = request.getParameter("memberId");
+session.setAttribute("memberId", memberId);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- -->
-<link rel="stylesheet"
-	href="/resources/ad_assets/css/message.css">
+<link rel="stylesheet" href="/resources/ad_assets/css/message.css">
 <!--부트스트랩 설정-->
 
 <link
@@ -20,7 +21,10 @@ session.setAttribute("memberId", memberId); %>
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
 	type="text/css" rel="stylesheet">
@@ -44,16 +48,18 @@ session.setAttribute("memberId", memberId); %>
 <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
 <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/main.css" />
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> <!-- 웹소켓 -->
 <style>
-	.envelope-icon{
-		font-size:25px;
-	}
-	.badge-red{
-	    position: absolute;
-	    bottom: 24px;
-	    right: -16px;
-	    font-size: .45em;
-	}
+.envelope-icon {
+	font-size: 25px;
+}
+
+.badge-red {
+	position: absolute;
+	bottom: 24px;
+	right: -16px;
+	font-size: .45em;
+}
 </style>
 </head>
 <body>
@@ -94,19 +100,19 @@ session.setAttribute("memberId", memberId); %>
 										href="../user/profile.do?memberId=admin"> <img
 											src="https://via.placeholder.com/300x300" alt="logo">
 									</a></li>
-									<li class="nav-item">
-										<a href="../user/profile.do?memberId=${memberId }"><h5>${memberId }님</h5>
-										</a>
-									</li>
-									<li class="nav-item dropdown no-arrow mx-1">
-									<a href="../message/msgMain.do?memberId=${memberId }">
-									<i class="far fa-envelope envelope-icon">
-										<span id = "msgCntAll" class="badge badge-danger badge-counter badge-red">${msgCnt}</span>
-									</i> <!-- Counter - Alerts -->
-											
-									</a>
-									<!-- 메세지 -->
-									<%-- <a
+									<li class="nav-item"><a
+										href="../user/profile.do?memberId=${memberId }"><h5>${memberId }님</h5>
+									</a></li>
+									<li id="msgCnt" class="nav-item dropdown no-arrow mx-1"><a
+										href="../message/msgMain.do?memberId=${memberId }"> <i
+											class="far fa-envelope envelope-icon"> 
+											<script id="temp" type="text/x-handlebars-template">
+<span id="msgCntAll"class="badge badge-danger badge-counter badge-red cnt">{{cnt}}</span>
+ 		</script>
+	 		 <%-- <span id="msgCntAll" class="badge badge-danger badge-counter badge-red">${msgCnt}</span> --%>
+										</i> <!-- Counter - Alerts -->
+
+									</a> <!-- 메세지 --> <%-- <a
 										class="nav-link dropdown-toggle"
 										href="../message/msgMain.do?memberId=${memberId}" id="alertsDropdown"
 										role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -135,42 +141,37 @@ session.setAttribute("memberId", memberId); %>
 	<script src="/assets/js/tiny-slider.js"></script>
 	<script src="/assets/js/glightbox.min.js"></script>
 	<script src="/assets/js/main.js"></script>
-	
+
 	<!-- 메세지 갯수 업데이트 -->
 	<script type="text/javascript">
-	
-	var wsUri = "ws://localhost:8090/msgCntAll";
-	
-	function send_message(){
-		websocket = new WebSocket(wsUri);
-		websocket.onopen = function(evt){
-			onOpen(evt);
-		};
+		// 웹소켓 정의(연결)
+		var sock = new SockJS("${contextPath }/chat-ws/");
+		sock.onmessage = onMessage;
+		sock.onclose = onClose;
 		
-		websocket.onmessage = function(evt){
-			onMessage(evt);
-		};
+		// 서버로부터 메시지 받았을 때
+		function onMessage(msg){
+			var items = msg.data.split("|");
+			var sender = items[0]; // memberId
+			var message = items[1];
+			var cnt = items[2]; // 안읽은 갯수
+			var date = items[3];
+			var data={
+					"sender" : sender,
+					"message" : message,
+					"cnt" : cnt,
+					"date" : date
+			};
+			
+			var template = Handlebars.compile($("#temp").html());
+			$("#msgCnt").append(template(data));
+		}
 		
-		websocket.onerror = function(evt){
-			onError(evt);'
-		};
-	}
+		// 서버와 연결 끊기
+		function onClose(evt){
+			console.log("연결 끊기")
+		}
 	
-	function onOpen(evt){
-		websocket.send("${memberId}");
-	}
-	
-	function onMessage(evt){
-		$('#msgCntAll').append(evt.data)
-	}
-	
-	function onError(evt){
-		
-	}
-	
-		$(document).reday(function(){
-			send_message();
-		})
 	</script>
 </body>
 </html>
