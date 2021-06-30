@@ -22,6 +22,7 @@
 		<mapper resource="com/homegym/mapper/HomegymAttachMapper.xml"/>
 		<mapper resource="com/homegym/mapper/MemberMapper.xml"/>
 		<mapper resource="com/homegym/mapper/MessageMapper.xml" />
+		<mapper resource="com/homegym/mapper/TrainerBoardMapper.xml"/>
 	</mappers>
 	
 </configuration>

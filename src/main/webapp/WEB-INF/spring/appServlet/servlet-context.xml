@@ -32,9 +32,6 @@
 	
 	<context:component-scan base-package="com.homegym.controller" />
 	
-<!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-	</beans:bean> -->
-	
 	 <!-- 업로드 패스 설정 (eunbi)-->
 	<beans:bean class="java.lang.String" id="uploadPath">
 		<beans:constructor-arg value="C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources"/>
