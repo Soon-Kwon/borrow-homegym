@@ -76,9 +76,6 @@ public class HomegymController {
 		model.addAttribute("list", jsonArray.fromObject(homegymService.getBoardListWithPaging(vo, cri, attach)));
 		model.addAttribute("listAll", jsonArray.fromObject(homegymService.getAllInfo(vo, cri, attach)));
 		
-		// 댓글 평점 구하기
-		model.addAttribute("score", homegymService.getScoreList(review));
-		
 		// 페이징할 때 필요한 cri 인스턴스와 전체 게시물을 담은 total 인스턴스 변수를 모델에 담는다.
 		int total = homegymService.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));

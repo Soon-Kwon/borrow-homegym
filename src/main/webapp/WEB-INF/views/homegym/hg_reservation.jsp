@@ -3,56 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
-
-<head>
-	
-	<style>
-	/*라디오 버튼 CSS*/
-	.select {
-    	padding: 15px 10px;
-	}
-	.select input[type=radio]{
-	    display: none;
-	}
-	.select input[type=radio]+label{
-	    display: inline-block;
-	    cursor: pointer;
-	    height: 24px;
-	    width: 90px;
-	    border: 1px solid #333;
-	    line-height: 24px;
-	    text-align: center;
-	    font-weight:bold;
-	    font-size:13px;
-	}
-	.select input[type=radio]+label{
-	    background-color: #fff;
-	    color: #333;
-	}
-	.select input[type=radio]:checked+label{
-	    background-color: #333;
-	    color: #fff;
-	}
-	
-	label{
-		display: block;
-	    margin-bottom: .5rem;
-	    color: #081828;
-	    font-size: 13px;
-	    font-weight: 500;
-	}
-	</style>
-</head>
-<body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
+   <!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Preloader -->
     <div class="preloader">
@@ -64,9 +16,6 @@
         </div>
     </div>
     <!-- /End Preloader -->
-
-   <!--Header -->
-   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Contact Area -->
     <section id="contact-us" class="contact-us section">

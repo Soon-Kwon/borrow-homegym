@@ -4,57 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
-
-<head>
-	
-	<style>
-		.image{
-			width: 200px;
-			height: 200px;
-		}
-	</style>
-	<!-- jquery -->    
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <!-- 페이징 관련 자바스크립트 -->
-    <script>
-		$(document).ready(function(){
-			
-			// 페이지 버튼 클릭했을 때 이동
-			var actionForm = $("#actionForm");
-			
-			$(".paginate_button a").on("click", function(e){
-				
-				e.preventDefault();
-				
-				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-				actionForm.submit();
-			});
-			
-			// 제목 클릭시 해당 글로 이동하는 form
-			$(".move").on("click", function(e){
-				
-				e.preventDefault();
-				
-				actionForm.append("<input type='hidden' name='hId' value='" 
-						+ $(this).attr("href") + "'>");
-				actionForm.attr("action", "/homegym/homegymDetailView.do");
-				actionForm.submit();
-			});
-		
-		});
-    </script>
-</head>
-
-<body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
+	<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Preloader -->
     <div class="preloader">
@@ -67,11 +18,8 @@
     </div>
     <!-- /End Preloader -->
 
-    <!--Header -->
-   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
-   
     <!-- Start Event Details -->
-	<div class="event-details section" style="padding-top: 60px;">
+	<div class="event-details section" id="hg-list-section" style="padding-top: 60px;">
 		<c:choose>
 			<c:when test="${empty list}">
 				<div class="container">
@@ -107,20 +55,14 @@
 								method="get">
 								<input class="form-control me-2" type="search" name="keyword"
 									placeholder="동네 이름을 검색해보세요!" aria-label="Search"> 
-								<button class="btn btn-outline-success" type="submit">
+								<button id="search-hg"class="btn btn-outline-success" type="submit">
 									<i class="lni lni-search-alt"></i>
 								</button>
 							</form>
 							<br>
 							<div id="map" style="width: 100%; height: 650px;"></div>
 							<div class="details-content">
-								<!-- Start Google-map Area -->
-								<!-- <div class="map-section">
-									<p class="location">
-										<i class="lni lni-map-marker"></i> 홈짐 주소 나오는 곳
-									</p>
-								</div> -->
-								<!-- End Google-map Area -->
+								<!--  맵 나오는 곳 -->
 							</div>
 							<div class="write" style="text-align: center;  margin-top: 30px;">
 								<button class="btn btn-primary" type="button"
@@ -152,8 +94,15 @@
 														<a class='move' href='<c:out value="${board.h_id}"/>'><c:out
 																value="${board.h_title}" /></a>
 													</h6>
-													<span style="font-size: 11px; padding-top: 20px">${score.avg_score}</span>
-													<span style="font-size: 11px; padding-top: 20px">${board.h_addr}</span>
+													<c:choose>
+														<c:when test="${board.avg_score == null}">
+														<p style="font-size: 11px; padding-top: 10px">⭐️ 리뷰가 없습니다</p>
+														</c:when>
+														<c:otherwise>	
+														<p style="font-size: 11px; padding-top: 10px">⭐ ${board.avg_score }</p>
+														</c:otherwise>
+													</c:choose>
+													<span style="font-size: 11px; padding-top: 10px">${board.h_addr}</span>
 												</div>
 											</li>
 
@@ -254,6 +203,38 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    
+    <!-- jquery -->    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <!-- 페이징 관련 자바스크립트 -->
+    <script>
+		$(document).ready(function(){
+			
+			// 페이지 버튼 클릭했을 때 이동
+			var actionForm = $("#actionForm");
+			
+			$(".paginate_button a").on("click", function(e){
+				
+				e.preventDefault();
+				
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
+			});
+			
+			// 제목 클릭시 해당 글로 이동하는 form
+			$(".move").on("click", function(e){
+				
+				e.preventDefault();
+				
+				actionForm.append("<input type='hidden' name='hId' value='" 
+						+ $(this).attr("href") + "'>");
+				actionForm.attr("action", "/homegym/homegymDetailView.do");
+				actionForm.submit();
+			});
+		
+		});
+    </script>
     
     <!-- ========================= 카카오 지도 ========================= -->
 
@@ -382,7 +363,5 @@
 		 	};
 		}
     </script>
-    
 </body>
-
 </html>

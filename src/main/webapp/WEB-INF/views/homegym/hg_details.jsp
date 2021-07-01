@@ -4,92 +4,214 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
-<head>
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
-	<!--========================= 캐러셀 ================================ -->
-	<link rel="stylesheet" href="/resources/assets/css/carousel.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<!-- ======================== 달력 ================================== -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="preloader-inner">
+			<div class="preloader-icon">
+				<span></span> <span></span>
+			</div>
+		</div>
+	</div>
+	<!-- /End Preloader -->
 	
-	<!-- =========================리뷰 처리 js============================ -->
-	<script src="/resources/assets/js/review.js"></script>
-	
-	<style>
-		p {
-			font-size: 17px;
-			line-height: 1.6;
-			letter-spacing: -0.6px;
-			margin: 16px 0;
-			word-break: break-all;
-		}
+	<!-- Start Blog Singel Area -->
+	<section class="section blog-single">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-12">
+					<div class="single-inner">
+						<div class="image-container">
+						
+						</div>
+							<div class="detail-inner">
+								<!-- post meta -->
+								<h2 class="post-title">
+									<p style="font-size: 25px;">${board.HTitle }</p>
+								</h2>
+								<p>${board.HContent }</p>
+								<br>
+								<h5> 이용 가능한 시설들</h5>
+								<br>
+								
+								<div class="icon-tag row">
+									
+								</div>
+								<br><br>
 
-		.popular-feed-loop {
-			width: 150px;
-			height: 150px;
-			border-radius: 70%;
-			overflow: hidden
-		}
+								<!-- <h3>
+									<span></span> 
+									<span></span> 
+									<span><i class="fas fa-tint"></i>정수기</span>
+									<span></span>
+									<span></span>
+								</h3> -->
+								<h5> ${board.memberId}님의 홈짐 위치</h5>
+								<br>
+								
+								<!-- 홈짐 위치 나오는 div -->
+								<div id="map" style="width: 100%; height: 450px;"></div>
+								<br>
+								<!-- 집주인일 경우 나오는 수정/삭제버튼 
+								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
+								<div id="manipulateBtn">
+									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
+									class="btn btn-time">
+									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
+									class="btn btn-time">
+								</div>	
+								
+								<!-- 리뷰 -->
+								<div class="post-comments">
+									
+									<div class="row">
+										<div class="col-8">
+										<h2>리뷰 💌</h2>										
+										</div>
+										<div class="col-4" style="text-align: right;">
+										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
+										</div>
+									</div>
+									<hr>
+									<br>
+									<!-- 댓글 추가 공간 -->
+									<ul class="comments-list">
+									</ul>
+								</div>								
+							</div>
+							<div style="text-align: center;">
+							<button type="button" class="btn btn-outline-info" id="re_plus">더보기</button>
+							</div>
+						</div>
+				</div>
+				<aside class="col-lg-4 col-md-12 col-12">
+					<div class="sidebar" id="sidebar">
+						<!-- Single Widget -->
+						<div class="widget popular-feeds" style="position: relative; top: 30px;">
+							<div class="info">
+								<h4 class="date">
+									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
+								</h4>
+								<br>
+								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
+								<br>
+							</div>
+								<h6>1시간당 가격</h6>
+								<br>
+								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
+								<br>
+								<div class="row">
+								<input type="button" value="지금 예약하러 가기"
+								 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
+								<br /> <br />
+									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
+								</div>
+						</div>
+						<!--/ End Single Widget -->
+					</div>
+				</aside>
+			</div>
+		</div>
+	</section>
+	<!-- End Blog Singel Area -->
 
-		.trainner {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">리뷰 등록</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>리뷰 남기기</label> 
+							<textarea class="form-control" name="hrContent" placeholder="다른 유저에게 도움이 될 후기를 남겨주세요">
+							</textarea>
+					</div>
+					<div class="form-group">
+						<label>작성자</label> <input class="form-control" name="memberId"
+							value="임시: 로그인한 유저" placeholder="임시: 로그인한 유저" readonly>
+					</div>
+						<label>평점주기</label>
+						<div>
+						<input type="radio" name="hrScore" value="1"> ⭐️
+						<input type="radio" name="hrScore" value="2"> ⭐⭐
+						<input type="radio" name="hrScore" value="3"> ⭐⭐⭐
+						<input type="radio" name="hrScore" value="4"> ⭐⭐⭐⭐									
+						<input type="radio" name="hrScore" value="5"> ⭐⭐⭐⭐⭐
+						</div>		
+					<div class="modal-footer">
+						<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
+						<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
+						<button id='modalRegisterBtn' type="button"
+							class="btn btn-default" data-dismiss="modal">등록</button>
+						<button id='modalCloseBtn' type="button" class="btn btn-default"
+							data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</div>
+	<!-- /.modal -->
 
-		#re_plus {
-			background-color: #9ea9d8;
-			width: 150px;
-			height: 50px;
-			font-size: 20px;
-			color: white;
-			font-weight: bold;
-			position: relative;
-			margin-top: 30px;
-		}
+		<!-- Start Footer Area -->
+		<footer class="footer style2">
+			<!-- Start Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-md-6" style="text-align: start;">
+								<div class="logo">
+									<br>
+									<br> <a href="main_index.html"><img
+										src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
+								</div>
+							</div>
+							<div class="col-md-6" style="text-align: end;">
+								<p>
+									<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
+									강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
+									사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
+								</p>
 
-		.sidebar {
-			position: sticky;
-			top: 30px;
-		}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!--/ End Footer Area -->
 
-		.btn-time {
-			border-radius: 2rem;
-			background-color: #9ea9d8;
-			margin: 10px 0px;
-		}
+
+		<!-- ========================= scroll-top ========================= -->
+		<a href="#" class="scroll-top btn-hover"> <i
+			class="lni lni-chevron-up"></i>
+		</a>
+
+		<!-- ========================= JS here ========================= -->
+		<script src="/resources/assets/js/bootstrap.min.js"></script>
+		<script src="/resources/assets/js/count-up.min.js"></script>
+		<script src="/resources/assets/js/wow.min.js"></script>
+		<script src="/resources/assets/js/tiny-slider.js"></script>
+		<script src="/resources/assets/js/glightbox.min.js"></script>
+		<script src="/resources/assets/js/main.js"></script>
+		<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
+		<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+		<!-- 제이쿼리 -->
+		<script src="https://code.jquery.com/jquery-3.6.0.js"
+			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		<!-- =========================리뷰 처리 js============================ -->
+		<script src="/resources/assets/js/review.js"></script>
 		
-		.image-container{
-			text-align: center;
-		}
+		<script type="text/javascript">
 		
-		.ic-child{
-			width: 100%;
-			padding-bottom: 20px;
-			text-align: center;
-		}
-		
-		.icon-tag{
-			text-align: center;
-			background-color: ffffff;
-			color: black;
-		}
-		
-		.icon-tag .fas{
-			font-size: 40px;
-		}
-		
-		#manipulateBtn{
-			text-align: right;
-		}
-	</style>
-	<script type="text/javascript">
 		$(document).ready(function () {
 
 			// 첨부파일 데이터를 가져오는 즉시실행함수
@@ -161,12 +283,13 @@
 			
 			function showList(page){
 				
-				// getList로부터 넘어오는 값은 리뷰 갯수와 리스트로 데이터가 구성되어있다 . 
+				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다 . 
 				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
 					
 					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
 					if(page == 99999){
 						reviewUL.empty();
+						index = 1;
 						showList(1);
 						return;
 					}
@@ -198,9 +321,10 @@
 					$(str).appendTo($(".comments-list")).slideDown();
 					
 					if(reviewCnt <= amount * page){
-						viewMoreReviewBtn.remove();
+						viewMoreReviewBtn.hide();
+					}else{
+						viewMoreReviewBtn.show();
 					}
-					//reviewUL.html(str);
 					
 				});
 			}
@@ -214,7 +338,7 @@
 						
 			// 모달창 제어
 			var modal = $(".modal")
-			var modalInputReview = modal.find("input[name='hrContent']");
+			var modalInputReview = modal.find("textarea[name='hrContent']");
 			var modalInputReviewer = modal.find("input[name='memberId']");
 		//  var modalInputScore = $("input[name='hrScore']:checked");
 		// 이렇게하면 undefined 오류가 생기는데 modalInputScore 변수의 값은
@@ -229,7 +353,8 @@
 			$("#addReviewBtn").on("click", function(e){
 				
 				//기존에 존재하던 값들은 지워준다
-				modal.find("input").val("");
+				modal.find("input[name != 'hrScore']").val("");
+				modal.find("textarea[name ='hrContent']").val("");
 				modal.find("button[id != 'modalCloseBtn']").hide();
 				
 				modalRegisterBtn.show();
@@ -317,243 +442,6 @@
 						
 		});
 	</script>
-</head>
-<body>
-	<!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span> <span></span>
-			</div>
-		</div>
-	</div>
-	<!-- /End Preloader -->
-
-	<!--Header -->
-   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
-
-	<!-- Start Blog Singel Area -->
-	<section class="section blog-single">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-12">
-					<div class="single-inner">
-						<div class="image-container">
-						
-						</div>
-							<div class="detail-inner">
-								<!-- post meta -->
-								<h2 class="post-title">
-									<p style="font-size: 25px;">${board.HTitle }</p>
-								</h2>
-								<p>${board.HContent }</p>
-								<br>
-								<h5> 이용 가능한 시설들</h5>
-								<br>
-								
-								<div class="icon-tag row">
-									
-								</div>
-								<br><br>
-
-								<!-- <h3>
-									<span></span> 
-									<span></span> 
-									<span><i class="fas fa-tint"></i>정수기</span>
-									<span></span>
-									<span></span>
-								</h3> -->
-								<h5> ${board.memberId}님의 홈짐 위치</h5>
-								<br>
-								
-								<!-- 홈짐 위치 나오는 div -->
-								<div id="map" style="width: 100%; height: 450px;"></div>
-								<br>
-								<!-- 집주인일 경우 나오는 수정/삭제버튼 
-								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
-								<div id="manipulateBtn">
-									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
-									class="btn btn-time">
-									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
-									class="btn btn-time">
-								</div>	
-								
-								<!-- 리뷰 -->
-								<div class="post-comments">
-									
-									<div class="row">
-										<div class="col-8">
-										<h2>리뷰 💌</h2>										
-										</div>
-										<div class="col-4" style="text-align: right;">
-										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
-										</div>
-									</div>
-									<hr>
-									<br>
-									<ul class="comments-list">
-								<!-- 	<li>
-											<div class="comment-img">
-												<img src="https://via.placeholder.com/100x100" alt="img"
-													style="width: 100px;">
-											</div>
-											<div class="comment-desc">
-												<div class="desc-top">
-													<h6>혜선짱</h6>
-													<span class="date">2021/05/25</span> <a href="javascript:void(0)"
-														class="reply-link"><i class="lni lni-reply"></i>답글 달기</a>
-												</div>
-												<p>깨끗하고 좋아요</p>
-											</div>
-										</li>
-										<li class="children">
-											<div class="comment-img">
-												<img class="trainner" src="https://via.placeholder.com/100x100"
-													width="100px" alt="img">
-											</div>
-											<div class="comment-desc">
-												<div class="desc-top">
-													<h6>
-														권지용<span class="saved"><i class="lni lni-bookmark"></i></span>
-													</h6>
-													<span class="date">15th May 2023</span> <a href="javascript:void(0)"
-														class="reply-link"><i class="lni lni-reply"></i>Reply</a>
-												</div>
-												<p>감사합니다 ! 다음에도 방문해주세요.</p>
-											</div>
-										</li> -->
-									</ul>
-								</div>								
-							</div>
-							<div style="text-align: center;">
-							<button type="button" class="btn btn-outline-info" id="re_plus">더보기</button>
-							</div>
-						</div>
-				</div>
-				<aside class="col-lg-4 col-md-12 col-12">
-					<div class="sidebar" id="sidebar">
-						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 30px;">
-							<div class="info">
-								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
-								</h4>
-								<br>
-								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
-								<br>
-							</div>
-								<h6>1시간당 가격</h6>
-								<br>
-								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
-								<br>
-								<div class="row">
-								<input type="button" value="지금 예약하러 가기"
-								 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
-								<br /> <br />
-									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
-								</div>
-						</div>
-						<!--/ End Single Widget -->
-					</div>
-				</aside>
-			</div>
-		</div>
-	</section>
-	<!-- End Blog Singel Area -->
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">리뷰 등록</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>한줄리뷰</label> <input class="form-control" name="hrContent"
-							value="" placeholder="간단한 한줄 후기를 남겨주세요">
-					</div>
-					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name="memberId"
-							value="임시: 로그인한 유저" placeholder="임시: 로그인한 유저" readonly>
-					</div>
-						<label>평점주기</label>
-						<div>
-						<input type="radio" name="hrScore" value="1"> ⭐️
-						<input type="radio" name="hrScore" value="2"> ⭐⭐
-						<input type="radio" name="hrScore" value="3"> ⭐⭐⭐
-						<input type="radio" name="hrScore" value="4"> ⭐⭐⭐⭐									
-						<input type="radio" name="hrScore" value="5"> ⭐⭐⭐⭐⭐
-						</div>		
-					<div class="modal-footer">
-						<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
-						<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
-						<button id='modalRegisterBtn' type="button"
-							class="btn btn-default" data-dismiss="modal">등록</button>
-						<button id='modalCloseBtn' type="button" class="btn btn-default"
-							data-dismiss="modal">닫기</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
-	<!-- /.modal -->
-
-		<!-- Start Footer Area -->
-		<footer class="footer style2">
-			<!-- Start Footer Bottom -->
-			<div class="footer-bottom">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-md-6" style="text-align: start;">
-								<div class="logo">
-									<br>
-									<br> <a href="main_index.html"><img
-										src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
-								</div>
-							</div>
-							<div class="col-md-6" style="text-align: end;">
-								<p>
-									<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
-									강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
-									사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
-								</p>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<!--/ End Footer Area -->
-
-
-		<!-- ========================= scroll-top ========================= -->
-		<a href="#" class="scroll-top btn-hover"> <i
-			class="lni lni-chevron-up"></i>
-		</a>
-
-		<!-- ========================= JS here ========================= -->
-		<script src="/resources/assets/js/bootstrap.min.js"></script>
-		<script src="/resources/assets/js/count-up.min.js"></script>
-		<script src="/resources/assets/js/wow.min.js"></script>
-		<script src="/resources/assets/js/tiny-slider.js"></script>
-		<script src="/resources/assets/js/glightbox.min.js"></script>
-		<script src="/resources/assets/js/main.js"></script>
 		<!-- ========================= 카카오 지도 ========================= -->
 
 		<script type="text/javascript"

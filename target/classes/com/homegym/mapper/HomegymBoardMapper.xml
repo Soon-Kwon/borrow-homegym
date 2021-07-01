@@ -33,12 +33,14 @@
 	</select> -->
 	
 	<select id="getBoardListWithPaging" resultType="HashMap">
-		  select hb.h_id, max(ha.uuid) as uuid, max(ha.fileName) as fileName, max(ha.uploadPath) as uploadPath
+		  select hb.h_id, max(ha.uuid) as uuid, max(ha.fileName) as fileName, max(ha.uploadPath) as uploadPath, ROUND(avg(hr_score), 2) as avg_score
 			, max(hb.memberId) as memberId, max(hb.h_title) as h_title, max(hb.h_price) as h_price, max(hb.h_updatedate) as h_updatedate
 			, max(hb.h_addr) as h_addr, max(hb.h_locate_X) as h_locate_X, max(hb.h_locate_Y) as h_locate_Y, max(hb.h_cnt) as h_cnt  
 					from homegym_board as hb 
-                		 join homegym_attach as ha
-                		 on hb.h_id = ha.h_id
+                		 join homegym_attach as ha 
+                         on hb.h_id = ha.h_id
+						 left outer join homegym_review as hr
+                		 on hr.h_id = hb.h_id
                 	where
                 		h_addr like concat('%', #{cri.keyword}, '%') 
                           group by hb.h_id
@@ -100,8 +102,8 @@
 	</select>
 	
 	<select id="getScoreList" resultType="com.homegym.biz.homegym.HomegymReviewVO">
-		select ROUND(avg(hr_score), 2) as avg_score
+		select h_id, ROUND(avg(hr_score), 2) as hrScore
 		from homegym_review
-		where h_id = #{hId}
+		group by h_id
 	</select>
 </mapper>
