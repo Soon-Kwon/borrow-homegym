@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -82,50 +84,8 @@
     </div>
     <!-- /End Preloader -->
 
-    <!-- Start Header Area -->
-    <header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html">
-								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
-											<h5>홈짐</h5>
-										</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-										</a></li>
-									<a class="circle-image" href="mypage_main.html">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item">
-										<a href="mypage_main.html"><h5>아이유님</h5></a>
-										</li>
-								</ul>
-							</div> <!-- navbar collapse -->
-						</nav> <!-- navbar -->
-					</div>
-				</div>
-			</div> <!-- row -->
-		</div> <!-- container -->
-	</header>
-    <!-- End Header Area -->
+   <!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Contact Area -->
     <section id="contact-us" class="contact-us section">
@@ -178,6 +138,7 @@
 									</div>
 								</div>
 							</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
                     </div>
                 </div>

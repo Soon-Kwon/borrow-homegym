@@ -69,19 +69,19 @@
                                 
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_MEMBER')">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">홈짐</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">트레이너</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
+									<li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tbList">트레이너</a></li>
+									<a class="circle-image" href="/user/mypage/profile.do"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
 									<li class="nav-item">
                                         <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
                                         aria-label="Toggle navigation"><sec:authentication property="principal.nickname" />님</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                        <li class="nav-item"><a href="/user/profile.do">마이페이지</a></li>
-                                       	 <li class="nav-item"><a href="/user/profile_update">&nbsp 내 정보 수정</a></li>
-                                         <li class="nav-item"><a href="/user/myactiv">&nbsp 활동 내역</a></li>
-                                       	 <li class="nav-item"><a href="/user/mywrite">&nbsp 글 관리</a></li>
+                                        <li class="nav-item"><a href="/user/mypage/profile.do">마이페이지</a></li>
+                                       	 <li class="nav-item"><a href="/user/mypage/profile_update">&nbsp 내 정보 수정</a></li>
+                                         <li class="nav-item"><a href="/user/mypage/myactiv">&nbsp 활동 내역</a></li>
+                                       	 <li class="nav-item"><a href="/user/mypage/mywrite">&nbsp 글 관리</a></li>
                                         <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();">로그아웃</a></li>
                                         </ul>
                                     </li>
@@ -91,19 +91,20 @@
 								</sec:authorize>
 								
 								<sec:authorize access="hasRole('ROLE_ADMIN')">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_board.jsp">홈짐</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">트레이너</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
+									<li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tbList">트레이너</a></li>
+									<a class="circle-image" href="/user/mypage/profile.do"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
 									<li class="nav-item">
                                         <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
-                                        aria-label="Toggle navigation"><%-- <sec:authentication property="principal.nickname" /> --%>님</a>
+                                        aria-label="Toggle navigation">관리자님</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                        <li class="nav-item"><a href="/user/profile.do">관리자페이지</a></li>
-                                       	 <li class="nav-item"><a href="/user/profile_update">&nbsp 회원정보 관리</a></li>
-                                         <li class="nav-item"><a href="/user/myactiv">&nbsp 활동 관리</a></li>
-                                       	 <li class="nav-item"><a href="/user/mywrite">&nbsp 글 관리</a></li>
+                                        <li class="nav-item"><a href="/admin/adIndex.do">관리자페이지</a></li>
+                                       	 <li class="nav-item"><a href="/admin/adMembers.do">&nbsp 회원 관리</a></li>
+                                         <li class="nav-item"><a href="/admin/adContents.do">&nbsp 게시글 관리</a></li>
+                                       	 <li class="nav-item"><a href="/admin/adFacilities.do">&nbsp 홈짐 관리</a></li>
+                                       	 <li class="nav-item"><a href="/admin/adAlerts.do">&nbsp 문의 관리</a></li>
                                         <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();">로그아웃</a></li>
                                         </ul>
                                     </li>

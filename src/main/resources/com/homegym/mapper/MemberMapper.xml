@@ -19,7 +19,7 @@
 	 </resultMap> -->
 
 	<select id="loadUserByUsername">
-	Select m_id, memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
+	Select memberId, password, name, nickname, phone, zipCode, address, image, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
 	</select>
 	
 	<select id="selectUserById" resultType="com.homegym.security.CustomUserDetails">            
@@ -28,7 +28,7 @@
 	
 	<!-- 회원가입 쿼리 -->
 	<insert id="memberJoin">
-	insert into member(memberId, password, name, nickname, phone, zip_code, address, birth, gender, auth) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender}, "ROLE_MEMBER");
+	insert into member(memberId, password, name, nickname, phone, zipCode, address, birth, gender, auth) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender}, "ROLE_MEMBER");
     </insert>
     
     <!-- 회원가입 AUTH  -->
@@ -58,20 +58,8 @@
 	
 	<!-- 마이페이지 회원정보 수정 페이지 -->
 	<select id="getMyPageInfo" resultType="member" parameterType="String">
-		SELECT memberId,
-			   password, 
-			   name,
-		       phone,
-		       zipCode,
-		       nickName,
-		       address,
-		       image as imagePath,
-		       birth,
-		       gender,
-		       auth,
-		       userThumbImg
-		FROM member
-		WHERE memberId= #{memberId}
+		SELECT memberId, password, name, phone, zipCode, nickName, address, image as imagePath, birth, gender, auth
+		FROM member WHERE memberId= #{memberId}
 	</select>
 
 	<!-- 회원정보 수정 처리 -->
@@ -99,8 +87,7 @@
 	<update id="userImgUpload" parameterType="HashMap">
 		UPDATE member
 		SET
-	     IMAGE = #{imagePath}, 
-	     userThumbImg = #{userThumbImg}
+	     IMAGE = #{imagePath}
 	    WHERE 
 	    	memberId=#{memberId}
 	</update>
@@ -142,7 +129,7 @@
 		SELECT
 			count(*)
 		FROM homegym_detail
-		WHERE lend_memberId= #{memberId}
+		WHERE borrowerId= #{memberId}
 	</select>
 	
 	<!-- 내가 빌려준 홈짐 갯수 -->
@@ -179,7 +166,7 @@
 		FROM homegym_board hb INNER JOIN homegym_detail hd
 		ON hb.h_id = hd.h_id
 		WHERE memberId = #{memberId} AND
-			  lend_memberId IS NOT NULL
+			  borrowerId IS NOT NULL
 	</select>
 	
 	<!-- 내가 빌려준 홈짐 리스트 -->
@@ -194,7 +181,7 @@
 		SELECT b.*, d.*
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
-		WHERE lend_memberId= #{memberId}
+		WHERE borrowerId= #{memberId}
 
 	</select>
 	
@@ -203,7 +190,7 @@
 		SELECT *
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
-		WHERE memberId = #{memberId} OR lend_memberId = #{memberId} 
+		WHERE memberId = #{memberId} OR borrowerId = #{memberId} 
 			AND status = 'ing'
 	</select>
 	
@@ -281,7 +268,7 @@
   				SELECT b.memberId,b.h_title,b.h_addr,d.payYN
 				FROM homegym_board b INNER JOIN homegym_detail d
 				ON b.h_id = d.h_id
-				WHERE lend_memberId= #{memberId}
+				WHERE borrowerId= #{memberId}
 			)as rh
   		LIMIT #{cri.skip}, #{cri.amount}
   				

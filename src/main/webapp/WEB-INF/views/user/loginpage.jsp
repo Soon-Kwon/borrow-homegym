@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="zxx">
@@ -73,12 +76,12 @@
 						<form action="/login" method="post">
 							<div class="form-group">
 								<label>아이디</label> <input type="text" name="memberId" class="margin-5px-bottom" 
-									id="memberId" placeholder="아이디" width="" value="admin"><!-- type="email" -->
+									id="memberId" placeholder="아이디를 입력하세요" width=""><!-- type="email" -->
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label> <input class="margin-5px-bottom"
 									type="password" name="password" id="password"
-									placeholder="패스워드" value="admin">
+									placeholder="비밀번호를 입력하세요">
 							</div>
 							<div class="check-and-pass">
 								<div class="row align-items-center">

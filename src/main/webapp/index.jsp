@@ -69,7 +69,7 @@
                                     <br>dummy text ever since.</p> -->                           
                                     
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
-                                    <a href="hom" class="btn" style="border-radius: 8px;">홈짐 등록하러 가기</a>
+                                    <a href="/homegym/registerView.do" class="btn" style="border-radius: 8px;">홈짐 등록하러 가기</a>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                                                                 가까운 홈짐</b></h2><br>
                                 <h6 class="wow fadeInLeft" data-wow-delay=".5s">동네 이웃의 다양한 홈짐을 경험해보세요👫🏻<br></h6>
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
-                                    <a href="javascript:void(0)" class="btn">대여하러 가기</a>
+                                    <a href="/homegym/homegymListView.do" class="btn">대여하러 가기</a>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                                                                 트레이너를 만나세요</b></h2><br>
                                 <h6 class="wow fadeInLeft" data-wow-delay=".5s">조건에 딱 맞는 트레이너를 찾으시나요? 🏋🏻 ♀️</h6>
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
-                                    <a href="trainer_board.html" class="btn">찾아보러 가기</a>
+                                    <a href="/trainer/tbList" class="btn">찾아보러 가기</a>
                                 </div>
                             </div>
                         </div>
