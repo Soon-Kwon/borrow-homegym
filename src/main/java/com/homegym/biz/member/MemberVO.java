@@ -1,8 +1,5 @@
 package com.homegym.biz.member;
 
-
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -28,6 +25,7 @@ public class MemberVO {
 	   private String ufilepath;
 	   private String birth;
 	   private String gender;
+	   private String auth;
 	   private Boolean enabled;
-	   private List<AuthVO> authList;
+	  
 }

@@ -68,7 +68,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	// 내가 쓴 댓글 갯수
-
+	@Override
+	public int getMyAllReviewCnt(String memberId) {
+		return memberDAO.getMyAllReviewCnt(memberId);
+	}
 	
 	/*  회원 정보 관리 페이지 */
 	
@@ -118,13 +121,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	//수락 대기중인 홈짐
 	@Override
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri) {
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri) {
 		return memberDAO.getWaitingHGPaging(memberId, cri);
 	}
 	
 	//내가 빌려준 홈짐 조회 (페이징)
 	@Override
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri) {
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri) {
 		return memberDAO.getLendHGPaging(memberId,cri);
 	}
 
@@ -159,8 +162,10 @@ public class MemberServiceImpl implements MemberService {
 	/*  내 게시글 , 댓글, 리뷰 내역  */
 	// 내가 쓴 게시글 조회 
 	@Override
-	public List<TrainerBoardVO> getMyBoardList(String memberId) {
-		return memberDAO.getMyBoardList(memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId) {
+		return memberDAO.getMyBoardPaging(memberId);
 	}
+
+
 
 }

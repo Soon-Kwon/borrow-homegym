@@ -111,9 +111,9 @@ public class MemberController {
 		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
 		model.addAttribute("myBoardCnt", myBoardCnt);
 
-		// 내가 쓴 댓글 수
-		// int myReplyCnt = memberService.getMyAllReplyCnt(memberId);
-		model.addAttribute("myReplyCnt", "400");
+		// 내가 쓴 리뷰 수
+		int myReviewCnt = memberService.getMyAllReviewCnt(memberId);
+		model.addAttribute("myReviewCnt", myReviewCnt);
 
 		return "/user/profile";
 
@@ -264,7 +264,10 @@ public class MemberController {
 		session.setAttribute("memberId", memberId);
 
 		/* 수락 대기중 */
-		List<HomegymVO> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
+		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
+		for(int i =0; i<waitingHG.size();i++) {
+			System.out.println(waitingHG.get(i));
+		}
 		model.addAttribute("waitingHomegym", waitingHG);
 		
 		int wait_total = memberService.getMyWaitngHomegymCnt(memberId);
@@ -273,8 +276,11 @@ public class MemberController {
 		
 		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
 
-		/* 빌려준 홈짐 */
-		List<HomegymVO> lendHG = memberService.getLendHGPaging(memberId, cri);
+		/* 빌려준 홈짐  (Map으로 받을 때는 camelCase 사용 X)*/
+		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
+		for(int i=0; i < lendHG.size(); i++) {
+			System.out.println(lendHG.get(i));
+		}
 		model.addAttribute("lendHomegym", lendHG);
 
 		int ld_total = memberService.getLendHomeGymCnt(memberId);
@@ -285,6 +291,9 @@ public class MemberController {
 
 		/* 빌린 홈짐 */
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
+		for(int i=0; i < rentHG.size(); i++) {
+			System.out.println(rentHG.get(i));
+		}
 		model.addAttribute("rentHomegym", rentHG);
 
 		int rt_total = memberService.getRentHomeGymCnt(memberId);
@@ -294,9 +303,11 @@ public class MemberController {
 		System.out.println("rt_pageMaker ::::::" + rt_pageMaker);
 
 		/* 진행중인 홈짐 */
-		List<HomegymVO> progressHomegym = memberService.getMyProgressHomegym(memberId, cri);
-		model.addAttribute("progressHomegym", progressHomegym);
-
+		/*
+		 * List<HomegymVO> progressHomegym =
+		 * memberService.getMyProgressHomegym(memberId, cri);
+		 * model.addAttribute("progressHomegym", progressHomegym);
+		 */
 		// 완료된 홈짐
 		// List<HomegymVO> finishedHomegym =
 		// memberService.getMyFinishedHomegym(memberId);
@@ -332,14 +343,17 @@ public class MemberController {
 
 	/* 마이페이지 내 글 관리 페이지 이동 */
 	@GetMapping("mypage/mywrite")
-	public String mywrite(HttpServletRequest request, HttpSession session, Model model) {
+	public String mywrite(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
 
 		//내가 쓴글 리스트
-		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardList(memberId);
+		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId);
 		model.addAttribute("board", trainerBoardVO);
-
+		
+		int writeTotal = memberService.getMyAllBoardCnt(memberId);
+		PageMakerDTO board_pageMaker = new PageMakerDTO(cri,writeTotal);
+		model.addAttribute("board_pageMaker", board_pageMaker);
 		
 		//내가 쓴 리뷰 리스트
 		

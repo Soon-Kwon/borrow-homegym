@@ -252,8 +252,8 @@
                             <h3><a href="javascript:void(0)">내가 쓴글 보기</a></h3>
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 게시글</p>
                             <h1 style="margin-top: 20px;">${myBoardCnt}</h1>
-                            <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 댓글</p>
-                            <h1 style="margin-top: 20px;">${myReplyCnt}</h1>
+                            <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 리뷰</p>
+                            <h1 style="margin-top: 20px;">${myReviewCnt}</h1>
                             <div class="button">
                                 <a href="mywrite.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>

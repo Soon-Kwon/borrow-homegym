@@ -201,15 +201,29 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.TContent}</a></td>
+			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
-			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
+			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
                                     			</c:forEach>
                                     		</c:otherwise>
                                     	</c:choose>
                                 		</tbody>
                                     </table>
+                                    
+                                    <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                    <c:if test ="${board_pageMaker.prev}">
+	                                                        <li class="paginate_button previous"><a href="{board_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${board_pageMaker.startPage}" end="${board_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${board_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${board_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${board_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+                                                </div>  
                                 </div> 
                             </div>
                         </div>

@@ -83,8 +83,8 @@ public class MemberDAO {
 	}
 	
 	// 내가 쓴 게시글 조회 
-	public List<TrainerBoardVO> getMyBoardList(String memberId) {
-		return sqlsession.selectList("MemberDAO.getMyBoardList",memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId) {
+		return sqlsession.selectList("MemberDAO.getMyBoardPaging",memberId);
 	}
 	
 	//내가 빌려준 홈짐 수
@@ -102,6 +102,11 @@ public class MemberDAO {
 		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt",memberId);
 	}
 	
+	//내가 쓴 리뷰 갯수
+	public int getMyAllReviewCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getMyAllReviewCnt",memberId);
+	}
+	
 	
 	/*마이페이지 활동 내역*/
 	
@@ -111,7 +116,7 @@ public class MemberDAO {
 	}
 	
 	// 수락 대기중인 홈짐 페이징
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 			map.put("memberId",memberId);
@@ -120,7 +125,7 @@ public class MemberDAO {
 	}
 	
 	//내가 빌려준 홈짐
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 		map.put("memberId",memberId);

@@ -39,7 +39,7 @@ public interface MemberService {
 	public boolean checkPw(String memberId,String password);
 
 	//내가 쓴 게시글 리스트 조회
-	public List<TrainerBoardVO> getMyBoardList(String memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId);
 	
 	// 수락 대기중인 홈짐 수 조회
 	public int getMyWaitngHomegymCnt(String memberId);
@@ -54,13 +54,13 @@ public interface MemberService {
 	public int getMyAllBoardCnt(String memberId);
 	
 	//내가 쓴 댓글 수 조회
-	
+	public int getMyAllReviewCnt(String memberId);
 	
 	//수락 대기중인 홈짐
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri);
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri);
 	
 	//내가 빌려준 홈짐 조회
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri);
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri);
 	
 	//내가 빌린 홈짐 조회
 	public List<Map<String, String>> getRentdHGPaging(String memberId,Criteria cri);
