@@ -114,8 +114,8 @@
 									</div>
 								</div>
 								<div class="col-12">
-									<div class="form-group button">
-										<button type="submit" class="btn" style="margin-left: 290px;">전송하기</button>
+									<div class="form-group button" style="text-align: center;">
+										<button type="submit" class="btn">전송하기</button>
 									</div>
 								</div>
 							</div>

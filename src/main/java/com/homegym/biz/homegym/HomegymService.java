@@ -10,6 +10,8 @@ public interface HomegymService {
 	
 	public List<HomegymVO> getBoardListWithPaging(HomegymVO homegym, Criteria cri, HomegymAttachVO attach);
 	
+	public List<HomegymVO> getAllInfo(HomegymVO homegym, Criteria cri, HomegymAttachVO attach);
+	
 	public HomegymVO get(HomegymVO homegym, int hId);
 	
 	public boolean modify(HomegymVO homegym);
@@ -17,6 +19,9 @@ public interface HomegymService {
 	public boolean remove(int hId);
 	
 	public int getTotal(Criteria cri);
+	
+	// 리뷰 평점 보여주기
+	public List<HomegymReviewVO> getScoreList(HomegymReviewVO review);
 	
 	// 첨부파일 리스트 보여주기 
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO attach, int hId);

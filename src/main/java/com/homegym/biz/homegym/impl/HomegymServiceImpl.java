@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
 
@@ -56,6 +57,12 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.getBoardListWithPaging(vo, cri, attach);
 	}
 	
+	public List<HomegymVO> getAllInfo(HomegymVO vo, Criteria cri, HomegymAttachVO attach){
+		
+		log.info("전체 위치 정보 출력........" + vo);
+		return homegymDAO.getAllInfo(vo, cri, attach);
+	}
+	
 	public HomegymVO get(HomegymVO vo, int hId) {
 	
 		log.info("상세 글 보기.........");
@@ -100,11 +107,16 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.getTotalCount(cri);
 	}
 	
+	// 리뷰 평점 구하기
+	public List<HomegymReviewVO> getScoreList(HomegymReviewVO review) {
+		
+		return homegymDAO.getScoreList(review);
+	}
+	
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO vo, int hId){
 		
 		log.info("게시글 번호로 해당되는 첨부파일 가져오기........");
 		return attachDAO.findByHId(vo, hId);
 	}
-
 	
 }

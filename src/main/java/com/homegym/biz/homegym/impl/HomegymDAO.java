@@ -2,7 +2,6 @@ package com.homegym.biz.homegym.impl;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 
 import lombok.extern.log4j.Log4j;
@@ -33,8 +33,24 @@ public class HomegymDAO {
 		params.put("vo", vo);
 		params.put("cri", cri);
 		params.put("attach", attach);
+		
+		List<HomegymVO> test = mybatis.selectList("HomegymDAO.getBoardListWithPaging", params);
+		// mybatis가 hashmap 결과값을 list로 매핑하여 반환한다. 이 때 generic 값을 무시하고 넣어버린다.
+		log.info("리스트 결과값 테스트: " + test);
+		
+		return test;
+	}
 	
-		return mybatis.selectList("HomegymDAO.getBoardListWithPaging", params);
+	public List<HomegymVO> getAllInfo(HomegymVO vo, Criteria cri, HomegymAttachVO attach){
+		
+		log.info("DAO의 getAllInfo()");
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("vo", vo);
+		params.put("cri", cri);
+		params.put("attach", attach);
+		
+		return mybatis.selectList("HomegymDAO.getAllInfo", params);
 	}
 	
 	public HomegymVO read(HomegymVO vo, int hId) {
@@ -77,5 +93,11 @@ public class HomegymDAO {
 	public int getTotalCount(Criteria cri) {
 		
 		return mybatis.selectOne("HomegymDAO.getTotalCount", cri);
+	}
+	
+	// 리뷰 테이블에서 리뷰 평점 구하기
+	public List<HomegymReviewVO> getScoreList(HomegymReviewVO review) {
+		
+		return mybatis.selectList("HomegymDAO.getScoreList", review);
 	}
 }

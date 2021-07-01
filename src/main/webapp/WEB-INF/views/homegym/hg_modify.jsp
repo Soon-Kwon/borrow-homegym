@@ -334,7 +334,7 @@
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
-											<label>글제목</label> <input name="hTitle" type="text" id="title" placeholder="${board.HTitle }"
+											<label>글제목</label> <input name="hTitle" type="text" id="title" value="${board.HTitle }"
 												required="required">
 										</div>
 									</div>
@@ -342,7 +342,7 @@
 									<div class="col-lg-6 col-10">
 										<div class="form-group">
 											<label>주소</label> <input type="text" id="sample5_address"
-												class="form-control" name="hAddr" placeholder="새로 등록해 주세요" required="true"
+												class="form-control" name="hAddr" placeholder="새로 등록해 주세요" required="required"
 												readonly="readonly" />
 										</div>
 										<input type="hidden" id="x-coordinate" name="hLocateX" />
@@ -360,7 +360,7 @@
 										<div class="col-lg-4 col-11">
 											<div class="form-group">
 												<label>가격 책정</label><input type="text" id="price" class="form-control"
-													name="hPrice" placeholder="${board.HPrice }" required="true" />
+													name="hPrice" value="${board.HPrice }" required="required" />
 											</div>
 										</div>
 										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
@@ -483,7 +483,7 @@
 									<div class="col-12">
 										<div class="form-group message">
 											<label>글 내용</label>
-											<textarea name="hContent" placeholder="${board.HContent }"></textarea>
+											<textarea name="hContent">${board.HContent }</textarea>
 										</div>
 									</div>
 									<div class="col-12">

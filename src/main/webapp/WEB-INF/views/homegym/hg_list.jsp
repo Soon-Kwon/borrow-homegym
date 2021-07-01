@@ -152,6 +152,7 @@
 														<a class='move' href='<c:out value="${board.h_id}"/>'><c:out
 																value="${board.h_title}" /></a>
 													</h6>
+													<span style="font-size: 11px; padding-top: 20px">${score.avg_score}</span>
 													<span style="font-size: 11px; padding-top: 20px">${board.h_addr}</span>
 												</div>
 											</li>
@@ -267,9 +268,33 @@
 	    };
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-		 
+		
+		
+		// 마커를 표시할 위치와 title 객체 배열입니다
+		
+		var list = new Array();
+		var positions = new Array();
+		
+		// 컨트롤러에서 넘어온 list 값을 ${list}로 호출하고 forEach문을 통해 
+		// 자바스크립트 객체인 list로 넘겨준다. 
+		<c:forEach items="${listAll}" var="item1">
+			list.push(${item1});
+		</c:forEach>
+		
+		for(var i = 0; i < list.length; i++) {
+			var temp = {
+					title : list[i]['h_title'],
+					content: '<div style="text-align: center;">' + list[i]['h_title'] +'</div>',
+			        latlng: new kakao.maps.LatLng(list[i]['h_locate_Y'],
+			        		list[i]['h_locate_X']),
+			        no: list[i]['h_id'],
+			        thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=' + list[i]['uploadPath'] + '/' + list[i]['uuid'] + '_' + list[i]['fileName'] + '" alt="Event Image"></a></div>'
+			}
+			
+			positions.push(temp);
+		}
 		// 마커를 표시할 위치와 title 객체 배열입니다 
-	   var positions = [
+	    /* var positions = [
 	    {
 	        title: '<c:out value="${list[0]['h_title']}"/>', 
 	        content: '<div style="text-align: center;"><c:out value="${list[0]['h_title']}"/></div>',
@@ -301,8 +326,8 @@
 		        		'<c:out value="${list[3]['h_locate_X']}"/>'),
 	      	no: <c:out value="${list[3]['h_id']}"/> + "",
 	      	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[3]['uploadPath'] }/${list[3]['uuid']}_${list[3]['fileName']}" alt="Event Image"></a></div>'  
-	    }
-	];
+	    } 
+	]; */
 		
 		// 마커 이미지의 이미지 주소입니다
 		var imageSrc = "/resources/assets/images/logo/logo.png"; 
@@ -350,6 +375,7 @@
 		    };
 		}
     	
+		// 인포윈도우 클릭시 해당 게시글로 이동
 		function clickListener(index) {
 		    return function() {
 		    	location.href="/homegym/homegymDetailView.do?hId=" + index

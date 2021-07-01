@@ -190,6 +190,7 @@
 						}else if(list[i].hrScore == 5){str += "<span>⭐️⭐⭐⭐⭐</span>";}
 
 						str += "<span class='date'>" + reviewService.displayTime(list[i].hrUpdatedate) + "</span>";
+						// HTML data속성을 이용해 reviewid 값을 자바스크립트에서 쓸 수 있다.  
 						str += "<a class='reply-link' data-reviewid='" + list[i].reviewId + "'><i class='lni lni-reply'></i>수정하기</a>";
 						str += "</div><p>" + list[i].hrContent + "</p></div></li>";
 					}
@@ -227,7 +228,8 @@
 			// 리뷰쓰기 버튼 누르면 동작
 			$("#addReviewBtn").on("click", function(e){
 				
-				//modal.find("input").val("");
+				//기존에 존재하던 값들은 지워준다
+				modal.find("input").val("");
 				modal.find("button[id != 'modalCloseBtn']").hide();
 				
 				modalRegisterBtn.show();
@@ -255,7 +257,7 @@
 					alert("리뷰가 등록되었습니다");
 					
 					// input의 값들을 모두 지운다. 
-					//modal.find("input").val(""); 
+					modal.find("input").val(""); 
 					modal.modal("hide");
 					
 					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
@@ -269,8 +271,9 @@
 				
 				reviewService.get(reviewId, function(review){
 					
-					//현재 .do로 호출하기 때문에 값을 못불러오는듯 하다. 
-					//그래서 컨트롤러의 produces 값에서 xml을 빼고 json만 쓰니까 된다. 
+					//현재 .json으로 json데이터를 불러와야하는데
+					//.do로 호출하기 때문에 그 값(review.xxx)을 못불러 온다. 
+					//그래서 컨트롤러의 produces 값에서 xml을 빼고 json만 쓰면 json데이터만 반환되므로 .do를 사용해도 가능하다. 
 					modalInputReview.val(review.hrContent);
 					modalInputReviewer.val(review.borrowerId);
 					modal.data("reviewid", review.reviewId);
@@ -293,6 +296,7 @@
 				reviewService.update(review, function(result){
 					
 					alert("수정되었습니다");
+					
 					modal.modal("hide");
 					showList(99999);
 				});
@@ -367,7 +371,7 @@
 									<span></span>
 									<span></span>
 								</h3> -->
-								<h5> ${board.MId}님의 홈짐 위치</h5>
+								<h5> ${board.memberId}님의 홈짐 위치</h5>
 								<br>
 								
 								<!-- 홈짐 위치 나오는 div -->
@@ -440,7 +444,7 @@
 						<div class="widget popular-feeds" style="position: relative; top: 30px;">
 							<div class="info">
 								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.MId }님의 홈짐
+									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
 								</h4>
 								<br>
 								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
