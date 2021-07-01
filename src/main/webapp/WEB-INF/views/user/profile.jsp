@@ -180,14 +180,14 @@
                         <div class="single-feature">
                             
                             <c:if test="${empty member.imagePath}">
-				                   <div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
+				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
 				             </c:if>
-				            <c:if test="${not empty member.imagePath}">
-				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
+				            <c:if test="${not empty member_imagePath}">
+				                    <div id="userphoto"><img src="${member_imagePath }" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
 				            </c:if>
-                            <h4 style="margin-left:30px;">${member.name}님</h4>
-                            <span id="auth">🌱${member.auth}</span> <br>
-                            <span id="memberId"> ${member.memberId} <span>
+                            <h4 style="margin-left:30px;">${member_name}님</h4>
+                            <span id="auth">🌱${member_auth}</span><br>
+                            <span id="memberId">${member_memberId} <span>
                             <div class="button">
                                 <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>

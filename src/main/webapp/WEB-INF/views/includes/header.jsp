@@ -77,6 +77,17 @@
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
                                         aria-label="Toggle navigation"><sec:authentication property="principal.nickname" />님</a>
+                                        <sec:authentication property="principal.memberId" var="member_memberId" />
+                                        <sec:authentication property="principal.password" var="member_password" />
+                                        <sec:authentication property="principal.name"  var="member_name" />
+                                        <sec:authentication property="principal.phone" var="member_phone" />
+                                        <sec:authentication property="principal.zipCode" var="member_zipCode" />
+                                        <sec:authentication property="principal.address" var="member_address" />
+                                        <sec:authentication property="principal.image" var="member_image"/>
+                                        <sec:authentication property="principal.birth" var="member_birth"/>
+                                        <sec:authentication property="principal.gender" var="member_gender" />
+                                        <sec:authentication property="principal.auth" var="member_auth" />
+                                        
                                         <ul class="sub-menu collapse" id="submenu-1-4">
                                         <li class="nav-item"><a href="/user/mypage/profile.do">마이페이지</a></li>
                                        	 <li class="nav-item"><a href="/user/mypage/profile_update">&nbsp 내 정보 수정</a></li>
