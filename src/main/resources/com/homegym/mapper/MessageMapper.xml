@@ -99,7 +99,7 @@
 		SELECT MAX(MSGROOMNO) FROM MESSAGE
 	</select>
 
-	<!-- 메세지 이력있는지 검색 -->
+	<!-- 메세지 "이력"있는지 검색 : 1이상이면 존재-->
 	<select id="checkMsgHistory" parameterType="message"
 		resultType="int">
 		SELECT COUNT(MSGNO) FROM MESSAGE
@@ -108,7 +108,7 @@
 		OR (RECVID = #{sendId} AND SENDID = #{recvId})
 	</select>
 
-	<!-- 기존 메세지 내역의 채팅방번호 가져오기 -->
+	<!-- 기존 메세지 내역의 "채팅방번호" 가져오기 -->
 	<select id="getMsgRoomNo" parameterType="message"
 		resultType="int">
 		SELECT MSGROOMNO FROM MESSAGE
@@ -120,13 +120,13 @@
 	
 	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
 	<select id="unReadCntAll" parameterType="string"
-		resultType="int">
+		resultType="String">
 		SELECT COUNT(MSGNO) FROM MESSAGE
 		WHERE RECVID=#{curId}
 		AND MSGCHK = 0
 	</select>
 	
-	<!-- 기존에  -->
+	<!-- 기존에 메세지 내역이 있다면 -->
 	
 
 

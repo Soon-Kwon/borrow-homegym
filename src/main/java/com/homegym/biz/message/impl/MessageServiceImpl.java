@@ -40,8 +40,13 @@ public class MessageServiceImpl implements MessageService {
 	/*메세지 list에서 메세지 보내기*/
 	@Override
 	public int sendMsgInList(MessageVO vo) {
-		// TODO Auto-generated method stub
 		return messageDAO.sendMsgInList(vo);
+	}
+
+	/* 새 메세지 알림 조회*/
+	@Override
+	public String getNewNoticeCnt(String memberId) {
+		return messageDAO.getNewNoticeCnt(memberId);
 	}
 
 
