@@ -59,9 +59,11 @@
 		display: block;
 	    margin-bottom: .5rem;
 	    color: #081828;
-	    font-size: 13px;
+	    font-size: 19px;
 	    font-weight: 500;
 	}
+	
+
 	</style>
 </head>
 <body>
@@ -91,66 +93,61 @@
     <section id="contact-us" class="contact-us section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-12 col-12">
-                    <div class="form-main">
+                <div class="col-lg-8 col-md-12 col-12" style="margin-left: 170px;">
+                    <div class="form-main" style="margin-left: 200px;">
                         <h3 class="title" ><span style="color: #2f3e83;">집에서 만나는 헬스장!</span>
-                            홈짐 예약하기😊
-                        </h3>
-                        <form class="form" method="post" action="/details/reservation.do">
+                            	🔔 홈짐 예약 요청이 도착했습니다.  </h3>
+                       
                         <input type="hidden" name="hId" value="${hId }"/>
-							<div class="row">
-								<div class="col-lg-8 col-8 select">
-									<label>성별</label> 
-									<input type="radio" id='male' name='sex' value='M' ><label for="male">남</label>
-									<input type="radio" id='female' name='sex' value='F'><label for="female">여</label>
+							<div class="row" >
+								<div class="col-lg-10 col-10">
+									<label>🙍‍♀️🙍‍♂️  성별</label>
+									<c:if test="${myRequest.sex == 'f'}">여성</c:if>
+									<c:if test="${myRequest.sex == 'm'}">남성</c:if>
 								</div>
 								<div class="col-lg-10 col-10">
 									<div class="form-group">
-										<label>전화번호</label> <input name="phoneNum" type="text"
-											placeholder="전화번호를 입력해주세요." required="required">
+										<label>📌  예약자 아이디</label> ${myRequest.borrowerId}
+									</div>
+								</div>
+								<div class="col-lg-10 col-10">
+									<div class="form-group">
+										<label>📞    예약자 전화번호</label> ${myRequest.phoneNum}
 									</div>
 								</div>
 								<div class="col-lg-10 col-12">
 									<div class="form-group">
-										<label>예약가능날짜</label> <input type='date' id="rentalDate"
-											name='rentalDate' required />
+										<label>📅  요청 예약날짜</label> ${myRequest.rentalDate}
 									</div>
 								</div>
 								<div class="col-lg-5 col-12">
 									<div class="form-group">
-										<label>시작 시간 : </label> <input type='time' name='startTime' required/>
+										<label>⏰  시작 시간  </label>${myRequest.startTime}
 									</div>
 								</div>
 								<div class="col-lg-5 col-12">
 									<div class="form-group">
-										<label>종료 시간 : </label> <input type='time' name='endTime' required/><br>
+										<label>⏰  종료 시간  </label>${myRequest.endTime}
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-group message">
-										<label>메세지📣</label>
-										<textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?"></textarea>
+										<strong>📫  요청 메세지</strong>
+										<textarea name="message" readonly>${myRequest.message}</textarea>
+										
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-group button">
-										<button type="submit" class="btn" style="margin-left: 290px;">전송하기</button>
+										<button class="btn" id="backBtn" style="margin-left: 200px;">뒤로가기</button>
 									</div>
 								</div>
 							</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						</form>
+
                     </div>
                 </div>
-                <div class="col-lg-4 col-12">
-                    <div class="contact-info">
-                        <!-- Start Single Info -->
-                        <div class="single-info">
-                            <i class="lni lni-map-marker"></i>
-                            <h4>잠깐! 홈짐의 위치를 확인하세요</h4>
-                            <p class="no-margin-bottom">서울시 종로구 인사동
-                            아이유하우스
-                        </div>
+          
                         <!-- End Single Info -->
                     </div>
                 </div>
@@ -207,6 +204,22 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+    <!-- 뒤로가기 버튼 -->
+    <script>
+
+	$(document).ready(function(){
+		$("#backBtn").click(function(){
+			window.history.back();
+		});
+	});
+
+</script>
+
+
 </body>
 
 </html>
