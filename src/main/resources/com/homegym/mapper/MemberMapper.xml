@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace = "MemberDAO"> <!-- com.homegym.mapper.MemberMapper -->
-<!-- 	<resultMap type="com.homegym.biz.member.MemberVO" id="memberMap">
+<mapper namespace = "MemberDAO">
+ 	<!-- <resultMap type="com.homegym.biz.member.MemberVO" id="memberMap">
 		<id property="memberId" column="memberId"/>
 		<result property="mID" column="mId"/>
 		<result property="memberId" column="memberId"/>
@@ -14,36 +14,42 @@
 		<result property="image" column="image"/>
 		<result property="birth" column="birth"/>
 		<result property="gender" column="gender"/>
-		<result property="enabled" column="enabled"/>
-		<collection property="authList" resultMap="authMap">
-		</collection>
-	</resultMap>
-	
-	<resultMap type="com.homegym.biz.member.AuthVO" id="authMap">
-		<result property="mID" column="mId"/>
-		<result property="memberId" column="memberId"/>
 		<result property="auth" column="auth"/>
-	</resultMap> -->
-	
-	<select id="loadUserByUsername" >
-	Select mem.m_id, mem.memberId, password, name, nickname, phone, zip_code, address, image, birth, gender, enabled, auth FROM member mem LEFT OUTER JOIN member_auth auth on mem.memberId = auth.memberId WHERE mem.memberId= #{memberId};
+		<result property="enabled" column="enabled"/>
+	 </resultMap> -->
+
+	<select id="loadUserByUsername">
+	Select memberId, password, name, nickname, phone, zipCode, address, image, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
 	</select>
+	
+	<select id="selectUserById" resultType="com.homegym.security.CustomUserDetails">            
+    Select * from member WHERE memberId = #{memberId}
+    </select>
 	
 	<!-- 회원가입 쿼리 -->
 	<insert id="memberJoin">
-	insert into member(memberId, password, name, nickname, phone, zip_code, address, birth, gender) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender});
+	insert into member(memberId, password, name, nickname, phone, zipCode, address, birth, gender, auth) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender}, "ROLE_MEMBER");
     </insert>
     
     <!-- 회원가입 AUTH  -->
-    <insert id="insertMemberAuth">
+    <!-- <insert id="insertMemberAuth">
     insert into member_auth(memberId, auth) values (#{memberId}, "ROLE_MEMBER");
-    </insert>
+    </insert> -->
     
+    <!--  아이디 중복 체크 -->
+    <select id="idCheck" parameterType="String" resultType="Integer">
+		SELECT count(*) FROM member WHERE memberId = #{memberId}
+	</select>
+	
+	<!--  닉네임 중복 체크 -->
+    <select id="nickCheck" parameterType="String" resultType="Integer">
+		SELECT count(*) FROM member WHERE nickname = #{nickname}
+	</select>
 
 	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
 	<select id="getInfo" resultType="member" parameterType="String">
 		SELECT memberId,
-			   auth,
+			   nickname,
 			   name,
 			   image as imagePath
 		FROM member
@@ -57,7 +63,7 @@
 			   name,
 		       phone,
 		       zipCode,
-		       nickName,
+		       nickname,
 		       address,
 		       image as imagePath,
 		       birth,
@@ -65,8 +71,8 @@
 		       auth
 		FROM member
 		WHERE memberId= #{memberId}
+
 	</select>
-	
 
 	<!-- 회원정보 수정 처리 -->
 	<update id="memberUpdate" parameterType="member">
@@ -81,7 +87,7 @@
 	     		password = #{password},
 	    	</otherwise>
 	  	</choose>
-  			 nickName = #{nickName},
+  			 nickname = #{nickname},
 			 zipCode = #{zipCode},
 			 phone = #{phone},
 			 address = #{address}
@@ -146,7 +152,6 @@
 		FROM homegym_board
 		WHERE memberId=#{memberId}
 	</select>
-	
 	<!-- 내가 쓴 댓글 갯수 -->
 	<select id="getMyAllReviewCnt" resultType="int">
 		SELECT 
@@ -164,9 +169,9 @@
 	</select> 
 	
 	<!-- 내가 쓴 게시물 목록  -->
-<!-- 	<select id="getMyBoardList" resultType="trainer" parameterType="String">
+	<select id="getMyBoardList" resultType="trainer" parameterType="String">
 		SELECT *
-		FROM trainer_board(
+		FROM (
 			SELECT *
 			FROM trainer_board
 			WHERE memberId= #{memberId}
@@ -174,17 +179,10 @@
 				tbRegDate 
 			)as tb
   		LIMIT #{cri.skip}, #{cri.amount}
+
 	</select>
-	 -->
+
 	
-	<!-- 홈짐 관리 리스트 -->
-<!-- 	<select id="getMyWaitingHG" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board hb INNER JOIN homegym_detail hd
-		ON hb.h_id = hd.h_id
-		WHERE memberId = #{memberId} AND
-			  borrowerId IS NOT NULL
-	</select> -->
 	
 	<!-- 내가 빌려준 홈짐 리스트 -->
 	<select id="getMyLendHG" resultType="homegymVO" parameterType="String">
@@ -247,13 +245,14 @@
 	</select>
 	
 	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardPaging" resultType="trainer" parameterType="String">
+	<select id="getMyBoardPaging" resultType="trainer" >
 		<![CDATA[
 		SELECT *
 		FROM (
 				SELECT *
 				FROM trainer_board
 				WHERE memberId = #{memberId}
+				ORDER BY tno desc
 				)as tb
   		LIMIT #{cri.skip}, #{cri.amount}
   		]]>
@@ -301,6 +300,23 @@
   		LIMIT #{cri.skip}, #{cri.amount}
   				
   ]]>
+	</select>
+	
+	<!-- 내가 쓴 리뷰 리스트 조회-->
+	<select id="getMyReviews" resultType="HashMap">
+		SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate
+		FROM homegym_board hb INNER JOIN homegym_review hr
+		ON hb.h_id = hr.h_id
+		WHERE borrowerId= #{memberId}
+	</select>
+	
+	<!-- 요청 홈짐예약 폼 조회 ( + 07/02 수정중) -->
+	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+		SELECT *
+		FROM homegym_board b INNER JOIN homegym_detail d
+		ON b.h_id = d.h_id
+		where b.memberId= #{memberId}
+		and d.d_id=#{d_id};
 	</select>
 	
 </mapper>

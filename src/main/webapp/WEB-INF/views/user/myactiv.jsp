@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-  <%
+<%--   <%
  	String memberId = session.getAttribute("memberId").toString();
- %>
+ %> --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,6 +96,8 @@
 <script>
 	/*버튼 선택시 상태값 변경*/
 	function changeHomegymStatus(object) {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 		// 수락버튼(id = acceptBtn)을 눌렀을 때
 		if(object.id == 'acceptBtn') {
 			//상태(status ) 가 'Y'값을 가지게 된다.
@@ -115,6 +118,10 @@
 			dataType: 'json',
 			data: JSON.stringify(data),
 			contentType: "application/json",
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+            },
 			success: function(data) {
 				//성공시에 페이지 리로드 후 
 				//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
@@ -155,47 +162,7 @@
     </div>
     <!-- /End Preloader -->
 
-    <!-- Start Header Area -->
-    <header class="header style2 navbar-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                <div class="nav-inner">
-                    <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="/index.jsp">
-                            <img src="../assets/images/logo/로고2.png" alt="logo">
-                        </a>
-                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-                        <form class="d-flex search-form">
-                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i
-                                    class="lni lni-search-alt"></i></button>
-                        </form>
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                            <ul id="nav" class="navbar-nav ms-auto">
-                                <li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_list.do"><h5>홈짐</h5></a></li>
-                                <li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tr_list.do"><h5>트레이너</h5></a></li>
-                                <a class="circle-image" href="mp_main.do">
-                                    <img src="https://via.placeholder.com/300x300" alt="logo">
-                                </a>
-                                <li class="nav-item"><a href="mp_main.do"><h5>아이유님</h5></a></li>
-                                
-                            </ul>
-                        </div> <!-- navbar collapse -->
-                    </nav> <!-- navbar -->
-                </div>
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </header>
-    <!-- End Header Area -->
+    <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Breadcrumbs -->
     <div class="breadcrumbs overlay">
@@ -263,10 +230,10 @@
                 <div class="col-lg-8 col-12">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                       
-                         <li class="nav-item" role="presentation">
+                         <li class="nav-item" role="presentation"><a href="#tab1">
                             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
                                 data-bs-target="#overview" type="button" role="tab" tabindex="1" aria-controls="borrow"
-                                aria-selected="true">홈짐관리</button>
+                                aria-selected="true">홈짐관리</button></a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
@@ -285,7 +252,7 @@
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" id="tab-1"
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
                                 
@@ -311,7 +278,7 @@
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
+                                                                <a href="/user/mypage/reservationForm.do?${waitingHomegym.dId}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>
@@ -356,7 +323,7 @@
                                                             </div>
                                                         </div>
       
-                                           </c:forEach>
+                                           			</c:forEach>
                                           </c:otherwise>
                                     </c:choose>
                                     </div>
@@ -741,17 +708,16 @@
     			actionForm.attr("action","/user/mypage/myactiv.do");
     			actionForm.submit();
     		});
-  /*   		
-    		$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-    			localStorage.setItem('activeTab', $(e.target).attr('href'));
-    		});
-    		var activeTab = localStorage.getItem('activeTab');
-    		if(activeTab){
-    			$('#myTab a[href="' + activeTab + '"]').tab('show');
-    		}
-    		 */
+  		
+    		$(function(){
+    			$("#TabMenu").tabs({
+    				select:function(event,ui){
+    				window.loaction.replace(ui.tab.hash);
+    				}
+    			})
+    			});
     		
-    		$(location).attr('href', url);
+    		
     	});
 
     </script>

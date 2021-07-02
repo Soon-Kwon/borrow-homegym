@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -280,7 +283,9 @@ ul li.tag-item {
 		}
 
 		$("input[type='file']").change(function(e) {
-
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
 			var formData = new FormData();
 
 			var inputFile = $("input[name='uploadFile']");
@@ -304,6 +309,10 @@ ul li.tag-item {
 				data : formData,
 				type : 'POST',
 				dataType : 'json',
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
 				success : function(result) {
 					
 					alert("업로드 성공");
@@ -320,7 +329,8 @@ ul li.tag-item {
 		$(".uploadResult").on("click", "button", function(e) {
 
 			console.log("delete file");
-
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
 			var targetFile = $(this).data("file");
 			var type = $(this).data("type");
 
@@ -334,6 +344,10 @@ ul li.tag-item {
 				},
 				dataType : 'text',
 				type : 'POST',
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
 				success : function(result) {
 					alert(result);
 					targetLi.remove();
@@ -356,59 +370,8 @@ ul li.tag-item {
 	</div>
 	<!-- /End Preloader -->
 
-	<!-- Start Header Area -->
-	<header class="header style2 navbar-area" style="bottom: 830px">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html"> <img
-								src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span> <span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search"
-									placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="lni lni-search-alt"></i>
-								</button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar"
-								id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a
-										href="location.html">
-											<h5>홈짐</h5>
-									</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a
-										href="community.html">
-											<h5>커뮤니티</h5>
-									</a></li>
-									<a class="circle-image" href="mypage.html"> <img
-										src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="mypage.html">
-											<h5>아이유님</h5>
-									</a></li>
-
-								</ul>
-							</div>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</header>
-	<!-- End Header Area -->
+	 <!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 	<!-- Start Breadcrumbs -->
 	<div class="intro overlay">
@@ -562,6 +525,7 @@ ul li.tag-item {
 									</div>
 								</div>
 							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</form>
 					</div>
 				</div>
