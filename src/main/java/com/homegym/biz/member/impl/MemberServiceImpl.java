@@ -186,8 +186,11 @@ public class MemberServiceImpl implements MemberService {
 
 	//홈짐 요청 폼 조회
 	@Override
-	public HomegymDetailVO getMyRequest(String memberId) {
-		return memberDAO.getMyRequest(memberId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId) {
+		return memberDAO.getMyRequest(vo,hId);
 	}
+	
+
+
 
 }
