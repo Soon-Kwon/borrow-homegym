@@ -251,7 +251,7 @@
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="/user/mypage/reservationForm.do?${waitingHomegym.dId}"><img class="thumb"
+                                                                <a href="/user/mypage/reservationForm.do?d_id=${waitingHomegym.d_id}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>

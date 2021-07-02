@@ -312,11 +312,16 @@
 	
 	<!-- 요청 홈짐예약 폼 조회 ( + 07/02 수정중) -->
 	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
-		SELECT *
+		<!-- SELECT *
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
 		where b.memberId= #{memberId}
-		and d.d_id=#{d_id};
+		and d.d_id=#{d_id}; -->
+		
+		SELECT * 
+		FROM homegym_detail
+		WHERE d_id = #{dId}
+		
 	</select>
 	
 </mapper>

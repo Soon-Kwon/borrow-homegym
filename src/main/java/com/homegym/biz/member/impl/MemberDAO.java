@@ -194,7 +194,11 @@ public class MemberDAO {
 	}
 	
 	//요청 홈짐 예약 폼 조회
-	public HomegymDetailVO getMyRequest(String memberId) {
-		return sqlsession.selectOne("MemberDAO.getMyRequest",memberId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("vo",vo);
+		map.put("dId",dId);
+		return sqlsession.selectOne("MemberDAO.getMyRequest",map);
 	}
 }
