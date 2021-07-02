@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 import com.homegym.biz.trainerboard.TrainerCriteria;
 
@@ -68,8 +67,8 @@ public class TrainerBoardDAO {
 	}
 
 	// 파일 업로드
-	public void addFile(TrainerBoardVO vo) throws Exception {
-		mybatis.update("TrainerBoardDAO.addFile", vo);
+	public void addFile(String fileName) throws Exception {
+		mybatis.update("TrainerBoardDAO.addFile", fileName);
 	}
 
 	// 게시글 번호 조회

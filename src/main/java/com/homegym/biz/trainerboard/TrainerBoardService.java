@@ -2,6 +2,7 @@ package com.homegym.biz.trainerboard;
 
 import java.util.List;
 
+
 public interface TrainerBoardService {
 
 	// CRUD 기능의 메소드 구현
@@ -25,9 +26,7 @@ public interface TrainerBoardService {
 
 	public int getTotal(TrainerCriteria cri);
 
-	// 파일 업로드 (추가)
-	void addFile(TrainerBoardVO vo) throws Exception;
-	
-	//게시글 번호 조회
-	int getTno(TrainerBoardVO vo);
+	// 첨부파일 리스트 보여주기 
+		public List<TrainerAttachVO> getAttachList(TrainerAttachVO attach, int tno);
+
 }

@@ -1,6 +1,10 @@
 package com.homegym.biz.trainerboard;
 
 import java.util.Date;
+import java.util.List;
+
+//import org.springframework.web.multipart.MultipartFile;
+
 
 import lombok.Data;
 
@@ -26,11 +30,13 @@ public class TrainerBoardVO {
 	private String tbActivChk2;
 	private String tbActivChk3;
 	private String tbImg;
-	private String[] files;
 	private String tbPhoto1;
 	private String tbPhoto2;
 	private String tbPhoto3;
 	private int tbCnt;
 	private String searchCondition;
 	private String searchKeyword;
+	
+	private List<TrainerAttachVO> attachList; // 첨부파일 VO 자료
+
 }

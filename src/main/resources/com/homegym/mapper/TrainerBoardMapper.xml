@@ -127,6 +127,8 @@
 		ORDER BY SEQ DESC
 		]]>
 	</select> -->
+	
+	<!-- 
 	<update id="addFile">	
 		UPDATE TRAINER_BOARD
 		SET 
@@ -135,7 +137,18 @@
 		  , TBPHOTO3 = #{tbPhoto3}
 		WHERE TNO = #{tno}
 	</update>
-	
+	 -->
+	 
+	<insert id="addFile">
+        INSERT INTO tbl_article_file (
+            file_name
+            , article_no
+        ) VALUES (
+            #{fileName}
+            , LAST_INSERT_ID()
+        )
+    </insert>
+	 
 	<select id="getTno" resultType="int">
 		SELECT MAX(TNO) AS TNO
 		FROM TRAINER_BOARD

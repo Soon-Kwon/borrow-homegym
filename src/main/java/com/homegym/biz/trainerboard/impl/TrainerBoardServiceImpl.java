@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.homegym.biz.trainerboard.TrainerAttachVO;
 import com.homegym.biz.trainerboard.TrainerBoardService;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 import com.homegym.biz.trainerboard.TrainerCriteria;
@@ -13,13 +14,18 @@ import com.homegym.biz.trainerboard.TrainerCriteria;
 public class TrainerBoardServiceImpl implements TrainerBoardService {
 
 	@Autowired
+	private TrainerAttachDAO attachDAO;
+
+	@Autowired
 	private TrainerBoardDAO boardDAO;
 
 	// 글 작성
 	@Override
 	public void getTbWrite(TrainerBoardVO vo) {
+		
+		
 		boardDAO.getTbWrite(vo);
-
+		
 	}
 
 	// 글 수정
@@ -63,17 +69,15 @@ public class TrainerBoardServiceImpl implements TrainerBoardService {
 		return boardDAO.getTotalCount(cri);
 	}
 
-	// 파일 업로드
+	
+	//첨부파일 업로드
 	@Override
-	public void addFile(TrainerBoardVO vo) throws Exception {
-		boardDAO.addFile(vo);
-
+	public List<TrainerAttachVO> getAttachList(TrainerAttachVO vo, int tno) {
+		
+		System.out.println("게시글 번호에 해당하는 첨부파일 가져오기 실행");
+//		log.info("게시글 번호에 해당하는 첨부파일 가져오기");
+		return attachDAO.findByTno(vo, tno);
 	}
 
-	// 게시글 번호 조회
-	@Override
-	public int getTno(TrainerBoardVO vo) {
-		return boardDAO.getTno(vo);
-	}
-
+	
 }

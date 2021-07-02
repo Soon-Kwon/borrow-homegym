@@ -8,9 +8,7 @@
 
 <head>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZzltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"
 	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
 	crossorigin="anonymous"></script>
@@ -73,6 +71,7 @@ p {
 	color: #fff;
 }
 
+/* 해시태그CSS */
 * {
 	margin: 0;
 	padding: 0;
@@ -112,223 +111,131 @@ ul li.tag-item {
 	cursor: pointer;
 	margin-left: 8px;
 }
+
+/* 파일업로드 css  */
+.uploadResult {
+	width: 100%;
+	background-color: white;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadResult ul li img {
+	width: 80px;
+	heigh: 80px;
+}
+
+.uploadResult .btn {
+	padding: 1px;
+	margin: 0px;
+	border-radius: .90erm;
+	color: black;
+	background-color: white;
+	border-color: white;
+	border: 0px;
+}
+}
+
 </style>
 <!--//해시태그 끝-->
 
 <!--해시태그-->
 <script>
-	$(document)
-			.ready(
-					function() {
-
-						var tag = {};
-						var counter = 0;
-
-						// 태그를 추가한다.
-						function addTag(value) {
-							tag[counter] = value; // 태그를 Object 안에 추가
-							counter++; //  삭제를 위한 del-btn 의 고유 id 
-						}
-
-						//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
-						function marginTag() {
-							return Object.values(tag).filter(function(word) {
-								return word !== "";
-							});
-						}
-
-						// 서버에 넘기기
-						$("#tag-form").on("submit", function(e) {
-							var value = marginTag(); // return array
-							$("#rdTag").val(value);
-
-							$(this).submit();
-						});
-
-						$("#tag")
-								.on(
-										"keypress",
-										function(e) {
-											var self = $(this);
-
-											// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
-											if (e.key === "Enter"
-													|| e.keyCode == 32) {
-
-												if ($(".tag-item").size() == 3) {
-
-													alert('최대 입력 개수는 3개입니다.');
-
-												} else {
-
-													var tagValue = self.val();
-
-													// 해시태그 값 없으면 x
-													if (tagValue !== "") {
-
-														var result = Object
-																.values(tag)
-																.filter(
-																		function(
-																				word) {
-																			return word === tagValue;
-																		})
-
-														// 태그 중복 검사
-														if (result.length == 0) {
-															$("#tag-list")
-																	.append(
-																			"<li class='tag-item'>"
-																					+ tagValue
-																					+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-															$("#tag-list")
-																	.append(
-																			"<input name=tagList type=hidden value=" + tagValue + ">");
-															/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
-															addTag(tagValue);
-														} else {
-															alert("이미 입력한 해시태그입니다.");
-														}
-													}
-													e.preventDefault();
-												}
-											}
-										});
-
-						// 삭제 버튼 
-						$(document).on("click", ".del-btn", function(e) {
-							var index = $(this).attr("idx");
-							tag[index] = "";
-							$(this).parent().remove();
-						});
-
-						$("input[id=check]:checkbox").click(function() {
-							//$("input[name=tr_options]:checkbox").click(function () {
-							//this.checked = true; //checked 처리
-							if ($(this).is(":checked")) {
-								$(this).parent().addClass("checkColor");
-							} else {
-								$(this).parent().removeClass("checkColor");
-							}
-						});
-					});
-</script>
-	
-	
-	<!-- 이미지 업로드  -->
-<script>
-	var chkArray = new Array();
 	$(document).ready(function() {
 
-		// 체크박스 색 조정
-		$("input[name=homegym_options]").click(function() {
-			//this.checked = true; //checked 처리
-			if ($(this).is(":checked")) {
-				$(this).parent().addClass("checkColor");
-				chkArray.push(this.value);
+		var tag = {};
+		var counter = 0;
+	
+		// 태그를 추가한다.
+		function addTag(value) {
+			tag[counter] = value; // 태그를 Object 안에 추가
+			counter++; //  삭제를 위한 del-btn 의 고유 id 
+		}
+	
+		//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+		function marginTag() {
+			return Object.values(tag).filter(function(word) {
+				return word !== "";
+			});
+		}
+	
+		// 서버에 넘기기
+		$("#tag-form").on("submit", function(e) {
+			var value = marginTag(); // return array
+			$("#rdTag").val(value);
+	
+			$(this).submit();
+		});
+
+	$("#tag").on("keypress",function(e) {
+		var self = $(this);
+
+		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+		if (e.key === "Enter" || e.keyCode == 32) {
+
+			if ($(".tag-item").size() == 3) {
+
+				alert('최대 입력 개수는 3개입니다.');
+
 			} else {
-				$(this).parent().removeClass("checkColor");
-				for (var i = 0; i < chkArray.length; i++) {
-					if (chkArray[i] == this.value) {
-						chkArray.splice(i, 1);
-						i--;
+
+				var tagValue = self.val();
+
+				// 해시태그 값 없으면 x
+				if (tagValue !== "") {
+
+					var result = Object.values(tag).filter(function(word) {
+						return word === tagValue;
+					});
+					
+
+					// 태그 중복 검사
+					if (result.length == 0) {
+						$("#tag-list").append(
+										"<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+						$("#tag-list").append(
+										"<input name=tagList type=hidden value=" + tagValue + ">");
+						/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
+						addTag(tagValue);
+					} else {
+						alert("이미 입력한 해시태그입니다.");
 					}
 				}
+				e.preventDefault();
 			}
-		});
-
-		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-		var maxSize = 5242880;
-
-		function checkExtension(fileName, fileSize) {
-
-			if (fileSize >= maxSize) {
-				alert("파일 사이즈 초과");
-				return false;
-			}
-
-			if (regex.test(fileName)) {
-				alert("해당 종류의 파일은 업로드할 수 없습니다.");
-				return false;
-			}
-
-			return true;
 		}
-
-		$("input[type='file']").change(function(e) {
-			
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			var formData = new FormData();
-
-			var inputFile = $("input[name='uploadFile']");
-
-			var files = inputFile[0].files;
-
-			for (var i = 0; i < files.length; i++) {
-
-				if (!checkExtension(files[i].name, files[i].size)) {
-					return false;
-				}
-
-				formData.append("uploadFile", files[i]);
-
-			}
-
-			$.ajax({
-				url : '/uploadAjaxAction.do',
-				processData : false,
-				contentType : false,
-				data : formData,
-				type : 'POST',
-				dataType : 'json',
-				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-				beforeSend : function(xhr){
-					xhr.setRequestHeader(header, token);
-	            },
-				success : function(result) {
-					
-					alert("업로드 성공");
-					console.log(result);
-					showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등)
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		});
-
-		// x를 누르면 업로드된 파일 삭제
-		$(".uploadResult").on("click", "button", function(e) {
-
-			console.log("delete file");
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			var targetFile = $(this).data("file");
-			var type = $(this).data("type");
-
-			var targetLi = $(this).closest("li");
-
-			$.ajax({
-				url : '/deleteFile.do',
-				data : {
-					fileName : targetFile,
-					type : type
-				},
-				dataType : 'text',
-				type : 'POST',
-				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-				beforeSend : function(xhr){
-					xhr.setRequestHeader(header, token);
-	            },
-				success : function(result) {
-					alert(result);
-					targetLi.remove();
-				}
-			});
-		});
 	});
+
+	// 삭제 버튼 
+	$(document).on("click", ".del-btn", function(e) {
+		var index = $(this).attr("idx");
+		tag[index] = "";
+		$(this).parent().remove();
+	});
+
+	$("input[id=check]:checkbox").click(function() {
+		//$("input[name=tr_options]:checkbox").click(function () {
+		//this.checked = true; //checked 처리
+		if ($(this).is(":checked")) {
+			$(this).parent().addClass("checkColor");
+		} else {
+			$(this).parent().removeClass("checkColor");
+		}
+	});
+});
 </script>
+	
+	
 </head>
 
 <body>
@@ -365,7 +272,7 @@ ul li.tag-item {
 			<div class="row">
 				<div class="col-lg-13 col-md-12 col-12">
 					<div class="form-main">
-						<form class="form" method="post" action="tbWriter.do">
+						<form class="form" id="submitForm" method="post" action="tbWriter.do">
 							<div class="row">
 								<h3 class="title">
 									<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
@@ -466,35 +373,32 @@ ul li.tag-item {
 								<!-- 사진 업로드 -->
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label style="font-size: 20px;">대표사진 등록</label>
+										<br> <label style="font-size: 15px;">대표사진 등록</label>
 									</div>
 									<div>
 										<input type="file" id="img_upload" name="tbImg"
 											accept="image/*" style="margin-bottom: 30px;">
-										<div id="image_container"></div>
 									</div>
+
 									<div class="form-group">
-										<label style="font-size: 20px;">자기 소개사진 등록
-											<p>(최대 3장 업로드 가능)</p>
-										</label>
+										<label style="font-size: 15px; margin-top: 5px;">자기소개
+											사진 </label>
 									</div>
-									<!-- 자기소개 사진업로드 -->
-									<div>
-										<input type="file" id="img_upload" multiple="multiple"
-											name="upLoadFile" accept="image/*"
-											style="margin-bottom: 30px;">
-										<button id="uploadBtn">사진 올리기</button>
-										<!-- 											name="tbPhoto1" accept="image/*" style="margin-bottom: 30px;"> -->
-										<%-- 	<a href="resources/upload/${filename}">${photo1}</a><br> --%>
-										<div id="image_container"></div>
+									<div class="uploadDiv">
+										<input type='file' name='uploadFile' multiple>
+										<!-- <input type='file' id='img_upload' name='uploadFile' multiple > -->
+									</div>
+									<div class="uploadResult">
+										<ul>
+
+										</ul>
 									</div>
 								</div>
-
+							
 
 								<div class="col-12">
 									<div class="form-group button" style="text-align: center;">
-										<button type="submit" class="btn"
-											style="background-color: #3428A5; width: 110px;">등록</button>
+										<button type="button" onclick="save();" class="btn" style="background-color: #3428A5; border-radius:10px; width: 90px;">등록</button>
 									</div>
 								</div>
 							</div>
@@ -547,9 +451,8 @@ ul li.tag-item {
 	<script src="/resources/assets/js/wow.min.js"></script>
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-
+	<script src="/resources/assets/js/main.js"></script>
+	<script src="/resources/assets/js/upload_file.js"></script>
 
 </body>
 
