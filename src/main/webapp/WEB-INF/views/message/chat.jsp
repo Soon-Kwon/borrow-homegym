@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	String memberId = request.getParameter("memberId");
+String memberId = request.getParameter("memberId");
 session.setAttribute("memberId", memberId);
+
 String otherId = request.getParameter("otherId");
 session.setAttribute("otherId", otherId);
 %>
@@ -16,18 +17,13 @@ session.setAttribute("otherId", otherId);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--부트스트랩 설정-->
 <link rel="stylesheet" href="/resources/ad_assets/css/chat.css">
-<!--<script src="/resources/ad_assets/js/custom.js"></script> 지워도 될 듯 -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
 	type="text/css" rel="stylesheet">
-
-
-<!-- --- -->
-<style type="text/css">
-/* 프로필 사진을 비율변화 없이 둥글게 */
+<style>
+	/* 프로필 사진을 비율변화 없이 둥글게 */
 /*1:1 문의하기버튼*/
 .box {
-	width: 30%;
+	width: 100%;
 	/*height: auto;*/
 	/* border-radius: 70%; */
 	overflow: hidden;
@@ -86,6 +82,7 @@ session.setAttribute("otherId", otherId);
 .msg_send_btn:hover {
 	background: #0465ac none repeat scroll 0 0;
 }
+	
 </style>
 </head>
 
@@ -102,7 +99,7 @@ session.setAttribute("otherId", otherId);
 	<br>
 
 	<!-- chat.jsp 시작 -->
-	<div class="chat_window">
+	<!-- <div class="chat_window">
 		<div class="top_menu">
 			<div class="buttons">
 				<div class="button close"></div>
@@ -119,7 +116,7 @@ session.setAttribute("otherId", otherId);
 			<div class="message_input_wrapper">
 				<input class="message_input" placeholder="Type your message here..." />
 			</div>
-			<div class="send_message" onclick="sendMessage()" type="button">
+			<div class="send_messageaa" onclick="sendMessageaa()" type="button">
 				<div class="icon"></div>
 				<div class="text">Send</div>
 			</div>
@@ -132,19 +129,19 @@ session.setAttribute("otherId", otherId);
 				<div class="text"></div>
 			</div>
 		</li>
-	</div>
+	</div> -->
 	<!-- chat.jsp 끝 -->
 
-	<!-- modal창 띄우기-->
+	<!-- 대화modal창 띄우기-->
 	<div class="text-center center row">
 		<div class="col-1"></div>
 		<div class="col-10">
 			<div class="box">
 				<div class="messagesend-btn">
-					<!-- 메세지 보내기 버튼 -->
+					<!-- 1:1문의버튼 -->
 					<button type="button" class="msg_send_btn_profile"
 						data-bs-toggle="modal" data-bs-target="#exampleModal"
-						onclick="javascript:MessageContentList('${otherId}')">
+						onclick="javascript:showMessageContent('${otherId}')">
 						<i class="fas fa-comments"></i>&nbsp;&nbsp; 1:1 문의하기
 					</button>
 				</div>
@@ -157,6 +154,7 @@ session.setAttribute("otherId", otherId);
 							<div class="modal-header">
 								<span id="m_writer_profile">
 									<div class="message-box">
+									<!-- 상대방 프로필 경로잡아주기 -->
 										<img src="/resources/assets/images/gym/re3.png" alt="상대방 프로필"
 											class="avatar img_circle img-profile" alt="avatar">
 
@@ -184,7 +182,7 @@ session.setAttribute("otherId", otherId);
 											</div>
 											<div class='col-1'>
 												<button class='msg_send_btn' type='button'
-													onclick="javascript:SendMessage('${otherId}')">
+													onclick="javascript:sendMessage('${otherId}')">
 													<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
 												</button>
 											</div>
@@ -201,6 +199,70 @@ session.setAttribute("otherId", otherId);
 		</div>
 	</div>
 
+<script type="text/javascript">
+	// 1:1문의를 하고자하는 상대방 id세팅 
+	// - 해당 홈짐글의 번호를 통해 그 글을 쓴 사람의 id를 가져와서 otherId에 넣기()
+	// 
+	let otherId = ${otherId};
+
+	// 1:1문의할 떄, 메세지 내역 가져오기
+	const showMessageContent = function(otherId){
+		console.log("otherId : " + otherId);
+		
+		$.ajax({
+			url:"msgContentByAsking.do",
+			method:"GET",
+			data:{
+				otherId : otherId
+			},
+			success : function(data){
+				console.log("1:1문의하기에서 메세지 내용 가져오기 성공 data : "+data);
+				
+				// 메세지 내용을 html에 넣기
+				$('.msg_history').html(data);
+				
+				// 이 함수로 메세지 내용 가져온 후, 스크롤을 맨아래로
+				$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight);
+			},
+			error: function(){
+				alert('서버 에러');
+			}
+		});
+	};
+	
+	// 1:1문의할 떄, 메세지 전송하기
+	const sendMessage = function(otherId){
+		let msgContent = $('.write_msg').val();
+		console.log(msgContent);
+		
+		msgContent = msgContent.trim();
+		
+		if(msgContent ==""){
+			alert('메세지를 입력해주세요');
+		} else {
+			$.ajax({
+				url : "msgSendByAsking.do",
+				method:"GET",
+				data:{
+					otherId : otherId,
+					msgContent : msgContent
+				},
+				success:function(data){
+					console.log('메세지 전송 성공');
+					
+					// 메세지 입력칸 비우기
+					$('.write_msg').val("");
+					
+					// 메세지 내용 리로드
+					showMessageContent(otherId);
+				},
+				error: function(){
+					alert('서버 에러');
+				}
+			});
+		}
+	};
+</script>
 
 </body>
 </html>

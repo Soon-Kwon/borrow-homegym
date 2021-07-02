@@ -5,9 +5,9 @@
 
 <!-- ajax이용한 메세지 content(오른쪽 영역)처리 -->
 <c:forEach var="tmp" items="${clist}">
+	<%-- <div msgRoomNo="${tmp.msgRoomNo }" />--%>
 	<c:choose>
 		<c:when test="${tmp.sendId eq null}">
-		대화할 방 선택 혹은 친구찾기를 통해 대화를 시작해주세요.
 		
 		</c:when>
 		<c:when test="${tmp.curId ne tmp.sendId}">

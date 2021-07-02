@@ -37,6 +37,13 @@
 <script src="https://kit.fontawesome.com/a0fcc69da7.js"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<!-- ========================= CSS here ========================= -->
+<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+<link rel="stylesheet" href="/resources/assets/css/animate.css" />
+<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+<link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 <!-- 웹소켓 -->
 <script
@@ -121,12 +128,12 @@
 
 
 	<script>
-	
+		var selectedMsgRoomNo = '';
 		// 메세지 리스트 가져오기(처음)
 		const FirstMessageList = function() {
 			$.ajax({
 					url : "msgList.do",
-					method : "get",
+					method : "GET",
 					success : function(data) {
 						console.log("FirstMessageList()");
 
@@ -138,8 +145,6 @@
 							// 그때의 메세지방, 상대방 id담음
 							let msgRoomNo = $(this).attr('msgRoomNo');
 							let otherId = $(this).attr('otherId');
-							console.log("msgRoomNo : "+msgRoomNo);
-							console.log("otherId : "+otherId);
 
 							// 클릭한 채팅방 빼고, 나머지 active효과 해제
 							// .chat_list_box를 갖지 않는 .chat_list_box요소의 내용에 msgRoomNo더함
@@ -168,8 +173,8 @@
 							$('.write_msg').keydown(function(){
 								if(event.keyCode == 13){
 									SendMessage(msgRoomNo,otherId);
-								}
-							})
+								} 
+							});
 							
 							// 버튼 클릭하면 메세지 전송
 							$('.msg_send_btn').on('click',function() {
@@ -225,7 +230,12 @@
 							// 메세지 입력/전송 칸 보이기
 							$('.send_message').html(send_msg);
 							
-							
+							// 엔터키 누르면 메세지 전송
+							$('.write_msg').keydown(function(){
+								if(event.keyCode == 13){
+									SendMessage(msgRoomNo,otherId);
+								} 
+							});
 
 							// 메세지 전송버튼 클릭
 							$('.msg_send_btn').on('click',function() {
@@ -248,6 +258,7 @@
 
 		// 클릭한 메세지 내용 보여주고, 읽지 않은 메세지를 읽음처리하는 함수
 		const ShowMessageContent = function(msgRoomNo) {
+			selectedMsgRoomNo = msgRoomNo;
 			/* // navbar에도 메세지 읽음처리 반영 (알림갯수)
 			getNewNoticeCnt(); */
 			console.log("msgRoomNo"+msgRoomNo);
@@ -261,6 +272,7 @@
 				},
 				success : function(data) {
 					console.log("ShowMessageContent() 메시지 가져오기");
+					console.log("data : "+data);
 
 					// 메세지 내용을 html에 담음
 					$('.msg_history').html(data);
@@ -270,7 +282,7 @@
 							$('.msg_history')[0].scrollHeight);
 				},
 				error : function() {
-					alert('에러 발생');
+					alert('ShowMessageContent()에러 발생');
 				}
 			})
 
@@ -313,7 +325,7 @@
 						MessageList();
 					},
 					error : function() {
-						alert('서버 에러');
+						alert('sendMessage() 에러');
 					}
 				});
 			}
@@ -322,8 +334,9 @@
 		// message_list, message_content 실시간 업데이트할 함수
 		function getInfiniteChat(){
 			setInterval(function(){
-				MessageList()
-			}, 4000);
+				MessageList();
+				ShowMessageContent(selectedMsgRoomNo);
+			}, 3000);
 		}
 	</script>
 	
@@ -331,7 +344,7 @@
 	$(document).ready(function() {
 		// 메세지 리스트 리로드
 		FirstMessageList();
-		//getInfiniteChat();
+		getInfiniteChat();
 	});
 	</script>
 

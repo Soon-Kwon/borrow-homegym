@@ -64,7 +64,7 @@ public class MessageDAO {
 		System.out.println("recvId : " + vo.getRecvId()); // null
 		System.out.println("curId : " + curId);
 
-		// 메세지 내역 가져오기
+		// 채팅방 번호를 통해 메세지 내역 가져오기
 		ArrayList<MessageVO> clist = (ArrayList) sqlSession.selectList("MessageDAO.getMsgContentByRoom", vo);
 		for (MessageVO mVo : clist) {
 			// 현재 로그인한 아이디set

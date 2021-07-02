@@ -4,14 +4,6 @@
 <!-- com.homegym.mapper.MessageMapper -->
 <mapper namespace="MessageDAO">
 
-	<!-- 임시 : member정보 가져오기 -->
-	<select id="getInfo" resultType="member" parameterType="String">
-		SELECT *
-		FROM member
-		WHERE memberId= #{memberId}
-	</select>
-	<!-- ============= -->
-
 	<!-- 가장 최신 메세지 내용 담긴 리스트 가져오기 -->
 	<select id="getMessageAll" resultType="message"
 		parameterType="message">
@@ -47,7 +39,7 @@
 		</choose>
 	</select>
 
-	<!-- 메세지 내용 가져오기 -->
+	<!-- 채팅방번호를 통해 메세지 내용 가져오기 -->
 	<select id="getMsgContentByRoom" parameterType="message"
 		resultType="message">
 		SELECT M.MSGNO, M.MSGROOMNO, M.SENDID, M.RECVID, M.MSGCONTENT,
@@ -55,9 +47,11 @@
 		FROM MESSAGE M LEFT OUTER JOIN MEMBER U
 		ON M.SENDID = U.MEMBERID
 		<choose>
+			<!-- 기존에 있던 방이면 방번호가 일치한 방의 내용 불러오기 -->
 			<when test="msgRoomNo != 0">
 				WHERE MSGROOMNO = #{msgRoomNo}
 			</when>
+			<!-- 기존에 없던 방이면 msgRoomNo = 0인 경우 -->
 			<otherwise>
 				WHERE (RECVID = #{recvId} AND SENDID = #{curId})
 				OR (SENDID = #{sendId} AND RECVID = #{curId})
@@ -126,8 +120,13 @@
 		AND MSGCHK = 0
 	</select>
 	
-	<!-- 기존에 메세지 내역이 있다면 -->
-	
+	<!-- 1:1문의) 해당 글을 작성한 번호를 통해 그 글의 memberId가져오기 -->
+	<!-- <select id="boardWriterId" parameterType="" resultType="String">
+		SELECT MEMBERID FROM MEMBER
+		WHERE 
+		기존 방이 있으면
+		기존 방이 없으면
+	</select> -->
 
 
 
