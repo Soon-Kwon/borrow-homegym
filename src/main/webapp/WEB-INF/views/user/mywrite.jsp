@@ -11,9 +11,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
-<head>
-</head>
-
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -143,15 +140,35 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.TContent}</a></td>
+			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
-			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
+			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
                                     			</c:forEach>
                                     		</c:otherwise>
                                     	</c:choose>
                                 		</tbody>
                                     </table>
+                                    
+                                   <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                    	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
+                                    </form> 
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                   <c:if test ="${tb_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${tb_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${tb_pageMaker.startPage}" end="${tb_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${tb_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${tb_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${tb_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+                                                </div>  
                                 </div> 
                             </div>
                         </div>
@@ -163,51 +180,54 @@
                                         <table class="table table-hover" style="text-align: center; line-height: 35px;">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th>리뷰번호</th>
+                                                <th>홈짐번호</th>
                                                 <th>리뷰내용</th>
-                                                <th>작성자</th>
-                                                <th>작성일</th>
+                                                <th>별점</th>
+                                                <th>리뷰 작성일</th>
                                             </tr>
                                             </thead>
-                                              <tbody>
-                                    <c:choose>
-                                    	<c:when test ="${fn:length(review)==0}">
-                                    	<div style="font-size: 20px">
-                                    		<tr>
-												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
-											</tr>
+                                            <tbody>
+                                   				 <c:choose>
+                                    				<c:when test ="${fn:length(myReviews)==0}">
+                                    				<div style="font-size: 20px">
+                                    					<tr>
+															<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
+														</tr>
 											
-										</div>
-                                    	</c:when>
-                                    	<c:otherwise>
-                                    		<c:forEach var="board" items="${board}" varStatus="status">
-		                                    	<tr>
-		                                            <td>4</td>
-		                                            <td><a href="course-details.html">너무 좋아요!!</a></td>
-		                                            <td>김영광</td>
-		                                            <td>날짜</td>
-		                                        </tr>
-                                    		</c:forEach>
-                                    	</c:otherwise>
-                                    </c:choose>
-                                </tbody>
-                                        </table>
-                                    </div>            
-                                </div>
-                                <!-- <div class="bottom-content"> -->
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-12 col-md-12 col-12">
-                                                <div class="button" style="width: 200px; margin: 20px auto 0 auto; col">
-                                                    <a href="href="course-details.html" class="btn">리뷰 쓰러가기</a>
-                                                </div>
-                                            </div>
-                                        </div>
+													</div>
+                                    			</c:when>
+                                    			<c:otherwise>
+                                    				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
+		                                    			<tr>
+				                                            <td>${myReviews.Htitle}</td>
+				                                            <td><a href="course-details.html">${myReviews.hrContent}</a></td>
+					                                            <c:if test="${myReviews.hrScore==1}">
+					                                            	<td>⭐</td><
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==2}">
+					                                            	<td>⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==3}">
+					                                            	<td>⭐⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==4}">
+					                                            	<td>⭐⭐⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==5}">
+					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
+					                                            </c:if>
+				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hrRegdate}" /></td>
+		                                       		    </tr>
+                                    			   </c:forEach>
+                                    	     	</c:otherwise>
+                                     		 </c:choose>
+                               			  </tbody>
+                                       </table>
                                     <!-- </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- End Course Details Wrapper -->
                 
             </div>
@@ -247,7 +267,6 @@
     </footer>
     <!--/ End Footer Area -->
 
-    </footer>
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->
@@ -262,6 +281,27 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    
+    
+    
+     <script type="text/javascript">
+    	$(document).ready(function(){
+    		var actionForm= $("#actionForm");
+
+    		
+    		$(".pagination-list a").on("click",function(e){
+    			e.preventDefault();
+    			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
+    			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+    			actionForm.attr("action","/user/mypage/mywrite.do");
+    			actionForm.submit();
+    		});
+
+    	});
+    	
+  
+
+    </script>
 </body>
 
 </html>

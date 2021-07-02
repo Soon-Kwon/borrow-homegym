@@ -16,10 +16,12 @@ public class PageMakerDTO {
 		this.cri=cri;
 		this.total=total;
 		
-		this.endPage = (int) (Math.ceil(cri.getPageNum() /(double)page ))* page;  //
+		//마지막 페이지
+		this.endPage = (int) (Math.ceil(cri.getPageNum() /(double)page ))* page;  
+		//시작 페이지
 		this.startPage= this.endPage - (page-1);
 		
-		
+		//전체 마지막 페이지
 		int realEnd = (int) (Math.ceil(total * 1.0 / cri.getAmount()));
 		
 		if(realEnd < this.endPage) {

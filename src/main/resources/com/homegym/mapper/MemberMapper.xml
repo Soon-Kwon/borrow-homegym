@@ -47,9 +47,9 @@
 	</select>
 
 	<!-- 마이페이지 프로필 정보(활동내역 내가 쓴글 추가해야됨.)  -->
-	<select id="getInfo" resultType="member" parameterType="String">
+	<select id="getInfo" resultType="authmember" parameterType="String">
 		SELECT memberId,
-			   auth,
+			   nickname,
 			   name,
 			   image as imagePath
 		FROM member
@@ -57,9 +57,21 @@
 	</select>
 	
 	<!-- 마이페이지 회원정보 수정 페이지 -->
-	<select id="getMyPageInfo" resultType="member" parameterType="String">
-		SELECT memberId, password, name, phone, zipCode, nickName, address, image as imagePath, birth, gender, auth
-		FROM member WHERE memberId= #{memberId}
+	<select id="getMyPageInfo" resultType="authmember" parameterType="String">
+		SELECT memberId,
+			   password, 
+			   name,
+		       phone,
+		       zipCode,
+		       nickname,
+		       address,
+		       image as imagePath,
+		       birth,
+		       gender,
+		       auth
+		FROM member
+		WHERE memberId= #{memberId}
+
 	</select>
 
 	<!-- 회원정보 수정 처리 -->
@@ -75,7 +87,7 @@
 	     		password = #{password},
 	    	</otherwise>
 	  	</choose>
-  			 nickName = #{nickName},
+  			 nickname = #{nickname},
 			 zipCode = #{zipCode},
 			 phone = #{phone},
 			 address = #{address}
@@ -116,12 +128,13 @@
 		WHERE memberId=#{memberId} AND password=#{password}
 	</select>
 	
-	<!-- 수락 대기중인 홈짐 갯수 -->
+	<!--관리할 홈짐 갯수 -->
 	<select id="getWaingHomegymCnt" resultType="int">
 		SELECT 
 			count(*)
-		FROM homegym_board
-		WHERE memberId = #{memberId} 
+		FROM homegym_board b INNER JOIN homegym_detail d
+        ON b.h_id = d.h_id
+		WHERE memberId = #{memberId}
 	</select>
 	
 	<!-- 내가 빌린 홈짐 갯수 -->
@@ -140,7 +153,12 @@
 		WHERE memberId=#{memberId}
 	</select>
 	<!-- 내가 쓴 댓글 갯수 -->
-	
+	<select id="getMyAllReviewCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM homegym_review
+		WHERE borrowerId = #{memberId} 
+	</select>
 	
 	<!-- 내가 작성한 게시글 갯수 -->
 	<select id="getMyAllBoardCnt" resultType="int">
@@ -153,21 +171,18 @@
 	<!-- 내가 쓴 게시물 목록  -->
 	<select id="getMyBoardList" resultType="trainer" parameterType="String">
 		SELECT *
-		FROM trainer_board
-		WHERE memberId= #{memberId}
-		ORDER BY
-			tbRegDate 
+		FROM (
+			SELECT *
+			FROM trainer_board
+			WHERE memberId= #{memberId}
+			ORDER BY
+				tbRegDate 
+			)as tb
+  		LIMIT #{cri.skip}, #{cri.amount}
+
 	</select>
+
 	
-	
-	<!-- 홈짐 관리 리스트 -->
-	<select id="getMyWaitingHG" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board hb INNER JOIN homegym_detail hd
-		ON hb.h_id = hd.h_id
-		WHERE memberId = #{memberId} AND
-			  borrowerId IS NOT NULL
-	</select>
 	
 	<!-- 내가 빌려준 홈짐 리스트 -->
 	<select id="getMyLendHG" resultType="homegymVO" parameterType="String">
@@ -186,13 +201,13 @@
 	</select>
 	
 	<!-- 진행중인 홈짐 리스트 -->
-	<select id="getMyProgressHomegym" resultType="homegymVO" parameterType="String">
+<!-- 	<select id="getMyProgressHomegym" resultType="homegymVO" parameterType="String">
 		SELECT *
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
 		WHERE memberId = #{memberId} OR borrowerId = #{memberId} 
 			AND status = 'ing'
-	</select>
+	</select> -->
 	
 	<!-- 완료된 홈짐 리스트 -->
 <!-- 	<select id="getMyFinishedHomegym" resultType="homegymVO" parameterType="String">
@@ -205,11 +220,11 @@
 	<!-- 홈짐 수락여부 상태값 변경 -->
 	<update id="HomegymAcceptUpdate" parameterType="HashMap" >
 		UPDATE 
-			homegym_board
+			homegym_detail
 		SET
-	    	acceptYN = #{status}
+	    	agreeYN = #{status}
 		WHERE
-			h_id = #{hId}
+			d_id = #{dId}
 	</update>
 	
 	<!-- 활동내역 수락한 홈짐 리스트 페이징 -->
@@ -228,17 +243,30 @@
   ]]>
 	
 	</select>
-
-
-	<!-- 홈짐 관리 리스트 페이징 -->
-	<select id="getWaitingHGPaging" resultType="homegymVO">
-	<![CDATA[
+	
+	<!-- 내가 쓴 게시물 목록  -->
+	<select id="getMyBoardPaging" resultType="trainer" >
+		<![CDATA[
 		SELECT *
 		FROM (
 				SELECT *
-				FROM homegym_board 
+				FROM trainer_board
 				WHERE memberId = #{memberId}
-				
+				ORDER BY tno desc
+				)as tb
+  		LIMIT #{cri.skip}, #{cri.amount}
+  		]]>
+	</select>
+
+	<!-- 홈짐 관리 리스트 페이징 -->
+	<select id="getWaitingHGPaging" resultType="hashMap">
+	<![CDATA[
+		SELECT *
+		FROM (
+				SELECT b.h_title,b.h_addr,d.rental_date, d.d_id,d.agreeYN
+				FROM homegym_board b INNER JOIN homegym_detail d
+				ON b.h_id = d.h_id
+                WHERE memberId = #{memberId}
 			)as wh
 		LIMIT #{cri.skip}, #{cri.amount}
 	]]>
@@ -246,14 +274,13 @@
 	
 	
 	<!-- 빌려준 홈짐 리스트 페이징   -->
-	<select id="getLendHGPaging" resultType="homegymVO">
+	<select id="getLendHGPaging" resultType="HashMap">
   	<![CDATA[
   		SELECT *
   		FROM (
-  				SELECT *
-				FROM homegym_board
+  				SELECT distinct b.h_id,b.h_title,b.h_addr,b.h_cnt
+				FROM homegym_board b INNER JOIN homegym_detail d
 				WHERE memberId = #{memberId}
-				ORDER BY h_id desc
 			)as lh
   		LIMIT #{cri.skip}, #{cri.amount}
   				
@@ -265,7 +292,7 @@
   	<![CDATA[
   		SELECT *
   		FROM (
-  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN
+  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN,d.rental_date
 				FROM homegym_board b INNER JOIN homegym_detail d
 				ON b.h_id = d.h_id
 				WHERE borrowerId= #{memberId}
@@ -273,6 +300,23 @@
   		LIMIT #{cri.skip}, #{cri.amount}
   				
   ]]>
+	</select>
+	
+	<!-- 내가 쓴 리뷰 리스트 조회-->
+	<select id="getMyReviews" resultType="HashMap">
+		SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate
+		FROM homegym_board hb INNER JOIN homegym_review hr
+		ON hb.h_id = hr.h_id
+		WHERE borrowerId= #{memberId}
+	</select>
+	
+	<!-- 요청 홈짐예약 폼 조회 ( + 07/02 수정중) -->
+	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+		SELECT *
+		FROM homegym_board b INNER JOIN homegym_detail d
+		ON b.h_id = d.h_id
+		where b.memberId= #{memberId}
+		and d.d_id=#{d_id};
 	</select>
 	
 </mapper>

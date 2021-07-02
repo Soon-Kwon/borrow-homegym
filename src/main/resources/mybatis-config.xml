@@ -14,6 +14,7 @@
 		<typeAlias alias="homegymVO" type="com.homegym.biz.homegym.HomegymVO"/>
 		<typeAlias alias="attachVO" type="com.homegym.biz.homegym.HomegymAttachVO"/>
 		<typeAlias alias="message" type="com.homegym.biz.message.MessageVO" />
+		<typeAlias alias="authmember" type="com.homegym.security.CustomUserDetails" />
 	</typeAliases>
 
 	<!-- Sql Mapper 설정 -->

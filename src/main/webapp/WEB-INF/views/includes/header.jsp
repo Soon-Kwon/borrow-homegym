@@ -90,12 +90,12 @@
                                         <sec:authentication property="principal.gender" var="member_gender" />
                                         <sec:authentication property="principal.auth" var="member_auth" />
                                         
-                                        <ul class="sub-menu collapse" id="submenu-1-4">
-                                        <li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>
-                                       	 <li class="nav-item"><a href="/user/mypage/profile_update">&nbsp &nbsp &nbsp 내 정보 수정</a></li>
-                                         <li class="nav-item"><a href="/user/mypage/myactiv">&nbsp &nbsp &nbsp 활동 내역</a></li>
-                                       	 <li class="nav-item"><a href="/user/mypage/mywrite">&nbsp &nbsp &nbsp 글 관리</a></li>
-                                        <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
+                                        <ul class="sub-menu collapse" id="submenu-1-4" style="width: 150px;">
+                                        	<li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>
+                                       	 	<li class="nav-item"><a href="/user/mypage/profile_update">&nbsp &nbsp &nbsp 내 정보 수정</a></li>
+                                         	<li class="nav-item"><a href="/user/mypage/myactiv">&nbsp &nbsp &nbsp 활동 내역</a></li>
+                                       	 	<li class="nav-item"><a href="/user/mypage/mywrite">&nbsp &nbsp &nbsp 글 관리</a></li>
+                                        	<li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>
                                     </li>
 										<form id="logout" action="/logout" method="POST">

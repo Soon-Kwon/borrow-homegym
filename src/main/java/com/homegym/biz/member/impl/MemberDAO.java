@@ -12,6 +12,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberVO;
@@ -81,12 +83,12 @@ public class MemberDAO {
 	}
 
 	// 마이페이지 프로필 정보 가져오기
-	public MemberVO getUser(String memberId) {
+	public CustomUserDetails getUser(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getInfo", memberId);
 	}
 
 	// 마이페이지 회원정보 페이지 이동
-	public MemberVO getMyPageInfo(String memberId) {
+	public CustomUserDetails getMyPageInfo(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getMyPageInfo", memberId);
 	}
 
@@ -107,12 +109,15 @@ public class MemberDAO {
 		System.out.println(result);
 		return result;
 	}
+	
+	// 내가 쓴 게시글 조회 
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
+		Map<String,Object> map = new HashMap<String,Object>();
 
-	// 내가 쓴 게시글 조회
-	public List<TrainerBoardVO> getMyBoardList(String memberId) {
-		return sqlsession.selectList("MemberDAO.getMyBoardList", memberId);
+		map.put("memberId",memberId);
+		map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getMyBoardPaging",map);
 	}
-
 	// 내가 빌려준 홈짐 수
 	public int getLendHomeGymCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt", memberId);
@@ -128,6 +133,11 @@ public class MemberDAO {
 		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt", memberId);
 	}
 	
+	//내가 쓴 리뷰 갯수
+	public int getMyAllReviewCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getMyAllReviewCnt",memberId);
+	}
+	
 	
 	/*마이페이지 활동 내역*/
 	
@@ -137,7 +147,7 @@ public class MemberDAO {
 	}
 	
 	// 수락 대기중인 홈짐 페이징
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 			map.put("memberId",memberId);
@@ -146,7 +156,7 @@ public class MemberDAO {
 	}
 	
 	//내가 빌려준 홈짐
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 		map.put("memberId",memberId);
@@ -176,5 +186,15 @@ public class MemberDAO {
 	//홈짐 수락 거절 상태 변화
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
+	}
+	
+	//내가 쓴 댓글 조회
+	public List<Map<String, String>> getMyReviews(String memberId){
+		return sqlsession.selectList("MemberDAO.getMyReviews",memberId);
+	}
+	
+	//요청 홈짐 예약 폼 조회
+	public HomegymDetailVO getMyRequest(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getMyRequest",memberId);
 	}
 }

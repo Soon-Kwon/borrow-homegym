@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%--  <%
+ <%-- <%
  	String memberId = session.getAttribute("memberId").toString();
- %> --%>
+ %>  --%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
@@ -192,7 +192,7 @@ function updateInfo() {
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
-				nickName : $('input[name=nickName]').val(),
+				nickname : $('input[name=nickname]').val(),
 				phone : $('input[name=phone]').val(),
 				zipCode : $('input[name=zipCode]').val(),
 				address : $('input[name=address]').val()
@@ -546,8 +546,8 @@ function execPostCode() {
                                                         <label for="nickname">
                                                             <h6>닉네임</h6>
                                                         </label>
-                                                        <input type="text" class="form-control" name="nickName"
-                                                         value="${member.nickName}">
+                                                        <input type="text" class="form-control" name="nickname"
+                                                         value="${member.nickname}">
                                                     </div>
                                                 </div>
                                                 <br>
