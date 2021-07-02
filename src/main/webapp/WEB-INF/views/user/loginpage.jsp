@@ -1,38 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="zxx">
 
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>빌려줘! 홈짐 - 로그인</title>
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="shortcut icon" type="image/x-icon"
-	href="/resources/assets/images/logo/logo.png" />
-
-
-
-<!-- Place favicon.ico in the root directory -->
-
-<!-- Web Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-	rel="stylesheet">
-
-<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
- 	<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-
-
-</head>
 
 <body>
 	<!--[if lte IE 9]>
@@ -53,65 +28,9 @@
 	</div>
 	<!-- /End Preloader -->
 
-	<header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="/index.jsp"> <img
-								src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span> <span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search"
-									placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="lni lni-search-alt"></i>
-								</button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar"
-								id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a
-										href="location.html">
-											<h5>홈짐</h5>
-									</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a
-										href="community.html">
-											<h5>트레이너</h5>
-									</a></li>
-									<a class="circle-image" href="mp_main.jsp"> <img
-										src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="mp_main.jsp">
-											<h5>아이유님</h5>
-									</a></li>
-								</ul>
-							</div>
-							<!-- navbar collapse -->
-						</nav>
-						<!-- navbar -->
-					</div>
-				</div>
-			</div>
-			<!-- row -->
-		</div>
-		<!-- container -->
-	</header>
-	<!-- End Header Area -->
-	<!-- End Header Area -->
+	<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
-	<!-- Start Breadcrumbs -->
-
-	<!-- End Breadcrumbs -->
 
 	<!-- start login section -->
 	<section class="blacnk">
@@ -129,12 +48,12 @@
 						<form action="/login" method="post">
 							<div class="form-group">
 								<label>아이디</label> <input type="text" name="memberId" class="margin-5px-bottom" 
-									id="memberId" placeholder="아이디" width="" value="admin"><!-- type="email" -->
+									id="memberId" placeholder="아이디를 입력하세요" width=""><!-- type="email" -->
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label> <input class="margin-5px-bottom"
 									type="password" name="password" id="password"
-									placeholder="패스워드" value="admin">
+									placeholder="비밀번호를 입력하세요">
 							</div>
 							<div class="check-and-pass">
 								<div class="row align-items-center">
@@ -146,14 +65,14 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<div class="button">
-								<button type="submit" class="btn" href="/index">LogIn</button>
+								<button type="submit" class="btn">LogIn</button>
 							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
 								<a href="/user/registration.do">회원가입 하기</a>
 							</p>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</div>
 				</div>

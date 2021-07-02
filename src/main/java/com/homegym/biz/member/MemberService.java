@@ -5,23 +5,28 @@ import java.util.List;
 
 import java.util.Map;
 
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
 public interface MemberService {
 
 	//회원가입
     public void memberJoin(MemberVO member) throws Exception;
     
-    public void insertMemberAuth(MemberVO member) throws Exception;
-    
-
+    //아이디 중복 체크
+  	public int idCheck(String memberId) throws Exception;
+  	
+    //닉네임 중복 체크
+  	public int nickCheck(String nickName) throws Exception;
 
 	//프로필 정보가져오기
-	public MemberVO getUser(String memberId);
+	public CustomUserDetails getUser(String memberId);
 	
 	//회원정보 수정페이지 
-	public MemberVO getMyPageInfo(String memberId);
+	public CustomUserDetails getMyPageInfo(String memberId);
 	
 	//회원정보 수정
 	public int memberUpdate(MemberVO vo);
@@ -39,7 +44,7 @@ public interface MemberService {
 	public boolean checkPw(String memberId,String password);
 
 	//내가 쓴 게시글 리스트 조회
-	public List<TrainerBoardVO> getMyBoardList(String memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId, Criteria cri);
 	
 	// 수락 대기중인 홈짐 수 조회
 	public int getMyWaitngHomegymCnt(String memberId);
@@ -54,13 +59,13 @@ public interface MemberService {
 	public int getMyAllBoardCnt(String memberId);
 	
 	//내가 쓴 댓글 수 조회
-	
+	public int getMyAllReviewCnt(String memberId);
 	
 	//수락 대기중인 홈짐
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri);
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri);
 	
 	//내가 빌려준 홈짐 조회
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri);
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri);
 	
 	//내가 빌린 홈짐 조회
 	public List<Map<String, String>> getRentdHGPaging(String memberId,Criteria cri);
@@ -71,7 +76,13 @@ public interface MemberService {
 	//완료된 홈짐 조회
 //	public List<HomegymVO> getMyFinishedHomegym(String memberId);
 	
+	//내가 쓴 리뷰 조회
+	public List<Map<String, String>> getMyReviews(String memberId);
+	
 	//홈짐 수락 거절 변경
 	public int HomegymAcceptUpdate(Map<String, String> paramMap);
+	
+	//홈짐 예약 요청 조회
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId);
 
 }

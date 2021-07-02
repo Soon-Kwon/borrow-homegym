@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.homegym.PageDTO;
 
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/homegym/*")
@@ -34,6 +36,8 @@ public class HomegymController {
 	@Autowired
 	private HomegymService homegymService;
 	
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/upload/";
+	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
 	// 글쓰기 페이지로 이동
 	@RequestMapping("/registerView.do")
 	public String registerView(Model model, Criteria cri){
@@ -61,12 +65,18 @@ public class HomegymController {
 	
 	// 게시글 리스트 보여주기
 	@GetMapping("/homegymListView.do")
-	public String listView(Model model, HomegymVO vo, Criteria cri, HomegymAttachVO attach) {
+	public String listView(Model model, HomegymVO vo, Criteria cri, HomegymAttachVO attach, HomegymReviewVO review) {
 		
 		// getBoardListWithPaging은 resultType이 hashmap인 객체들을 담은 List이다. 
 		// 첨부파일, vo, 페이징을 모두 보여줘야 되기 때문이다.
-		model.addAttribute("list", homegymService.getBoardListWithPaging(vo, cri, attach));
-
+		
+		// jsp의 지도위에 데이터베이스에 존재하는 데이터를 보여주기 위해서는 json 데이터로 보내주는 것이 자바스크립트를 사용하기 편하다.
+		// 그래서 jsonArray 관련 라이브러리를 활용하여 json 데이터로 만들어 view단에 뿌려준다.
+		JSONArray jsonArray = new JSONArray();
+		model.addAttribute("list", jsonArray.fromObject(homegymService.getBoardListWithPaging(vo, cri, attach)));
+		model.addAttribute("listAll", jsonArray.fromObject(homegymService.getAllInfo(vo, cri, attach)));
+		
+		// 페이징할 때 필요한 cri 인스턴스와 전체 게시물을 담은 total 인스턴스 변수를 모델에 담는다.
 		int total = homegymService.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	
@@ -79,6 +89,8 @@ public class HomegymController {
 	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
 			@RequestParam("hId") int hId ) {
 		model.addAttribute("board", homegymService.get(vo, hId));
+		model.addAttribute("score", homegymService.getScore(hId));
+		
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";
 	}
@@ -153,7 +165,7 @@ public class HomegymController {
 				
 				// java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근)
 				// attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다.
-				Path file = Paths.get("/Users/soon/Desktop/upload/" + attach.getUploadPath()
+				Path file = Paths.get(UPLOAD_FOLDER+ attach.getUploadPath()
 				+ "/" + attach.getUuid() + "_" + attach.getFileName());
 				
 				// java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다.
@@ -161,7 +173,7 @@ public class HomegymController {
 				
 				// 이미지 파일이면 섬네일도 지워준다.	
 				if(Files.probeContentType(file).startsWith("image")) {
-					Path thumbNail = Paths.get("/Users/soon/Desktop/upload/" + attach.getUploadPath()
+					Path thumbNail = Paths.get(UPLOAD_FOLDER + attach.getUploadPath()
 				+ "/s_" + attach.getUuid() + "_" + attach.getFileName());
 					
 				Files.delete(thumbNail);

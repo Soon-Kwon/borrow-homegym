@@ -1385,7 +1385,7 @@ ol {
 }
 
 .header.style3.navbar-area .header-social ul li a:hover {
-  color: #0EDC8D;
+  color: #5c6dbd;
 }
 
 /*===== NAVBAR =====*/
@@ -1417,11 +1417,11 @@ ol {
 }
 
 .header .navbar .navbar-nav .nav-item a.active {
-  color: #0EDC8D;
+  color: #5c6dbd;;
 }
 
 .sticky .navbar .navbar-nav .nav-item a.active {
-  color: #0EDC8D;
+  color:#5c6dbd;;
 }
 
 .header .navbar .navbar-nav .nav-item .sub-menu a.active {
@@ -1439,7 +1439,7 @@ ol {
 /* Topbar */
 .header .toolbar-area {
   padding: 12px 0;
-  background: #0EDC8D;
+  background: #5c6dbd;
 }
 
 .header .toolbar-area .toolbar-social {
@@ -1498,7 +1498,7 @@ ol {
 }
 
 .header .toolbar-login .btn {
-  color: #0EDC8D;
+  color: #5c6dbd;;
   padding: 6px 20px;
   font-size: 13px;
   background-color: #fff;
@@ -1537,7 +1537,7 @@ ol {
 .navbar-area.sticky {
   position: fixed;
   z-index: 99;
-  background: #0EDC8D;
+  background: #5c6dbd;
   -webkit-box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.05);
           box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.05);
   -webkit-transition: all 0.3s ease-out 0s;
@@ -1691,7 +1691,7 @@ ol {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: #333;
   transition: all 0.3s ease-out 0s;
@@ -1808,7 +1808,7 @@ ol {
   -webkit-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
   padding: 10px 0;
-  border-bottom: 4px solid #0EDC8D;
+  border-bottom: 4px solid #5c6dbd;
   border-top: 1px solid rgba(0, 0, 0, 0.03);
 }
 
@@ -1863,7 +1863,7 @@ ol {
   }
   .navbar-nav .nav-item .sub-menu .nav-item a:hover {
     background: #fff !important;
-    color: #0EDC8D !important;
+    color: #5c6dbd !important;
   }
   .navbar-nav .nav-item .sub-menu::after {
     display: none;
@@ -1882,7 +1882,7 @@ ol {
 .navbar-nav .nav-item .sub-menu > li.active > a,
 .navbar-nav .nav-item .sub-menu > li:hover > a {
   color: #fff !important;
-  background-color: #0EDC8D !important;
+  background-color: #5c6dbd !important;
 }
 
 .navbar-nav .nav-item .sub-menu > li > a {
@@ -1901,7 +1901,7 @@ ol {
 
 .navbar-nav .nav-item .sub-menu > li > a:hover {
   background: rgba(0, 0, 0, 0.05);
-  color: #0EDC8D;
+  color: #5c6dbd;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -1936,14 +1936,14 @@ ol {
   }
   .navbar-nav .nav-item .sub-menu > li.active {
     background: #fff !important;
-    color: #0EDC8D !important;
+    color: #5c6dbd !important;
   }
   .header.style3.navbar-area .header-social {
     display: none;
   }
   .navbar-nav .nav-item .sub-menu > li.active > a,
   .navbar-nav .nav-item .sub-menu > li:hover > a {
-    color: #0EDC8D !important;
+    color:  #5c6dbd !important;
     background-color: #fff !important;
   }
 }
@@ -5054,7 +5054,7 @@ course-details .nav-tabs li button.active {
     Blog CSS
 ========================================*/
 .latest-news-area {
-  background-color: #F4F7FA;
+  /* background-color: #F4F7FA; */
 }
 
 .latest-news-area.blog-grid-page .pagination {

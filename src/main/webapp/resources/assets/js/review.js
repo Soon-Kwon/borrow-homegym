@@ -3,6 +3,9 @@
  * ajax호출을 담당한다.
  * review는 사용자가 작성한 리뷰의 정보를 받고, callback과 error로 받은 함수를 결과로 알려준다.*/
 	var reviewService = (function(){
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 	
 	// 리뷰 등록시 호출되는 add함수
 	function add(review, callback, error){
@@ -12,6 +15,9 @@
 			url: '/reviews/new.do',
 			data: JSON.stringify(review),
 			contentType: "application/json; charset=utf-8",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+            },
 			success: function(result, status, xhr){
 				if(callback){
 					callback(result);
@@ -51,6 +57,9 @@
 		$.ajax({
 			type: 'delete',
 			url: '/reviews/' + reviewId + '.do',
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+            },
 			success: function(result, status, xhr){
 				if(callback){
 					callback(result);
@@ -71,6 +80,9 @@
 			type: 'put',
 			url: '/reviews/' + review.reviewId + '.do',
 			data: JSON.stringify(review),
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+            },
 			contentType: "application/json; charset=utf-8",
 			success: function(result, status, xhr){
 				if(callback){

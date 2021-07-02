@@ -1,332 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-	<html class="no-js" lang="zxx">
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="x-ua-compatible" content="ie=edge" />
-		<title>빌려줘! 홈짐 - 홈짐 등록</title>
-		<meta name="description" content="" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
-		<!-- Place favicon.ico in the root directory -->
-
-		<!-- Web Font -->
-		<link
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-			rel="stylesheet">
-
-		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-		<link rel="stylesheet" href="/resources/assets/css/animate.css" />
-		<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-		<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-		<link rel="stylesheet" href="/resources/assets/css/main.css" />
-
-		<style>
-			.intro {
-				background-image: url("/resources/assets/images/gym/homegym-image-01.jpg");
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-				position: relative;
-				padding: 200px 0 80px 0;
-				z-index: 2;
-				overflow: hidden;
-				text-align: center;
-			}
-
-			.intro.overlay::before {
-				background-color: #ffffff;
-				opacity: 0.1;
-				z-index: -1;
-			}
-
-			.intro .intro-content {
-				position: relative;
-				float: none;
-				padding: 0px;
-			}
-
-			.intro .intro-content .page-title {
-				font-size: 30px;
-				margin-bottom: 5px;
-				color: #fff;
-			}
-
-			.intro .intro-content p {
-				font-size: 14px;
-				margin: 15px 0px 0px;
-				color: #fff;
-			}
-
-			/* 체크박스 */
-			p {
-				margin: 10px 5px;
-			}
-
-			.checkColor {
-				background-color: #9ea9d8;
-				border-color: #9ea9d8;
-				color: white;
-			}
-
-			.btn-outline-secondary:hover {
-				color: #6c757d;
-				background-color: #ededf2;
-				border-color: #ededf2;
-			}
-
-			.btn-outline-secondary {
-				border-color: #dadae3;
-			}
-
-			/* 폰트 */
-			.font-general {
-				color: black;
-				font-size: 20px;
-			}
-			
-			.uploadResult{
-				width:100%;
-				background-color: white;
-			}
-			
-			.uploadResult ul{
-				display: flex;
-				flex-flow: row;
-				justify-content: center;
-				align-items: center;
-			}
-			
-			.uploadResult ul li{
-				list-style: none;
-				padding: 10px;
-			}
-			
-			.uploadResult ul li img{
-				width: 80px;
-				heigh: 80px;
-			}
-			.uploadResult .btn {
-				padding: 1px;
-				margin: 0px;
-				border-radius: .90erm;
-				color: black;
-				background-color: white;
-				border-color: white;
-				border: 0px;
-			}
-		</style>
-		<!-- 다음 주소 api & 지도 api-->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9&libraries=services"></script>
-		<!-- 제이쿼리 -->
-		<script src="https://code.jquery.com/jquery-3.6.0.js"
-			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-		
-		<!-- 동적으로 입력 폼 추가/삭제-->
-		<script>
-			function add_item() {
-				// append-form 에 있는 내용을 읽어와서 처리..
-				var div = document.createElement('div');
-				div.innerHTML = document.getElementById('append-form').innerHTML;
-				document.getElementById('field').appendChild(div);
-			}
-			function remove_item(obj) {
-				// obj.parentNode 를 이용하여 삭제
-				document.getElementById('field').removeChild(obj.parentNode.parentNode.parentNode);
-			}
-		</script>
-	</head>
-
-	<body>
-		<!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-    <script>
-			var chkArray = new Array();
-			$(document).ready(function () {
-				
-				// 체크박스 색 조정
-				$("input[name=homegym_options]").click(function () {
-					//this.checked = true; //checked 처리
-					if ($(this).is(":checked")) {
-						$(this).parent().addClass("checkColor");
-						chkArray.push(this.value);
-					} else {
-						$(this).parent().removeClass("checkColor");
-						for(var i = 0; i < chkArray.length; i++) {
-							if(chkArray[i] == this.value) {
-								chkArray.splice(i, 1);
-								i--;
-							}
-						}
-					}				
-				});
-				
-				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-				var maxSize = 5242880;
-				
-				// 파일 사이즈, 형식 체크 
-				function checkExtension(fileName, fileSize){
-					
-					if(fileSize >= maxSize){
-						alert("파일 사이즈 초과");
-						return false;
-					}
-					
-					if(regex.test(fileName)){
-						alert("해당 종류의 파일은 업로드할 수 없습니다.");
-						return false;
-					}
-				
-					return true;
-				}
-				
-				// 스프링 시큐리티 csrf 토큰
-				/* var csrfHeaderName = "${_csrf.headerName}";
-				var csrfTokenValue = "${_csrf.token}"; */
-				
-				// 업로드된 파일 보여주기
-				$("input[type='file']").change(function(e){
-					
-					var formData = new FormData();
-					
-					var inputFile = $("input[name='uploadFile']");
-					
-					// 파일 목록을 보는 .files (jQuery)
-					var files = inputFile[0].files;
-					
-					for(var i = 0; i < files.length; i++ ){
-						
-						if(!checkExtension(files[i].name, files[i].size)){
-							return false;
-						}
-					
-						formData.append("uploadFile", files[i]);
-				
-					}
-					
-					$.ajax({
-						url: '/uploadAjaxAction.do',
-						processData: false,
-						contentType: false,
-						/* beforeSend: function(xhr){
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						}, */
-						data: formData,
-						type: 'POST',
-						dataType: 'json',
-						success: function(result){
-							console.log(result);
-							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일)
-						}, 
-						error: function(error){
-							console.log(error);
-						}
-					});
-				});
-				
-				// x를 누르면 업로드된 파일 삭제
-				$(".uploadResult").on("click", "button", function(e){
-					
-					console.log("delete file");
-					
-					/* data속성을 이용해 파일 이름과 타입을 구한다*/
-					var targetFile = $(this).data("file");
-					var type = $(this).data("type");
-					
-					var targetLi = $(this).closest("li");
-					
-					$.ajax({
-						url: '/deleteFile.do',
-						data: {fileName: targetFile, type: type},
-						/* beforeSend: function(xhr){
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						}, */
-						dataType: 'text',
-						type: 'POST',
-						success: function(result){
-							alert(result);
-							targetLi.remove();
-						}
-					});
-				});
-			});
-		
-		</script>
-
-		<!-- Preloader -->
-		<div class="preloader">
-			<div class="preloader-inner">
-				<div class="preloader-icon">
-					<span></span> <span></span>
-				</div>
-			</div>
-		</div>
-		<!-- /End Preloader -->
-
-		<!-- Start Header Area -->
-		<header class="header style2 navbar-area">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-12">
-						<div class="nav-inner">
-							<nav class="navbar navbar-expand-lg">
-								<a class="navbar-brand" href="main_index.html">
-									<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-								</a>
-								<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-									data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-									aria-expanded="false" aria-label="Toggle navigation">
-									<span class="toggler-icon"></span>
-									<span class="toggler-icon"></span>
-									<span class="toggler-icon"></span>
-								</button>
-								<form class="d-flex search-form">
-									<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-										aria-label="Search">
-								<!-- 	<button class="btn btn-outline-success" type="submit"><i
-											class="lni lni-search-alt"></i></button> -->
-								</form>
-								<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-									<ul id="nav" class="navbar-nav ms-auto">
-										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?
-										pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
-												<h5>홈짐</h5>
-											</a></li>
-										<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-												<h5>트레이너</h5>
-											</a></li>
-										<a class="circle-image" href="mypage_main.html">
-											<img src="https://via.placeholder.com/300x300" alt="logo">
-										</a>
-										<li class="nav-item"><a href="mypage_main.html">
-												<h5>아이유님</h5>
-											</a></li>
-
-									</ul>
-								</div> <!-- navbar collapse -->
-							</nav> <!-- navbar -->
-						</div>
-					</div>
-				</div> <!-- row -->
-			</div> <!-- container -->
-		</header>
-		<!-- End Header Area -->
-		<!-- End Header Area -->
-		<!-- End Header Area -->
+   
+   
+   
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	
+	  <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- /End Preloader -->
 
 		<!-- Start Breadcrumbs -->
 		<div class="intro overlay">
@@ -551,7 +241,130 @@
 			</div>
 		</footer>
 		<!--/ End Footer Area -->
-
+		
+		<!-- 다음 주소 api & 지도 api-->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9&libraries=services"></script>
+		<!-- 제이쿼리 -->
+		<script src="https://code.jquery.com/jquery-3.6.0.js"
+			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		
+		   <script>
+			var chkArray = new Array();
+			$(document).ready(function () {
+				
+				// 체크박스 색 조정
+				$("input[name=homegym_options]").click(function () {
+					//this.checked = true; //checked 처리
+					if ($(this).is(":checked")) {
+						$(this).parent().addClass("checkColor");
+						chkArray.push(this.value);
+					} else {
+						$(this).parent().removeClass("checkColor");
+						for(var i = 0; i < chkArray.length; i++) {
+							if(chkArray[i] == this.value) {
+								chkArray.splice(i, 1);
+								i--;
+							}
+						}
+					}				
+				});
+				
+				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+				var maxSize = 5242880;
+				
+				// 파일 사이즈, 형식 체크 
+				function checkExtension(fileName, fileSize){
+					
+					if(fileSize >= maxSize){
+						alert("파일 사이즈 초과");
+						return false;
+					}
+					
+					if(regex.test(fileName)){
+						alert("해당 종류의 파일은 업로드할 수 없습니다.");
+						return false;
+					}
+				
+					return true;
+				}
+				
+				
+				// 업로드된 파일 보여주기
+				$("input[type='file']").change(function(e){
+					// 시큐리티 토큰
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					var formData = new FormData();
+					
+					var inputFile = $("input[name='uploadFile']");
+					
+					// 파일 목록을 보는 .files (jQuery)
+					var files = inputFile[0].files;
+					
+					for(var i = 0; i < files.length; i++ ){
+						
+						if(!checkExtension(files[i].name, files[i].size)){
+							return false;
+						}
+					
+						formData.append("uploadFile", files[i]);
+				
+					}
+					
+					$.ajax({
+						url: '/uploadAjaxAction.do',
+						processData: false,
+						contentType: false,
+						data: formData,
+						type: 'POST',
+						dataType: 'json',
+						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header, token);
+			            },
+						success: function(result){
+							console.log(result);
+							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일)
+						}, 
+						error: function(error){
+							console.log(error);
+						}
+					});
+				});
+				
+				// x를 누르면 업로드된 파일 삭제
+				$(".uploadResult").on("click", "button", function(e){
+					
+					console.log("delete file");
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					
+					/* data속성을 이용해 파일 이름과 타입을 구한다*/
+					var targetFile = $(this).data("file");
+					var type = $(this).data("type");
+					
+					var targetLi = $(this).closest("li");
+					
+					$.ajax({
+						url: '/deleteFile.do',
+						data: {fileName: targetFile, type: type},
+						dataType: 'text',
+						type: 'POST',
+						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header, token);
+						},
+						success: function(result){
+							alert(result);
+							targetLi.remove();
+						}
+					});
+				});
+			});
+		
+		</script>
 		<!-- 주소api 스크립트-->
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -613,6 +426,8 @@
 		
 		function save(){
 			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
 			// 해쉬태그 데이터 베이스 저장
 			var hashTag = '';
 			for(var i = 0; i < chkArray.length; i++) {
@@ -667,9 +482,10 @@
 				url: 'register.do',
 				dataType: 'text',
 				data: data,
-				/* beforeSend: function(xhr){
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				}, */
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
 				success: function(data) {
 					if(data == 'OK') {
 						alert('글 작성에 성공하였습니다.');
@@ -732,7 +548,7 @@
 			uploadUL.append(str);
 		}
 		</script>
-
+		
 		<!-- ========================= scroll-top ========================= -->
 		<a href="#" class="scroll-top btn-hover"> <i class="lni lni-chevron-up"></i>
 		</a>

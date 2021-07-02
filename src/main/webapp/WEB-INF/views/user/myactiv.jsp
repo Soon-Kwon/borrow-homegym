@@ -1,41 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-  <%
+<%--   <%
  	String memberId = session.getAttribute("memberId").toString();
- %>
+ %> --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>빌려줘! 홈짐 - 마이페이지</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-<!-- Bootstrap 설정 CDN 방식 -->
-
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css"/>
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-     
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-    
-
     	
         .latest-news-area {
             background-color: #fff;
@@ -88,24 +63,25 @@
 		    bottom: 10px;
 		    border-radius: 40px;
 		 }
-	
     </style>
 
 </head>
 <script>
 	/*버튼 선택시 상태값 변경*/
 	function changeHomegymStatus(object) {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 		// 수락버튼(id = acceptBtn)을 눌렀을 때
 		if(object.id == 'acceptBtn') {
 			//상태(status ) 가 'Y'값을 가지게 된다.
 			var data = { 
-				'hId'	 : object.value,
+				'dId'	 : object.value,
 				'status' : 'Y'	
 			};
 		} else { //id가 acceptBtn이 아닌경우
 			//상태 (status) 가  'N' 값을 가지게 된다.
 			var data = { 
-				'hId'	 : object.value,
+				'dId'	 : object.value,
 				'status' : 'N'	
 			};
 		}
@@ -115,6 +91,10 @@
 			dataType: 'json',
 			data: JSON.stringify(data),
 			contentType: "application/json",
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+            },
 			success: function(data) {
 				//성공시에 페이지 리로드 후 
 				//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
@@ -155,47 +135,7 @@
     </div>
     <!-- /End Preloader -->
 
-    <!-- Start Header Area -->
-    <header class="header style2 navbar-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                <div class="nav-inner">
-                    <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="/index.jsp">
-                            <img src="../assets/images/logo/로고2.png" alt="logo">
-                        </a>
-                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-                        <form class="d-flex search-form">
-                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i
-                                    class="lni lni-search-alt"></i></button>
-                        </form>
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                            <ul id="nav" class="navbar-nav ms-auto">
-                                <li class="nav-item" style="margin-right: 100px;"><a href="/homegym/hg_list.do"><h5>홈짐</h5></a></li>
-                                <li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tr_list.do"><h5>트레이너</h5></a></li>
-                                <a class="circle-image" href="mp_main.do">
-                                    <img src="https://via.placeholder.com/300x300" alt="logo">
-                                </a>
-                                <li class="nav-item"><a href="mp_main.do"><h5>아이유님</h5></a></li>
-                                
-                            </ul>
-                        </div> <!-- navbar collapse -->
-                    </nav> <!-- navbar -->
-                </div>
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </header>
-    <!-- End Header Area -->
+    <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Breadcrumbs -->
     <div class="breadcrumbs overlay">
@@ -263,19 +203,19 @@
                 <div class="col-lg-8 col-12">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                       
-                         <li class="nav-item" role="presentation">
+                         <li class="nav-item" role="presentation"><a href="#tab1">
                             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
-                                data-bs-target="#overview" type="button" role="tab" aria-controls="borrow"
-                                aria-selected="true">홈짐관리</button>
+                                data-bs-target="#overview" type="button" role="tab" tabindex="1" aria-controls="borrow"
+                                aria-selected="true">홈짐관리</button></a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
-                                data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum"
+                                data-bs-target="#curriculum" type="button" role="tab" tabindex="2" aria-controls="curriculum"
                                 aria-selected="false">빌려준 홈짐</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
-                                data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
+                                data-bs-target="#instructor" type="button" role="tab" tabindex="3" aria-controls="instructor"
                                 aria-selected="false">빌린 홈짐</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -285,7 +225,7 @@
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" id="tab-1"
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
                                 
@@ -305,54 +245,48 @@
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    		<c:forEach var="homegym" items="${waitingHomegym}" varStatus="status">
+                                    		<c:forEach var="waitingHomegym" items="${waitingHomegym}" varStatus="status">
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
+                                                                <a href="/user/mypage/reservationForm.do?d_id=${waitingHomegym.d_id}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
-                                                                    <ul>
-                                                                        <li><i class="lni lni-tag"></i>
-                                                                            ${homegym.HTitle}
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            ${homegym.HAddr}
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            ${homegym.status}
-                                                                        </li>
+                                                                    <ul style="font-weight:bold; font-size:15px;">
+                                                                        <%-- <li>📌${homegym.h_title}</li> --%>
+                                                                        <li>📌${waitingHomegym.h_title}</li>
+                                                                        <li>🏡위치 : ${waitingHomegym.h_addr}</li>
+                                                                        <li>📆 대여일: ${waitingHomegym.rental_date}</li>
                                                                     </ul>
                                                                 </div>
                                                             </div>  
                                                               
                                                              <div class="flex-box">
                                                                     <c:choose>
-                                                                    <c:when test="${homegym.acceptYN == 'Y' and homegym.status == 'ready'}"> 
+                                                                    <c:when test="${waitingHomegym.agreeYN == 'Y' }"> 
                                                            			 	 <div class="button accept">
-			                                                                        <button class="btn" id="accept" value="${homegym.HId}" >수락됨</button>
+			                                                                        <button class="btn" id="accept" value="${waitingHomegym.d_id}" >수락됨</button>
 			                                                                 </div>
 			                                                                  
 																		</c:when>
-                                                           			 <c:when test="${homegym.acceptYN == 'N'}"> 
+                                                           			 <c:when test="${waitingHomegym.agreeYN == 'N'}"> 
                                                            			 		<div class="button rejectBtn">
-			                                                                        <button class="btn" id="reject" value="${homegym.HId}" >취소됨</button>
+			                                                                        <button class="btn" id="reject" value="${waitingHomegym.d_id}" >거절됨</button>
 			                                                                 </div>
 			                                                                  
 																		</c:when>
 																		<c:otherwise> 
 																			<div class="button accept-btn">
-                                                                        		<button class="btn" id="acceptBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락하기</button>
+                                                                        		<button class="btn" id="acceptBtn" value="${waitingHomegym.d_id}" onclick="changeHomegymStatus(this);">수락하기</button>
+                                                                   		 		
                                                                    		 	</div>
 			                                                               <div class="button deny-btn">
-                                                                        		<button class="btn" id="rejectBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);" data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
+                                                                        		<button class="btn" id="rejectBtn" value="${waitingHomegym.d_id}" onclick="changeHomegymStatus(this);" data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
                                                                     		</div>
 			                                                                  
 																		 </c:otherwise>
@@ -362,26 +296,28 @@
                                                             </div>
                                                         </div>
       
-                                           </c:forEach>
+                                           			</c:forEach>
                                           </c:otherwise>
                                     </c:choose>
                                     </div>
                                     </div>
-                                    <%-- <form id="actionForm" action="user/mypage/myactiv" method="get">
-                                    	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-                                    	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-                                    </form> --%>
+                                    
+                                     <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                    	<input type="hidden" name="pageNum" value="${wait_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${wait_pageMaker.cri.amount}">
+                                    </form> 
                                                <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
-	                                                    <c:if test ="${pageMaker.prev}">
-	                                                        <li class="paginate_button previous"><a href="{pageMaker.startPage-1}">Prev</a></li>
+	                                                   <c:if test ="${wait_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${wait_pageMaker.startPage-1}">Prev</a></li>
 	                                                    </c:if>
-	                                                    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	                                                        <li class="pagenate_button ${pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    <c:forEach var="num" begin="${wait_pageMaker.startPage}" end="${wait_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${wait_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
 	                                                    </c:forEach>
-	                                                    <c:if test="${pageMaker.next}">
-	                                                        <li class="paginate_button next"><a href="${pageMaker.endPage+1}">Next</a></li>
+	                                                    <c:if test="${wait_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${wait_pageMaker.endPage+1}">Next</a></li>
 	                                                    </c:if>
 	                                                    </ul>
                                                 </div>  
@@ -420,7 +356,7 @@
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    		<c:forEach var="homegym" items="${lendHomegym}" varStatus="status">
+                                    		<c:forEach var="lendHomegym" items="${lendHomegym}" varStatus="status">
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
@@ -432,19 +368,11 @@
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            ${homegym.HTitle}
-                                                                        </li>
-                                                                        <li>
-                                                                            <!--  <i class="lni lni-tag11"></i>  -->
-                                                                            ${homegym.HAddr}
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            ${homegym.memberId}
-                                                                        </li>
+                                                                    <ul style="font-weight:bold; font-size:15px;">
+                                                                        <li>💜${lendHomegym.h_title}</li>
+                                                                        <li>💜위치 : ${lendHomegym.h_addr}</li>
+                                                                        <li>💜조회수  ${lendHomegym.h_cnt}</li>
+                                                                       
                                                                     </ul>
                                                                 </div>
                                                             </div>    
@@ -466,6 +394,8 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+                                      	<input type="hidden" name="memberId" value="silverbi99@naver.com"/> <!-- 세션 받으면 바꾸기 -->
+                                      	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
                                     </form> 
@@ -520,7 +450,7 @@
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    		<c:forEach var="homegym" items="${rentHomegym}" varStatus="status">
+                                    		<c:forEach var="rentHomegym" items="${rentHomegym}" varStatus="status">
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
@@ -532,25 +462,16 @@
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <i class="lni lni-tag"></i>
-                                                                            ${homegym.HTitle}
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag"></i> -->
-                                                                            ${homegym.HAddr}
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            ${homegym.memberId}
-                                                                        </li>
+                                                                    <ul style="font-weight:bold; font-size:15px;">
+                                                                        <li>📌${rentHomegym.h_title}</li>
+                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li>
+                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
                                                                     </ul>
                                                                 </div>
                                                             </div>    
                                                             <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-                                                                    <c:if test="${homegym.payYN =='N'}"> 
+                                                                    <c:if test="${rentHomegym.payYN =='N'}"> 
 																			<div class="button accept-btn">
 			                                                                        <button class="btn" id="payBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 하기</button>
 			                                                                    </div>
@@ -558,7 +479,7 @@
 			                                                                        <button class="btn" id="denyBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락 취소</button>
 			                                                                    </div>  -->
 																		 </c:if>
-                                                           		 	  <c:if test="${homegym.payYN =='Y'}"> 
+                                                           		 	  <c:if test="${rentHomegym.payYN =='Y'}"> 
                                                            			 	<div class="button accept-btn">
 			                                                                        <button class="btn" id="payOK" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 완료</button>
 			                                                                    </div>
@@ -566,7 +487,7 @@
 			                                                                        <button class="btn" id="reviewBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">리뷰쓰기</button>
 			                                                                    </div> 
 																		</c:if>   
-																		<c:if test="${homegym.acceptYN == 'N'}"> 
+																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 
                                                            			 	<div class="button accept-btn">
 			                                                                        <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절됨</button>
 			                                                                    </div>
@@ -579,6 +500,11 @@
                                            </c:forEach>
                                           </c:otherwise>
                                     </c:choose>
+                                     <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
+                                    </form>
                                                <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
@@ -750,10 +676,21 @@
     		
     		$(".pagination-list a").on("click",function(e){
     			e.preventDefault();
+    			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-    			actionForm.attr("action","/user/mypage/myactiv");
+    			actionForm.attr("action","/user/mypage/myactiv.do");
     			actionForm.submit();
     		});
+  		
+    		$(function(){
+    			$("#TabMenu").tabs({
+    				select:function(event,ui){
+    				window.loaction.replace(ui.tab.hash);
+    				}
+    			})
+    			});
+    		
+    		
     	});
 
     </script>

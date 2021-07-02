@@ -1,56 +1,72 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="zxx">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>빌려줘! 홈짐 - 회원가입</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-    <link rel="stylesheet" href="/resources/assets/css/board/board.css">
-    <link rel="stylesheet" href="/resources/assets/css/seok.css">
     
-    <script
-  	src="https://code.jquery.com/jquery-3.4.1.js"
-  	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  	crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
     </script>
-    
-    <!-- 체크박스 하나만 선택하게 하기(성별) -->
-    <script>
-    function doOpenCheck(chk){
-        var obj = document.getElementsByName("gender");
-        for(var i=0; i<obj.length; i++){
-            if(obj[i] != chk){
-                obj[i].checked = false;
+   
+   <!-- 다음 우편번호 API -->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="/resources/js/addressapi.js"></script>
+
+	<script>
+	function execPostCode() {
+         new daum.Postcode({
+             oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+ 
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+ 
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+ 
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                console.log(data.zonecode);
+                console.log(fullRoadAddr);
+                
+                
+                $("[name=zipCode]").val(data.zonecode);
+                $("[name=address]").val(fullRoadAddr);
+                
+            	
+             // 우편번호와 주소 정보를 해당 필드에 넣는다.
+             document.getElementById('sample3_postcode').value = data.zonecode; //5자리 새우편번호 사용
+             document.getElementById('sample3_address').value = fullAddr;
             }
-        }
-    }
-    </script>
+         }).open();
+     }
+</script>
+
 
 </head>
 
 <body>
-    <!--[if lte IE 9]>
+    <!--[if lte IE 9] >
       <p class="browserupgrade">
         You are using an <strong>outdated</strong> browser. Please
         <a href="https://browsehappy.com/">upgrade your browser</a> to improve
@@ -69,49 +85,9 @@
     </div>
     <!-- /End Preloader -->
 
-    <header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="/index.jsp">
-								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="location.html">
-											<h5>홈짐</h5>
-										</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-										</a></li>
-									<a class="circle-image" href="/index">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item">
-										<a href="mypage_main.html"><h5>아이유님</h5></a>
-										</li>
-								</ul>
-							</div> <!-- navbar collapse -->
-						</nav> <!-- navbar -->
-					</div>
-				</div>
-			</div> <!-- row -->
-		</div> <!-- container -->
-	</header>
-	<!-- End Header Area -->
+    <!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+   
     <!-- start Registration section -->
     <section class="login section">
         <div class="container">
@@ -119,42 +95,50 @@
                 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
                     <div class="form-head">
                         <h4 class="title">회원 가입</h4>
-                        <form id="join_form" method="post" action="/member/join">
+                        <form id="join_form" method="post" action="/user/join" accept-charset="UTF-8">
                             <div class="form-group">
-                              <div class="form-group">
-                                <label>이름</label>
-                                <input class="margin-5px-bottom" type="text" id="name" name="name" placeholder="이름" button style="width:80%">
-                                </div>
                                 <label>아이디</label>
-                                <input class="margin-5px-bottom" type="text" id="memberId" name="memberId" placeholder="아이디" button style="width:80%">
-                                <button type="button" id="idChk" class="btnjo">중복 확인</button>
+                                <input type="text" class="margin-5px-bottom"  id="memberId" name="memberId" placeholder="이메일 형식 입력(ex.user@gmail.com)" style= "width:80%">
+                                <button type="button" id="idChk" class="btnjo" onclick="idCheck();">중복 확인</button>
+                                <div id="idCheck" style="margin-top:5px;"></div>
                             </div>
                             <div class="form-group">
                                 <label>닉네임</label>
-                                <input class="margin-5px-bottom" type="text" id="nickname" name="nickname" placeholder="닉네임" button style="width:80%">
-                                <button type="check" class="btnjo" >중복 확인</button>
+                                <input class="margin-5px-bottom" type="text" id="nickname" name="nickname" placeholder="닉네임 입력" style="width:80%">
+                                <button type="button" id="nickChk" class="btnjo" onclick="nickCheck();">중복 확인</button>
+                                <div id="nickCheck" style="margin-top:5px;"></div>
                             </div>
                             <div class="form-group">
                                 <label>비밀번호</label>
-                                <input class="margin-5px-bottom" type="password" id="password" name="password" placeholder="비밀번호" button style="width:80%">
+                                <input class="margin-5px-bottom" type="password" id="password" name="password" placeholder="비밀번호 입력" style="width:80%">
+                                <div id="pwCheck" style="margin-top:5px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>비밀번호 확인</label>
+                                <input class="margin-5px-bottom" type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 재입력" style="width:80%">
+                            	<div id="checkNotice" style="margin-top:5px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>이름</label>
+                                <input class="margin-5px-bottom" type="text" id="name" name="name" placeholder="이름 입력" style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>전화번호</label>
-                                <input class="margin-5px-bottom" type="text" id="phone" name="phone" placeholder="'-' 빼고 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="phone" name="phone" placeholder="'-' 빼고 숫자만 입력" style="width:80%">
                             </div>
                           
                             <div class="form-group">
                                 <label>생년월일</label>
-                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리" button style="width:80%">
-                            </div>
-                            <div class="form-group">
-                                <label>우편번호</label>
-                                <input class="margin-5px-bottom" type="text" id="zipCode" name="zipCode" placeholder="주소를 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리 입력(ex.910101) " style="width:80%">
                             </div>
                             <div class="form-group">
                                 <label>주소</label>
-                                <input class="margin-5px-bottom" type="text" id="address" name="address" placeholder="주소를 입력해주세요" button style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="zipCode" name="zipCode" placeholder="우편번호" style="width:80%" readonly="readonly">
+                                <button type="button" id="zip_codeBtn" class="btnjo" onclick="execPostCode();"><i class="fa fa-search"></i>우편번호 검색</button>                            
                             </div>
+                            <div class="form-group">
+                                <input class="margin-5px-bottom" type="text" id="address" name="address" placeholder="도로명 주소" style="width:80%" readonly="readonly">
+                            </div>                                             
                             
                             <div class="gender">
                                 <label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -166,7 +150,7 @@
                                 <button type="submit" class="btn" id="join_button">회원가입</button>
                             </div>
                             <p class="outer-link">아이디가 있으신가요?&nbsp;&nbsp; <a href="/user/login">로그인</a></p>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                         </form>
                     </div>
                 </div>
@@ -222,9 +206,157 @@
     <script type="text/javascript"></script>
     
     <script>
+    
+    /* 성별 체크박스 하나만 선택하게 하기 */
+    function doOpenCheck(chk){
+        var obj = document.getElementsByName("gender");
+        for(var i=0; i<obj.length; i++){
+            if(obj[i] != chk){
+                obj[i].checked = false;
+            }
+        }
+    }
+   
+	/* 비밀번호 동일한지 체크 */
+   $(function(){
+	    $('#password').keyup(function(){
+	      $('#checkNotice').html('');
+	    });
 
-    </script>
+	    $('#passwordCheck').keyup(function(){
+	        if($('#password').val() != $('#passwordCheck').val()){
+	          $('#checkNotice').text('비밀번호 불일치');
+	          $('#checkNotice').attr('style', 'color: red');
+	        } else{
+	          $('#checkNotice').text('비밀번호 일치');
+	          $('#checkNotice').attr('style', 'color: green');
+	        }
 
+	    });
+	});
+	
+	/* 아이디 중복 체크 */
+	function idCheck() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var memberId = $('#memberId').val();
+		
+		if(memberId.search(/\s/) != -1) {
+			alert("아이디에는 공백이 들어갈 수 없습니다.");
+		} else {
+			if(memberId.trim().length != 0) {
+				$.ajax ({
+					type: 'POST',
+					url: '/user/idCheck',
+					data: memberId,
+					dataType:'text',
+					contentType: "application/json; charset=UTF-8",
+					/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+		            },
+					success: function(data) {
+						if(data == 'OK') {
+							$("#idCheck").text('사용가능한 아이디입니다.');
+							$("#idCheck").attr("style","color: green");
+						} else {
+							$("#idCheck").text('중복된 아이디가 존재합니다.');
+							$("#idCheck").attr("style","color: red");
+						}
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			} else {
+				alert("아이디를 입력해주세요.");
+			}
+		}
+	}
+	
+	/* 닉네임 중복 체크 */
+	function nickCheck() {
+		console.log("진입");
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var nickname = $('#nickname').val();
+		
+		if(nickname.search(/\s/) != -1) {
+			alert("닉네임에는 공백이 들어갈 수 없습니다.");
+		} else {
+			if(nickname.trim().length != 0) {
+				$.ajax ({
+					type: 'POST',
+					url: '/user/nickCheck',
+					data: nickname,
+					dataType: 'text',
+					contentType: "application/json; charset=UTF-8",
+					/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+		            },
+					success: function(data) {
+						if(data == 'OK') {
+							$("#nickCheck").text('사용가능한 닉네임입니다.');
+							$("#nickCheck").attr("style","color: green");
+						} else {
+							$("#nickCheck").text('중복된 닉네임이 존재합니다.');
+							$("#nickCheck").attr("style","color: red");
+						}
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			} else {
+				alert("닉네임을 입력해주세요.");
+			}
+		}
+	}
+    
+ 	/* 이메일 형식 체크 */
+	function email_check( memberId ) {    
+	    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	    return (memberId != '' && memberId != 'undefined' && regex.test(memberId)); 
+	}
+
+	$("input[name=memberId]").blur(function(){
+	  var memberId = $(this).val();
+	  if( memberId == '' || memberId == 'undefined') return;
+	  if(! email_check(memberId) ) {
+	  	$("#idCheck").text('이메일 형식으로 적어주세요');
+	    $(this).focus();
+	    return false;
+	  }else {
+		$("#idCheck").text('');
+	  }
+	});
+  	
+	/* 비밀번호 형식 체크 */	
+	function password_check(password) {    
+			   // 원하는 특수문자 추가 제거		
+		var regex= /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+	    if(!regex.test(password)){
+			return false;
+	    } else {
+	    	return true;
+	   	}
+	}
+		
+	$("input[name=password]").blur(function(){
+		var password = $('#password').val();
+		if( password == '' || password == 'undefined') return;
+			console.log(password);
+		if(! password_check(password) ) {
+			$("#pwCheck").text('영문+숫자+특수기호 8자리 이상으로 구성해주세요');
+			$(this).focus();
+		}else {
+			$("#pwCheck").text('');
+		}  
+	});
+	        
+	</script>
+    
 </body>
 
 </html>

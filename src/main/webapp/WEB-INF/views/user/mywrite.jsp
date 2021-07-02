@@ -1,37 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%
+ <%-- <%
  	String memberId = session.getAttribute("memberId").toString();
- %>
+ %> --%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+ <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>글 관리</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
-    <!-- Place favicon.ico in the root directory -->
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-
-</head>
 
 <body>
     <!--[if lte IE 9]>
@@ -53,47 +31,8 @@
     </div>
     <!-- /End Preloader -->
 
-    <!-- Start Header Area -->
-    <header class="header style2 navbar-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                <div class="nav-inner">
-                    <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="main_index.html">
-                            <img src="/resources/assets/images/logo/로고2.png" alt="logo">
-                        </a>
-                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-                        <form class="d-flex search-form">
-                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i
-                                    class="lni lni-search-alt"></i></button>
-                        </form>
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                            <ul id="nav" class="navbar-nav ms-auto">
-                                <li class="nav-item" style="margin-right: 100px;"><a href="location.html"><h5>홈짐</h5></a></li>
-                                <li class="nav-item" style="margin-right: 120px;"><a href="community.html"><h5>트레이너</h5></a></li>
-                                <a class="circle-image" href="mypage_main.html">
-                                    <img src="https://via.placeholder.com/300x300" alt="logo">
-                                </a>
-                                <li class="nav-item"><a href="mypage_main.html"><h5>아이유님</h5></a></li>
-                                
-                            </ul>
-                        </div> <!-- navbar collapse -->
-                    </nav> <!-- navbar -->
-                </div>
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </header>
-    <!-- End Header Area -->
+   	<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     <!-- Start Breadcrumbs -->
     <div class="breadcrumbs overlay">
@@ -201,15 +140,35 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.TContent}</a></td>
+			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
-			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.TRegDate}" /></td>
+			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
                                     			</c:forEach>
                                     		</c:otherwise>
                                     	</c:choose>
                                 		</tbody>
                                     </table>
+                                    
+                                   <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                    	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
+                                    </form> 
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                   <c:if test ="${tb_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${tb_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${tb_pageMaker.startPage}" end="${tb_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${tb_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${tb_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${tb_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+                                                </div>  
                                 </div> 
                             </div>
                         </div>
@@ -221,51 +180,54 @@
                                         <table class="table table-hover" style="text-align: center; line-height: 35px;">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th>리뷰번호</th>
+                                                <th>홈짐번호</th>
                                                 <th>리뷰내용</th>
-                                                <th>작성자</th>
-                                                <th>작성일</th>
+                                                <th>별점</th>
+                                                <th>리뷰 작성일</th>
                                             </tr>
                                             </thead>
-                                              <tbody>
-                                    <c:choose>
-                                    	<c:when test ="${fn:length(review)==0}">
-                                    	<div style="font-size: 20px">
-                                    		<tr>
-												<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
-											</tr>
+                                            <tbody>
+                                   				 <c:choose>
+                                    				<c:when test ="${fn:length(myReviews)==0}">
+                                    				<div style="font-size: 20px">
+                                    					<tr>
+															<td colspan="4"><p style="margin:40px; font-weight: bold;">아직 작성한 리뷰가 없습니다.😥</p></td>
+														</tr>
 											
-										</div>
-                                    	</c:when>
-                                    	<c:otherwise>
-                                    		<c:forEach var="board" items="${board}" varStatus="status">
-		                                    	<tr>
-		                                            <td>4</td>
-		                                            <td><a href="course-details.html">너무 좋아요!!</a></td>
-		                                            <td>김영광</td>
-		                                            <td>날짜</td>
-		                                        </tr>
-                                    		</c:forEach>
-                                    	</c:otherwise>
-                                    </c:choose>
-                                </tbody>
-                                        </table>
-                                    </div>            
-                                </div>
-                                <!-- <div class="bottom-content"> -->
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-12 col-md-12 col-12">
-                                                <div class="button" style="width: 200px; margin: 20px auto 0 auto; col">
-                                                    <a href="href="course-details.html" class="btn">리뷰 쓰러가기</a>
-                                                </div>
-                                            </div>
-                                        </div>
+													</div>
+                                    			</c:when>
+                                    			<c:otherwise>
+                                    				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
+		                                    			<tr>
+				                                            <td>${myReviews.Htitle}</td>
+				                                            <td><a href="course-details.html">${myReviews.hrContent}</a></td>
+					                                            <c:if test="${myReviews.hrScore==1}">
+					                                            	<td>⭐</td><
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==2}">
+					                                            	<td>⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==3}">
+					                                            	<td>⭐⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==4}">
+					                                            	<td>⭐⭐⭐⭐</td>
+					                                            </c:if>
+					                                            <c:if test="${myReviews.hrScore==5}">
+					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
+					                                            </c:if>
+				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hrRegdate}" /></td>
+		                                       		    </tr>
+                                    			   </c:forEach>
+                                    	     	</c:otherwise>
+                                     		 </c:choose>
+                               			  </tbody>
+                                       </table>
                                     <!-- </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- End Course Details Wrapper -->
                 
             </div>
@@ -305,7 +267,6 @@
     </footer>
     <!--/ End Footer Area -->
 
-    </footer>
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->
@@ -320,6 +281,27 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    
+    
+    
+     <script type="text/javascript">
+    	$(document).ready(function(){
+    		var actionForm= $("#actionForm");
+
+    		
+    		$(".pagination-list a").on("click",function(e){
+    			e.preventDefault();
+    			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
+    			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+    			actionForm.attr("action","/user/mypage/mywrite.do");
+    			actionForm.submit();
+    		});
+
+    	});
+    	
+  
+
+    </script>
 </body>
 
 </html>

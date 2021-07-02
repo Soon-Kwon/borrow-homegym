@@ -4,347 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<!DOCTYPE html>
-
-<html class="no-js" lang="zxx">
-
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="x-ua-compatible" content="ie=edge" />
-	<title>빌려줘! 홈짐</title>
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
-
-	<!-- Place favicon.ico in the root directory -->
-
-	<!-- Web Font -->
-	<link
-		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-		rel="stylesheet">
-	
-	<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-	<link rel="stylesheet" href="/resources/assets/css/animate.css" />
-	<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-	<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-	<link rel="stylesheet" href="/resources/assets/css/main.css" />
-
-	<!--========================= 캐러셀 ================================ -->
-	<link rel="stylesheet" href="/resources/assets/css/carousel.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<!-- ======================== 달력 ================================== -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
-	
-	<!-- =========================리뷰 처리 js============================ -->
-	<script src="/resources/assets/js/review.js"></script>
-	
-	<style>
-		p {
-			font-size: 17px;
-			line-height: 1.6;
-			letter-spacing: -0.6px;
-			margin: 16px 0;
-			word-break: break-all;
-		}
-
-		.popular-feed-loop {
-			width: 150px;
-			height: 150px;
-			border-radius: 70%;
-			overflow: hidden
-		}
-
-		.trainner {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-
-		#re_plus {
-			background-color: #9ea9d8;
-			width: 150px;
-			height: 50px;
-			font-size: 20px;
-			color: white;
-			font-weight: bold;
-			position: relative;
-			margin-top: 30px;
-		}
-
-		.sidebar {
-			position: sticky;
-			top: 30px;
-		}
-
-		.btn-time {
-			border-radius: 2rem;
-			background-color: #9ea9d8;
-			margin: 10px 0px;
-		}
-		
-		.image-container{
-			text-align: center;
-		}
-		
-		.ic-child{
-			width: 100%;
-			padding-bottom: 20px;
-			text-align: center;
-		}
-		
-		.icon-tag{
-			text-align: center;
-			background-color: ffffff;
-			color: black;
-		}
-		
-		.icon-tag .fas{
-			font-size: 40px;
-		}
-		
-		#manipulateBtn{
-			text-align: right;
-		}
-	</style>
-	<script type="text/javascript">
-		$(document).ready(function () {
-
-			// 첨부파일 데이터를 가져오는 즉시실행함수
-			(function(){
-			
-				var hId = '<c:out value="${board.HId}"/>';
-			
-				$.getJSON("/homegym/getAttachList.do", {hId: hId}, function(arr){
-					
-					console.log(arr);
-
-					var str ="";
-					
-					$(arr).each(function(i, attach){
-						
-						var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
-								+ "_" + attach.fileName);
-						
-				
-							str += "<div class='ic-child'><img style='width:100%;' src='/display.do?fileName=" + fileCallPath  
-								+ "'></div>";   
-							
-					});					
-						$(".image-container").html(str);
-				});
-				
-			})();			
-			
-			// 해쉬태그 분리 
-			var hashtag = '<c:out value='${board.HHashtag}'/>';
-			var afterSplit = hashtag.split(', ');
-			
-			str = "";
-			
-			for(var i = 0 ; i < afterSplit.length ; i++){
-				switch(afterSplit[i]){
-				case "주차가능":
-				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-parking"></i><br>주차가능</div>');
-				break;
-				case "와이파이가능":
-				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-wifi"></i><br>와이파이</div>');
-				break;
-				case "정수기보유":
-				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-tint"></i><br>정수기</div>');
-				break;
-				case "에어컨보유":
-				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-fan"></i><br>에어컨</div>');
-				break;
-				case "샤워가능":
-				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-shower"></i><br>샤워</div>');	
-				break;
-				default:
-				
-				}
-			}	
-			
-			// 리뷰 목록 가져오기
-			
-			var hIdValue = '<c:out value="${board.HId}"/>';
-			var memberId = '<c:out value="${board.memberId}"/>';
-			var borrowerId = "임시: 로그인 된 유저";
-			var reviewUL = $(".comments-list");
-		
-			var viewMoreReviewBtn = $("#re_plus"); // 더보기 버튼 
-			var index = 1; // 더보기 1페이지
-			var amount = 3; // 한번에 리뷰를 세개씩 로딩
-			
-			showList(1); // 리뷰 목록 호출
-			
-			function showList(page){
-				
-				// getList로부터 넘어오는 값은 리뷰 갯수와 리스트로 데이터가 구성되어있다 . 
-				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
-					
-					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
-					if(page == 99999){
-						reviewUL.empty();
-						showList(1);
-						return;
-					}
-					
-					var str = '';
-					
-					if(list == null || list.length ==0){
-						reviewUL.html("<div class='comment-desc'><div class ='desc-top'>" + 
-								"<p>아직 등록된 리뷰가 없습니다!</p></div></div>")
-						return;
-					}
-					
-					for(var i = 0, len = list.length || 0; i < len; i++){
-						str += "<li><div class='comment-img><img src='https://via.placeholder.com/100x100'"
-						+ "alt='img' style='width: 100px;'></div>";
-						str += "<div class='comment-desc'><div class='desc-top'><h5>" + list[i].borrowerId + "</h5>";
-						if(list[i].hrScore == 1) {str += "<span>⭐️</span>";
-						}else if(list[i].hrScore == 2){str += "<span>⭐⭐</span>";
-						}else if(list[i].hrScore == 3){str += "<span>⭐️⭐⭐</span>";
-						}else if(list[i].hrScore == 4){str += "<span>⭐️⭐⭐⭐</span>";
-						}else if(list[i].hrScore == 5){str += "<span>⭐️⭐⭐⭐⭐</span>";}
-
-						str += "<span class='date'>" + reviewService.displayTime(list[i].hrUpdatedate) + "</span>";
-						str += "<a class='reply-link' data-reviewid='" + list[i].reviewId + "'><i class='lni lni-reply'></i>수정하기</a>";
-						str += "</div><p>" + list[i].hrContent + "</p></div></li>";
-					}
-					
-					$(str).appendTo($(".comments-list")).slideDown();
-					
-					if(reviewCnt <= amount * page){
-						viewMoreReviewBtn.remove();
-					}
-					//reviewUL.html(str);
-					
-				});
-			}
-			
-			// 더보기 버튼 눌렀을 때 작동
-	
-			viewMoreReviewBtn.on("click", function(e){
-				index++
-				showList(index);
-			});
-						
-			// 모달창 제어
-			var modal = $(".modal")
-			var modalInputReview = modal.find("input[name='hrContent']");
-			var modalInputReviewer = modal.find("input[name='memberId']");
-		//  var modalInputScore = $("input[name='hrScore']:checked");
-		// 이렇게하면 undefined 오류가 생기는데 modalInputScore 변수의 값은
-		// 라디오버튼 값이 체크가 되어있지 않을 때 체크된 값이있는 input 태그를 탐색한다. 
-		// 때문에 undefined가 된다.
-			
-			var modalModBtn = $("#modalModBtn");
-			var modalRemoveBtn = $("#modalRemoveBtn");
-			var modalRegisterBtn = $("#modalRegisterBtn");
-			
-			// 리뷰쓰기 버튼 누르면 동작
-			$("#addReviewBtn").on("click", function(e){
-				
-				//modal.find("input").val("");
-				modal.find("button[id != 'modalCloseBtn']").hide();
-				
-				modalRegisterBtn.show();
-				
-				$(".modal").modal("show");
-			});
-			
-			// 닫기 버튼 누르면 동작
-			$("#modalCloseBtn").on("click", function(e){
-				$(".modal").modal("hide");				
-			});
-			
-			// 등록 버튼 누르면 동작
-			modalRegisterBtn.on("click", function(e){
-				var review ={
-						hrContent: modalInputReview.val(),
-						hrScore: $("input[name='hrScore']:checked").val(),
-						hid: hIdValue,
-						memberId: memberId,
-						borrowerId: borrowerId
-				};
-			
-				reviewService.add(review, function(result){
-					
-					alert("리뷰가 등록되었습니다");
-					
-					// input의 값들을 모두 지운다. 
-					//modal.find("input").val(""); 
-					modal.modal("hide");
-					
-					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
-				});
-			});
-			
-			// 댓글 수정 이벤트 처리
-			$(".comments-list").on("click", ".reply-link", function(e){
-				
-				var reviewId = $(this).data("reviewid");
-				
-				reviewService.get(reviewId, function(review){
-					
-					//현재 .do로 호출하기 때문에 값을 못불러오는듯 하다. 
-					//그래서 컨트롤러의 produces 값에서 xml을 빼고 json만 쓰니까 된다. 
-					modalInputReview.val(review.hrContent);
-					modalInputReviewer.val(review.borrowerId);
-					modal.data("reviewid", review.reviewId);
-					
-					modal.find("button[id != 'modalCloseBtn']").hide();
-					modalModBtn.show();
-					modalRemoveBtn.show();
-					
-					$(".modal").modal("show");
-				});
-			});
-			
-			// 댓글 수정 
-			modalModBtn.on("click", function(e){
-				
-				var review = {reviewId: modal.data("reviewid")
-							, hrContent: modalInputReview.val()
-							, hrScore: $("input[name='hrScore']:checked").val() };
-				
-				reviewService.update(review, function(result){
-					
-					alert("수정되었습니다");
-					modal.modal("hide");
-					showList(99999);
-				});
-			});
-			
-			// 댓글 삭제
-			modalRemoveBtn.on("click", function(e){
-				
-				var reviewId = modal.data("reviewid");
-				
-				reviewService.remove(reviewId, function(result){
-					
-					alert("삭제되었습니다");
-					modal.modal("hide");
-					showList(99999);
-				});
-			});
-						
-		});
-	</script>
-</head>
-<body>
-	<!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 	<!-- Preloader -->
 	<div class="preloader">
@@ -355,55 +15,7 @@
 		</div>
 	</div>
 	<!-- /End Preloader -->
-
-	<!-- Start Header Area -->
-	<header class="header style2 navbar-area">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html">
-								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-								aria-expanded="false" aria-label="Toggle navigation">
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-									aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i
-										class="lni lni-search-alt"></i></button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
-											<h5>홈짐</h5>
-										</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>커뮤니티</h5>
-										</a></li>
-									<a class="circle-image" href="mypage_main.html">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item"><a href="mypage_main.html">
-											<h5>아이유님</h5>
-										</a></li>
-
-								</ul>
-							</div> <!-- navbar collapse -->
-						</nav> <!-- navbar -->
-					</div>
-				</div>
-			</div> <!-- row -->
-		</div> <!-- container -->
-	</header>
-	<!-- End Header Area -->
-
+	
 	<!-- Start Blog Singel Area -->
 	<section class="section blog-single">
 		<div class="container">
@@ -435,7 +47,7 @@
 									<span></span>
 									<span></span>
 								</h3> -->
-								<h5> ${board.MId}님의 홈짐 위치</h5>
+								<h5> ${board.memberId}님의 홈짐 위치</h5>
 								<br>
 								
 								<!-- 홈짐 위치 나오는 div -->
@@ -455,7 +67,7 @@
 									
 									<div class="row">
 										<div class="col-8">
-										<h2>리뷰 💌</h2>										
+										<h2>리뷰 <span style="font-size: 30px;">⭐ ${score.hr_score }</span> </h2>	
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
@@ -463,37 +75,8 @@
 									</div>
 									<hr>
 									<br>
+									<!-- 댓글 추가 공간 -->
 									<ul class="comments-list">
-								<!-- 	<li>
-											<div class="comment-img">
-												<img src="https://via.placeholder.com/100x100" alt="img"
-													style="width: 100px;">
-											</div>
-											<div class="comment-desc">
-												<div class="desc-top">
-													<h6>혜선짱</h6>
-													<span class="date">2021/05/25</span> <a href="javascript:void(0)"
-														class="reply-link"><i class="lni lni-reply"></i>답글 달기</a>
-												</div>
-												<p>깨끗하고 좋아요</p>
-											</div>
-										</li>
-										<li class="children">
-											<div class="comment-img">
-												<img class="trainner" src="https://via.placeholder.com/100x100"
-													width="100px" alt="img">
-											</div>
-											<div class="comment-desc">
-												<div class="desc-top">
-													<h6>
-														권지용<span class="saved"><i class="lni lni-bookmark"></i></span>
-													</h6>
-													<span class="date">15th May 2023</span> <a href="javascript:void(0)"
-														class="reply-link"><i class="lni lni-reply"></i>Reply</a>
-												</div>
-												<p>감사합니다 ! 다음에도 방문해주세요.</p>
-											</div>
-										</li> -->
 									</ul>
 								</div>								
 							</div>
@@ -508,7 +91,7 @@
 						<div class="widget popular-feeds" style="position: relative; top: 30px;">
 							<div class="info">
 								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.MId }님의 홈짐
+									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
 								</h4>
 								<br>
 								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
@@ -545,8 +128,9 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>한줄리뷰</label> <input class="form-control" name="hrContent"
-							value="" placeholder="간단한 한줄 후기를 남겨주세요">
+						<label>리뷰 남기기</label> 
+							<textarea class="form-control" name="hrContent" placeholder="다른 유저에게 도움이 될 후기를 남겨주세요">
+							</textarea>
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
@@ -618,6 +202,254 @@
 		<script src="/resources/assets/js/tiny-slider.js"></script>
 		<script src="/resources/assets/js/glightbox.min.js"></script>
 		<script src="/resources/assets/js/main.js"></script>
+		<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
+		<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+		<!-- 제이쿼리 -->
+		<script src="https://code.jquery.com/jquery-3.6.0.js"
+			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		<!-- =========================리뷰 처리 js============================ -->
+		<script src="/resources/assets/js/review.js"></script>
+		
+		<script type="text/javascript">
+		
+		$(document).ready(function () {
+
+			// 첨부파일 데이터를 가져오는 즉시실행함수
+			(function(){
+			
+				var hId = '<c:out value="${board.HId}"/>';
+			
+				$.getJSON("/homegym/getAttachList.do", {hId: hId}, function(arr){
+					
+					console.log(arr);
+
+					var str ="";
+					
+					$(arr).each(function(i, attach){
+						
+						var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
+								+ "_" + attach.fileName);
+						
+				
+							str += "<div class='ic-child'><img style='width:100%;' src='/display.do?fileName=" + fileCallPath  
+								+ "'></div>";   
+							
+					});					
+						$(".image-container").html(str);
+				});
+				
+			})();			
+			
+			// 해쉬태그 분리 
+			var hashtag = '<c:out value='${board.HHashtag}'/>';
+			var afterSplit = hashtag.split(', ');
+			
+			str = "";
+			
+			for(var i = 0 ; i < afterSplit.length ; i++){
+				switch(afterSplit[i]){
+				case "주차가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-parking"></i><br>주차가능</div>');
+				break;
+				case "와이파이가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-wifi"></i><br>와이파이</div>');
+				break;
+				case "정수기보유":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-tint"></i><br>정수기</div>');
+				break;
+				case "에어컨보유":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-fan"></i><br>에어컨</div>');
+				break;
+				case "샤워가능":
+				$(".icon-tag").append('<div class="col-lg-2 col-2"><i class="fas fa-shower"></i><br>샤워</div>');	
+				break;
+				default:
+				
+				}
+			}	
+			
+			// 리뷰 목록 가져오기
+			
+			var hIdValue = '<c:out value="${board.HId}"/>';
+			var memberId = '<c:out value="${board.memberId}"/>';
+			var borrowerId = "임시: 로그인 된 유저";
+			var reviewUL = $(".comments-list");
+		
+			var viewMoreReviewBtn = $("#re_plus"); // 더보기 버튼 
+			var index = 1; // 더보기 1페이지
+			var amount = 3; // 한번에 리뷰를 세개씩 로딩
+			
+			showList(1); // 리뷰 목록 호출
+			
+			function showList(page){
+				
+				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다. 
+				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
+					
+					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
+					if(page == 99999){
+						reviewUL.empty();
+						index = 1;
+						showList(1);
+						return;
+					}
+					
+					var str = '';
+					
+					if(list == null || list.length ==0){
+						reviewUL.html("<div class='comment-desc'><div class ='desc-top'>" + 
+								"<p>아직 등록된 리뷰가 없습니다!</p></div></div>")
+						viewMoreReviewBtn.hide(); // 글이 없을시 더보기 버튼 숨기기
+						return;
+					}
+					
+					for(var i = 0, len = list.length || 0; i < len; i++){
+						str += "<li><div class='comment-img><img src='https://via.placeholder.com/100x100'"
+						+ "alt='img' style='width: 100px;'></div>";
+						str += "<div class='comment-desc'><div class='desc-top'><h5>" + list[i].borrowerId + "</h5>";
+						if(list[i].hrScore == 1) {str += "<span>⭐️</span>";
+						}else if(list[i].hrScore == 2){str += "<span>⭐⭐</span>";
+						}else if(list[i].hrScore == 3){str += "<span>⭐️⭐⭐</span>";
+						}else if(list[i].hrScore == 4){str += "<span>⭐️⭐⭐⭐</span>";
+						}else if(list[i].hrScore == 5){str += "<span>⭐️⭐⭐⭐⭐</span>";}
+
+						str += "<span class='date'>" + reviewService.displayTime(list[i].hrUpdatedate) + "</span>";
+						// HTML data속성을 이용해 reviewid 값을 자바스크립트에서 쓸 수 있다.  
+						str += "<a class='reply-link' data-reviewid='" + list[i].reviewId + "'><i class='lni lni-reply'></i>수정하기</a>";
+						str += "</div><p>" + list[i].hrContent + "</p></div></li>";
+					}
+					
+					$(str).appendTo($(".comments-list")).slideDown();
+					
+					if(reviewCnt <= amount * page){
+						viewMoreReviewBtn.hide();
+					}else{
+						viewMoreReviewBtn.show();
+					}
+					
+				});
+			}
+			
+			// 더보기 버튼 눌렀을 때 작동
+	
+			viewMoreReviewBtn.on("click", function(e){
+				index++
+				showList(index);
+			});
+						
+			// 모달창 제어
+			var modal = $("#myModal")
+			var modalInputReview = modal.find("textarea[name='hrContent']");
+			var modalInputReviewer = modal.find("input[name='memberId']");
+		//  var modalInputScore = $("input[name='hrScore']:checked");
+		// 이렇게하면 undefined 오류가 생기는데 modalInputScore 변수의 값은
+		// 라디오버튼 값이 체크가 되어있지 않을 때 체크된 값이있는 input 태그를 탐색한다. 
+		// 때문에 undefined가 된다.
+			
+			var modalModBtn = $("#modalModBtn");
+			var modalRemoveBtn = $("#modalRemoveBtn");
+			var modalRegisterBtn = $("#modalRegisterBtn");
+			
+			// 리뷰쓰기 버튼 누르면 동작
+			$("#addReviewBtn").on("click", function(e){
+				
+				//기존에 존재하던 값들은 지워준다
+				modal.find("input[name != 'hrScore']").val("");
+				modal.find("input:radio[name = 'hrScore']").prop('checked', false);
+				modal.find("textarea[name ='hrContent']").val("");
+				modal.find("button[id != 'modalCloseBtn']").hide();
+				
+				modalRegisterBtn.show();
+				
+				$("#myModal").modal("show");
+			});
+			
+			// 닫기 버튼 누르면 동작
+			$("#modalCloseBtn").on("click", function(e){
+				$("#myModal").modal("hide");				
+			});
+			
+			// 등록 버튼 누르면 동작
+			modalRegisterBtn.on("click", function(e){
+				var review ={
+						hrContent: modalInputReview.val(),
+						hrScore: $("input[name='hrScore']:checked").val(),
+						hid: hIdValue,
+						memberId: memberId,
+						borrowerId: borrowerId
+				};
+				
+				// 평점이 없을시 입력해달라는 요청메시지 보내기
+				if(review.hrScore === undefined){
+					alert("평점을 입력해주세요!");
+					return $("#myModal").modal("show");
+				}
+			
+				reviewService.add(review, function(result){
+					
+					alert("리뷰가 등록되었습니다");
+					
+					// input의 값들을 모두 지운다.
+					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
+					modal.modal("hide");
+					
+					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
+				});
+			});
+			
+			// 댓글 수정 클릭 이벤트 처리
+			$(".comments-list").on("click", ".reply-link", function(e){
+				
+				var reviewId = $(this).data("reviewid");
+				
+				reviewService.get(reviewId, function(review){
+					
+					//현재 .json으로 json데이터를 불러와야하는데
+					//.do로 호출하기 때문에 그 값(review.xxx)을 못불러 온다. 
+					//그래서 컨트롤러의 produces 값에서 xml을 빼고 json만 쓰면 json데이터만 반환되므로 .do를 사용해도 가능하다. 
+					modalInputReview.val(review.hrContent);
+					modalInputReviewer.val(review.borrowerId);
+					modal.data("reviewid", review.reviewId);
+					
+					modal.find("button[id != 'modalCloseBtn']").hide();
+					modalModBtn.show();
+					modalRemoveBtn.show();
+					
+					$("#myModal").modal("show");
+				});
+			});
+			
+			// 댓글 수정 
+			modalModBtn.on("click", function(e){
+				
+				var review = {reviewId: modal.data("reviewid")
+							, hrContent: modalInputReview.val()
+							, hrScore: $("input[name='hrScore']:checked").val() };
+				
+				reviewService.update(review, function(result){
+					
+					alert("수정되었습니다");
+					
+					modal.modal("hide");
+					showList(99999);
+				});
+			});
+			
+			// 댓글 삭제
+			modalRemoveBtn.on("click", function(e){
+				
+				var reviewId = modal.data("reviewid");
+				
+				reviewService.remove(reviewId, function(result){
+					
+					alert("삭제되었습니다");
+					modal.modal("hide");
+					showList(99999);
+				});
+			});
+						
+		});
+	</script>
 		<!-- ========================= 카카오 지도 ========================= -->
 
 		<script type="text/javascript"
