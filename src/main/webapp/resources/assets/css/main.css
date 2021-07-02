@@ -5054,7 +5054,7 @@ course-details .nav-tabs li button.active {
     Blog CSS
 ========================================*/
 .latest-news-area {
-  background-color: #F4F7FA;
+  /* background-color: #F4F7FA; */
 }
 
 .latest-news-area.blog-grid-page .pagination {

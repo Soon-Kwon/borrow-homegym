@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html>
@@ -29,6 +30,7 @@
     <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
 
 </head>
 <body>
@@ -89,11 +91,11 @@
                                         <sec:authentication property="principal.auth" var="member_auth" />
                                         
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                        <li class="nav-item"><a href="/user/mypage/profile.do">마이페이지</a></li>
-                                       	 <li class="nav-item"><a href="/user/mypage/profile_update">&nbsp 내 정보 수정</a></li>
-                                         <li class="nav-item"><a href="/user/mypage/myactiv">&nbsp 활동 내역</a></li>
-                                       	 <li class="nav-item"><a href="/user/mypage/mywrite">&nbsp 글 관리</a></li>
-                                        <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();">로그아웃</a></li>
+                                        <li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>
+                                       	 <li class="nav-item"><a href="/user/mypage/profile_update">&nbsp &nbsp &nbsp 내 정보 수정</a></li>
+                                         <li class="nav-item"><a href="/user/mypage/myactiv">&nbsp &nbsp &nbsp 활동 내역</a></li>
+                                       	 <li class="nav-item"><a href="/user/mypage/mywrite">&nbsp &nbsp &nbsp 글 관리</a></li>
+                                        <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>
                                     </li>
 										<form id="logout" action="/logout" method="POST">
@@ -111,12 +113,12 @@
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
                                         aria-label="Toggle navigation">관리자님</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                        <li class="nav-item"><a href="/admin/adIndex.do">관리자페이지</a></li>
-                                       	 <li class="nav-item"><a href="/admin/adMembers.do">&nbsp 회원 관리</a></li>
-                                         <li class="nav-item"><a href="/admin/adContents.do">&nbsp 게시글 관리</a></li>
-                                       	 <li class="nav-item"><a href="/admin/adFacilities.do">&nbsp 홈짐 관리</a></li>
-                                       	 <li class="nav-item"><a href="/admin/adAlerts.do">&nbsp 문의 관리</a></li>
-                                        <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();">로그아웃</a></li>
+                                        <li class="nav-item"><a href="/admin/adIndex.do"><b>관리자페이지</b></a></li>
+                                       	 <li class="nav-item"><a href="/admin/adMembers.do">&nbsp &nbsp &nbsp 회원 관리</a></li>
+                                         <li class="nav-item"><a href="/admin/adContents.do">&nbsp &nbsp &nbsp 게시글 관리</a></li>
+                                       	 <li class="nav-item"><a href="/admin/adFacilities.do">&nbsp &nbsp &nbsp 홈짐 관리</a></li>
+                                       	 <li class="nav-item"><a href="/admin/adAlerts.do">&nbsp &nbsp &nbsp 문의 관리</a></li>
+                                        <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>
                                     </li>
 										<form id="logout" action="/logout" method="POST">
@@ -135,75 +137,5 @@
     </header>
     <!-- End Header Area -->
 </body>
-  <!-- ========================= scroll-top ========================= -->
-    <a href="#" class="scroll-top btn-hover">
-        <i class="lni lni-chevron-up"></i>
-    </a>
-
-    <!-- ========================= JS here ========================= -->
-    <script src="/resources/assets/js/bootstrap.min.js"></script>
-    <script src="/resources/assets/js/count-up.min.js"></script>
-    <script src="/resources/assets/js/wow.min.js"></script>
-    <script src="/resources/assets/js/tiny-slider.js"></script>
-    <script src="/resources/assets/js/glightbox.min.js"></script>
-    <script src="/resources/assets/js/main.js"></script>
-    <script type="text/javascript">
-        //========= testimonial Slider
-        tns({
-            container: '.testimonial-slider',
-            items: 3,
-            slideBy: 'page',
-            autoplay: false,
-            mouseDrag: true,
-            gutter: 0,
-            nav: true,
-            controls: false,
-            controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 1,
-                },
-                768: {
-                    items: 2,
-                },
-                992: {
-                    items: 2,
-                },
-                1170: {
-                    items: 3,
-                }
-            }
-        });
-        //====== Clients Logo Slider
-        tns({
-            container: '.client-logo-carousel',
-            slideBy: 'page',
-            autoplay: true,
-            autoplayButtonOutput: false,
-            mouseDrag: true,
-            gutter: 15,
-            nav: false,
-            controls: false,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 3,
-                },
-                768: {
-                    items: 4,
-                },
-                992: {
-                    items: 4,
-                },
-                1170: {
-                    items: 6,
-                }
-            }
-        });
-    </script>
+  
 </html>

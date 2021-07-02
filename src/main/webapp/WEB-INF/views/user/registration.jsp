@@ -8,39 +8,9 @@
 <html class="no-js" lang="zxx">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-	<%-- <meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/> --%>
-    <title>빌려줘! 홈짐 - 회원가입</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/images/logo/logo.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-    <link rel="stylesheet" href="/resources/assets/css/board/board.css">
-    <link rel="stylesheet" href="/resources/assets/css/seok.css">
     
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
     </script>
-    
-    
-    <script type="text/javascript">
-   
-   </script>
-   
    
    <!-- 다음 우편번호 API -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
