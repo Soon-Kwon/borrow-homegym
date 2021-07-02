@@ -9,6 +9,7 @@ import com.homegym.biz.homegym.HomegymDetailVO;
 import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
 public interface MemberService {
 
@@ -22,10 +23,10 @@ public interface MemberService {
   	public int nickCheck(String nickName) throws Exception;
 
 	//프로필 정보가져오기
-	public MemberVO getUser(String memberId);
+	public CustomUserDetails getUser(String memberId);
 	
 	//회원정보 수정페이지 
-	public MemberVO getMyPageInfo(String memberId);
+	public CustomUserDetails getMyPageInfo(String memberId);
 	
 	//회원정보 수정
 	public int memberUpdate(MemberVO vo);
@@ -82,6 +83,6 @@ public interface MemberService {
 	public int HomegymAcceptUpdate(Map<String, String> paramMap);
 	
 	//홈짐 예약 요청 조회
-	public HomegymDetailVO getMyRequest(String memberId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId);
 
 }

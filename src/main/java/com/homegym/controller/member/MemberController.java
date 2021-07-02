@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.member.PageMakerDTO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
 import lombok.Setter;
 
@@ -154,44 +156,94 @@ public class MemberController {
 
 	/* 마이페이지 메인 이동 */
 	
+//	@GetMapping("mypage/profile.do")
+//	public String profile(MemberVO vo,HttpServletRequest request, HttpSession session, Model model) {
+//		String memberId = request.getParameter("memberId");
+//		session.setAttribute("memberId", memberId);
+//
+//		MemberVO memberVO = memberService.getUser(memberId);
+//		model.addAttribute("member", memberVO);
+//
+//		System.out.println("vo정보::::: " + memberVO);
+//		// 빌린 홈짐 수
+//		int rentCnt = memberService.getRentHomeGymCnt(memberId);
+//		model.addAttribute("rentCnt", rentCnt);
+//
+//		// 빌려준 홈짐 수
+//		int lendCnt = memberService.getLendHomeGymCnt(memberId);
+//		model.addAttribute("lendCnt", lendCnt);
+//
+//		// 내가 작성한 게시글 수
+//		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
+//		model.addAttribute("myBoardCnt", myBoardCnt);
+//
+//		// 내가 쓴 리뷰 수
+//		int myReviewCnt = memberService.getMyAllReviewCnt(memberId);
+//		model.addAttribute("myReviewCnt", myReviewCnt);
+//
+//		return "/user/profile";
+//
+//	}
+	
 	@GetMapping("mypage/profile.do")
-	public String profile(MemberVO vo,HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+	public String profile(Model model) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		
+		CustomUserDetails vo = new CustomUserDetails();
+		vo = memberService.getUser(loginMemberVO.getUsername());
+		
+		model.addAttribute("member", vo);
 
-		MemberVO memberVO = memberService.getUser(memberId);
-		model.addAttribute("member", memberVO);
-
-		System.out.println("vo정보::::: " + memberVO);
+		System.out.println("vo정보::::: " + loginMemberVO.getUsername());
 		// 빌린 홈짐 수
-		int rentCnt = memberService.getRentHomeGymCnt(memberId);
+		int rentCnt = memberService.getRentHomeGymCnt(loginMemberVO.getUsername());
 		model.addAttribute("rentCnt", rentCnt);
 
 		// 빌려준 홈짐 수
-		int lendCnt = memberService.getLendHomeGymCnt(memberId);
+		int lendCnt = memberService.getLendHomeGymCnt(loginMemberVO.getUsername());
 		model.addAttribute("lendCnt", lendCnt);
 
 		// 내가 작성한 게시글 수
-		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
+		int myBoardCnt = memberService.getMyAllBoardCnt(loginMemberVO.getUsername());
 		model.addAttribute("myBoardCnt", myBoardCnt);
 
 		// 내가 쓴 리뷰 수
-		int myReviewCnt = memberService.getMyAllReviewCnt(memberId);
+		int myReviewCnt = memberService.getMyAllReviewCnt(loginMemberVO.getUsername());
 		model.addAttribute("myReviewCnt", myReviewCnt);
 
 		return "/user/profile";
-
 	}
+
 
 	/* 1.마이페이지 회원정보 수정페이지 이동 */
 	
+//	@GetMapping("mypage/profile_update")
+//	public String profile_update(HttpServletRequest request, HttpSession session, Model model) {
+//		String memberId = request.getParameter("memberId");
+//		session.setAttribute("memberId", memberId);
+//
+//		MemberVO vo = memberService.getMyPageInfo(memberId);
+//		System.out.println(vo.getImagePath());
+//		model.addAttribute("member", vo);
+//
+//		return "user/profile_update";
+//	}
+	
+	/* 1.마이페이지 회원정보 수정페이지 이동 */
+	
 	@GetMapping("mypage/profile_update")
-	public String profile_update(HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
-
-		MemberVO vo = memberService.getMyPageInfo(memberId);
-		System.out.println(vo.getImagePath());
+	public String profile_update(Model model) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		
+		CustomUserDetails vo = new CustomUserDetails();
+		vo = memberService.getMyPageInfo(loginMemberVO.getUsername());
+		
 		model.addAttribute("member", vo);
 
 		return "user/profile_update";
@@ -326,14 +378,14 @@ public class MemberController {
 
 	/*예약 상세내용 이동*/
 	@GetMapping("mypage/reservationForm.do")
-	public String getMyRequest(HttpServletRequest request, HttpSession session, Model model) {
+	public String getMyRequest(@RequestParam("d_id") int dId, HomegymDetailVO vo,HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
 		
-		HomegymDetailVO homegymDetailVO = memberService.getMyRequest(memberId) ;
+		HomegymDetailVO homegymDetailVO = memberService.getMyRequest(vo,dId) ;
 		model.addAttribute("myRequest", homegymDetailVO);
 		
-		System.out.println("myRequest :::: " + homegymDetailVO);
+		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
 		return "user/reservation_detail";
 	}
 	

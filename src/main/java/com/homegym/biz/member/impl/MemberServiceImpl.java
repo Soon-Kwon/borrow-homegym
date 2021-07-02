@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 내 프로필 조회
 	@Override
-	public MemberVO getUser(String memberId) {
+	public CustomUserDetails getUser(String memberId) {
 		return memberDAO.getUser(memberId);
 		
 	}
@@ -91,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 회원 정보 수정페이지 이동
 	@Override
-	public MemberVO getMyPageInfo(String memberId) {
+	public CustomUserDetails getMyPageInfo(String memberId) {
 		return memberDAO.getMyPageInfo(memberId);
 	}
 
@@ -186,8 +186,8 @@ public class MemberServiceImpl implements MemberService {
 
 	//홈짐 요청 폼 조회
 	@Override
-	public HomegymDetailVO getMyRequest(String memberId) {
-		return memberDAO.getMyRequest(memberId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId) {
+		return memberDAO.getMyRequest(vo,hId);
 	}
 	
 

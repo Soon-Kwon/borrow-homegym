@@ -9,34 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>빌려줘! 홈짐 - 마이페이지</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-<!-- Bootstrap 설정 CDN 방식 -->
-
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
-    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css"/>
-    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="/resources/assets/css/main.css" />
-     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-     
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-    
-
     	
         .latest-news-area {
             background-color: #fff;
@@ -89,7 +63,6 @@
 		    bottom: 10px;
 		    border-radius: 40px;
 		 }
-	
     </style>
 
 </head>
@@ -278,7 +251,7 @@
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="/user/mypage/reservationForm.do?${waitingHomegym.dId}"><img class="thumb"
+                                                                <a href="/user/mypage/reservationForm.do?d_id=${waitingHomegym.d_id}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>

@@ -83,12 +83,12 @@ public class MemberDAO {
 	}
 
 	// 마이페이지 프로필 정보 가져오기
-	public MemberVO getUser(String memberId) {
+	public CustomUserDetails getUser(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getInfo", memberId);
 	}
 
 	// 마이페이지 회원정보 페이지 이동
-	public MemberVO getMyPageInfo(String memberId) {
+	public CustomUserDetails getMyPageInfo(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getMyPageInfo", memberId);
 	}
 
@@ -194,7 +194,11 @@ public class MemberDAO {
 	}
 	
 	//요청 홈짐 예약 폼 조회
-	public HomegymDetailVO getMyRequest(String memberId) {
-		return sqlsession.selectOne("MemberDAO.getMyRequest",memberId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("vo",vo);
+		map.put("dId",dId);
+		return sqlsession.selectOne("MemberDAO.getMyRequest",map);
 	}
 }
