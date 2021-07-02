@@ -16,4 +16,6 @@ public class HomegymReviewVO {
 	private Date hrRegdate;
 	private Date hrUpdatedate;
 	
+	private int hr_score; // 평균
+	
 }

@@ -64,7 +64,7 @@ public class MessageDAO {
 		System.out.println("recvId : " + vo.getRecvId()); // null
 		System.out.println("curId : " + curId);
 
-		// 메세지 내역 가져오기
+		// 채팅방 번호를 통해 메세지 내역 가져오기
 		ArrayList<MessageVO> clist = (ArrayList) sqlSession.selectList("MessageDAO.getMsgContentByRoom", vo);
 		for (MessageVO mVo : clist) {
 			// 현재 로그인한 아이디set
@@ -111,14 +111,31 @@ public class MessageDAO {
 		}
 
 		int flag = sqlSession.insert("MessageDAO.sendMsgInList", vo);
+		System.out.println("DAO의 sendMsgInList()의 flag값 : "+ flag);
 		return flag;
 	}
 	
-	/* navbar에서 보여줄 안읽은 메세지 총 카운트 unread 세주기*/
-	public int unReadCntAll(String curId) {
-		log.info("DAO의 msgCntAll();");
-		return sqlSession.selectOne("MessageDAO.countUnreadAll", curId);
-		
+	/*
+	 * public int unReadCntAll(String curId) { log.info("DAO의 msgCntAll();"); return
+	 * sqlSession.selectOne("MessageDAO.countUnreadAll", curId);
+	 * 
+	 * }
+	 */
+
+	/* navbar에서 보여줄 안읽은 메세지 총 카운트*/
+	public String getNewNoticeCnt(String memberId) {
+		log.info("DAO의 getNewNoticeCnt();");
+		return sqlSession.selectOne("MessageDAO.unReadCntAll", memberId);
 	}
+	
+	/* 
+	 * 1:1 문의하기
+	 * 1. 메세지 이력있는지 검색
+	 * 1-1. 이력있으면 (반환값이 1이상) 그때의 채팅방 번호가져와서 대화내용 불러오기
+	 * 1-2. 이력없으면 (반환값이 0이면) 현존하는 채팅방번호 중 max +1 해서 새롭게 만들기
+	 * */
+//	public String 
+	
+	/**/
 
 }

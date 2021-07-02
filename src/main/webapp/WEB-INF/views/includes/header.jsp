@@ -135,7 +135,3 @@
             </div> <!-- row -->
         </div> <!-- container -->
     </header>
-    <!-- End Header Area -->
-</body>
-  
-</html>

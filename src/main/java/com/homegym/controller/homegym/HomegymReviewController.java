@@ -50,7 +50,7 @@ public class HomegymReviewController {
 			(@PathVariable("page") int page, @PathVariable("hId") int hId){
 			
 		log.info("----------댓글 목록 가져오기-----------");
-		// PathVariable로 가져온 파라미터 page를 이용해서 Criteria를 처리하는데 사용한다. 
+		// PathVariable로 가져온 파라미터 page를 이용해서 Criteria를 처리(한번에 보여줄 수 정하기)하는데 사용한다. 
 		// 수집된 hId 파라미터는 getList의 hId에서 해당 게시물의 댓글리스트를 불러오는데 사용한다. 
 		Criteria cri = new Criteria(page, 3);
 		log.info(cri);

@@ -5,7 +5,11 @@
 
 <!-- ajax이용한 메세지 content(오른쪽 영역)처리 -->
 <c:forEach var="tmp" items="${clist}">
+	<%-- <div msgRoomNo="${tmp.msgRoomNo }" />--%>
 	<c:choose>
+		<c:when test="${tmp.sendId eq null}">
+		
+		</c:when>
 		<c:when test="${tmp.curId ne tmp.sendId}">
 		&nbsp;&nbsp;${tmp.sendId}
 			<%-- 받은 메세지 --%>
@@ -53,3 +57,6 @@
 
 	</c:choose>
 </c:forEach>
+<script>
+	
+</script>

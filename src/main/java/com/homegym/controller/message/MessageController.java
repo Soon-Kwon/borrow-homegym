@@ -8,16 +8,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.homegym.biz.member.MemberVO;
+import com.homegym.biz.member.MemberService;
 import com.homegym.biz.message.MessageService;
 import com.homegym.biz.message.MessageVO;
 
 import lombok.extern.log4j.Log4j;
+
+/*
+ * @Title	알림
+ * @Author 	김신혜
+ * @Date	2021.06.30
+ * 
+ * */
 
 @Controller
 @Log4j
@@ -26,19 +33,24 @@ public class MessageController {
 
 	@Autowired
 	private MessageService messageService;
+	/*
+	 * @Autowired private MemberService memberService;
+	 */
 
 	/* message main화면 */
 	@RequestMapping("/msgMain.do")
 	public String msgMain(HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
 		/*
-		 * memberController에서 세팅해야하는 값 (HttpSession tomcat 생성 30 유지됨) - 그래야 다른 페이지에서
-		 * 아래처럼 getSession을 통해 쓸 수 있음 session.setAttribute("member", member);
+		 * session.setAttribute("member", member);
+		 * - memberController에서 세팅해야하는 값 (HttpSession tomcat 생성 30분 유지) 
+		 * - 그래야 다른 페이지에서 아래처럼 getSession을 통해 member를 받아서 쓸 수 있음
+		 *  
 		 */
 
 		/*
 		 * 다른 곳에서 세팅한 session값 받기 위한 로직 HttpSession session = request.getSession();
-		 * MemberVO member = (MemberVO)session.getAttribute("member"); String memberId =
-		 * member.getMemberId();
+		 * MemberVO member = (MemberVO)session.getAttribute("member"); 
+		 * String memberId = member.getMemberId();
 		 */
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
@@ -93,7 +105,7 @@ public class MessageController {
 		return "message/message_content";
 	}
 
-	/* 메세지 리스트(왼쪽)에서 메세지 보내기 */
+	/* message list(왼쪽)에서 메세지 보내기 */
 	@ResponseBody
 	@RequestMapping("/msgSend.do")
 	public int msgSendInList(@RequestParam int msgRoomNo, @RequestParam String otherId, @RequestParam String msgContent,
@@ -110,12 +122,61 @@ public class MessageController {
 		return flag;
 	}
 	
-	/*메세지 bell 알림표시*/
-	@ResponseBody
-	@GetMapping("/msgCntAll.do")
-	public String msgCt() {
-		return "include/navbar";
+	/*1:1문의) 채팅방번호에 따른 메세지 내용 가져오기*/
+	@RequestMapping("/msgContentByAsking.do")
+	public String msgContentByAsking(HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
+		
+		System.out.println("1:1문의하기를 통한 메세지 내용 가져오기");
+		
+		String otherId = request.getParameter("otherId");
+		
+		// 문의할 id(번호)
+		vo.setRecvId(otherId);
+		System.out.println("otherId" + otherId);
+		// 현재 로그인한 id
+		vo.setCurId((String)session.getAttribute("curId")); 
+		
+		// 채팅방번호에 따른 메세지 내용 가져오기 
+		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
+		model.addAttribute("clist", clist);
+		
+		return "message/message_content";
 	}
+	
+	/*1:1문의) 메세지 리스트에서 메세지 보내기*/
+	@ResponseBody
+	@RequestMapping("/msgSendByAsking.do")
+	public int msgSendByAsking(@RequestParam String otherId, @RequestParam String msgContent, HttpSession session, MessageVO vo) {
+		System.out.println("1:1문의하기를 통한 메세지 보내기");
+		System.out.println("otherId : " + otherId);
+		System.out.println("msgContent : "+msgContent);
+		
+		// 현재 로그인한 id를 sendId로 세팅
+		vo.setSendId((String)session.getAttribute("curId"));
+		vo.setRecvId(otherId);
+		vo.setMsgContent(msgContent);
+		
+		int flag = messageService.sendMsgInList(vo);
+		return flag;
+		
+	}
+	
+	/* 안읽은 전체 메세지 navbar에 표시*/
+	@ResponseBody
+	@PostMapping("/getNewNoticeCnt.do")
+	public String getNewNoticeCnt(@RequestParam String memberId) {
+		return messageService.getNewNoticeCnt(memberId);
+	}
+
+	// 임시, DB에서 등록된 유저있는지 확인
+	/* message list(왼쪽)에서 member찾기*/
+	@RequestMapping("/searchUser.do")
+	public String searchUser() {
+		return "message/message_search";
+	}
+	
+	
+	
 
 	/* 임시 */
 	@RequestMapping("/msg.do")
@@ -123,8 +184,10 @@ public class MessageController {
 		return "message/websocket_connectionTest";
 	}
 
-	@GetMapping("/chat.do")
+	/* 임시 */
+	@RequestMapping("/chat.do")
 	public String chat() {
+		// 글을 쓴 사람을 임시로 test5라고 하자
 		return "message/chat";
 	}
 

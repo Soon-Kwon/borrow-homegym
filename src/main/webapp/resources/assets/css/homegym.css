@@ -1,0 +1,230 @@
+/**********************************************************************/
+/***********************홈짐 게시판 관련 css 정리 **************************/
+/**********************************************************************/
+
+/*===================홈짐 글쓰기 게시판========================*/
+
+/*체크박스 CSS*/
+.btn-group-toggle>.btn input[type=checkbox]
+, .btn-group-toggle>.btn input[type=radio]
+, .btn-group-toggle>.btn-group>.btn input[type=checkbox]
+, .btn-group-toggle>.btn-group>.btn input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+
+.intro {
+	background-image: url("/resources/assets/images/gym/homegym-image-01.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	padding: 200px 0 80px 0;
+	z-index: 2;
+	overflow: hidden;
+	text-align: center;
+}
+
+.intro.overlay::before {
+	background-color: #ffffff;
+	opacity: 0.1;
+	z-index: -1;
+}
+
+.intro .intro-content {
+	position: relative;
+	float: none;
+	padding: 0px;
+}
+
+.intro .intro-content .page-title {
+	font-size: 30px;
+	margin-bottom: 5px;
+	color: #fff;
+}
+
+.intro .intro-content p {
+	font-size: 14px;
+	margin: 15px 0px 0px;
+	color: #fff;
+}
+
+/* 체크박스 */
+.home_options p {
+	margin: 10px 5px;
+}
+
+.checkColor {
+	background-color: #9ea9d8;
+	border-color: #9ea9d8;
+	color: white;
+}
+
+.btn-outline-secondary:hover {
+	color: #6c757d;
+	background-color: #ededf2;
+	border-color: #ededf2;
+}
+
+.btn-outline-secondary {
+	border-color: #dadae3;
+}
+
+/* 폰트 */
+.font-general {
+	color: black;
+	font-size: 20px;
+}
+
+.uploadResult{
+	width:100%;
+	background-color: white;
+}
+
+.uploadResult ul{
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li{
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadResult ul li img{
+	width: 80px;
+	heigh: 80px;
+}
+.uploadResult .btn {
+	padding: 1px;
+	margin: 0px;
+	border-radius: .90erm;
+	color: black;
+	background-color: white;
+	border-color: white;
+	border: 0px;
+}
+
+/*===================홈짐 리스트========================*/
+
+.thumbnail .image {
+	width: 200px;
+	height: 200px;
+}
+
+/* 헤더에 가리는 부분 */
+#hg-list-section{
+	margin-top: 100px;
+}
+
+/*===================홈짐 상세보기========================*/
+
+.blog-single p {
+	font-size: 17px;
+	line-height: 1.6;
+	letter-spacing: -0.6px;
+	margin: 16px 0;
+	word-break: break-all;
+}
+
+.popular-feed-loop {
+	width: 150px;
+	height: 150px;
+	border-radius: 70%;
+	overflow: hidden
+}
+
+.trainner {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#re_plus {
+	background-color: #9ea9d8;
+	width: 150px;
+	height: 50px;
+	font-size: 20px;
+	color: white;
+	font-weight: bold;
+	position: relative;
+	margin-top: 30px;
+}
+
+.sidebar {
+	position: sticky;
+	top: 30px;
+}
+
+.btn-time {
+	border-radius: 2rem;
+	background-color: #9ea9d8;
+	margin: 10px 0px;
+}
+
+.image-container{
+	text-align: center;
+}
+
+.ic-child{
+	width: 100%;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.icon-tag{
+	text-align: center;
+	background-color: ffffff;
+	color: black;
+}
+
+.icon-tag .fas{
+	font-size: 40px;
+}
+
+#manipulateBtn{
+	text-align: right;
+}
+
+/*===================홈짐 예약 페이지========================*/
+
+/*라디오 버튼 CSS*/
+.select {
+   	padding: 15px 10px;
+}
+.select input[type=radio]{
+    display: none;
+}
+.select input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 90px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.select input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.select input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+
+.select label{
+	display: block;
+    margin-bottom: .5rem;
+    color: #081828;
+    font-size: 13px;
+    font-weight: 500;
+}
+/**********************************************************************/
+/**********************************************************************/
+/**********************************************************************/

@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,33 +15,31 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 /*
- * @Title	웹소켓 - 알림 핸들러
+ * @Title	웹소켓 - 채팅 핸들러
  * @author	김신혜
- * @date	2021. 06. 30.
+ * @date	2021. 06. 31.
  * */
 
-// path="/notice-ws"
-public class NoticeHandler extends TextWebSocketHandler { 
+// path="/msg-ws"
+public class MessageHandler extends TextWebSocketHandler { 
 
-	// memberId는 이메일
 	// 로그인한 세션 전체
 	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 
 	// 로그인 중인 개별 유저
 	private Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 
-	private final Logger logger = LogManager.getLogger(getClass());
+	private static Logger logger = LoggerFactory.getLogger(NoticeHandler.class);
 
 	// 서버접속 성공시
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
 		String memberId = getMemberId(session);
-		if(memberId != null) {
-			log(memberId + "연결");
-			users.put(memberId, session);
-			sessions.add(session);
-		}
+		users.put(memberId, session);
+		sessions.add(session);
+		logger.info("msg-ws // {} 연결", "고유 식별자 : "+ session.getId() + " // memberId : " + memberId);
+		
 		
 	}
 

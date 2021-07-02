@@ -6,9 +6,6 @@ import com.homegym.biz.member.MemberVO;
 
 public interface MessageService {
 
-	// 내 프로필 조회
-	public MemberVO getUser(String memberId);
-
 	// message main화면 - 메세지 목록 가져오기
 	public ArrayList<MessageVO> getMessageAll(MessageVO vo);
 
@@ -17,6 +14,9 @@ public interface MessageService {
 	
 	// message list에서 메세지 보내기
 	public int sendMsgInList(MessageVO vo);
+
+	// 새 메세지 알림 조회
+	public String getNewNoticeCnt(String memberId);
 
 
 }
