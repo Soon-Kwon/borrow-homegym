@@ -87,52 +87,9 @@
     </div>
     <!-- /End Preloader -->
 
-    <!-- Start Header Area -->
-    <header class="header style navbar-area"> 
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-12">
-					<div class="nav-inner">
-						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="main_index.html">
-								<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-							</a>
-							<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-								data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-								<span class="toggler-icon"></span>
-							</button>
-							<form class="d-flex search-form">
-								<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
-							</form>
-							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-								<ul id="nav" class="navbar-nav ms-auto">
-									<li class="nav-item" style="margin-right: 100px;">
-									<a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">
-											<h5>홈짐</h5>
-										</a></li>
-									<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-											<h5>트레이너</h5>
-										</a></li>
-									<a class="circle-image" href="mypage_main.html">
-										<img src="https://via.placeholder.com/300x300" alt="logo">
-									</a>
-									<li class="nav-item">
-										<a href="mypage_main.html"><h5>아이유님</h5></a>
-										</li>
-								</ul>
-							</div> <!-- navbar collapse -->
-						</nav> <!-- navbar -->
-					</div>
-				</div>
-			</div> <!-- row -->
-		</div> <!-- container -->
-	</header>
-	<!-- End Header Area -->
-    <!-- End Header Area -->
+    <!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+   
     <!-- Start Event Details -->
 	<div class="event-details section" style="padding-top: 60px;">
 		<c:choose>
@@ -332,29 +289,7 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		 
 		// 마커를 표시할 위치와 title 객체 배열입니다 
-	 	
-		//	var list = <c:out value="${list}"/>;
-		//console.log(list.length);		
-		var positions = [];
-		
-		for (var i = 0 ; i < 4 ; i++){
-			var temp = {
-			title: "'" + '<c:out value="${list[' + i + "]['h_title']}" + '"/>' + "'"
-			//title: "'<c:out value=\"${list[" + i + "]['h_title']}\"/>'"
-
-		   /*  content: "'" + '<div style="text-align: center;"><c:out value="${list[' + i + 
-	        	"]['h_title']}" + '"/></div>' + "'",
-	        latlng: new kakao.maps.LatLng("'" + '<c:out value="${list[' + i + "]['h_locate_Y']}" +  '"/>' + "'" ,
-	        		"'" + '<c:out value="${list[' + i + "]['h_locate_X']}" + '"/>' + "'"),
-	        no: '<c:out value="${list[' + i + "]['h_id']}" +  '"/>' + "",
-	        thumbnail: "'" + '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[' 
-	        	+ i + "]['uploadPath'] }/${list[" + i + "]['uuid']}_${list[i]['fileName']}" + '"alt="Event Image"></a></div>' + "'" */
-			}
-			
-			positions.push(temp);
-		}  
-		
-	/* var positions = [
+	   var positions = [
 	    {
 	        title: '<c:out value="${list[0]['h_title']}"/>', 
 	        content: '<div style="text-align: center;"><c:out value="${list[0]['h_title']}"/></div>',
@@ -387,7 +322,7 @@
 	      	no: <c:out value="${list[3]['h_id']}"/> + "",
 	      	thumbnail: '<div><img style="width:150px; height:100px;" src="/display.do?fileName=${list[3]['uploadPath'] }/${list[3]['uuid']}_${list[3]['fileName']}" alt="Event Image"></a></div>'  
 	    }
-	]; */
+	];
 		
 		// 마커 이미지의 이미지 주소입니다
 		var imageSrc = "/resources/assets/images/logo/logo.png"; 

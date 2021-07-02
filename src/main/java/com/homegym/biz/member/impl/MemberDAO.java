@@ -1,41 +1,68 @@
 package com.homegym.biz.member.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
-@Repository
+import lombok.Setter;
+
+@Repository//memberDAO
 public class MemberDAO {
-   @Autowired
-   private SqlSessionTemplate sqlsession;
-   
-   	//회원가입
- 	public void memberJoin(MemberVO vo) {
- 		System.out.println("회원가입");
- 		sqlsession.insert("MemberDAO.memberJoin", vo);
- 	}
- 	
- 	public void insertMemberAuth(MemberVO vo) {
- 		System.out.println("권한");
- 		sqlsession.insert("MemberDAO.insertMemberAuth", vo);
- 	}
- 	
- 	//로그인시 사용자 정보 가져오기
-    public MemberVO read(String username) {
- 	   return sqlsession.selectOne("MemberDAO.loadUserByUsername", username);
-    }
-
 	
-	//마이페이지 회원 정보 수정하기
+
+	@Autowired
+	private SqlSessionTemplate sqlsession;
+
+
+	// 회원가입
+	public void memberJoin(MemberVO vo) {
+		System.out.println("회원가입");
+		sqlsession.insert("MemberDAO.memberJoin", vo);
+	}
+
+	//아이디 중복 체크
+	public int idCheck(String memberId) throws Exception {
+		System.out.println("===> Mybatis로 idCheck");
+		System.out.println(memberId);
+		int result = sqlsession.selectOne("MemberDAO.idCheck", memberId);
+		return result;
+	}
+	
+	//닉네임 중복 체크
+	public int nickCheck(String nickname) throws Exception {
+		System.out.println("===> Mybatis로 nickCheck");
+		System.out.println(nickname);
+		int result = sqlsession.selectOne("MemberDAO.nickCheck", nickname);
+		return result;
+		}
+	
+	// 사용자 정보 가져오기
+	public CustomUserDetails getUserById(String username) {
+        return sqlsession.selectOne("MemberDAO.selectUserById", username);
+    }
+	
+	// 로그인시 사용자 정보 가져오기
+	public MemberVO read(String username) {
+		return sqlsession.selectOne("MemberDAO.loadUserByUsername", username);
+	}
+
+	// 마이페이지 회원 정보 수정하기
 	public int memberUpdate(MemberVO vo) {
 		return sqlsession.update("MemberDAO.memberUpdate", vo);
 	}
@@ -54,42 +81,46 @@ public class MemberDAO {
 	public int memberDelete(MemberVO vo) {
 		return sqlsession.delete("MemberDAO.memberDelete", vo);
 	}
-	
-	//마이페이지 프로필 정보 가져오기
+
+	// 마이페이지 프로필 정보 가져오기
 	public MemberVO getUser(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getInfo", memberId);
 	}
-	
-	//마이페이지 회원정보 페이지 이동
+
+	// 마이페이지 회원정보 페이지 이동
 	public MemberVO getMyPageInfo(String memberId) {
-		return sqlsession.selectOne("MemberDAO.getMyPageInfo",memberId);
+		return sqlsession.selectOne("MemberDAO.getMyPageInfo", memberId);
 	}
-	
-	//비밀번호 체크
-	public boolean checkPw(String memberId,String password) {
-		boolean result=false;
-		Map<String,String> map = new HashMap<String,String>();
+
+	// 비밀번호 체크
+	public boolean checkPw(String memberId, String password) {
+		boolean result = false;
+		Map<String, String> map = new HashMap<String, String>();
 
 		System.out.println(memberId);
 		System.out.println(password);
-			map.put("memberId",memberId);
-			map.put("password",password);
-			
-		int count=sqlsession.selectOne("MemberDAO.checkPw",map);
-		
-		if(count == 1) result=true;
+		map.put("memberId", memberId);
+		map.put("password", password);
+
+		int count = sqlsession.selectOne("MemberDAO.checkPw", map);
+
+		if (count == 1)
+			result = true;
 		System.out.println(result);
 		return result;
 	}
 	
 	// 내가 쓴 게시글 조회 
-	public List<TrainerBoardVO> getMyBoardList(String memberId) {
-		return sqlsession.selectList("MemberDAO.getMyBoardList",memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("memberId",memberId);
+		map.put("cri",cri);
+		return sqlsession.selectList("MemberDAO.getMyBoardPaging",map);
 	}
-	
-	//내가 빌려준 홈짐 수
+	// 내가 빌려준 홈짐 수
 	public int getLendHomeGymCnt(String memberId) {
-		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt",memberId);
+		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt", memberId);
 	}
 	
 	//내가 빌린 홈짐 수
@@ -99,7 +130,12 @@ public class MemberDAO {
 	
 	//내가 쓴 게시글 갯수 
 	public int getMyAllBoardCnt(String memberId) {
-		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt",memberId);
+		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt", memberId);
+	}
+	
+	//내가 쓴 리뷰 갯수
+	public int getMyAllReviewCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getMyAllReviewCnt",memberId);
 	}
 	
 	
@@ -111,7 +147,7 @@ public class MemberDAO {
 	}
 	
 	// 수락 대기중인 홈짐 페이징
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 			map.put("memberId",memberId);
@@ -120,7 +156,7 @@ public class MemberDAO {
 	}
 	
 	//내가 빌려준 홈짐
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri){
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri){
 		Map<String,Object> map = new HashMap<String,Object>();
 
 		map.put("memberId",memberId);
@@ -149,6 +185,16 @@ public class MemberDAO {
 
 	//홈짐 수락 거절 상태 변화
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
-		return sqlsession.update("MemberDAO.HomegymAcceptUpdate",paramMap);
+		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
+	}
+	
+	//내가 쓴 댓글 조회
+	public List<Map<String, String>> getMyReviews(String memberId){
+		return sqlsession.selectList("MemberDAO.getMyReviews",memberId);
+	}
+	
+	//요청 홈짐 예약 폼 조회
+	public HomegymDetailVO getMyRequest(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getMyRequest",memberId);
 	}
 }

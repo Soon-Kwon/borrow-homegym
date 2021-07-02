@@ -146,9 +146,10 @@
 			var chkArray = new Array();
 			$(document).ready(function () {
 				
+				
 				// 스프링 시큐리티 csrf 토큰 
-				var csrfHeaderName = "${_csrf.headerName}";
-				var csrfTokenValue = "${_csrf.token}";
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
 				
 				// 체크박스 색 조정
 				$("input[name=homegym_options]").click(function () {
@@ -238,6 +239,8 @@
 				// 수정시 업로드한 파일 보여주기
 				$("input[type='file']").change(function(e){
 					
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
 					var formData = new FormData();
 					
 					var inputFile = $("input[name='uploadFile']");
@@ -264,6 +267,10 @@
 						}, */
 						type: 'POST',
 						dataType: 'json',
+						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header, token);
+			            },
 						success: function(result){
 							console.log(result);
 							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등)
@@ -318,55 +325,8 @@
 		</div>
 		<!-- /End Preloader -->
 
-		<!-- Start Header Area -->
-		<header class="header style2 navbar-area">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-12">
-						<div class="nav-inner">
-							<nav class="navbar navbar-expand-lg">
-								<a class="navbar-brand" href="main_index.html">
-									<img src="/resources/assets/images/logo/로고2.png" alt="logo">
-								</a>
-								<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-									data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-									aria-expanded="false" aria-label="Toggle navigation">
-									<span class="toggler-icon"></span>
-									<span class="toggler-icon"></span>
-									<span class="toggler-icon"></span>
-								</button>
-								<form class="d-flex search-form">
-									<input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-										aria-label="Search">
-								<!-- 	<button class="btn btn-outline-success" type="submit"><i
-											class="lni lni-search-alt"></i></button> -->
-								</form>
-								<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-									<ul id="nav" class="navbar-nav ms-auto">
-										<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=${cri.pageNum }&amount=${cri.amount}&keyword=">
-												<h5>홈짐</h5>
-											</a></li>
-										<li class="nav-item" style="margin-right: 120px;"><a href="community.html">
-												<h5>트레이너</h5>
-											</a></li>
-										<a class="circle-image" href="mypage_main.html">
-											<img src="https://via.placeholder.com/300x300" alt="logo">
-										</a>
-										<li class="nav-item"><a href="mypage_main.html">
-												<h5>아이유님</h5>
-											</a></li>
-
-									</ul>
-								</div> <!-- navbar collapse -->
-							</nav> <!-- navbar -->
-						</div>
-					</div>
-				</div> <!-- row -->
-			</div> <!-- container -->
-		</header>
-		<!-- End Header Area -->
-		<!-- End Header Area -->
-		<!-- End Header Area -->
+		<!--Header -->
+   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 		<!-- Start Breadcrumbs -->
 		<div class="intro overlay">
@@ -654,12 +614,7 @@
 		<script>
 		
 		// 글 수정시 실행되는 update	()함수
-		
-		var csrfHeaderName = "${_csrf.headerName}";
-		var csrfTokenValue = "${_csrf.token}";
-		
 		function update(){
-			
 			// 해쉬태그 데이터 베이스 저장
 			var hashTag = '';
 			for(var i = 0; i < chkArray.length; i++) {
@@ -682,6 +637,8 @@
 			
 			$(".uploadResult ul li").each(function(i, obj){
 				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
 				var jobj = $(obj);
 				
 				console.dir(jobj);
@@ -712,9 +669,10 @@
 				url: 'homegymModify.do',
 				dataType: 'text',
 				data: data,
-				/* beforeSend: function(xhr){
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				}, */
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
 				success: function(data) {
 					alert(data);
 					if(data == 'OK') {
@@ -733,6 +691,8 @@
 		
 		function remove(){
 			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
 			var hId = ${board.HId};
 			
 			if(confirm("이 게시글을 정말로 삭제하시겠습니까?")){
@@ -740,9 +700,10 @@
 					type: 'POST',
 					url: 'homegymRemove.do',
 					dataType: 'text',
-					/* beforeSend: function(xhr){
-						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					}, */
+					/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+		            },
 					data: {hId: hId},
 					success: function(data){
 						alert('글 삭제에 성공하였습니다.');

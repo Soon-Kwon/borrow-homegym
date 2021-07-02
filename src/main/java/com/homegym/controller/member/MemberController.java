@@ -14,10 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberService;
@@ -43,19 +47,37 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder pwencoder;
 	
+	// 로그
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private MemberService memberService;
 	
-	// 로그인 이동
-	@GetMapping("/login")
-	public String login() {
-		return "user/login";
+	// 로그인 접속 
+	@GetMapping("/loginpage")
+	public String loginInput(String error, String logout, Model model) {
+		logger.info("error: " + error);
+		logger.info("logout: " + logout);
+		
+		if (error != null) {
+			model.addAttribute("error", "등록되지 않은 아이디나 비밀번호 입니다. 다시 입력해주세요.");
+		}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "로그아웃 되었습니다!");
+		}
+		
+		return "user/loginpage";
+	}
+	
+	// 회원가입 이동
+	@GetMapping("/registration")
+	public String registration() {
+		return "user/registration";
 	}
 
-	//회원가입
-	@RequestMapping(value="/join", method=RequestMethod.POST)
+	// 회원가입 진행
+	@RequestMapping(value="/join", method=RequestMethod.POST, produces="text/plain; charset=UTF-8")
 	public String joinPOST(MemberVO member) throws Exception{
 			
 		logger.info("join 진입");
@@ -66,30 +88,72 @@ public class MemberController {
 		member.setPassword(password);
 		
 		memberService.memberJoin(member);
-		memberService.insertMemberAuth(member);
 		
 		logger.info("join Service 성공");
 		return "redirect:/index.jsp";
 		}
 	
-	// 회원가입 이동
-	@GetMapping("/registration")
-	public String registration() {
-		return "user/registration";
-	}
+	// 아이디 중복 체크
+	@ResponseBody
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	//메시지 전달을 위해 리턴 타입 String으로 변환
 	
-	// 로그아웃 이동
-	@RequestMapping("/logout.do")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "login.jsp";
-	}
+	public String idCheck(@RequestBody String memberId) throws Exception {
+		
+		//이메일 확인
+		System.out.println(memberId);
+		/* email 확인 후 email일 null 일 때는 paramMap으로 매개변수 수정하시고
+		String email = paramMap.get("email");
+		*/
+        
+        int count = 0;
+        count = memberService.idCheck(memberId);
+        System.out.println(count);
+		
+		if(count == 0) {
+			return "OK";
+		} else {
+			return "FAIL";
+		} 
+    }
+	
+	// 닉네임 중복 체크
+		@ResponseBody
+		@RequestMapping(value = "/nickCheck", method = RequestMethod.POST)
+		//메시지 전달을 위해 리턴 타입 String으로 변환
+		
+		public String nickCheck(@RequestBody String nickname) throws Exception {
+			
+			//이메일 확인
+			System.out.println(nickname);
+			/* email 확인 후 email일 null 일 때는 paramMap으로 매개변수 수정하시고
+			String email = paramMap.get("email");
+			*/
+	        
+	        int count = 0;
+	        count = memberService.nickCheck(nickname);
+	        System.out.println(count);
+			
+			if(count == 0) {
+				return "OK";
+			} else {
+				return "FAIL";
+			} 
+	    }
+
+//	// 로그아웃 이동
+//	@RequestMapping("/logout.do")
+//	public String logout(HttpSession session) {
+//		session.invalidate();
+//		return "login.jsp";
+//	}
 	
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
 	/* 마이페이지 메인 이동 */
+	
 	@GetMapping("mypage/profile.do")
 	public String profile(MemberVO vo,HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
@@ -111,15 +175,16 @@ public class MemberController {
 		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
 		model.addAttribute("myBoardCnt", myBoardCnt);
 
-		// 내가 쓴 댓글 수
-		// int myReplyCnt = memberService.getMyAllReplyCnt(memberId);
-		model.addAttribute("myReplyCnt", "400");
+		// 내가 쓴 리뷰 수
+		int myReviewCnt = memberService.getMyAllReviewCnt(memberId);
+		model.addAttribute("myReviewCnt", myReviewCnt);
 
 		return "/user/profile";
 
 	}
 
 	/* 1.마이페이지 회원정보 수정페이지 이동 */
+	
 	@GetMapping("mypage/profile_update")
 	public String profile_update(HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
@@ -133,6 +198,7 @@ public class MemberController {
 	}
 
 	/* 1-2.마이페이지 회원정보 수정 요청 */
+	
 	@ResponseBody
 	@PostMapping("mypage/update")
 	public Map<String, Object> memberUpdate(@RequestBody MemberVO vo, HttpSession session) throws Exception {
@@ -167,7 +233,7 @@ public class MemberController {
 	/* 1-3. 프로필 이미지 등록 */
 	
 	  @PostMapping("mypage/userImgUpload") 
-	  public String userImgUpload(MultipartFile file,MemberVO vo, HttpServletRequest request) throws IOException, Exception {
+	  public String userImgUpload(MultipartFile file, MemberVO vo, HttpServletRequest request) throws IOException, Exception {
 	  HashMap<String,Object> paramMap = new HashMap<String,Object>();
 	  String attachPath = "/resources/imgUpload/";
 	  //getRealPath("/") : webapp 폴더까지
@@ -228,6 +294,7 @@ public class MemberController {
 	}
 		 
 	/* 1-5. 마이페이지 회원 탈퇴 요청 */
+		 
 	@ResponseBody
 	@PostMapping("mypage/delete")
 	public Map<String, Object> memberDelete(@RequestBody MemberVO vo, HttpSession session) throws Exception {
@@ -257,14 +324,32 @@ public class MemberController {
 
 	}
 
+	/*예약 상세내용 이동*/
+	@GetMapping("mypage/reservationForm.do")
+	public String getMyRequest(HttpServletRequest request, HttpSession session, Model model) {
+		String memberId = request.getParameter("memberId");
+		session.setAttribute("memberId", memberId);
+		
+		HomegymDetailVO homegymDetailVO = memberService.getMyRequest(memberId) ;
+		model.addAttribute("myRequest", homegymDetailVO);
+		
+		System.out.println("myRequest :::: " + homegymDetailVO);
+		return "user/reservation_detail";
+	}
+	
+	
 	/* 마이페이지 홈짐 활동내역 이동 */
+	
 	@GetMapping("mypage/myactiv")
 	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
 
-		/* 수락 대기중 */
-		List<HomegymVO> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
+		//수락 대기중 
+		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
+		for(int i =0; i<waitingHG.size();i++) {
+			System.out.println(waitingHG.get(i));
+		}
 		model.addAttribute("waitingHomegym", waitingHG);
 		
 		int wait_total = memberService.getMyWaitngHomegymCnt(memberId);
@@ -273,8 +358,11 @@ public class MemberController {
 		
 		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
 
-		/* 빌려준 홈짐 */
-		List<HomegymVO> lendHG = memberService.getLendHGPaging(memberId, cri);
+		//빌려준 홈짐  (Map으로 받을 때는 camelCase 사용 X)
+		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
+		for(int i=0; i < lendHG.size(); i++) {
+			System.out.println(lendHG.get(i));
+		}
 		model.addAttribute("lendHomegym", lendHG);
 
 		int ld_total = memberService.getLendHomeGymCnt(memberId);
@@ -283,8 +371,11 @@ public class MemberController {
 
 		System.out.println("ld_pageMaker::::::" + ld_pageMaker);
 
-		/* 빌린 홈짐 */
+		// 빌린 홈짐 
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
+		for(int i=0; i < rentHG.size(); i++) {
+			System.out.println(rentHG.get(i));
+		}
 		model.addAttribute("rentHomegym", rentHG);
 
 		int rt_total = memberService.getRentHomeGymCnt(memberId);
@@ -294,9 +385,11 @@ public class MemberController {
 		System.out.println("rt_pageMaker ::::::" + rt_pageMaker);
 
 		/* 진행중인 홈짐 */
-		List<HomegymVO> progressHomegym = memberService.getMyProgressHomegym(memberId, cri);
-		model.addAttribute("progressHomegym", progressHomegym);
-
+		/*
+		 * List<HomegymVO> progressHomegym =
+		 * memberService.getMyProgressHomegym(memberId, cri);
+		 * model.addAttribute("progressHomegym", progressHomegym);
+		 */
 		// 완료된 홈짐
 		// List<HomegymVO> finishedHomegym =
 		// memberService.getMyFinishedHomegym(memberId);
@@ -305,6 +398,7 @@ public class MemberController {
 	}
 
 	/* 수락 거절 상태값 변화 */
+	
 	@ResponseBody
 	@PostMapping("/acceptCheck")
 	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,
@@ -331,18 +425,31 @@ public class MemberController {
 	}
 
 	/* 마이페이지 내 글 관리 페이지 이동 */
+	
 	@GetMapping("mypage/mywrite")
-	public String mywrite(HttpServletRequest request, HttpSession session, Model model) {
+	public String mywrite(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
 
 		//내가 쓴글 리스트
-		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardList(memberId);
+		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId, cri);
+		for(int i=0; i < trainerBoardVO.size(); i++) {
+			System.out.println(trainerBoardVO.get(i));
+		}
 		model.addAttribute("board", trainerBoardVO);
+
+		int writeTotal = memberService.getMyAllBoardCnt(memberId);
+		PageMakerDTO tb_pageMaker = new PageMakerDTO(cri,writeTotal);
+		model.addAttribute("tb_pageMaker", tb_pageMaker);
+
+		System.out.println("tb_pageMaker::::::" + tb_pageMaker);
 
 		
 		//내가 쓴 리뷰 리스트
+		List<Map<String, String>> myReviews = memberService.getMyReviews(memberId);
+		model.addAttribute("myReviews", myReviews);
 		
+		System.out.println("myReviews :::::" + myReviews);
 		return "user/mywrite";
 	}
 

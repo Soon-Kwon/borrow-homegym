@@ -7,30 +7,44 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
+import com.homegym.security.CustomUserDetails;
 
 import lombok.AllArgsConstructor;
 
-@Service
+@Service//memberService
 @AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberDAO memberDAO;
-
+	
+	// 회원가입
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
 		memberDAO.memberJoin(member);
 	}
 	
+	// 아이디 중복 체크
 	@Override
-	public void insertMemberAuth(MemberVO member) throws Exception {
-		memberDAO.insertMemberAuth(member);
+	public int idCheck(String memberId) throws Exception {
+		int result = memberDAO.idCheck(memberId);
+		return result;
 	}
+	
+	// 닉네임 중복 체크
+	@Override
+	public int nickCheck(String nickname) throws Exception {
+		int result = memberDAO.nickCheck(nickname);
+		return result;
+	}
+	
 	/*  마이페이지 메인 프로필 정보*/
 	
 	// 내 프로필 조회
@@ -68,7 +82,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	// 내가 쓴 댓글 갯수
-
+	@Override
+	public int getMyAllReviewCnt(String memberId) {
+		return memberDAO.getMyAllReviewCnt(memberId);
+	}
 	
 	/*  회원 정보 관리 페이지 */
 	
@@ -118,13 +135,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	//수락 대기중인 홈짐
 	@Override
-	public List<HomegymVO> getWaitingHGPaging(String memberId,Criteria cri) {
+	public List<Map<String, String>> getWaitingHGPaging(String memberId,Criteria cri) {
 		return memberDAO.getWaitingHGPaging(memberId, cri);
 	}
 	
 	//내가 빌려준 홈짐 조회 (페이징)
 	@Override
-	public List<HomegymVO> getLendHGPaging(String memberId,Criteria cri) {
+	public List<Map<String, String>> getLendHGPaging(String memberId,Criteria cri) {
 		return memberDAO.getLendHGPaging(memberId,cri);
 	}
 
@@ -153,14 +170,27 @@ public class MemberServiceImpl implements MemberService {
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return memberDAO.HomegymAcceptUpdate(paramMap);
 	}
-
 	
-	
-	/*  내 게시글 , 댓글, 리뷰 내역  */
+	/*  내 게시글 , 리뷰 내역  */
 	// 내가 쓴 게시글 조회 
 	@Override
-	public List<TrainerBoardVO> getMyBoardList(String memberId) {
-		return memberDAO.getMyBoardList(memberId);
+	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
+		return memberDAO.getMyBoardPaging(memberId,cri);
 	}
+
+	//내가 쓴 리뷰 조회
+	@Override
+	public List<Map<String, String>> getMyReviews(String memberId) {
+		return memberDAO.getMyReviews(memberId);
+	}
+
+	//홈짐 요청 폼 조회
+	@Override
+	public HomegymDetailVO getMyRequest(String memberId) {
+		return memberDAO.getMyRequest(memberId);
+	}
+	
+
+
 
 }
