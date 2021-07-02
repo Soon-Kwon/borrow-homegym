@@ -34,6 +34,10 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class UploadController {
 	
+	// 업로드 폴더 경로 
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/upload/";
+	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
+
 	// 파일 업로드
 	@PostMapping(value= "/uploadAjaxAction.do",  produces = MediaType
 			.APPLICATION_JSON_UTF8_VALUE)
@@ -43,7 +47,7 @@ public class UploadController {
 		// 최종 결과를 담을 list
 		List<HomegymAttachVO> list = new ArrayList<>();
 		
-		String uploadFolder = "/Users/soon/Desktop/upload";
+		String uploadFolder = UPLOAD_FOLDER;
 		
 		// getFolder 메서드는 년/월/일 형식의 폴더 구조를 만들어낸다. 
 		String uploadFolderPath = getFolder();
@@ -124,7 +128,7 @@ public class UploadController {
 		
 		log.info("fileName: " + fileName);
 		
-		File file = new File(("/Users/soon/Desktop/upload/") + fileName);
+		File file = new File((UPLOAD_FOLDER) + fileName);
 		
 		log.info("file: " + file);
 		
@@ -156,7 +160,7 @@ public class UploadController {
 		try {
 			
 			// 한글이름의 파일일 경우를 위해서 URLDecoder.decode 메서드 활용한다
-			file = new File("/Users/soon/Desktop/upload/" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File(UPLOAD_FOLDER + URLDecoder.decode(fileName, "UTF-8"));
 			
 			// 파일 삭제
 			file.delete();
@@ -208,16 +212,11 @@ public class UploadController {
 		return false;
 	}
 	
-	@GetMapping("/uploadForm.do")
-	public void uploadForm() {
-		
-		log.info("upload form");
-	}
-	
+	// 기본적인 파일 업로드 구조
 	@PostMapping("uploadFormAction.do")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 		
-		String uploadFolder = "/Users/soon/Desktop/upload";
+		String uploadFolder = UPLOAD_FOLDER;
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
@@ -233,11 +232,5 @@ public class UploadController {
 				log.error(e.getMessage());
 			}
 		}
-	}
-	
-	@GetMapping("/uploadAjax.do")
-	public void uploadAjax() {
-		
-		log.info("upload ajax");
 	}
 }

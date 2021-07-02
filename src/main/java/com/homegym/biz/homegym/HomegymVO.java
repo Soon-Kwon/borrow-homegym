@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 
 public class HomegymVO {
+	
 	private int hId;
-	private int mId;
 	private String memberId;
 	private String hTitle;
 	private String hContent;
@@ -22,11 +22,6 @@ public class HomegymVO {
 	private Date hUpdatedate;
 	private int hCnt;
 	private String hHashtag;
-	private String acceptYN;
-	private String status;
-	private String uploadFile1;
-	private String uploadFile2;
-	private String uploadFile3;
 	
 	private List<HomegymAttachVO> attachList; // 첨부파일 VO 자료
 }

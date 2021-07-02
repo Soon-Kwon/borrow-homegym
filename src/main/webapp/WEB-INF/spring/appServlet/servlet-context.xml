@@ -41,7 +41,8 @@
 
 	<!-- websocket-handler등록, 클라이언트 관리위함 -->
 	<websocket:handlers>
-		<websocket:mapping handler="noticeHandler" path="/chat-ws" />
+		<websocket:mapping handler="noticeHandler" path="/notice-ws.do" />
+		<websocket:mapping handler="messageHandler" path="/msg-ws.do" />
 		<websocket:handshake-interceptors>
 			<beans:bean
 				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
@@ -51,16 +52,9 @@
 	
 
 	<!-- 이 속성을 이용해 핸들러로 처리할 클래스 참조 -->
-	<beans:bean id="noticeHandler"
-		class="com.homegym.biz.common.NoticeHandler"></beans:bean>
-		
-	<!-- websocket:handlers>
-		<websocket:mapping handler="myHandler" path="/include/msgCntAll.do"/>
-	</websocket:handlers>
-	<beans:bean id="myHandler" class="com.homegym.biz.common.NoticeHandler"/> -->
+	<beans:bean id="noticeHandler" class="com.homegym.biz.common.NoticeHandler"/>
+	<beans:bean id="messageHandler" class="com.homegym.biz.common.MessageHandler"/> 
 
-	<beans:bean id="webSocketHandler"
-		class="com.homegym.biz.common.NoticeHandler"></beans:bean>
 
 	<!-- 일반 파일 업로드 -->
 	<resources mapping="/imgUpload/**" location="/resources/imgUpload/"/>

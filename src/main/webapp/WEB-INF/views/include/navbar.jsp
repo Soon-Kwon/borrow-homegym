@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String memberId = request.getParameter("memberId");
 session.setAttribute("memberId", memberId);
 %>
-
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +22,6 @@ session.setAttribute("memberId", memberId);
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
 	type="text/css" rel="stylesheet">
@@ -35,12 +32,9 @@ session.setAttribute("memberId", memberId);
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/resources/ad_assets/css/sb-admin-2.min.css"
-	rel="stylesheet">
 <script src="https://kit.fontawesome.com/a0fcc69da7.js"
 	crossorigin="anonymous"></script>
+
 <!-- ========================= CSS here ========================= -->
 <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
@@ -48,7 +42,14 @@ session.setAttribute("memberId", memberId);
 <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
 <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/main.css" />
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> <!-- 웹소켓 -->
+
+<!-- bootstrap, jquery modal창 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<!-- 웹소켓 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <style>
 .envelope-icon {
 	font-size: 25px;
@@ -61,7 +62,105 @@ session.setAttribute("memberId", memberId);
 	font-size: .45em;
 }
 </style>
+<script type="text/javascript">
+	// 안읽은 메세지 카운트 가져오기
+	function getUnread(){
+		$.ajax({
+				type:"POST",
+				async:"true",
+				dataType:"text",
+				data:{
+					memberId : '${memberId}' // data로 넘겨주기
+				},
+				url: "${contextPath}/message/getNewNoticeCnt.do",
+				success:function(result){
+					// 안읽은게 1개 이상이면
+					if(result >= 1){
+						// 화면에 출력
+						showUnread(result); 
+					} else {
+						showUnread('');
+					}
+				}
+			})
+	}
+	
+	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
+	function getInfiniteUnread(){
+		setInterval(function(){
+			getUnread();
+		}, 4000); // 3초마다 요청
+	}
+	
+	// 안읽은 메세지 갯수 출력
+	function showUnread(result){
+		$('#newNoticeCnt').text(result);
+	}
+	
+	// 메세지아이콘 클릭 - 대화창popup(list, content함께)
+	function openMsgPopup(){
+		var popupOpener;
+		let memberId = '${memberId}';
+		// 팝업창 열릴 때 이벤트
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1150,height=600");
+		
+	}
+	
+	// 웹소켓 연결
+	var socket = null;
+	
+	$(document).ready(function() {
+		// navbar의 안읽은 메세지 가져오기
+		getInfiniteUnread();
+		
+		getNewNoticeCnt();
+		// 웹소켓 연결
+		/* sock = new SockJS("<c:url value="/notice-ws"/>");
+		socket = sock;
+
+		// 데이터 전달 받았을 때
+		sock.onmessage = onMessage; // toast생성 */
+		
+		
+	
+	});
+	
+	// 실시간 알림 받았을 시
+	function onMessage(evt) {
+		var data = evt.data;
+
+		// toast
+		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+		toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+		toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+		toast += "<span aria-hidden='true'>&times;</span></button>";
+		toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+		/* let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+		toast +=		"<div class='toast-header'>";
+		toast +=			"<i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+		toast +=			"<small class='text-muted'>just now</small>";
+		toast +=			"<button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+		toast +=				"<span aria-hidden='true'>&times;</span>";
+		toast += 			"</button>";
+		toast += 		"</div>"; 
+		toast += 	"	<div class='toast-body'>" + data + "</div>";
+		toast += 	"</div>"; */
+
+		$("#msgStack").append(toast); //msgStack에 div에 생성한 toast추가
+		$(".toast").toast({
+			"animation" : true,
+			"autohide" : false
+		});
+		$('.toast').toast('show');
+		// 알림 카운트 추가
+		//$("#msgCntAll").text($("#msgCntAll").text() * 1 + 1);
+	}
+	
+	
+	
+</script>
 </head>
+
 <body>
 
 	<!-- 유저페이지의 메세지 Start Header Area -->
@@ -103,29 +202,21 @@ session.setAttribute("memberId", memberId);
 									<li class="nav-item"><a
 										href="../user/profile.do?memberId=${memberId }"><h5>${memberId }님</h5>
 									</a></li>
-									<li id="msgCnt" class="nav-item dropdown no-arrow mx-1"><a
-										href="../message/msgMain.do?memberId=${memberId }"> <i
-											class="far fa-envelope envelope-icon"> 
-											<script id="temp" type="text/x-handlebars-template">
-<span id="msgCntAll"class="badge badge-danger badge-counter badge-red cnt">{{cnt}}</span>
- 		</script>
-	 		 <%-- <span id="msgCntAll" class="badge badge-danger badge-counter badge-red">${msgCnt}</span> --%>
-										</i> <!-- Counter - Alerts -->
+									<li id="msgCnt" class="nav-item dropdown no-arrow mx-1">
+									<a href="#" onclick="openMsgPopup();"> 
+									<i class="far fa-envelope envelope-icon"> 
+											<!-- 알림받아오기 -->
+											<span id="newNoticeCnt"	class="badge badge-danger badge-counter badge-red"></span>
+										</i> 
 
-									</a> <!-- 메세지 --> <%-- <a
-										class="nav-link dropdown-toggle"
-										href="../message/msgMain.do?memberId=${memberId}" id="alertsDropdown"
-										role="button" data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> 
-											<i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts -->
-											<span class="badge badge-danger badge-counter">5+</span>
-									</a> <!-- Dropdown - Alerts --> --%></li>
+									</a> 
 
 								</ul>
 							</div>
 							<!-- navbar collapse -->
 						</nav>
 						<!-- navbar -->
+						
 					</div>
 				</div>
 			</div>
@@ -133,6 +224,8 @@ session.setAttribute("memberId", memberId);
 		</div>
 		<!-- container -->
 	</header>
+	
+	<div id="msgStack"></div>
 	<!-- End Header Area -->
 	<!-- ========================= JS here ========================= -->
 	<script src="/assets/js/bootstrap.min.js"></script>
@@ -141,37 +234,5 @@ session.setAttribute("memberId", memberId);
 	<script src="/assets/js/tiny-slider.js"></script>
 	<script src="/assets/js/glightbox.min.js"></script>
 	<script src="/assets/js/main.js"></script>
-
-	<!-- 메세지 갯수 업데이트 -->
-	<script type="text/javascript">
-		// 웹소켓 정의(연결)
-		var sock = new SockJS("${contextPath }/chat-ws/");
-		sock.onmessage = onMessage;
-		sock.onclose = onClose;
-		
-		// 서버로부터 메시지 받았을 때
-		function onMessage(msg){
-			var items = msg.data.split("|");
-			var sender = items[0]; // memberId
-			var message = items[1];
-			var cnt = items[2]; // 안읽은 갯수
-			var date = items[3];
-			var data={
-					"sender" : sender,
-					"message" : message,
-					"cnt" : cnt,
-					"date" : date
-			};
-			
-			var template = Handlebars.compile($("#temp").html());
-			$("#msgCnt").append(template(data));
-		}
-		
-		// 서버와 연결 끊기
-		function onClose(evt){
-			console.log("연결 끊기")
-		}
-	
-	</script>
 </body>
 </html>

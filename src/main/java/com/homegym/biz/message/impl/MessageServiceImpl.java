@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.homegym.biz.member.MemberVO;
-import com.homegym.biz.member.impl.MemberDAO;
 import com.homegym.biz.message.MessageService;
 import com.homegym.biz.message.MessageVO;
 
@@ -15,15 +13,6 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private MessageDAO messageDAO;
-	@Autowired
-	private MemberDAO memberDAO;
-
-	// 내 프로필 조회
-	@Override
-	public MemberVO getUser(String memberId) {
-		return memberDAO.getUser(memberId);
-
-	}
 
 	/*메세지 리스트(list) 가져오기*/
 	@Override
@@ -40,8 +29,13 @@ public class MessageServiceImpl implements MessageService {
 	/*메세지 list에서 메세지 보내기*/
 	@Override
 	public int sendMsgInList(MessageVO vo) {
-		// TODO Auto-generated method stub
 		return messageDAO.sendMsgInList(vo);
+	}
+
+	/* 새 메세지 알림 조회*/
+	@Override
+	public String getNewNoticeCnt(String memberId) {
+		return messageDAO.getNewNoticeCnt(memberId);
 	}
 
 
