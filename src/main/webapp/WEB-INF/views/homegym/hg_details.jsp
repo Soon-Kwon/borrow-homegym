@@ -67,7 +67,7 @@
 									
 									<div class="row">
 										<div class="col-8">
-										<h2>리뷰 💌</h2>										
+										<h2>리뷰 <span style="font-size: 30px;">⭐ ${score.hr_score }</span> </h2>	
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
@@ -283,7 +283,7 @@
 			
 			function showList(page){
 				
-				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다 . 
+				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다. 
 				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
 					
 					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
@@ -299,6 +299,7 @@
 					if(list == null || list.length ==0){
 						reviewUL.html("<div class='comment-desc'><div class ='desc-top'>" + 
 								"<p>아직 등록된 리뷰가 없습니다!</p></div></div>")
+						viewMoreReviewBtn.hide(); // 글이 없을시 더보기 버튼 숨기기
 						return;
 					}
 					
@@ -337,7 +338,7 @@
 			});
 						
 			// 모달창 제어
-			var modal = $(".modal")
+			var modal = $("#myModal")
 			var modalInputReview = modal.find("textarea[name='hrContent']");
 			var modalInputReviewer = modal.find("input[name='memberId']");
 		//  var modalInputScore = $("input[name='hrScore']:checked");
@@ -354,17 +355,18 @@
 				
 				//기존에 존재하던 값들은 지워준다
 				modal.find("input[name != 'hrScore']").val("");
+				modal.find("input:radio[name = 'hrScore']").prop('checked', false);
 				modal.find("textarea[name ='hrContent']").val("");
 				modal.find("button[id != 'modalCloseBtn']").hide();
 				
 				modalRegisterBtn.show();
 				
-				$(".modal").modal("show");
+				$("#myModal").modal("show");
 			});
 			
 			// 닫기 버튼 누르면 동작
 			$("#modalCloseBtn").on("click", function(e){
-				$(".modal").modal("hide");				
+				$("#myModal").modal("hide");				
 			});
 			
 			// 등록 버튼 누르면 동작
@@ -376,20 +378,26 @@
 						memberId: memberId,
 						borrowerId: borrowerId
 				};
+				
+				// 평점이 없을시 입력해달라는 요청메시지 보내기
+				if(review.hrScore === undefined){
+					alert("평점을 입력해주세요!");
+					return $("#myModal").modal("show");
+				}
 			
 				reviewService.add(review, function(result){
 					
 					alert("리뷰가 등록되었습니다");
 					
-					// input의 값들을 모두 지운다. 
-					modal.find("input").val(""); 
+					// input의 값들을 모두 지운다.
+					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
 					modal.modal("hide");
 					
 					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
 				});
 			});
 			
-			// 댓글 수정 이벤트 처리
+			// 댓글 수정 클릭 이벤트 처리
 			$(".comments-list").on("click", ".reply-link", function(e){
 				
 				var reviewId = $(this).data("reviewid");
@@ -407,7 +415,7 @@
 					modalModBtn.show();
 					modalRemoveBtn.show();
 					
-					$(".modal").modal("show");
+					$("#myModal").modal("show");
 				});
 			});
 			

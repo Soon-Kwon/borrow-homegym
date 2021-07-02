@@ -1,5 +1,6 @@
 package com.homegym.biz.homegym.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
-import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
 
@@ -108,9 +108,9 @@ public class HomegymServiceImpl implements HomegymService{
 	}
 	
 	// 리뷰 평점 구하기
-	public List<HomegymReviewVO> getScoreList(HomegymReviewVO review) {
+	public HashMap<?,?> getScore(int hId) {
 		
-		return homegymDAO.getScoreList(review);
+		return homegymDAO.getScore(hId);
 	}
 	
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO vo, int hId){

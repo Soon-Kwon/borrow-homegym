@@ -89,6 +89,7 @@ public class HomegymController {
 	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
 			@RequestParam("hId") int hId ) {
 		model.addAttribute("board", homegymService.get(vo, hId));
+		model.addAttribute("score", homegymService.getScore(hId));
 		
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";

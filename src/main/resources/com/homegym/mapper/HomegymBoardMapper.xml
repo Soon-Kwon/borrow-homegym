@@ -25,13 +25,6 @@
 		select * from homegym_board where h_id > 0
 	</select>
 	
-<!-- 	<select id="getBoardListWithPaging" resultType="homegymVO">
-		select * 
-		from (select * from homegym_board
-				order by h_id desc) R1
-		LIMIT #{cri.amount} OFFSET #{cri.skip}
-	</select> -->
-	
 	<select id="getBoardListWithPaging" resultType="HashMap">
 		  select hb.h_id, max(ha.uuid) as uuid, max(ha.fileName) as fileName, max(ha.uploadPath) as uploadPath, ROUND(avg(hr_score), 2) as avg_score
 			, max(hb.memberId) as memberId, max(hb.h_title) as h_title, max(hb.h_price) as h_price, max(hb.h_updatedate) as h_updatedate
@@ -101,9 +94,10 @@
                 		h_addr like concat('%', #{keyword}, '%') 
 	</select>
 	
-	<select id="getScoreList" resultType="com.homegym.biz.homegym.HomegymReviewVO">
-		select h_id, ROUND(avg(hr_score), 2) as hrScore
+	<select id="getScore" resultType="Hashmap">
+		select h_id, ROUND(avg(hr_score), 2) as hr_score
 		from homegym_review
+		where h_id = #{hId}
 		group by h_id
 	</select>
 </mapper>
