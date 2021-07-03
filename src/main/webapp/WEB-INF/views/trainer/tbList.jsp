@@ -95,13 +95,13 @@
 						<div class="single-course wow fadeInUp" data-wow-delay=".2s">
 							<div class="course-image">
 								<a href="tbDetail.do?tno=${trBoard.tno}"> 
-									<img src="/resources/assets/images/trainer/kim001.png">
+									<img src="/trainer/display/main.do?fileName=${trBoard.tbImg}">
 								</a>
 
 							</div>
 							<div class="content">
 								<h3>
-									<a href="service-single.html">${trBoard.tbTitle}</a>
+									${trBoard.tbTitle}
 								</h3>
 								<p>${trBoard.tbContent}</p>
 							</div>
@@ -109,9 +109,10 @@
 					</div>
 			</c:forEach>
 				</div>
+				
+				<!-- 페이징 시작  -->
 			         <div class="row">
                 <div class="col-12">
-                    <!-- Pagination -->
                     <div class="pagination center" >
                         <ul class="pagination-list">
                         	<c:if test="${pageMaker.prev }">

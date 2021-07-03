@@ -139,6 +139,7 @@
 	</update>
 	 -->
 	 
+	<!-- 
 	<insert id="addFile">
         INSERT INTO tbl_article_file (
             file_name
@@ -153,5 +154,6 @@
 		SELECT MAX(TNO) AS TNO
 		FROM TRAINER_BOARD
 		WHERE MEMBERID = #{memberId}
-	</select>
+	</select> 
+	-->
 </mapper>

@@ -102,22 +102,27 @@ p {
 						<h2 style="font-weight: bold;">${trainerBoard.tbTitle}</h2>
 					<div class="single-inner">
 						<br>
-						<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						<div class="top-slide">
+						<div id="subPhoto" class="carousel slide" data-ride="carousel">
 							<!-- Indicators -->
 							<ol class="carousel-indicators">
-								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+								<li data-target="#subPhoto" data-slide-to="0" class="active"></li>
+								<li data-target="#subPhoto" data-slide-to="1"></li>
+								<li data-target="#subPhoto" data-slide-to="2"></li>
 							</ol>
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner" role="listbox">
 								<div class="item active">
-									<img src="/resources/assets/images/gym/gym1.jpg" alt="...">
-									<div class="carousel-caption"></div>
+									<img src="/trainer/display.do?fileName=${trainerBoard.tbPhoto1}"  style="width:100%">
+									
 								</div>
 								<div class="item">
-									<img src="/resources/assets/images/gym/gym2.jpg" alt="...">
-									<div class="carousel-caption"></div>
+									<img src="/trainer/display.do?fileName=${trainerBoard.tbPhoto2}" style="width:100%"> 
+								
+								</div>
+								<div class="item">
+									<img src="/trainer/display.do?fileName=${trainerBoard.tbPhoto3}" style="width:100%">
+								
 								</div>
 
 							</div>
@@ -132,7 +137,7 @@ p {
 								aria-hidden="true"></span> <span class="sr-only">Next</span>
 							</a>
 						</div>
-
+</div>
 						<div class="post-details">
 							<div class="detail-inner">
 								<h2 class="post-title">

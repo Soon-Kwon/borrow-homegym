@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+<c:set var="memberId"  value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberId}"  />
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -31,9 +33,72 @@
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
-
+    
+    <!-- message 관련 -->
+    <script src="/resources/assets/js/message.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+    
+	
 </head>
 <body>
+<script type="text/javascript">
+	// 안읽은 메세지 카운트 가져오기
+	function getUnread(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajax({
+				type:"POST",
+				async:"true",
+				dataType:"text",
+				data:{
+					memberId : '${memberId}' // data로 넘겨주기
+				},
+				url: "${contextPath}/message/getNewNoticeCnt.do",
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
+				success:function(result){
+					// 안읽은게 1개 이상이면
+					if(result >= 1){
+						// 화면에 출력
+						showUnread(result); 
+					} else {
+						showUnread('');
+					}
+				}
+			})
+	}
+	
+	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
+	function getInfiniteUnread(){
+		setInterval(function(){
+			getUnread();
+		}, 4000); // 4초마다 요청
+	}
+	
+	// 안읽은 메세지 갯수 출력
+	function showUnread(result){
+		$('#newNoticeCnt').text(result);
+	}
+	
+	// 메세지아이콘 클릭 - 대화창popup(list, content함께)
+	function openMsgPopup(){
+		var popupOpener;
+		let memberId = '${memberId}';
+		// 팝업창 열릴 때 이벤트
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1150,height=600");
+		
+	}
+	
+	$(document).ready(function() {
+		// navbar의 안읽은 메세지 가져오기
+		getInfiniteUnread();
+	});
+	
+	</script>
+
  <!-- Start Header Area -->
     <header class="header style2 navbar-area">
         <div class="container">
@@ -100,6 +165,16 @@
                                         	<li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>
                                     </li>
+                                    <li class="nav-item">
+                                    
+	                                    <a href="#" onclick="openMsgPopup();">
+										<i class="far fa-envelope envelope-icon" style="font-size: 30px;"> 
+												<!-- 알림받아오기 -->
+												<span id="newNoticeCnt"	class="badge bg-danger" style="font-size:13px; position: absolute; bottom: 24px; right: -16px;"></span>
+											</i> 
+	
+										</a>
+                                    </li>
 										<form id="logout" action="/logout" method="POST">
    										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 										</form>
@@ -122,6 +197,16 @@
                                        	 <li class="nav-item"><a href="/admin/adAlerts.do">&nbsp &nbsp &nbsp 문의 관리</a></li>
                                         <li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                    
+	                                    <a href="#" onclick="openMsgPopup();">
+										<i class="far fa-envelope envelope-icon" style="font-size: 30px;"> 
+												<!-- 알림받아오기 -->
+												<span id="newNoticeCnt"	class="badge bg-danger" style="font-size:13px; position: absolute; bottom: 24px; right: -16px;"></span>
+											</i> 
+	
+										</a>
                                     </li>
 										<form id="logout" action="/logout" method="POST">
    										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
