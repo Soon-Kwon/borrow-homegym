@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.homegym.biz.homegym.HomegymDetailVO;
@@ -63,7 +64,7 @@ public class MemberDAO {
 	}
 
 	// 마이페이지 회원 정보 수정하기
-	public int memberUpdate(MemberVO vo) {
+	public int memberUpdate(CustomUserDetails vo) {
 		return sqlsession.update("MemberDAO.memberUpdate", vo);
 	}
 	
@@ -78,7 +79,7 @@ public class MemberDAO {
 	}
 	
 	//회원 탈퇴
-	public int memberDelete(MemberVO vo) {
+	public int memberDelete(CustomUserDetails vo) {
 		return sqlsession.delete("MemberDAO.memberDelete", vo);
 	}
 
@@ -96,17 +97,22 @@ public class MemberDAO {
 	public boolean checkPw(String memberId, String password) {
 		boolean result = false;
 		Map<String, String> map = new HashMap<String, String>();
+		
+		CustomUserDetails vo = new CustomUserDetails();
+		
+		vo = sqlsession.selectOne("MemberDAO.selectUserById", memberId);
 
-		System.out.println(memberId);
-		System.out.println(password);
-		map.put("memberId", memberId);
-		map.put("password", password);
-
-		int count = sqlsession.selectOne("MemberDAO.checkPw", map);
-
-		if (count == 1)
-			result = true;
-		System.out.println(result);
+		BCryptPasswordEncoder pwencoder = new BCryptPasswordEncoder();
+		
+		if(vo == null) {
+			result = false;
+		} else {
+			if(pwencoder.matches(password, vo.getPassword())) {
+				result = true;
+			} else {
+				result = false;
+			}
+		}
 		return result;
 	}
 	

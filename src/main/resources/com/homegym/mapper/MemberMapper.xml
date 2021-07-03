@@ -83,9 +83,6 @@
 	    	<when test="newPassword != null  and newPassword != ''">
 	     		password = #{newPassword},
 	    	</when>
-	   		 <otherwise>
-	     		password = #{password},
-	    	</otherwise>
 	  	</choose>
   			 nickname = #{nickname},
 			 zipCode = #{zipCode},
@@ -125,7 +122,7 @@
 		SELECT 
 			count(*)
 		FROM member
-		WHERE memberId=#{memberId} AND password=#{password}
+		WHERE memberId = #{memberId} AND password = #{password}
 	</select>
 	
 	<!--관리할 홈짐 갯수 -->

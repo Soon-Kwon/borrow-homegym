@@ -80,6 +80,7 @@
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
                                         aria-label="Toggle navigation"><sec:authentication property="principal.nickname" />님</a>
                                         <sec:authentication property="principal.memberId" var="member_memberId" />
+                                        <sec:authentication property="principal.nickname" var="member_nickname" />                             
                                         <sec:authentication property="principal.password" var="member_password" />
                                         <sec:authentication property="principal.name"  var="member_name" />
                                         <sec:authentication property="principal.phone" var="member_phone" />

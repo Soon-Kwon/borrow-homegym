@@ -164,11 +164,11 @@
 				            <c:if test="${not empty member_image}">
 				                    <div id="userphoto"><img src="${member_imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
 				            </c:if>
-                            <h4 style="margin-left:30px;">${member_name}님</h4>
+                            <h4 style="margin-left:30px;">${member.name}님</h4>
                             <span id="auth">🏋️‍♂️${member_nickname}</span><br> 
                             <span id="memberId">${member_memberId} <span>
                             <div class="button">
-                                <a href="profile_update.do?memberId=silverbi99@naver.com" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do?memberId=${member.memberId}" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -182,7 +182,7 @@
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-                                <a href="myactiv.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="myactiv.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -196,7 +196,7 @@
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 리뷰</p>
                             <h1 style="margin-top: 20px;">${myReviewCnt}</h1>
                             <div class="button">
-                                <a href="mywrite.do?memberId=silverbi99@naver.com" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mywrite.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->

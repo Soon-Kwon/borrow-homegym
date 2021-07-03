@@ -29,7 +29,7 @@ public interface MemberService {
 	public CustomUserDetails getMyPageInfo(String memberId);
 	
 	//회원정보 수정
-	public int memberUpdate(MemberVO vo);
+	public int memberUpdate(CustomUserDetails vo);
 	
 	//프로필 이미지 등록
 	public void userImgUpload(HashMap<String, Object> paramMap);
@@ -38,10 +38,10 @@ public interface MemberService {
 	public int userImgDelete(String memberId);
 	
 	//회원 탈퇴 처리
-	public int memberDelete(MemberVO vo);
+	public int memberDelete(CustomUserDetails vo);
 	
 	//비밀번호 체크
-	public boolean checkPw(String memberId,String password);
+	public boolean checkPw(String memberId, String password);
 
 	//내가 쓴 게시글 리스트 조회
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId, Criteria cri);

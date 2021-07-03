@@ -185,10 +185,10 @@ function deleteInfo() {
 
 /*ajax를 통한 회원정보 수정*/
 function updateInfo() {
-	
+	console.log($('#memberId').val());
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	var data = {memberId : $('input[name=memberId]').val(),
+	var data = {memberId : $('#memberId').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
@@ -457,7 +457,7 @@ function execPostCode() {
                             		<!-- 프로필이미지  -->
                              <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
 	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
-	                        	<input name="memberId" id="memberId2" type="hidden" value="silverbi99@naver.com"/>
+	                        	<input name="memberId" id="memberId2" type="hidden" />
 	                        	<input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }"/>
 	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
 	                            <input type="file" name="file"  id="userImg"onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display:none;" > 
@@ -469,8 +469,7 @@ function execPostCode() {
 	                        
                         </form>
                        
-                     
-                                     
+                                                   
                                      <!-- 폼 전송 -->      
                    						 <form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
@@ -479,8 +478,8 @@ function execPostCode() {
                                                             <br>
                                                             <h6>아이디</h6>
                                                         </label>
-                                                        <input name="memberId" readonly class="form-control" 
-                                                            value="${member.memberId}">
+                                                        <input name="memberId" id="memberId" readonly class="form-control" 
+                                                            value="${member.memberId}" >
                                                             
                                                     </div>
                                                 </div>

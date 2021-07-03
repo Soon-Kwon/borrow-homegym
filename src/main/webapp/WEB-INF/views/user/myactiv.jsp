@@ -303,7 +303,7 @@
                                     </div>
                                     
                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                     	<input type="hidden" name="memberId"/>
                                     	<input type="hidden" name="pageNum" value="${wait_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${wait_pageMaker.cri.amount}">
                                     </form> 
@@ -394,7 +394,7 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                      	<input type="hidden" name="memberId" value="silverbi99@naver.com"/> <!-- 세션 받으면 바꾸기 -->
+                                      	<input type="hidden" name="memberId" />
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
@@ -501,7 +501,7 @@
                                           </c:otherwise>
                                     </c:choose>
                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                     	<input type="hidden" name="memberId"/>
                                     	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
                                     </form>

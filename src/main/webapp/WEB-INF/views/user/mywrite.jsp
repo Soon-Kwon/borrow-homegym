@@ -151,7 +151,7 @@
                                     </table>
                                     
                                    <form id="actionForm" action="user/mypage/mywrite.do" method="get">
-                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                     	<input type="hidden" name="memberId"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
                                     </form> 

@@ -8,12 +8,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
+
 public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -74,5 +74,5 @@ public class CustomUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 }
