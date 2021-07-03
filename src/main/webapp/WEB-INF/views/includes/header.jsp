@@ -51,12 +51,14 @@
                             <span class="toggler-icon"></span>
                             <span class="toggler-icon"></span>
                         </button>
-                        <form class="d-flex search-form">
-                            <input class="form-control me-2" type="search" placeholder="동네 이름을 검색해보세요!"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit"><i
-                                    class="lni lni-search-alt"></i></button>
-                        </form>
+                       <form class="d-flex search-form" action="/homegym/homegymListView.do"
+								method="get">
+								<input class="form-control me-2" type="search" name="keyword"
+									placeholder="동네 이름을 검색해보세요!" aria-label="Search"> 
+									<button id="search-hg"class="btn btn-outline-success" type="submit">
+									<i class="lni lni-search-alt"></i>
+								</button>
+					  </form>
                        
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
@@ -88,7 +90,7 @@
                                         <sec:authentication property="principal.image" var="member_image"/>
                                         <sec:authentication property="principal.birth" var="member_birth"/>
                                         <sec:authentication property="principal.gender" var="member_gender" />
-                                        <sec:authentication property="principal.auth" var="member_auth" />
+                                        <sec:authentication property="principal.auth" var="member_auth" /> 
                                         
                                         <ul class="sub-menu collapse" id="submenu-1-4" style="width: 150px;">
                                         	<li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>

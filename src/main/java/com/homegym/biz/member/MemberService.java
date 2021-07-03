@@ -29,7 +29,7 @@ public interface MemberService {
 	public CustomUserDetails getMyPageInfo(String memberId);
 	
 	//회원정보 수정
-	public int memberUpdate(MemberVO vo);
+	public int memberUpdate(CustomUserDetails vo);
 	
 	//프로필 이미지 등록
 	public void userImgUpload(HashMap<String, Object> paramMap);
