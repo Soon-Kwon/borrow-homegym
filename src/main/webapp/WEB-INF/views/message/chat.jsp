@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
 String memberId = request.getParameter("memberId");
 session.setAttribute("memberId", memberId);
@@ -203,7 +205,7 @@ session.setAttribute("otherId", otherId);
 	// 1:1문의를 하고자하는 상대방 id세팅 
 	// - 해당 홈짐글의 번호를 통해 그 글을 쓴 사람의 id를 가져와서 otherId에 넣기()
 	// 
-	let otherId = ${otherId};
+	let otherId = ${sessionScope.otherId};
 
 	// 1:1문의할 떄, 메세지 내역 가져오기
 	const showMessageContent = function(otherId){
