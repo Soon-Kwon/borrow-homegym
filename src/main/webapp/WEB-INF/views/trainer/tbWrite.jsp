@@ -9,9 +9,6 @@
 <head>
 
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"
-	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-	crossorigin="anonymous"></script>
 
 <style>
 p {
@@ -145,97 +142,8 @@ ul li.tag-item {
 	border: 0px;
 }
 }
-
-</style>
 <!--//해시태그 끝-->
-
-<!--해시태그-->
-<script>
-	$(document).ready(function() {
-
-		var tag = {};
-		var counter = 0;
-	
-		// 태그를 추가한다.
-		function addTag(value) {
-			tag[counter] = value; // 태그를 Object 안에 추가
-			counter++; //  삭제를 위한 del-btn 의 고유 id 
-		}
-	
-		//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
-		function marginTag() {
-			return Object.values(tag).filter(function(word) {
-				return word !== "";
-			});
-		}
-	
-		// 서버에 넘기기
-		$("#tag-form").on("submit", function(e) {
-			var value = marginTag(); // return array
-			$("#rdTag").val(value);
-	
-			$(this).submit();
-		});
-
-	$("#tag").on("keypress",function(e) {
-		var self = $(this);
-
-		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
-		if (e.key === "Enter" || e.keyCode == 32) {
-
-			if ($(".tag-item").size() == 3) {
-
-				alert('최대 입력 개수는 3개입니다.');
-
-			} else {
-
-				var tagValue = self.val();
-
-				// 해시태그 값 없으면 x
-				if (tagValue !== "") {
-
-					var result = Object.values(tag).filter(function(word) {
-						return word === tagValue;
-					});
-					
-
-					// 태그 중복 검사
-					if (result.length == 0) {
-						$("#tag-list").append(
-										"<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-						$("#tag-list").append(
-										"<input name=tagList type=hidden value=" + tagValue + ">");
-						/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
-						addTag(tagValue);
-					} else {
-						alert("이미 입력한 해시태그입니다.");
-					}
-				}
-				e.preventDefault();
-			}
-		}
-	});
-
-	// 삭제 버튼 
-	$(document).on("click", ".del-btn", function(e) {
-		var index = $(this).attr("idx");
-		tag[index] = "";
-		$(this).parent().remove();
-	});
-
-	$("input[id=check]:checkbox").click(function() {
-		//$("input[name=tr_options]:checkbox").click(function () {
-		//this.checked = true; //checked 처리
-		if ($(this).is(":checked")) {
-			$(this).parent().addClass("checkColor");
-		} else {
-			$(this).parent().removeClass("checkColor");
-		}
-	});
-});
-</script>
-	
-	
+</style>
 </head>
 
 <body>
@@ -438,7 +346,97 @@ ul li.tag-item {
 		</div>
 	</footer>
 	<!--/ End Footer Area -->
+<!--해시태그-->
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"
+	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+	crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function() {
+
+		var tag = {};
+		var counter = 0;
+	
+		// 태그를 추가한다.
+		function addTag(value) {
+			tag[counter] = value; // 태그를 Object 안에 추가
+			counter++; //  삭제를 위한 del-btn 의 고유 id 
+		}
+	
+		//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+		function marginTag() {
+			return Object.values(tag).filter(function(word) {
+				return word !== "";
+			});
+		}
+	
+		// 서버에 넘기기
+		$("#tag-form").on("submit", function(e) {
+			var value = marginTag(); // return array
+			$("#rdTag").val(value);
+	
+			$(this).submit();
+		});
+
+	$("#tag").on("keypress",function(e) {
+		
+		var self = $(this);
+
+		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+		if (e.key === "Enter" || e.keyCode == 32) {
+			
+		 	if ($(".tag-item").size() == 3) {
+
+				alert('최대 입력 개수는 3개입니다.');
+
+			} else { 
+
+				var tagValue = self.val();
+
+				// 해시태그 값 없으면 x
+				if (tagValue !== "") {
+
+					var result = Object.values(tag).filter(function(word) {
+						
+						return word === tagValue;
+					});
+					
+
+					// 태그 중복 검사
+					if (result.length == 0) {
+						$("#tag-list").append(
+										"<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+						$("#tag-list").append(
+										"<input name=tagList type=hidden value=" + tagValue + ">");
+						/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
+						addTag(tagValue);
+					} else {
+						alert("이미 입력한 해시태그입니다.");
+					}
+				}
+				e.preventDefault();
+			} 
+		}
+	});
+
+	// 삭제 버튼 
+	$(document).on("click", ".del-btn", function(e) {
+		var index = $(this).attr("idx");
+		tag[index] = "";
+		$(this).parent().remove();
+	});
+
+	$("input[id=check]:checkbox").click(function() {
+		//$("input[name=tr_options]:checkbox").click(function () {
+		//this.checked = true; //checked 처리
+		if ($(this).is(":checked")) {
+			$(this).parent().addClass("checkColor");
+		} else {
+			$(this).parent().removeClass("checkColor");
+		}
+	});
+});
+</script>
 	<!-- ========================= scroll-top ========================= -->
 	<a href="#" class="scroll-top btn-hover"> <i
 		class="lni lni-chevron-up"></i>

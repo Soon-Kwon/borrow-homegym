@@ -76,6 +76,38 @@ p {
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
 
+
+<script>
+//첨부파일 데이터를 가져오는 즉시실행함수
+(function(){
+
+	var tno = '<c:out value="${tainerboard.tno}"/>';
+
+	$.getJSON("/trainer/tbList.do", {tno: tno}, function(arr){
+		
+		console.log(arr);
+
+		var str ="";
+		
+		$(arr).each(function(i, attach){
+			
+			var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
+					+ "_" + attach.fileName);
+			
+	
+				str += "<div class='ic-child'><img style='width:100%;' src='/display.do?fileName=" + fileCallPath  
+					+ "'></div>";   
+				
+		});					
+			$(".image-container").html(str);
+	});
+	
+})();			
+
+
+
+
+</script>
 </head>
 
 <body>
@@ -101,8 +133,12 @@ p {
 					<br>
 						<h2 style="font-weight: bold;">${trainerBoard.tbTitle}</h2>
 					<div class="single-inner">
-						<br>
-						<div class="top-slide">
+					
+					<div class="image-container">
+						
+						</div>
+						<%-- <br>
+						
 						<div id="subPhoto" class="carousel slide" data-ride="carousel">
 							<!-- Indicators -->
 							<ol class="carousel-indicators">
@@ -135,9 +171,9 @@ p {
 								href="#carousel-example-generic" role="button" data-slide="next">
 								<span class="glyphicon glyphicon-chevron-right"
 								aria-hidden="true"></span> <span class="sr-only">Next</span>
-							</a>
+							</a> --%>
 						</div>
-</div>
+
 						<div class="post-details">
 							<div class="detail-inner">
 								<h2 class="post-title">

@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     
     <!-- message 관련 -->
-    <script src="/resources/assets/js/message.js"></script>
+	 <script src="/resources/assets/js/message.js"></script> 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
     
