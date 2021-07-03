@@ -141,6 +141,7 @@ public class UploadController {
 			
 			HttpHeaders header = new HttpHeaders();
 			
+			// 헤더에 파일 정보를 담는다
 			header.add("Content-Type", Files.probeContentType(file.toPath()));
 			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
 			

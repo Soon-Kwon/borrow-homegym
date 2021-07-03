@@ -422,7 +422,7 @@
 		</script>
 		<script>
 		
-		// 제출시 실행되는 save()함수
+		// 글 작성후 버튼 클릭시 실행되는 save()함수
 		
 		function save(){
 			
