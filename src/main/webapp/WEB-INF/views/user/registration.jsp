@@ -134,7 +134,7 @@
                             <div class="form-group">
                                 <label>주소</label>
                                 <input class="margin-5px-bottom" type="text" id="zipCode" name="zipCode" placeholder="우편번호" style="width:80%" readonly="readonly">
-                                <button type="button" id="zip_codeBtn" class="btnjo" onclick="execPostCode();"><i class="fa fa-search"></i>우편번호 검색</button>                            
+                                <button type="button" id="zip_codeBtn" class="btnjo" onclick="execPostCode();"><i class="fa fa-search"></i>우편번호</button>                            
                             </div>
                             <div class="form-group">
                                 <input class="margin-5px-bottom" type="text" id="address" name="address" placeholder="도로명 주소" style="width:80%" readonly="readonly">

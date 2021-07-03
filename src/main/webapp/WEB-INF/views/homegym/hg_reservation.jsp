@@ -27,7 +27,8 @@
                             홈짐 예약하기😊
                         </h3>
                         <form class="form" method="post" action="/details/reservation.do">
-                        <input type="hidden" name="hId" value="${hId }"/>
+                        <input type="hidden" name="hId" value="${hId}"/>
+                        <input type="hidden" name="borrowerId" value="${member_memberId}"/>
 							<div class="row">
 								<div class="col-lg-8 col-8 select">
 									<label>성별</label> 
@@ -137,6 +138,9 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    <script src="/resources/assets/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
 </body>
 
 </html>

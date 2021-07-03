@@ -457,7 +457,7 @@ function execPostCode() {
                             		<!-- 프로필이미지  -->
                              <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
 	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
-	                        	<input name="memberId" id="memberId2" type="hidden" value="silverbi99@naver.com"/>
+	                        	<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}"/>
 	                        	<input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }"/>
 	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
 	                            <input type="file" name="file"  id="userImg"onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display:none;" > 

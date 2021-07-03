@@ -189,7 +189,7 @@ public class MemberController {
 	public String profile(Model model) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+//		
 		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 		
 		CustomUserDetails vo = new CustomUserDetails();
@@ -197,26 +197,25 @@ public class MemberController {
 		
 		model.addAttribute("member", vo);
 
-		System.out.println("vo정보::::: " + loginMemberVO.getUsername());
+		System.out.println("vo정보::::: " + vo.getUsername());
 		// 빌린 홈짐 수
-		int rentCnt = memberService.getRentHomeGymCnt(loginMemberVO.getUsername());
+		int rentCnt = memberService.getRentHomeGymCnt(vo.getUsername());
 		model.addAttribute("rentCnt", rentCnt);
 
 		// 빌려준 홈짐 수
-		int lendCnt = memberService.getLendHomeGymCnt(loginMemberVO.getUsername());
+		int lendCnt = memberService.getLendHomeGymCnt(vo.getUsername());
 		model.addAttribute("lendCnt", lendCnt);
 
 		// 내가 작성한 게시글 수
-		int myBoardCnt = memberService.getMyAllBoardCnt(loginMemberVO.getUsername());
+		int myBoardCnt = memberService.getMyAllBoardCnt(vo.getUsername());
 		model.addAttribute("myBoardCnt", myBoardCnt);
 
 		// 내가 쓴 리뷰 수
-		int myReviewCnt = memberService.getMyAllReviewCnt(loginMemberVO.getUsername());
+		int myReviewCnt = memberService.getMyAllReviewCnt(vo.getUsername());
 		model.addAttribute("myReviewCnt", myReviewCnt);
 
 		return "/user/profile";
 	}
-
 
 	/* 1.마이페이지 회원정보 수정페이지 이동 */
 	
@@ -249,13 +248,21 @@ public class MemberController {
 		return "user/profile_update";
 	}
 
-	/* 1-2.마이페이지 회원정보 수정 요청 */
+/* 1-2.마이페이지 회원정보 수정 요청 */
 	
 	@ResponseBody
 	@PostMapping("mypage/update")
-	public Map<String, Object> memberUpdate(@RequestBody MemberVO vo, HttpSession session) throws Exception {
+	public Map<String, Object> memberUpdate(@RequestBody CustomUserDetails vo) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("memberId============>" + vo.getMemberId());
+		
+		String newPassword = vo.getNewPassword();
+		if(newPassword != null && !newPassword.equals("") ) {
+			newPassword = pwencoder.encode(newPassword);
+			vo.setPassword(newPassword);
+		}
 
 		/* id, password 체크 */
 		boolean result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
@@ -265,7 +272,13 @@ public class MemberController {
 			System.out.println("vo.getNewPassword" + vo.getNewPassword());
 			System.out.println("vo.getPassword" + vo.getPassword());
 			int cnt = memberService.memberUpdate(vo);
-
+//			if(newPassword != null && !newPassword.equals("") ) {
+//				Authentication newAuth = new UsernamePasswordAuthenticationToken(vo.getMemberId(), vo.getPassword(), vo.getAuthorities());
+//				SecurityContextHolder.getContext().setAuthentication(newAuth);
+//			} else {
+//				Authentication newAuth = new UsernamePasswordAuthenticationToken(vo.getMemberId(), pwencoder.encode(vo.getPassword()), vo.getAuthorities());
+//				SecurityContextHolder.getContext().setAuthentication(newAuth);
+//			}
 			if (cnt == 1) { // 회원 수정 성공시
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "회원 정보가 수정되었습니다.");
@@ -281,7 +294,6 @@ public class MemberController {
 		return map;
 
 	}
-
 	/* 1-3. 프로필 이미지 등록 */
 	
 	  @PostMapping("mypage/userImgUpload") 
@@ -310,7 +322,7 @@ public class MemberController {
 	  
 	  memberService.userImgUpload(paramMap);
 	  
-	  return "redirect:/user/mypage/profile_update.do?memberId=silverbi99@naver.com";
+	  return "redirect:/user/mypage/profile_update.do";
 	  }
 	  
 	/* 1-4.프로필 이미지 삭제 (DB + 서버)*/
@@ -394,9 +406,22 @@ public class MemberController {
 	
 	@GetMapping("mypage/myactiv")
 	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		/*
+		 * String memberId = request.getParameter("memberId");
+		 * session.setAttribute("memberId", memberId);
+		 */
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
+		String memberId = loginMemberVO.getMemberId();
+		/*
+		 * CustomUserDetails vo = new CustomUserDetails(); vo =
+		 * memberService.getUser(loginMemberVO.getUsername());
+		 */
+		
+		/* model.addAttribute("member", vo); */
+		
 		//수락 대기중 
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		for(int i =0; i<waitingHG.size();i++) {
@@ -480,8 +505,11 @@ public class MemberController {
 	
 	@GetMapping("mypage/mywrite")
 	public String mywrite(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+
+		String memberId = loginMemberVO.getMemberId();
 
 		//내가 쓴글 리스트
 		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId, cri);

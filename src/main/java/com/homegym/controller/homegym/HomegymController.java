@@ -36,8 +36,10 @@ public class HomegymController {
 	@Autowired
 	private HomegymService homegymService;
 	
-	private static final String UPLOAD_FOLDER = "C:/Users/bitcamp/Desktop/Upload/";
+
+	private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
+
 	// 글쓰기 페이지로 이동
 	@RequestMapping("/registerView.do")
 	public String registerView(Model model, Criteria cri){

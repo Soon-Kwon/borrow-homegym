@@ -60,7 +60,7 @@
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
 											<input type="checkbox" class="form-check-input width-auto" id="exampleCheck1"> 
-											<label class="form-check-label">비밀번호 저장</label>
+											<label class="form-check-label">자동 로그인</label>
 										</div>
 									</div>
 								</div>

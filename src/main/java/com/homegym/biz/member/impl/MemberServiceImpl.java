@@ -97,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 회원 정보 수정 처리
 	@Override
-	public int memberUpdate(MemberVO vo) {
+	public int memberUpdate(CustomUserDetails vo) {
 		System.out.println("패스워드 확인==========================>"+vo.getPassword());
 		return memberDAO.memberUpdate(vo);
 		
