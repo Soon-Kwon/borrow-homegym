@@ -84,7 +84,7 @@
 											<li class="single-event">
 												<div class="thumbnail">
 													<a href='<c:out value="${board.h_id}"/>' class="image move"><img
-														src='/display.do?fileName=${board.uploadPath }/${board.uuid }_${board.fileName }'
+														src='/display.do?fileName=${board.uploadPath }${board.uuid }_${board.fileName }'
 														alt="Event Image"></a>
 												</div>
 												<div class="info">

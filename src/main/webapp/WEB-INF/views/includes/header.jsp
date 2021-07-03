@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
+    <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     
     <!-- message 관련 -->
     <script src="/resources/assets/js/message.js"></script>
