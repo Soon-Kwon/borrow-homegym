@@ -34,8 +34,8 @@
 	
 	 <!-- 업로드 패스 설정 (eunbi)-->
 	<beans:bean class="java.lang.String" id="uploadPath">
-		<!-- <beans:constructor-arg value="C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources"/> -->
-		<beans:constructor-arg value="/Users/hayeon/upload"/>
+		 <beans:constructor-arg value="C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources"/> 
+		<!--<beans:constructor-arg value="/Users/hayeon/upload"/>-->
 	</beans:bean>
 	
 

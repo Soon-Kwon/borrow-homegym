@@ -256,7 +256,15 @@ public class MemberController {
 	public Map<String, Object> memberUpdate(@RequestBody MemberVO vo, HttpSession session) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		
+		  String newPassword = vo.getNewPassword(); newPassword =
+		  pwencoder.encode(newPassword); vo.setPassword(newPassword);
+		  
+		  String password = vo.getPassword(); password = pwencoder.encode(password);
+		  vo.setPassword(password);
 
+		
 		/* id, password 체크 */
 		boolean result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
 
@@ -310,7 +318,7 @@ public class MemberController {
 	  
 	  memberService.userImgUpload(paramMap);
 	  
-	  return "redirect:/user/mypage/profile_update.do?memberId=silverbi99@naver.com";
+	  return "redirect:/user/mypage/profile_update.do";
 	  }
 	  
 	/* 1-4.프로필 이미지 삭제 (DB + 서버)*/
@@ -394,9 +402,22 @@ public class MemberController {
 	
 	@GetMapping("mypage/myactiv")
 	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		/*
+		 * String memberId = request.getParameter("memberId");
+		 * session.setAttribute("memberId", memberId);
+		 */
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
+		String memberId = loginMemberVO.getMemberId();
+		/*
+		 * CustomUserDetails vo = new CustomUserDetails(); vo =
+		 * memberService.getUser(loginMemberVO.getUsername());
+		 */
+		
+		/* model.addAttribute("member", vo); */
+		
 		//수락 대기중 
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		for(int i =0; i<waitingHG.size();i++) {
@@ -480,8 +501,11 @@ public class MemberController {
 	
 	@GetMapping("mypage/mywrite")
 	public String mywrite(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+
+		String memberId = loginMemberVO.getMemberId();
 
 		//내가 쓴글 리스트
 		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId, cri);

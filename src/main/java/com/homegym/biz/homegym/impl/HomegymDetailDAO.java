@@ -1,5 +1,8 @@
 package com.homegym.biz.homegym.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +21,6 @@ public class HomegymDetailDAO {
 	// 글 작성 
 	public void insert(HomegymDetailVO vo) {
 		
-		log.info("홈짐예약 글작성 DAO: " + vo);
 		mybatis.insert("HomegymDetailDAO.insert", vo);
 	}
 }
