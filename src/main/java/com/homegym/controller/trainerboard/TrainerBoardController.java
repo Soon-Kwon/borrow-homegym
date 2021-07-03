@@ -188,14 +188,15 @@ public class TrainerBoardController {
 
 		// 최종 결과를 담을 리스트
 		List<TrainerAttachVO> list = new ArrayList<>();
-		String uploadFolder = "D:/upload";
+		String uploadFolder = "D:/upload/";
 
 		// 상세페이지에서 보여줄 서브 사진
 		// getFolder 메서드는 년/월/일 형식의 폴더 구조를 생성해 줌
-		String uploadFolderPath = getFolderSub();
+//		String uploadFolderPath = getFolderSub();
 
 		// uploadFolder의 폴더 경로에 uploadFolderPath에 대한 객체 생성(경로 설정)
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolder);
+//		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		log.info("upload path: " + uploadPath);
 
 		if (uploadPath.exists() == false) {
@@ -224,7 +225,8 @@ public class TrainerBoardController {
 			// 업로드 파일 이름을 uuid를 활용하여 파일명 변경
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 
-			fileNameList.add(uploadFolder + uploadFolderPath + uploadFileName);
+			fileNameList.add(uploadFolder + uploadFileName);
+//			fileNameList.add(uploadFolder + uploadFolderPath + uploadFileName);
 
 			try {
 				// 파일 객체 생성
@@ -234,7 +236,8 @@ public class TrainerBoardController {
 
 				// 데이터베이스에 uuid와 uploadPath(파일경로) 저장
 				attachVO.setUuid(uuid.toString());
-				attachVO.setUploadPath(uploadFolderPath);
+				attachVO.setUploadPath("D:/upload/");
+//				attachVO.setUploadPath(uploadFolderPath);
 
 				// 이미지 파일인지 체크
 				if (checkImageType(saveFile)) {
@@ -265,7 +268,7 @@ public class TrainerBoardController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	// 서버에서 섬네일 가져오기
+	// 서버에서 자기소개 섬네일 가져오기
 	@GetMapping("/display.do")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName) {
@@ -273,7 +276,6 @@ public class TrainerBoardController {
 		log.info("fileName: " + fileName);
 
 		File file = new File(("D:/upload/") + fileName);
-
 		log.info("file: " + file);
 
 		ResponseEntity<byte[]> result = null;
@@ -303,7 +305,7 @@ public class TrainerBoardController {
 
 		try {
 			// 한글이름의 파일일 경우를 대비해서 URLDecoder.decode() 활용
-			file = new File("D:/upload" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("D:/upload/" + URLDecoder.decode(fileName, "UTF-8"));
 
 			file.delete(); // 파일 삭제
 
@@ -326,36 +328,33 @@ public class TrainerBoardController {
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
 
-	// 대표사진 저장될 파일 경로 생성하기
-	private String getFolderMain() {
+	/*
+	 * // 대표사진 저장될 파일 경로 생성하기 private String getFolderMain() {
+	 * 
+	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date date = new Date();
+	 * 
+	 * String str = sdf.format(date);
+	 * 
+	 * // 임시 test str = str + "-main";
+	 * 
+	 * return str.replace("-", File.separator); }
+	 */
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date date = new Date();
-
-		String str = sdf.format(date);
-
-		// 임시 test
-		str = str + "-main";
-
-		return str.replace("-", File.separator);
-	}
-
-	// 자기소개 사진 저장될 파일 경로 생성하기
-	private String getFolderSub() {
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date date = new Date();
-
-		String str = sdf.format(date);
-
-		// 임시 test
-		str = str + "-sub";
-
-		return str.replace("-", File.separator);
-	}
-
+	/*
+	 * // 자기소개 사진 저장될 파일 경로 생성하기 private String getFolderSub() {
+	 * 
+	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date date = new Date();
+	 * 
+	 * String str = sdf.format(date);
+	 * 
+	 * // 임시 test str = str + "-sub";
+	 * 
+	 * return str.replace("-", File.separator); }
+	 */
 	private boolean checkImageType(File file) {
 
 		try {
@@ -380,7 +379,7 @@ public class TrainerBoardController {
 	@PostMapping("uploadFormAction.do")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 
-		String uploadFolder = "D:/upload";
+		String uploadFolder = "D:/upload/";
 
 		for (MultipartFile multipartFile : uploadFile) {
 
@@ -414,15 +413,17 @@ public class TrainerBoardController {
 		// uploadAjaxPostMain(MultipartFile[] uploadFile) {
 
 		List<TrainerAttachVO> list = new ArrayList<>();
-		String uploadFolder = "D:/upload";
+		String uploadFolder = "D:/upload/";
 		// String uploadFolder = "/Users/soon/Desktop/upload";
 
-		String uploadFolderPath = getFolderMain();
+		/* String uploadFolderPath = getFolderMain(); */
 		// String uploadFolderPath = getFolder();
 
 		// make folder ---------
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		log.info("upload path: " + uploadPath);
+		File uploadPath = new File(uploadFolder);
+		/*
+		 * File uploadPath = new File(uploadFolder, uploadFolderPath);
+		 */ log.info("upload path: " + uploadPath);
 
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
@@ -445,7 +446,8 @@ public class TrainerBoardController {
 
 		uploadFileName = uuid.toString() + "_" + uploadFileName;
 
-		String mainFileName = uploadFolder + uploadFolderPath + uploadFileName;
+		String mainFileName = uploadFolder + uploadFileName;
+		// String mainFileName = uploadFolder + uploadFolderPath + uploadFileName;
 
 		try {
 			// File saveFile = new File(uploadFolder, uploadFileName);
@@ -453,7 +455,8 @@ public class TrainerBoardController {
 			file.transferTo(saveFile);
 
 			attachVO.setUuid(uuid.toString());
-			attachVO.setUploadPath(uploadFolderPath);
+			attachVO.setUploadPath("D:/upload/");
+			// attachVO.setUploadPath(uploadFolderPath);
 
 			// check image type file
 			if (checkImageType(saveFile)) {
@@ -486,7 +489,7 @@ public class TrainerBoardController {
 
 		log.info("fileName: " + fileName);
 
-		File file = new File(("D:/upload/") + fileName);
+		File file = new File(fileName);
 		// File file = new File(("D:/upload") + fileName);
 
 		log.info("file: " + file);
