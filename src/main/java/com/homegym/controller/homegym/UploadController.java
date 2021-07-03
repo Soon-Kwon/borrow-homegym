@@ -35,7 +35,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class UploadController {
 	
 	// 업로드 폴더 경로 
-	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/upload/";
+	private static final String UPLOAD_FOLDER = "C:/Users/bitcamp/Desktop/Upload/";
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
 
 	// 파일 업로드
@@ -50,10 +50,12 @@ public class UploadController {
 		String uploadFolder = UPLOAD_FOLDER;
 		
 		// getFolder 메서드는 년/월/일 형식의 폴더 구조를 만들어낸다. 
-		String uploadFolderPath = getFolder();
+		//String uploadFolderPath = getFolder();
+		//uploadFolderPath.replace("\\","/");
+		//log.info("테스트: " + uploadFolderPath);
 		
 		// uploadFolder의 폴더경로에 uploadFolerPath라는 파일에 대한 객체를 생성한다. 경로설정
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolder);
 		log.info("upload path: " + uploadPath);
 		
 		if(uploadPath.exists() == false) {
@@ -90,7 +92,7 @@ public class UploadController {
 				
 				// 데이터베이스에 uuid와 uploadPath(파일경로) 저장
 				attachVO.setUuid(uuid.toString());
-				attachVO.setUploadPath(uploadFolderPath);
+				attachVO.setUploadPath(UPLOAD_FOLDER);
 				
 				// 이미지 파일인지 확인
 				if(checkImageType(saveFile)) {
@@ -128,7 +130,7 @@ public class UploadController {
 		
 		log.info("fileName: " + fileName);
 		
-		File file = new File((UPLOAD_FOLDER) + fileName);
+		File file = new File(fileName);
 		
 		log.info("file: " + file);
 		
