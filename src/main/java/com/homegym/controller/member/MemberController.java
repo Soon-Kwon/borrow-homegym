@@ -474,12 +474,37 @@ public class MemberController {
 		return "user/myactiv";
 	}
 
+	
+	/* 결제 상태값 변화  */
+	
+	@GetMapping("/payUpdate")
+	public String payUpdate(@RequestParam(value="d_id",required=false) int dId,@RequestParam(value="payYN",required=false) String payYN,HttpServletRequest request, HttpSession session) {
+		
+		System.out.println("결제 vo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dId);
+		System.out.println("결제 payYN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + payYN);
+		
+		HomegymDetailVO vo = new HomegymDetailVO();
+		
+		vo.setDId(dId);
+		vo.setPayYN(payYN);
+		memberService.payUpdate(vo);
+		
+		
+		return "redirect:/user/mypage/myactiv";
+	}
+	
+	/*결제 완료시 (jsp 페이지 보여줌) */
+	@GetMapping("/payOk")
+	public String payOK() {
+	
+		return "user/payOk";
+	}
+	
 	/* 수락 거절 상태값 변화 */
 	
 	@ResponseBody
 	@PostMapping("/acceptCheck")
-	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,
-			HttpSession session, Model model) {
+	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 

@@ -45,7 +45,7 @@
 <body>
 <script type="text/javascript">
 	// 안읽은 메세지 카운트 가져오기
-	function getUnread(){
+	/* function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
@@ -57,7 +57,7 @@
 				},
 				url: "${contextPath}/message/getNewNoticeCnt.do",
 				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-				beforeSend : function(xhr){
+				/*beforeSend : function(xhr){
 					xhr.setRequestHeader(header, token);
 	            },
 				success:function(result){
@@ -70,10 +70,10 @@
 					}
 				}
 			})
-	}
+	} */
 	
 	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-	function getInfiniteUnread(){
+	/* function getInfiniteUnread(){
 		setInterval(function(){
 			getUnread();
 		}, 4000); // 4초마다 요청
@@ -97,7 +97,7 @@
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
 	});
-	
+	 */
 	</script>
 
  <!-- Start Header Area -->

@@ -164,7 +164,12 @@ public class MemberServiceImpl implements MemberService {
 //	}
 
 
-	
+	/*결제 여부 변경*/
+	@Override
+	public void payUpdate(HomegymDetailVO vo) {
+		 memberDAO.payUpdate(vo);
+	}
+
 	/* 홈짐 수락 여부 변경*/
 	@Override
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
@@ -189,7 +194,8 @@ public class MemberServiceImpl implements MemberService {
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId) {
 		return memberDAO.getMyRequest(vo,hId);
 	}
-	
+
+
 
 
 

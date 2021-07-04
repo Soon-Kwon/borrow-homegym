@@ -58,23 +58,23 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title">마이페이지</h3>
+                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
                                             <h6 class="title"><a
-                                                    href="course-details.html">나의 활동내역</a></h6>
+                                                    href="myactiv">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -140,7 +140,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
@@ -151,7 +151,7 @@
                                     </table>
                                     
                                    <form id="actionForm" action="user/mypage/mywrite.do" method="get">
-                                     	<input type="hidden" name="memberId" value="${member.memberId}"/>
+                                     	<input type="hidden" name="memberId" value="${member_memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
                                     </form> 
@@ -200,7 +200,7 @@
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
-				                                            <td><a href="course-details.html">${myReviews.hr_content}</a></td>
+				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}">${myReviews.hr_content}</a></td>
 					                                            <c:if test="${myReviewshr_score==1}">
 					                                            	<td>⭐</td><
 					                                            </c:if>
@@ -214,7 +214,7 @@
 					                                            	<td>⭐⭐⭐⭐</td>
 					                                            </c:if>
 					                                            <c:if test="${myReviews.hr_score==5}">
-					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
+					                                            	<td>⭐⭐⭐⭐⭐</td>
 					                                            </c:if>
 				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hr_regdate}" /></td>
 		                                       		    </tr>

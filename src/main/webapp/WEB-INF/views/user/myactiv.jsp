@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <style>
     	
         .latest-news-area {
@@ -187,9 +186,9 @@
                             <h3 class="sidebar-widget-title">검색해보세요</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
+                                    <form action="/user/payOk.do">
                                         <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
+                                        <button><a href="/user/payOk.do"></a></button>
                                     </form>
                                 </div>
                             </div>
@@ -390,7 +389,7 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                      	<input type="hidden" name="memberId" value="${member}"/> <!-- 세션 받으면 바꾸기 -->
+                                      	<input type="hidden" name="memberId" value="${member_memberId}"/> 
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
@@ -447,14 +446,21 @@
                                     				</c:when>
                                     			<c:otherwise>
                                     		<c:forEach var="rentHomegym" items="${rentHomegym}" varStatus="status">
+                                    		
+                                    			<input type="hidden" value="${rentHomegym.h_title}" name="h_name" id="h_name_${status.index}"  />
+								                <input type="hidden" value="${rentHomegym.h_memberId}" name="email" id="email_${status.index}"/>
+												<input type="hidden" value="${rentHomegym.h_addr}" name="address" id="address_${status.index}"/>
+												<input type="hidden" value="${rentHomegym.h_price}" name="price" id="price_${status.index}"/>
+												<input type="hidden" value="${rentHomegym.phoneNum}" name="phoneNum" id="phoneNum_${status.index}"/>
+												<input type="hidden" value="${rentHomegym.d_id}" name="dId" id="dId_${status.index}"/>
+                                    			
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
+                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}">
+                                                                <img class="thumb" src="https://via.placeholder.com/1050x700" alt="#"></a>
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
@@ -468,8 +474,8 @@
                                                             <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
                                                                     <c:if test="${rentHomegym.payYN =='N' and rentHomegym.agreeYN == 'Y'}"> 
-																			<div class="button accept-btn">
-			                                                                     <button class="btn" id="payBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 하기</button>
+																			<div class="button accept-btn" id="acceptBtn">
+			                                                                     <button class="btn" id="payBtn_${status.index}" value="${homegym.HId}" name="homegymPay" data-attr="${status.index}">결제 하기</button>
 			                                                                </div>
 																	</c:if>
                                                            		 	 <c:if test="${rentHomegym.payYN =='Y'}"> 
@@ -498,7 +504,7 @@
                                           </c:otherwise>
                                     </c:choose>
                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                     	<input type="hidden" name="memberId" value="silverbi99@naver.com"/>
+                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
                                     	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
                                     </form>
@@ -665,30 +671,75 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- 결제 api 아임포트 -->
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
     
     <script type="text/javascript">
     	$(document).ready(function(){
-    		var actionForm= $("#actionForm");
+    /* 		var actionForm= $("#actionForm");
 
-    		
-    		$(".pagination-list a").on("click",function(e){
+			/* 페이징 */    		
+    	/* 	$(".pagination-list a").on("click",function(e){
     			e.preventDefault();
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/myactiv.do");
     			actionForm.submit();
+    		}); */
+			/* 결제 api */
+				 
+
+
+    			$(document).on("click", "#acceptBtn > button ", function() {
+					
+    				var idx = $(this).attr("data-attr");
+				
+					var name    = $("#h_name_"+idx).val(); //홈짐 명
+				 	var email   = $("#email_"+idx).val(); //주문자 이메일
+					var address = $("#address_"+idx).val(); // 주문자 주소
+					var price   = $("#price_"+idx).val();
+					var phone   = $("#phoneNum_"+idx).val(); 
+					var dId = $("#dId_"+idx).val();
+					
+					alert("name :: " + name + "email :: " + email + "address :: " + address + "price :: " + price + "phone :: " + phone + "dId :::" + dId);
+					
+			 		var IMP = window.IMP; // 생략가능
+					IMP.init('imp97132347');
+			 		
+					IMP.request_pay({
+						pg: 'inicis', 
+						pay_method: 'card',
+						merchant_uid: 'merchant_' + new Date().getTime(),
+						name: name,
+						//결제창에서 보여질 이름
+						amount: price,
+						//가격
+						buyer_email: email,
+						/* buyer_name: '구매자이름', */
+						buyer_tel: 'phone',
+						buyer_addr: 'address',
+						buyer_postcode: '123-456',
+						m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+					}, function (rsp) {
+						console.log(rsp);
+						if (rsp.success) {
+							var msg = '홈짐 결제가 완료되었습니다.';
+							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
+							/* msg += '고유ID : ' + rsp.imp_uid;
+							msg += '상점 거래ID : ' + rsp.merchant_uid;
+							msg += '결제 금액 : ' + rsp.paid_amount;
+							msg += '카드 승인번호 : ' + rsp.apply_num; */
+						} else {
+							var msg = '홈짐 결제에 실패하였습니다. 다시 시도해주세요 !';
+							msg += '에러내용 : ' + rsp.error_msg;
+							location.href="/user/mypage/myactiv.do?payYN=N";
+						}
+							alert(msg);
+						});
+					}); 
     		});
-  		
-    		$(function(){
-    			$("#TabMenu").tabs({
-    				select:function(event,ui){
-    				window.loaction.replace(ui.tab.hash);
-    				}
-    			})
-    			});
-    		
-    		
-    	});
+
 
     </script>
 </body>

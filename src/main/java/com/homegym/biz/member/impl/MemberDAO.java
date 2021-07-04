@@ -188,6 +188,12 @@ public class MemberDAO {
 	}
 	
 
+	//결제 여부 변경
+	public void payUpdate(HomegymDetailVO vo) {
+		
+		 sqlsession.update("MemberDAO.payUpdate",vo);
+	}
+	
 	//홈짐 수락 거절 상태 변화
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
