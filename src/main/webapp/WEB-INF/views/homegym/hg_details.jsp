@@ -47,7 +47,7 @@
 									<span></span>
 									<span></span>
 								</h3> -->
-								<h5> ${board.memberId}님의 홈짐 위치</h5>
+								<h5> ${board.nickName}님의 홈짐 위치</h5>
 								<br>
 								
 								<!-- 홈짐 위치 나오는 div -->
@@ -91,7 +91,7 @@
 						<div class="widget popular-feeds" style="position: relative; top: 30px;">
 							<div class="info">
 								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
+									<i class="lni lni-apartment"></i> ${board.nickName }님의 홈짐
 								</h4>
 								<br>
 								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
@@ -134,7 +134,7 @@
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
-							value="borrowerId" placeholder="${member_memberId}" readonly>
+							value="borrowerId" placeholder="<sec:authentication property="principal.nickname" />" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>
@@ -376,7 +376,7 @@
 						hrScore: $("input[name='hrScore']:checked").val(),
 						hid: hIdValue,
 						memberId: memberId,
-						borrowerId: "${member_memberId}"
+						borrowerId: "${member_nickName}"
 				};
 				
 				// 평점이 없을시 입력해달라는 요청메시지 보내기

@@ -12,6 +12,7 @@ public class HomegymVO {
 	
 	private int hId;
 	private String memberId;
+	private String nickName;
 	private String hTitle;
 	private String hContent;
 	private String hPrice;

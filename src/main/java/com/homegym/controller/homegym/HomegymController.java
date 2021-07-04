@@ -38,6 +38,7 @@ public class HomegymController {
 	
 
 	private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
+	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
 
 	// 글쓰기 페이지로 이동
@@ -53,7 +54,7 @@ public class HomegymController {
 	@ResponseBody
 	@RequestMapping("/register.do")
 	//public String register(@ModelAttribute HomegymVO vo) {
-	public String register(HomegymVO vo, Criteria cri) {
+	public String register(HomegymVO vo, Criteria cri, Model model) {
 		
 		log.info("글 등록하기: " + vo);
 		
@@ -62,6 +63,7 @@ public class HomegymController {
 		}
 		
 		homegymService.register(vo);
+		model.addAttribute("hId", vo.getHId());
 		return "OK";
 	}
 	
@@ -167,7 +169,7 @@ public class HomegymController {
 				
 				// java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근)
 				// attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다.
-				Path file = Paths.get(UPLOAD_FOLDER+ attach.getUploadPath()
+				Path file = Paths.get(UPLOAD_FOLDER + attach.getUploadPath()
 				+ "/" + attach.getUuid() + "_" + attach.getFileName());
 				
 				// java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다.
