@@ -21,5 +21,7 @@ public interface MessageService {
 	// 홈짐 글 번호를 통해 memberId 조회
 	public String getBoardWriterId(int hId);
 
+	public int getMsgRoomNo(MessageVO vo);
+
 
 }

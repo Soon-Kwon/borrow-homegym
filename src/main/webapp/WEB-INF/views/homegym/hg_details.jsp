@@ -55,12 +55,12 @@
 								<br>
 								<!-- 집주인일 경우 나오는 수정/삭제버튼 
 								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
-								<div id="manipulateBtn">
+								<%-- <div id="manipulateBtn">
 									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
 									class="btn btn-time">
 									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
 									class="btn btn-time">
-								</div>	
+								</div>	 --%>
 								
 								<!-- 리뷰 -->
 								<div class="post-comments">
@@ -102,10 +102,24 @@
 								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<input type="button" value="지금 예약하러 가기"
-								 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
-								<br /> <br />
-									<button id="showMessageContent" class="btn btn-time msg_send_btn_profile">집주인에게 문의하기</button>
+								<!-- 집주인일 경우 나오는 수정/삭제버튼 
+								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
+								<c:choose>
+									<c:when test="${board.memberId ne memberId }">
+										<input type="button" id="reserveBtn" value="지금 예약하러 가기"
+										 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn">
+										<br /> <br />
+										
+										<button id="showMsgContent" class="btn msg_send_btn_profile" style="margin-top:10px;" onclick="showMessageContent('${board.memberId}');">집주인에게 문의하기</button>
+									</c:when>
+									<c:when test="${board.memberId eq memberId}">
+										<input type="button" id="updateBtn" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
+										class="btn">
+									</c:when>
+								</c:choose>
+								<input type="button" id="listBtn" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
+										class="btn">
+								
 								</div>
 						</div>
 						<!--/ End Single Widget -->
@@ -159,7 +173,53 @@
 		</div>
 	</div>
 	<!-- /.modal -->
-	
+	<!-- 메세지 보내기 모달창 -->
+		<!-- Modal -->
+		<div class="modal fade" id="messageModal" tabindex="-1"
+			aria-labelledby="messageModalLabel" aria-hidden="true">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<span id="m_writer_profile">
+							<div class="message-box">
+								<!-- 상대방 프로필 경로잡아주기 -->
+								<img src="/resources/assets/images/gym/re3.png" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+
+							</div>
+						</span>
+						<h5 class="modal-title" id="messageModalLabel">&nbsp; ${board.nickName}</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body ">
+						<!-- 메세지 내용 영역 -->
+						<div class="mesgs col-12">
+							<!-- 메세지 내용 목록 -->
+							<div class="msg_history" name="contentList">
+								<!-- 메세지 내용이 올 자리 -->
+							</div>
+							<div class="send_message"></div>
+							<!-- 메세지 입력란이 올자리 -->
+							<div class='type_msg'>
+								<div class='input_msg_write row'>
+									<div class='col-11'>
+										<input type='text' class='write_msg form-control'
+											placeholder='메세지를 입력해주세요' />
+									</div>
+									<div class='col-1'>
+										<button class='msg_send_btn' type='button' onclick="sendMessage('${board.memberId}', '${memberId}');">
+											<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
+										</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 
 		<!-- Start Footer Area -->
@@ -488,28 +548,97 @@
 				});
 			});
 			
+			
 			// 집주인에게 문의하기
-			// 리뷰쓰기 버튼 누르면 동작
-			$("#showMessageContent").on("click", function(e){
+			$("#showMsgContent").on("click", function(e){
 				
-				//기존에 존재하던 값들은 지워준다
-				modal.find("input[name != 'hrScore']").val("");
-				modal.find("input:radio[name = 'hrScore']").prop('checked', false);
-				modal.find("textarea[name ='hrContent']").val("");
-				modal.find("button[id != 'modalCloseBtn']").hide();
+				$("#messageModal").modal("show");
+				console.log("showMessageContent보여주기");
 				
-				modalRegisterBtn.show();
 				
-				$("#myModal").modal("show");
+			});
+			
+			// 1:1 문의할 때, 엔터로 메세지 보내기
+			$('.write_msg').keydown(function(){
+				if(event.keyCode == 13){
+					SendMessage(otherId, curId);
+				} 
 			});
 			
 			// 닫기 버튼 누르면 동작
-			$("#modalCloseBtn").on("click", function(e){
-				$("#myModal").modal("hide");				
+			$("#showMsgContent").on("click", function(e){
+				$("#messageModal").modal("hide");				
 			});
 			
 		
 		});
+		
+		// 1:1문의할 떄, 메세지 내역 가져오는 함수
+		const showMessageContent = function(otherId){
+			$.ajax({
+				url:"/message/msgContentByAsking.do",
+				method:"GET",
+				data:{
+					otherId : otherId,
+					curId : '${memberId}'
+				},
+				success : function(data){
+					console.log("1:1문의하기에서 메세지 내용 가져오기 성공 data : "+data);
+					
+					// 메세지 내용을 html에 넣기
+					$('.msg_history').html(data);
+					
+					// 이 함수로 메세지 내용 가져온 후, 스크롤을 맨아래로
+					$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight); 
+				},
+				error: function(){
+					alert('showMessageContent(${board.memberId}); 에러');
+				}
+			});
+			
+			// 해당 채팅방의 메세지 내용을 읽었음으로 읽음처리 
+			$('.unread' + msgRoomNo).empty();
+		};
+		
+		// 1:1문의할 떄, 메세지 전송하기
+		const sendMessage = function(otherId, curId){
+			console.log("sendMessage otehrId : "+otherId);
+			let msgContent = $('.write_msg').val();
+			console.log(msgContent);
+			
+			msgContent = msgContent.trim();
+			
+			if(msgContent ==""){
+				alert('메세지를 입력해주세요');
+			} else {
+				$.ajax({
+					url : "/message/msgSendByAsking.do",
+					method:"GET",
+					data:{
+						otherId : otherId,
+						curId, curId,
+						msgContent : msgContent
+					},
+					success:function(data){
+						console.log('메세지 전송 성공');
+						
+						
+						// 메세지 입력칸 비우기
+						$('.write_msg').val("");
+						
+						
+						// 메세지 내용 리로드
+						showMessageContent(otherId);
+					},
+					error: function(){
+						alert('sendMessage() 에러');
+					}
+				});
+			}
+		};
+		
+		
+		
 	</script>
 		<!-- ========================= 카카오 지도 ========================= -->
 

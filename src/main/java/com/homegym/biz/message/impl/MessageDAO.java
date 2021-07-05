@@ -133,6 +133,12 @@ public class MessageDAO {
 		log.info("DAO의 getOtherId();");
 		return sqlSession.selectOne("MessageDAO.getBoardWriterId", hId);
 	}
+
+	/*1:1문의할 채팅방 번호가져오기*/
+	public int getMsgRoomNo(MessageVO vo) {
+		log.info("DAO의 getMsgRoomNo();");
+		return sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
+	}
 	
 	/* 
 	 * 1:1 문의하기

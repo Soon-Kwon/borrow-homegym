@@ -13,6 +13,7 @@
 		<c:when test="${tmp.curId ne tmp.sendId}">
 		&nbsp;&nbsp;${tmp.sendId}
 			<%-- 받은 메세지 --%>
+			
 			<div class="incoming_msg">
 				<div class="incoming_msg_img">
 					<%--<img src="https://ptetutorials.com/images/user-profile.png"
@@ -46,7 +47,7 @@
 		<c:otherwise>
 			<div class="outgoing_msg">
 				<div class="sent_msg">
-				<br> &nbsp;&nbsp;ME : ${tmp.curId}
+				<br> &nbsp;&nbsp;나
 					<p>${tmp.msgContent}</p>
 					<span class="time_date"> <fmt:formatDate
 							pattern="yyyy-MM-dd HH:mm" value="${tmp.msgSendTime }" />

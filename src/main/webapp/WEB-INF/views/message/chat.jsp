@@ -149,7 +149,6 @@
 									<!-- 메세지 내용 목록 -->
 									<div class="msg_history" name="contentList">
 										<!-- 메세지 내용이 올 자리 -->
-										clist.memberId : ${clist.memberId }
 									</div>
 									<div class="send_message"></div>
 									<!-- 메세지 입력란이 올자리 -->
@@ -193,9 +192,6 @@
 
 	// 1:1문의할 떄, 메세지 내역 가져오기
 	const showMessageContent = function(otherId){
-		console.log("otherId: " + otherId);
-		console.log("${memberId}");
-		console.log("${clist.curId}");
 		
 		$.ajax({
 			url:"msgContentByAsking.do",

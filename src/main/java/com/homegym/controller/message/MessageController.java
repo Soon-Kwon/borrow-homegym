@@ -123,22 +123,21 @@ public class MessageController {
 	
 	/*1:1문의) 채팅방번호에 따른 메세지 내용 가져오기*/
 	@RequestMapping("/msgContentByAsking.do")
-	public String msgContentByAsking(HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
+	public String msgContentByAsking(@RequestParam String otherId, @RequestParam String curId, HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
 		
 		System.out.println("1:1문의하기를 통한 메세지 내용 가져오기");
 		
-		// 글 번호를 통해 otherId 세팅하기
-		String hId = request.getParameter("hId");
-//		HomegymVO hVo = new HomegymVO();
-//		hVo.setHId(Integer.parseInt(hId));
-		
-		// DB에서 해당 글을 쓴 아이디 가져오기
-		String otherId = messageService.getBoardWriterId(Integer.parseInt(hId));
-		// 문의할 id(번호)
+		// 글 쓴 사람을 메세지 받을 사람으로 세팅
 		vo.setRecvId(otherId);
-		System.out.println("otherId" + otherId);
-		// 현재 로그인한 id
-		vo.setCurId((String)session.getAttribute("curId")); 
+		System.out.println("otherId : " + otherId);
+		
+		// 현재 로그인한 id를 보내는 사람으로 세팅
+		vo.setSendId(curId);
+		System.out.println("curId : "+curId);
+		
+		// 메세지 보낸 사람, 받는 사람의 채팅방 번호찾고 넘겨주기
+		int msgRoomNo = messageService.getMsgRoomNo(vo);
+		vo.setMsgRoomNo(msgRoomNo);
 		
 		// 채팅방번호에 따른 메세지 내용 가져오기 
 		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
@@ -153,13 +152,13 @@ public class MessageController {
 	/*1:1문의) 메세지 리스트에서 메세지 보내기*/
 	@ResponseBody
 	@RequestMapping("/msgSendByAsking.do")
-	public int msgSendByAsking(@RequestParam String otherId, @RequestParam String msgContent, HttpSession session, MessageVO vo) {
+	public int msgSendByAsking(@RequestParam String otherId, @RequestParam String msgContent, @RequestParam String curId, MessageVO vo) {
 		System.out.println("1:1문의하기를 통한 메세지 보내기");
 		System.out.println("otherId : " + otherId);
 		System.out.println("msgContent : "+msgContent);
 		
 		// 현재 로그인한 id를 sendId로 세팅
-		vo.setSendId((String)session.getAttribute("curId"));
+		vo.setSendId(curId);
 		vo.setRecvId(otherId);
 		vo.setMsgContent(msgContent);
 		

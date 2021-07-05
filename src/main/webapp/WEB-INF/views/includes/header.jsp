@@ -34,12 +34,14 @@
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
+    <link rel="stylesheet" href="/resources/assets/css/chat.css" />
     
     <!-- message, 알림 관련 -->
     <script src="/resources/assets/js/message.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    
     <script type="text/javascript">
     	var socket = null;
     	
@@ -81,7 +83,7 @@
 	
 </head>
 <body>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	// 안읽은 메세지 카운트 가져오기
 	function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -136,7 +138,7 @@
 		getInfiniteUnread();
 	});
 	
-	</script> -->
+	</script>
 
  <!-- Start Header Area -->
     <header class="header style2 navbar-area">

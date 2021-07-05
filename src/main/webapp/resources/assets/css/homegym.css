@@ -231,6 +231,30 @@ input[id='img_upload'] {
 	text-align: right;
 }
 
+/*수정/삭제, 목록, 문의버튼, 예약버튼*/
+
+#updateBtn, #showMsgContent{
+	width: 350px;
+    height: 50px;
+    bottom: 20px;
+    background-color: #656f98;
+    color: white;
+    border-radius: 20px;
+} 
+
+#listBtn, #reserveBtn{
+	width: 350px;
+    height: 50px;
+    bottom: 20px;
+    border: solid 1px;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+#showMsgConten{
+	margin-top:10px;
+}
+
 /*===================홈짐 예약 페이지========================*/
 
 /*라디오 버튼 CSS*/
