@@ -10,7 +10,18 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
+<style>
+	#addBtn{
+		height: 50px;
+	    width: 150px;
+	    font-size: 18px;
+	    margin-left: 350px;
+	    border-color: #5c6dbd;
+	    color: #5c6dbd;
+	    font-weight: 400;
+	}
 
+</style>
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -140,7 +151,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
@@ -186,7 +197,7 @@
                                                 <th>리뷰 작성일</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="listBody">
                                    				 <c:choose>
                                     				<c:when test ="${fn:length(myReviews)==0}">
                                     				<div style="font-size: 20px">
@@ -200,7 +211,7 @@
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
-				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}">${myReviews.hr_content}</a></td>
+				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}" style="color:black;">${myReviews.hr_content}</a></td>
 					                                            <c:if test="${myReviewshr_score==1}">
 					                                            	<td>⭐</td><
 					                                            </c:if>
@@ -219,10 +230,14 @@
 				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hr_regdate}" /></td>
 		                                       		    </tr>
                                     			   </c:forEach>
+                                    			  
                                     	     	</c:otherwise>
                                      		 </c:choose>
+                                     		
                                			  </tbody>
                                        </table>
+                                       
+                                         <button id="addBtn" class="btn btn-outline-secondary">더보기</button>
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -285,8 +300,45 @@
     
     
      <script type="text/javascript">
-    	$(document).ready(function(){
-    		var actionForm= $("#actionForm");
+     $(document).ready(function(){
+        /*  $("#addBtn").click(function(){
+             alert("Hello jQuery!");
+             //var startNum=$("#listBody tr").length; //마지막 리스트 번호 알아냄
+ 			// var addListHtml ="";
+             
+             var startIndex = 1;
+             var addStep = 5;
+ 			 alert(startNum);
+ 			
+ 			$ajax({
+				url:"/user/mypage/mywrite.do",
+				type:"post",
+				dataType:"json",
+				data:{"startNum":startNum},
+				
+				success:function(data){
+					if(data.length<10){
+						$("addBtn").remove();
+					}else{
+						var addListHtml="";
+						if(data.length>0){
+							for(var i=0; i<data.length; i++){
+								var idx = Number(startNum)+Number(i)+1;
+								addListHtml += "<tr>";
+								addListHtml += "<td>" + idx + "</td>";
+								addListHtml += "<td>" + data[i].title + "</td>";
+								addListHtml += "<td>" + data[i].description + "</td>";
+								addListHtml += "</tr>"
+							}
+							$("#listBody").append(addListHtml);
+						}
+					}
+				}
+
+ 			}); 
+         });
+      }); */
+ \   		var actionForm= $("#actionForm");
 
     		
     		$(".pagination-list a").on("click",function(e){
@@ -295,10 +347,20 @@
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/mywrite.do");
     			actionForm.submit();
-    		});
+    		}); \
+    		
+    	/*  	$(document).on("#addBtn", function() {
+    		$("#addBtn").click(function(){
+    			alert("ddddd"); 
+    			 var startNum=$("#listBody tr").length; //마지막 리스트 번호 알아냄
+    			var addListHtml ="";
+    			consol.log("startNum",startNum);
+    			 */
+
+/*     		});
 
     	});
-    	
+    	 */
   
 
     </script>

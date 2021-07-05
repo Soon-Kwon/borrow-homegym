@@ -92,7 +92,7 @@ position: absolute;
 }
 
 #zip_codeBtn{
-	background-color: #5F87E1;
+	background-color: #5f7ab9;
     color: white;
     }
     
@@ -107,6 +107,9 @@ position: absolute;
     width: 100px;
 }
 
+.form-group form-control {
+	border-radius: 15px;
+}
 
 </style>
 
@@ -479,7 +482,7 @@ function execPostCode() {
                                                             <br>
                                                             <h6>아이디</h6>
                                                         </label>
-                                                        <input name="memberId" readonly class="form-control" 
+                                                        <input name="memberId" readonly class="form-control" style="border-radius: 15px;"
                                                             value="${member.memberId}">
                                                             
                                                     </div>
@@ -490,7 +493,7 @@ function execPostCode() {
                                                         <label for="password">
                                                             <h6>현재 비밀번호</h6>
                                                         </label>
-                                                        <input type="password" class="form-control" id="password" name="password" 
+                                                        <input type="password" class="form-control" id="password" name="password" style="border-radius: 15px;"
                                                             placeholder="현재 비밀번호" title="현재 비밀번호입력은 필수입니다." >
                                                     </div>
                                                     <div>${msg}</div>
@@ -501,7 +504,7 @@ function execPostCode() {
                                                         <label for="new_password">
                                                             <h6>새 비밀번호</h6>
                                                         </label>
-                                                        <input type="password" class="form-control" name="newPassword"
+                                                        <input type="password" class="form-control" name="newPassword" style="border-radius: 15px;"
                                                             id="newPassword" placeholder="새 비밀번호" title="새 비밀번호를 입력해주세요.">
                                                     </div>
                                                 </div>
@@ -513,7 +516,7 @@ function execPostCode() {
                                                         <label for="re_password">
                                                             <h6>새 비밀번호 재확인</h6>
                                                         </label>
-                                                        <input type="password" class="form-control" name="rePassword"
+                                                        <input type="password" class="form-control" name="rePassword" style="border-radius: 15px;"
                                                             id="rePassword" placeholder="새 비밀번호 재확인"
                                                             title="새 비밀번호 재입력해주세요.">
                                                     </div>
@@ -525,7 +528,7 @@ function execPostCode() {
                                                         <label for="username">
                                                             <h6>이름</h6>
                                                         </label>
-                                                        <input name="name" readonly class="form-control" 
+                                                        <input name="name" readonly class="form-control" style="border-radius: 15px;"
                                                              value="${member.name}">
                                                            
                                                     </div>
@@ -536,7 +539,7 @@ function execPostCode() {
                                                         <label for="birth">
                                                             <h6>생년월일</h6>
                                                         </label>
-                                                        <input name="birth" readonly class="form-control"  
+                                                        <input name="birth" readonly class="form-control" style="border-radius: 15px;"
                                                             value="${member.birth}">
                                                     </div>
                                                 </div>
@@ -546,7 +549,7 @@ function execPostCode() {
                                                         <label for="nickname">
                                                             <h6>닉네임</h6>
                                                         </label>
-                                                        <input type="text" class="form-control" name="nickname"
+                                                        <input type="text" class="form-control" name="nickname" style="border-radius: 15px;"
                                                          value="${member.nickname}">
                                                     </div>
                                                 </div>
@@ -558,7 +561,7 @@ function execPostCode() {
                                                         <label for="phone">
                                                             <h6>연락처</h6>
                                                         </label>
-                                                        <input type="text" class="form-control" name="phone" 
+                                                        <input type="text" class="form-control" name="phone" style="border-radius: 15px;"
                                                             value="${member.phone} " title="enter your phone.">
                                                     </div>
                                                 </div>
@@ -582,16 +585,12 @@ function execPostCode() {
                                                 
                                                 <div class="form-group">  
                                                 <h6>주소</h6>                 
-													<input class="form-control" style="width: 30%; display: inline;  margin-bottom: 5px;" name="zipCode" value="${member.zipCode}" type="text" readonly="readonly" >
-													    <button type="button" id="zip_codeBtn" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+													<input class="form-control" style="width: 30%; display: inline; border-radius: 15px; margin-bottom: 5px;" name="zipCode" value="${member.zipCode}" type="text" readonly="readonly"  >
+													    <button type="button" id="zip_codeBtn" class="btn btn-default" style="border-radius: 20px;" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
 													</div>
 													<div class="form-group">
-													    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="address" value="${member.address}" type="text" readonly="readonly" />
+													    <input class="form-control" style="top: 5px; border-radius: 15px;" placeholder="도로명 주소" name="address" value="${member.address}" type="text" readonly="readonly"/>
 													</div>
-													<!--<div class="form-group">
-													    <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
-												</div> -->
-                                                
                                                 <br>
                                     
                                         <div class="form-group">

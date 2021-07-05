@@ -36,7 +36,7 @@
 		}
 		
 		#accept{
-			background-color: #8192d9;
+			background-color: #5c6dbd;
 			bottom: 10px;
 			border-radius: 40px;
 		}
@@ -53,14 +53,21 @@
 	    }
 	    
 	    
-	    #detailBtn, #payOK, #acceptBtn{
+	    #detailBtn, #acceptBtn{
 		    bottom: 10px;
 		    left: 30px;
 		    border-radius: 40px;
 		 }
-		 #detailBtn2 , #payBtn{
+		 #payOK{
+		   	bottom: 10px;
+		    left: 30px;
+		    border-radius: 40px;
+		 	background-color:#4c5277;
+		 }
+		 #detailBtn2 {
 		    bottom: 10px;
 		    border-radius: 40px;
+		    background-color:#5c6dbd;
 		 }
     </style>
 
@@ -368,7 +375,7 @@
                                                                 <div class="meta-data">
                                                                     <ul style="font-weight:bold; font-size:15px;">
                                                                         <li>💜${lendHomegym.h_title}</li>
-                                                                        <li>💜위치 : ${lendHomegym.h_addr}</li>
+                                                                        <li>💜위치 : ${lendHomegym.h_addr}</li><br>
                                                                         <li>💜조회수  ${lendHomegym.h_cnt}</li>
                                                                        
                                                                     </ul>
@@ -445,88 +452,89 @@
 														</div>
                                     				</c:when>
                                     			<c:otherwise>
-                                    		<c:forEach var="rentHomegym" items="${rentHomegym}" varStatus="status">
-                                    		
-                                    			<input type="hidden" value="${rentHomegym.h_title}" name="h_name" id="h_name_${status.index}"  />
-								                <input type="hidden" value="${rentHomegym.h_memberId}" name="email" id="email_${status.index}"/>
-												<input type="hidden" value="${rentHomegym.h_addr}" name="address" id="address_${status.index}"/>
-												<input type="hidden" value="${rentHomegym.h_price}" name="price" id="price_${status.index}"/>
-												<input type="hidden" value="${rentHomegym.phoneNum}" name="phoneNum" id="phoneNum_${status.index}"/>
-												<input type="hidden" value="${rentHomegym.d_id}" name="dId" id="dId_${status.index}"/>
-                                    			
-                                                 <div class="col-lg-6 col-12">
-                                                        <!-- Single News -->
-                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
-                                                            <div class="image">
-                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}">
-                                                                <img class="thumb" src="https://via.placeholder.com/1050x700" alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul style="font-weight:bold; font-size:15px;">
-                                                                        <li>📌${rentHomegym.h_title}</li>
-                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li>
-                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>    
-                                                            <!-- 버튼 시작 -->
-                                                                <div class="flex-box">
-                                                                    <c:if test="${rentHomegym.payYN =='N' and rentHomegym.agreeYN == 'Y'}"> 
-																			<div class="button accept-btn" id="acceptBtn">
-			                                                                     <button class="btn" id="payBtn_${status.index}" value="${homegym.HId}" name="homegymPay" data-attr="${status.index}">결제 하기</button>
-			                                                                </div>
-																	</c:if>
-                                                           		 	 <c:if test="${rentHomegym.payYN =='Y'}"> 
-                                                           			 	<div class="button accept-btn">
-			                                                                 <button class="btn" id="payOK" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 완료</button>
-			                                                            </div>
-			                                                             <div class="button deny-btn">
-			                                                                  <button class="btn" id="reviewBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">리뷰쓰기</button>
-			                                                              </div> 
-																	</c:if>   
-																	<c:if test="${rentHomegym.agreeYN == 'N'}"> 
-                                                           			 	<div class="button accept-btn">
-			                                                                   <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절 됨</button>
-			                                                             </div>
-																	</c:if> 
-																	<c:if test="${rentHomegym.agreeYN == null}"> 
-                                                           			 	<div class="button accept-btn">
-			                                                                   <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락 대기중</button>
-			                                                             </div>
-																	</c:if> 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-      
-                                           </c:forEach>
-                                          </c:otherwise>
-                                    </c:choose>
-                                     <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
-                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
-                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
-                                    </form>
-                                               <!-- Pagination -->
-                                                <div class="pagination center">
-                                                    <ul class="pagination-list">
-	                                                    <c:if test ="${rt_pageMaker.prev}">
-	                                                        <li class="pageInfo_btn previous"><a href="${rt_pageMaker.startPage-1}">Prev</a></li>
-	                                                    </c:if>
-	                                                    <c:forEach var="num" begin="${rt_pageMaker.startPage}" end="${rt_pageMaker.endPage}">
-	                                                        <li class="pageInfo_btn ${rt_pageMaker.cri.pageNum == num ? "active" :""}"><a href="${num}">${num}</a></li>
-	                                                    </c:forEach>
-	                                                    <c:if test="${rt_pageMaker.next}">
-	                                                        <li class="pageInfo_btn next"><a href="${rt_pageMaker.endPage+1}">Next</a></li>
-	                                                    </c:if>
-	                                                </ul>
-                                                </div>  
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                                
+	                                    		<c:forEach var="rentHomegym" items="${rentHomegym}" varStatus="status">
+	                                    		
+	                                    			<input type="hidden" value="${rentHomegym.h_title}" name="h_name" id="h_name_${status.index}"  />
+									                <input type="hidden" value="${rentHomegym.h_memberId}" name="email" id="email_${status.index}"/>
+													<input type="hidden" value="${rentHomegym.h_addr}" name="address" id="address_${status.index}"/>
+													<input type="hidden" value="${rentHomegym.h_price}" name="price" id="price_${status.index}"/>
+													<input type="hidden" value="${rentHomegym.phoneNum}" name="phoneNum" id="phoneNum_${status.index}"/>
+													<input type="hidden" value="${rentHomegym.d_id}" name="dId" id="dId_${status.index}"/>
+	                                    			
+	                                                 <div class="col-lg-6 col-12">
+	                                                        <!-- Single News -->
+	                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
+	                                                            data-wow-delay=".4s">
+	                                                            <div class="image">
+	                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}">
+	                                                                <img class="thumb" src="https://via.placeholder.com/1050x700" alt="#"></a>
+	                                                            </div>
+	                                                            <div class="content-body">
+	                                                                <div class="meta-data">
+	                                                                    <ul style="font-weight:bold; font-size:15px;">
+	                                                                        <li>📌${rentHomegym.h_title}</li>
+	                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li>
+	                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
+	                                                                    </ul>
+	                                                                </div>
+	                                                            </div>    
+	                                                            <!-- 버튼 시작 -->
+	                                                                <div class="flex-box">
+	                                                                    <c:if test="${rentHomegym.payYN =='N' and rentHomegym.agreeYN == 'Y'}"> 
+																				<div class="button accept-btn" id="acceptBtn">
+				                                                                     <button class="btn payBtn" id="payBtn_${status.index}" value="${homegym.HId}" name="homegymPay" data-attr="${status.index}" 
+				                                                                     style="bottom: 10px; border-radius: 40px; background-color: #4154a8;"> 결제 하기</button>
+				                                                                </div>
+																		</c:if>
+	                                                           		 	 <c:if test="${rentHomegym.payYN =='Y'}"> 
+	                                                           			 	<div class="button accept-btn">
+				                                                                 <button class="btn" id="payOK" value="${homegym.HId}">결제 완료</button>
+				                                                            </div>
+				                                                             <div class="button review-btn">
+				                                                                  <button class="btn" id="reviewBtn" value="${homegym.HId}">리뷰쓰기</button>
+				                                                              </div> 
+																		</c:if>   
+																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 
+	                                                           			 	<div class="button deny-btn">
+				                                                                   <button class="btn" id="reject" value="${homegym.HId}">거절 됨</button>
+				                                                             </div>
+																		</c:if> 
+																		<c:if test="${rentHomegym.agreeYN == null}"> 
+	                                                           			 	<div class="button wait-btn">
+				                                                                   <button class="btn" id="reject" value="${homegym.HId}">수락 대기중</button>
+				                                                             </div>
+																		</c:if> 
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	      
+	                                           </c:forEach>
+	                                           		       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+						                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
+						                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
+						                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
+                                    					  </form>
+			                                               <!-- Pagination -->
+			                                                <div class="pagination center">
+			                                                    <ul class="pagination-list">
+				                                                    <c:if test ="${rt_pageMaker.prev}">
+				                                                        <li class="pageInfo_btn previous"><a href="${rt_pageMaker.startPage-1}">Prev</a></li>
+				                                                    </c:if>
+				                                                    <c:forEach var="num" begin="${rt_pageMaker.startPage}" end="${rt_pageMaker.endPage}">
+				                                                        <li class="pageInfo_btn ${rt_pageMaker.cri.pageNum == num ? "active" :""}"><a href="${num}">${num}</a></li>
+				                                                    </c:forEach>
+				                                                    <c:if test="${rt_pageMaker.next}">
+				                                                        <li class="pageInfo_btn next"><a href="${rt_pageMaker.endPage+1}">Next</a></li>
+				                                                    </c:if>
+				                                                </ul>
+			                                                </div>  
+	                                          </c:otherwise>
+                                    		</c:choose>
+                         
+                                           	 </div>
+                                         </div>
+                                      </div>
+                                   </div>         
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>

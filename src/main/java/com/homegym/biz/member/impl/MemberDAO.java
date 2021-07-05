@@ -201,6 +201,7 @@ public class MemberDAO {
 	
 	//내가 쓴 댓글 조회
 	public List<Map<String, String>> getMyReviews(String memberId){
+		
 		return sqlsession.selectList("MemberDAO.getMyReviews",memberId);
 	}
 	

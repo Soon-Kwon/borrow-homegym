@@ -151,13 +151,10 @@
                             </div>
                         </div>
                         <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                            <h3 class="sidebar-widget-title">자주 묻는 질문</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
-                                    </form>
+                                    <p>FAQ 보러가기</p>
                                 </div>
                             </div>
                         </div>

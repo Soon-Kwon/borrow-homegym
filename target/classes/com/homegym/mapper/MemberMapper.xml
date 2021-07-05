@@ -196,7 +196,8 @@
 		SELECT b.*, d.*
 		FROM homegym_board b INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
-		WHERE borrowerId= #{memberId}
+		WHERE borrowerId= #{memberId} 
+		ORDER BY d_id DESC
 
 	</select>
 	
@@ -308,35 +309,35 @@
 	
 	<!-- 빌린 홈짐 리스트 페이징 -->
 		<select id="getRentdHGPaging" resultType="HashMap">
-  	<![CDATA[
-  		SELECT *
-  		FROM (
-  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN,d.rental_date,d.agreeYN,b.h_id,d.phoneNum,b.h_price,d.d_id
-				FROM homegym_board b INNER JOIN homegym_detail d
-				ON b.h_id = d.h_id
-				WHERE borrowerId= #{memberId}
-			)as rh
-  		LIMIT #{cri.skip}, #{cri.amount}
+	  	<![CDATA[
+	  		SELECT *
+	  		FROM (
+	  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN,d.rental_date,d.agreeYN,b.h_id,d.phoneNum,b.h_price,d.d_id
+					FROM homegym_board b INNER JOIN homegym_detail d
+					ON b.h_id = d.h_id
+					WHERE borrowerId= #{memberId}
+				)as rh
+	  		LIMIT #{cri.skip}, #{cri.amount}
   				
   ]]>
 	</select>
 	
 	<!-- 내가 쓴 리뷰 리스트 조회-->
 	<select id="getMyReviews" resultType="HashMap">
-		SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate,hr.h_id
-		FROM homegym_board hb INNER JOIN homegym_review hr
-		ON hb.h_id = hr.h_id
-		WHERE borrowerId= #{memberId}
+		SELECT *
+		FROM(
+			SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate,hr.h_id
+			FROM homegym_board hb INNER JOIN homegym_review hr
+			ON hb.h_id = hr.h_id
+			WHERE borrowerId= #{memberId}
+			ORDER BY hr_regdate DESC
+		)as rv
+		LIMIT #{start},
 	</select>
 	
-	<!-- 요청 홈짐예약 폼 조회 ( + 07/02 수정중) -->
+	<!-- 요청 홈짐예약 폼 조회 -->
 	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
-		<!-- SELECT *
-		FROM homegym_board b INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		where b.memberId= #{memberId}
-		and d.d_id=#{d_id}; -->
-		
+
 		SELECT * 
 		FROM homegym_detail
 		WHERE d_id = #{dId}
