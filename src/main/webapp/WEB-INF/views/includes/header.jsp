@@ -81,7 +81,7 @@
 	
 </head>
 <body>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	// 안읽은 메세지 카운트 가져오기
 	function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -136,7 +136,7 @@
 		getInfiniteUnread();
 	});
 	
-	</script>
+	</script> -->
 
  <!-- Start Header Area -->
     <header class="header style2 navbar-area">
@@ -184,7 +184,7 @@
                                         <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
                                         aria-controls="navbarSupportedContent" aria-expanded="false"
-                                        aria-label="Toggle navigation"><sec:authentication property="principal.nickname" />님</a>
+                                        aria-label="Toggle navigation"><sec:authentication property="principal.nickname" var="member_nickName"/>${member_nickName }님</a>
                                         <sec:authentication property="principal.memberId" var="member_memberId" />
                                         <sec:authentication property="principal.password" var="member_password" />
                                         <sec:authentication property="principal.name"  var="member_name" />

@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: winia
 Build-Jdk: 1.8.0_271
+=======
+Built-By: soon
+Build-Jdk: 11.0.11
+>>>>>>> 50aec7246929477afb1e2fad76a4988d4ae24e23
 Created-By: Maven Integration for Eclipse
 
