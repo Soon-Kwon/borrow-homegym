@@ -8,7 +8,6 @@
 
 <head>
 
-
 <style>
 p {
 	margin: 10px 5px;
@@ -181,15 +180,15 @@ ul li.tag-item {
 			<div class="row">
 				<div class="col-lg-13 col-md-12 col-12">
 					<div class="form-main">
-						<form class="form" id="submitForm" method="post" action="tbWriter.do">
+						<form class="form" id="submitForm" method="post" action="tbWrite.do">
 							<div class="row">
 								<h3 class="title">
 									<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
 								</h3>
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label style="font-size: 20px;">제목</label> <input
-											name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 "
+										<label style="font-size: 20px;">제목</label> 
+										<input name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 "
 											required="required">
 									</div>
 								</div>
@@ -244,9 +243,10 @@ ul li.tag-item {
 									<div class="form-group">
 										<input type="hidden" value="" name="tag" id="rdTag" />
 									</div>
-
+									
 									<ul id="tag-list"></ul>
-
+									<br>
+									
 									<div class="form-group">
 										<input type="text" id="tag" size="7" placeholder="Ex)종로구"
 											style="width: 300px;" />
@@ -349,95 +349,7 @@ ul li.tag-item {
 	<!--/ End Footer Area -->
 <!--해시태그-->
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"
-	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-	crossorigin="anonymous"></script>
-<script>
-	$(document).ready(function() {
 
-		var tag = {};
-		var counter = 0;
-	
-		// 태그를 추가한다.
-		function addTag(value) {
-			tag[counter] = value; // 태그를 Object 안에 추가
-			counter++; //  삭제를 위한 del-btn 의 고유 id 
-		}
-	
-		//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
-		function marginTag() {
-			return Object.values(tag).filter(function(word) {
-				return word !== "";
-			});
-		}
-	
-		// 서버에 넘기기
-		$("#tag-form").on("submit", function(e) {
-			var value = marginTag(); // return array
-			$("#rdTag").val(value);
-	
-			$(this).submit();
-		});
-
-	$("#tag").on("keypress",function(e) {
-		
-		var self = $(this);
-
-		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
-		if (e.key === "Enter" || e.keyCode == 32) {
-			
-		 	if ($(".tag-item").size() == 3) {
-
-				alert('최대 입력 개수는 3개입니다.');
-
-			} else { 
-
-				var tagValue = self.val();
-
-				// 해시태그 값 없으면 x
-				if (tagValue !== "") {
-
-					var result = Object.values(tag).filter(function(word) {
-						
-						return word === tagValue;
-					});
-					
-
-					// 태그 중복 검사
-					if (result.length == 0) {
-						$("#tag-list").append(
-										"<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-						$("#tag-list").append(
-										"<input name=tagList type=hidden value=" + tagValue + ">");
-						/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
-						addTag(tagValue);
-					} else {
-						alert("이미 입력한 해시태그입니다.");
-					}
-				}
-				e.preventDefault();
-			} 
-		}
-	});
-
-	// 삭제 버튼 
-	$(document).on("click", ".del-btn", function(e) {
-		var index = $(this).attr("idx");
-		tag[index] = "";
-		$(this).parent().remove();
-	});
-
-	$("input[id=check]:checkbox").click(function() {
-		//$("input[name=tr_options]:checkbox").click(function () {
-		//this.checked = true; //checked 처리
-		if ($(this).is(":checked")) {
-			$(this).parent().addClass("checkColor");
-		} else {
-			$(this).parent().removeClass("checkColor");
-		}
-	});
-});
-</script>
 	<!-- ========================= scroll-top ========================= -->
 	<a href="#" class="scroll-top btn-hover"> <i
 		class="lni lni-chevron-up"></i>
@@ -529,8 +441,8 @@ ul li.tag-item {
 		}
 	});
 });
-</script>
 
+</script>
 
 	<!-- ========================= JS here ========================= -->
 	<script src="/resources/assets/js/bootstrap.min.js"></script>

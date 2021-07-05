@@ -176,15 +176,60 @@ ul li.tag-item {
             });
 
 
+            var tbactivtag1 = "${trainerBoard.tbActivTag1}"
+            if (tbactivtag1 != "") {
+            	$("#tag-list").append(
+						"<li class='tag-item'>" + tbactivtag1 + "<span class='del-btn' idx='0'>x</span></li>");
+				$("#tag-list").append(
+								"<input name=tagList type=hidden value=" + tbactivtag1 + ">");
+				/*  $("#tag-list").append("<li class='tag-item'>" + tagValue + "<span class='del-btn' idx='" + counter + "'>x</span></li>"); */
+				//addTag(tagValue);
+            		
+            }
+            
+            var tbactivtag2 = "${trainerBoard.tbActivTag2}"
+            if (tbactivtag2 != "") {
+            	//var tbactivtag2 = "${trainerBoard.tbActivTag2}"
+            	
+            	$("#tag-list").append(
+						"<li class='tag-item'>" + tbactivtag2 + "<span class='del-btn' idx='1'>x</span></li>");
+				$("#tag-list").append(
+								"<input name=tagList type=hidden value=" + tbactivtag2 + ">");
+            }
+            
+            var tbactivtag3 = "${trainerBoard.tbActivTag3}"
+            if (tbactivtag3 != "") {
+            	//var tbactivtag2 = "${trainerBoard.tbActivTag2}"
+            	
+            	$("#tag-list").append(
+						"<li class='tag-item'>" + tbactivtag3 + "<span class='del-btn' idx='2'>x</span></li>");
+				$("#tag-list").append(
+								"<input name=tagList type=hidden value=" + tbactivtag3 + ">");
+            }
+            
+            var tbactivchk1 = "${trainerBoard.tbActivChk1}"
+           	if (tbactivchk1 != "") {
+           		$("input[name=tbActivChk1]").parent().addClass("checkColor");
+           	}
+            
+            var tbactivchk2 = "${trainerBoard.tbActivChk2}"
+           	if (tbactivchk2 != "") {
+           		$("input[name=tbActivChk2]").parent().addClass("checkColor");
+           	}
+            
+            var tbactivchk3 = "${trainerBoard.tbActivChk3}"
+           	if (tbactivchk3 != "") {
+           		$("input[name=tbActivChk3]").parent().addClass("checkColor");
+           	}
+            
             $("input[id=check]:checkbox").click(function () {
-            //$("input[name=tr_options]:checkbox").click(function () {
-                //this.checked = true; //checked 처리
                 if ($(this).is(":checked")) {
                     $(this).parent().addClass("checkColor");
                 } else {
                     $(this).parent().removeClass("checkColor");
                 }
             });
+            
         });
     </script>
 
@@ -234,21 +279,21 @@ ul li.tag-item {
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
 										<label style="font-size: 20px;">제목</label> 
-										<input name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 " required="required">
+										<input name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 " required="required" value="${trainerBoard.tbTitle}">
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group message">
 										<label style="font-size: 20px;">트레이너 소개</label>
-										<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. "></textarea>
+										<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. ">${trainerBoard.tbContent}</textarea>
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group message">
 										<label style="font-size: 20px;">프로그램 소개</label>
-										<textarea name="tbProgram" placeholder="프로그램에 대해 소개해주세요."></textarea>
+										<textarea name="tbProgram" placeholder="프로그램에 대해 소개해주세요.">${trainerBoard.tbProgram}</textarea>
 									</div>
 								</div>
 								<!-- 스케줄 (시간)-->
@@ -257,9 +302,9 @@ ul li.tag-item {
 										<label style="font-size: 20px;">트레이너 스케줄</label> <strong>평일
 											(월~토)</strong>
 										<div>
-											<input type="time" style="width: 300px;" id="time1" name="dayTimes">
+											<input type="time" style="width: 300px;" id="time1" name="dayTimes" value="${trainerBoard.dayTimes}">
 											<strong> ~ </strong> 
-											<input type="time" style="width: 300px;" id="time1" name="dayTimef">
+											<input type="time" style="width: 300px;" id="time1" name="dayTimef" value="${trainerBoard.dayTimef}">
 										</div>
 									</div>
 								</div>
@@ -267,9 +312,9 @@ ul li.tag-item {
 									<div class="form-group" >
 										<strong>일요일</strong>
 										<div>
-											<input type="time" style="width: 300px;" name="sunTimes">
+											<input type="time" style="width: 300px;" name="sunTimes" value="${trainerBoard.sunTimes}">
 												<strong> ~ </strong> 
-												<input type="time" style="width: 300px;"  name="sunTimef">
+												<input type="time" style="width: 300px;"  name="sunTimef"  value="${trainerBoard.sunTimef}">
 										</div>
 									</div>
 								</div>
@@ -331,6 +376,7 @@ ul li.tag-item {
 										<input type="file" id="img_upload" name="tbImg"
 											accept="image/*" style="margin-bottom: 30px;">
 										<div id="image_container"></div>
+										<%-- <img src="/resources/imgUpload/${trainerBoard.tbImg}"/> --%>
 									</div>
 									<div class="form-group">
 										<label style="font-size: 20px;">자기 소개사진 등록

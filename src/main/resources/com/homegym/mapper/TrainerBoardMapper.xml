@@ -89,14 +89,14 @@
 	<!-- 글 목록 -->
 	<select id="getTbList" resultType="trainer">
 	<![CDATA[
-		SELECT * FROM TRAINER_BOARD
+		SELECT * FROM TRAINER_BOARD ORDER BY TNO DESC
 		]]>
 	</select>
 
 	<!--글 상세보기 -->
 	<select id="getTbDetail" resultType="trainer">
 	<![CDATA[
-		SELECT * FROM TRAINER_BOARD WHERE TNO = #{tno}
+		SELECT * FROM TRAINER_BOARD WHERE TNO = #{tno} 
 		]]>
 	</select>
 	
@@ -104,7 +104,8 @@
 	<select id="getTbListPaging" resultType="trainer">
 		<![CDATA[
 			SELECT * FROM trainer_board	R1
-			LIMIT #{cri.amount} OFFSET #{cri.skip};
+			ORDER BY TNO DESC
+			LIMIT #{cri.amount} OFFSET #{cri.skip}
 		]]>
 	</select>
 	

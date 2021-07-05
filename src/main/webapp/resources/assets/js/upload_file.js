@@ -39,13 +39,13 @@ function save() {
 	$.ajax({
 		type : 'POST',
 		url : '/trainer/tbWrite.do',
-		//url : 'tbWrite.do',
+		// url : 'tbWrite.do',
 		dataType : 'text',
 		data : data,
-		/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-		beforeSend : function(xhr){
-		xhr.setRequestHeader(header, token);
-        },
+		/* 데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
 		success : function(data) {
 			alert(data);
 			if (data == 'OK') {
@@ -60,7 +60,67 @@ function save() {
 	});
 }
 
-// 업로드 결과 처리 함수
+// 업로드 결과 처리 함수/대표사진
+function showUploadResult(uploadResultArr) {
+
+	if (!uploadResultArr || uploadResultArr.length == 0) {
+		return;
+	}
+
+	var uploadUL = $(".uploadResult ul");
+
+	var str = "";
+
+	$(uploadResultArr)
+			.each(
+					function(i, obj) {
+
+						// image type
+						if (obj.fileType) {
+
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+									+ "/s_" + obj.uuid + "_" + obj.fileName);
+							str += "<li data-path='" + obj.uploadPath + "'";
+							str += " data-uuid='" + obj.uuid
+									+ "' data-filename='" + obj.fileName
+									+ "'data-type='" + obj.fileType + "'";
+							str += "><div>";
+							str += "<span> " + obj.fileName + "</span>";
+							str += "<button type='button' data-file=\'"
+									+ fileCallPath
+									+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+									+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/trainer/display/main.do?fileName="
+									/* str += "<img src='/display.do?fileName=" */
+									+ fileCallPath + "'>";
+							str += "</div>";
+							str += "</li>";
+						} else {
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+									+ "/" + obj.uuid + "_" + obj.fileName);
+							var fileLink = fileCallPath.replace(new RegExp(
+									/\\/g), "/");
+
+							str += "<li data-path='" + obj.uploadPath + "'";
+							str += " data-uuid='" + obj.uuid
+									+ "' data-filename='" + obj.fileName
+									+ "'data-type='" + obj.fileType + "'";
+							str += "><div>";
+							str += "<span> " + obj.fileName + "<span>";
+							str += "<button type='button' data-file=\'"
+									+ fileCallPath
+									+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+									+ "<i class='lni lni-cross-circle'></i></button><br>";
+							str += "<img src='/assets/images/common/attach.png'></a>";
+							str += "</div>";
+							str += "</li>";
+						}
+					});
+
+	uploadUL.append(str);
+}
+
+// 업로드 결과 처리 함수/자기소개
 function showUploadResult(uploadResultArr) {
 
 	if (!uploadResultArr || uploadResultArr.length == 0) {
@@ -91,8 +151,8 @@ function showUploadResult(uploadResultArr) {
 									+ "\'data-type='image' class='btn btn-warning btn-circle'>"
 									+ "<i class='lni lni-cross-circle'></i></button><br>";
 							str += "<img src='/trainer/display.do?fileName="
-							/*str += "<img src='/display.do?fileName="*/
-									+ fileCallPath + "'>";
+							/* str += "<img src='/display.do?fileName=" */
+							+ fileCallPath + "'>";
 							str += "</div>";
 							str += "</li>";
 						} else {
@@ -120,7 +180,6 @@ function showUploadResult(uploadResultArr) {
 	uploadUL.append(str);
 }
 
-
 var chkArray = new Array();
 $(document).ready(function() {
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -142,7 +201,7 @@ $(document).ready(function() {
 	}
 
 	$("input[name='uploadFile']").change(function(e) {
-	//$("input[type='file']").change(function(e) {
+		// $("input[type='file']").change(function(e) {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -161,28 +220,28 @@ $(document).ready(function() {
 			formData.append("uploadFile", files[i]);
 
 		}
-		
-		//업로드 파일 갯수 제한
-/*		if (files.length == 3){
-			
-			
-		}*/
-		
+
+		// 업로드 파일 갯수 제한
+		/*
+		 * if (files.length == 3){ }
+		 */
+
 		$.ajax({
 			url : '/trainer/uploadAjaxAction.do',
-			//url : '/uploadAjaxAction.do',
+			// url : '/uploadAjaxAction.do',
 			processData : false,
 			contentType : false,
 			data : formData,
 			type : 'POST',
 			dataType : 'json',
-			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-			beforeSend : function(xhr){
-			xhr.setRequestHeader(header, token);
-            },
+			/* 데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(result) {
 				console.log(result);
-				showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등) --> display.do
+				showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등) -->
+				// display.do
 			},
 			error : function(error) {
 				console.log(error);
@@ -203,63 +262,64 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : '/trainer/deleteFile.do',
-			//url : '/deleteFile.do',
+			// url : '/deleteFile.do',
 			data : {
 				fileName : targetFile,
 				type : type
 			},
 			dataType : 'text',
 			type : 'POST',
-			beforeSend : function(xhr){
-			xhr.setRequestHeader(header, token);
-            },
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(result) {
 				alert(result);
 				targetLi.remove();
 			}
 		});
 	});
-	
+
 	// 대표 이미지
 	$("input[name='tbImg']").change(function(e) {
-		//$("input[type='file']").change(function(e) {
+		// $("input[type='file']").change(function(e) {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-			var formData = new FormData();
+		var formData = new FormData();
 
-			var inputFile = $("input[name='tbImg']");
+		var inputFile = $("input[name='tbImg']");
 
-			var files = inputFile[0].files;
+		var files = inputFile[0].files;
 
-			for (var i = 0; i < files.length; i++) {
+		for (var i = 0; i < files.length; i++) {
 
-				if (!checkExtension(files[i].name, files[i].size)) {
-					return false;
-				}
-
-				formData.append("tbImg", files[i]);
-
+			if (!checkExtension(files[i].name, files[i].size)) {
+				return false;
 			}
 
-			$.ajax({
-				url : '/trainer/uploadAjaxActionMain.do',
-				//url : '/uploadAjaxAction.do',
-				processData : false,
-				contentType : false,
-				data : formData,
-				type : 'POST',
-				dataType : 'json',
-				beforeSend : function(xhr){
+			formData.append("tbImg", files[i]);
+
+		}
+
+		$.ajax({
+			url : '/trainer/uploadAjaxActionMain.do',
+			// url : '/uploadAjaxAction.do',
+			processData : false,
+			contentType : false,
+			data : formData,
+			type : 'POST',
+			dataType : 'json',
+			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
-	            },
-				success : function(result) {
-					console.log(result);
-					//showUploadResultMain(result); // 업로드 결과 처리 함수 (섬네일 등) --> display.do
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
+			},
+			success : function(result) {
+				console.log(result);
+				// showUploadResultMain(result); // 업로드 결과 처리 함수 (섬네일 등) -->
+				// display.do
+			},
+			error : function(error) {
+				console.log(error);
+			}
 		});
+	});
 
 });

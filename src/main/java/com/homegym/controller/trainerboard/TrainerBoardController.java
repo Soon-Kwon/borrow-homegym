@@ -65,8 +65,13 @@ public class TrainerBoardController {
 	@ResponseBody
 	public String insertTbWrite(HttpServletRequest request, TrainerBoardVO vo) throws Exception {
 
-		System.out.println("게시글 작성");
-		System.out.println(vo);
+		//System.out.println("게시글 작성");
+		//System.out.println(vo);
+		
+		log.info("게시글 작성");
+		log.info(vo);
+		
+		
 		// 해시태그 저장
 		String[] tagList = vo.getTagList();
 		System.out.println(Arrays.toString(tagList));
@@ -99,6 +104,7 @@ public class TrainerBoardController {
 		}
 		// 해시태그 끝
 
+		// 사진 업로드
 		if (fileNameList.size() == 1) {
 			vo.setTbPhoto1(fileNameList.get(0));
 		} else if (fileNameList.size() == 2) {
@@ -121,10 +127,15 @@ public class TrainerBoardController {
 	// 글 수정
 	// http://localhost:8090/trainer/tbUpdate.do
 	@GetMapping("/tbUpdate")
-	public String getTbUpdate(HttpServletRequest request, HttpSession session, TrainerBoardVO vo, Model model) {
-
+	public String getTbUpdate(@RequestParam("tno") int tno, HttpServletRequest request, HttpSession session, TrainerBoardVO vo, Model model) {
+		
 		System.out.println("게시판 수정하기");
-		boardService.getTbUpdate(vo);
+		log.info("update vo : " + vo);
+		//boardService.getTbUpdate(vo);
+		
+		TrainerBoardVO trainerBoardVO = boardService.getTbDetail(tno);
+		model.addAttribute("trainerBoard", trainerBoardVO);
+		
 		return "trainer/tbUpdate";
 
 	}
@@ -184,11 +195,45 @@ public class TrainerBoardController {
 	// 다중 파일 업로드 영역(자기소개 사진 업로드)
 	@PostMapping(value = "/uploadAjaxAction.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<TrainerAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session) {
+	public ResponseEntity<List<TrainerAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile, HttpServletRequest request, HttpSession session) {
 
 		// 최종 결과를 담을 리스트
 		List<TrainerAttachVO> list = new ArrayList<>();
-		String uploadFolder = "D:/upload/";
+		
+		
+		//getRealPath("/") : webapp 폴더까지
+		String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
+		String attachPath = "/resources/imgUpload/";
+		String uploadFolder = imgUploadPath + attachPath;
+		//String fileName = null;
+		
+		/*
+		if (file != null) {
+			// getOriginalFilename() : 파일이름을 String 값으로 반환
+			File uploadFile = new File(imgUploadPath + attachPath + file.getOriginalFilename());
+			// transfertTo : 파일 저장
+			file.transferTo(uploadFile);
+		} else {
+			fileName = uploadPath + File.separator + "images" + File.separator + "basicImg.png";
+		}
+		
+		// imagepath : /resources/imgUpload/파일명
+		vo.setImagePath(attachPath + file.getOriginalFilename());
+
+		paramMap.put("memberId", vo.getMemberId());
+		paramMap.put("imagePath", vo.getImagePath());
+		// paramMap.put("userThumbImg", vo.getUserThumbImg());
+
+		memberService.userImgUpload(paramMap);
+
+		// return "redirect:/user/mypage/profile_update.do";
+		*/
+		
+		
+		
+		
+		//String uploadFolder = session.getServletContext().getRealPath("/resources/assets/images/trainer/");
+		//String uploadFolder = "D:/upload/";
 
 		// 상세페이지에서 보여줄 서브 사진
 		// getFolder 메서드는 년/월/일 형식의 폴더 구조를 생성해 줌
@@ -225,7 +270,8 @@ public class TrainerBoardController {
 			// 업로드 파일 이름을 uuid를 활용하여 파일명 변경
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 
-			fileNameList.add(uploadFolder + uploadFileName);
+			fileNameList.add(uploadFileName);
+			//fileNameList.add(uploadFolder + uploadFileName);
 //			fileNameList.add(uploadFolder + uploadFolderPath + uploadFileName);
 
 			try {
@@ -236,7 +282,9 @@ public class TrainerBoardController {
 
 				// 데이터베이스에 uuid와 uploadPath(파일경로) 저장
 				attachVO.setUuid(uuid.toString());
-				attachVO.setUploadPath("D:/upload/");
+				attachVO.setUploadPath(uploadFolder);
+				//attachVO.setUploadPath("D:/upload/");
+				
 //				attachVO.setUploadPath(uploadFolderPath);
 
 				// 이미지 파일인지 체크
@@ -274,8 +322,9 @@ public class TrainerBoardController {
 	public ResponseEntity<byte[]> getFile(String fileName) {
 
 		log.info("fileName: " + fileName);
-
-		File file = new File(("D:/upload/") + fileName);
+		System.out.println("여기지?");
+		//File file = new File(("D:/upload/") + fileName);
+		File file = new File(fileName);
 		log.info("file: " + file);
 
 		ResponseEntity<byte[]> result = null;
@@ -297,7 +346,7 @@ public class TrainerBoardController {
 	// 서버에서 첨부파일 삭제하기
 	@PostMapping("/deleteFile.do")
 	@ResponseBody
-	public ResponseEntity<String> deleteFile(String fileName, String type) {
+	public ResponseEntity<String> deleteFile(String fileName, String type, HttpServletRequest request, HttpSession session) {
 
 		log.info("deleteFile: " + fileName);
 
@@ -305,7 +354,15 @@ public class TrainerBoardController {
 
 		try {
 			// 한글이름의 파일일 경우를 대비해서 URLDecoder.decode() 활용
-			file = new File("D:/upload/" + URLDecoder.decode(fileName, "UTF-8"));
+			
+			//getRealPath("/") : webapp 폴더까지
+			String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
+			String attachPath = "/resources/imgUpload/";
+			String uploadFolder = imgUploadPath + attachPath;
+			
+			//String uploadFolder = session.getServletContext().getRealPath("/resources/assets/images/trainer/");
+			file = new File(uploadFolder + URLDecoder.decode(fileName, "UTF-8"));
+			//file = new File("D:/upload/" + URLDecoder.decode(fileName, "UTF-8"));
 
 			file.delete(); // 파일 삭제
 
@@ -377,9 +434,16 @@ public class TrainerBoardController {
 	}
 
 	@PostMapping("uploadFormAction.do")
-	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
+	public void uploadFormPost(MultipartFile[] uploadFile, Model model, HttpServletRequest request, HttpSession session) {
+		
+		//getRealPath("/") : webapp 폴더까지
+		String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
+		String attachPath = "/resources/imgUpload/";
+		String uploadFolder = imgUploadPath + attachPath;
+		
+		//String uploadFolder = session.getServletContext().getRealPath("/resources/assets/images/trainer/");
+		//String uploadFolder = "D:/upload/";
 
-		String uploadFolder = "D:/upload/";
 
 		for (MultipartFile multipartFile : uploadFile) {
 
@@ -408,12 +472,19 @@ public class TrainerBoardController {
 	@PostMapping(value = "/uploadAjaxActionMain.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<TrainerAttachVO>> uploadAjaxPostMain(@RequestParam("tbImg") MultipartFile file,
-			HttpSession session) throws Exception {
+			HttpServletRequest request, HttpSession session) throws Exception {
 		// public ResponseEntity<List<TrainerAttachVO>>
 		// uploadAjaxPostMain(MultipartFile[] uploadFile) {
 
 		List<TrainerAttachVO> list = new ArrayList<>();
-		String uploadFolder = "D:/upload/";
+		
+		// getRealPath("/") : webapp 폴더까지
+		String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
+		String attachPath = "/resources/imgUpload/";
+		String uploadFolder = imgUploadPath + attachPath;
+
+		//String uploadFolder = session.getServletContext().getRealPath("/resources/assets/images/trainer/");
+		//String uploadFolder = "D:/upload/";
 		// String uploadFolder = "/Users/soon/Desktop/upload";
 
 		/* String uploadFolderPath = getFolderMain(); */
@@ -446,7 +517,8 @@ public class TrainerBoardController {
 
 		uploadFileName = uuid.toString() + "_" + uploadFileName;
 
-		String mainFileName = uploadFolder + uploadFileName;
+		String mainFileName = uploadFileName;
+		//String mainFileName = uploadFolder + uploadFileName;
 		// String mainFileName = uploadFolder + uploadFolderPath + uploadFileName;
 
 		try {
@@ -455,7 +527,8 @@ public class TrainerBoardController {
 			file.transferTo(saveFile);
 
 			attachVO.setUuid(uuid.toString());
-			attachVO.setUploadPath("D:/upload/");
+			attachVO.setUploadPath(uploadFolder);
+			//attachVO.setUploadPath("D:/upload/");
 			// attachVO.setUploadPath(uploadFolderPath);
 
 			// check image type file
@@ -490,6 +563,8 @@ public class TrainerBoardController {
 		log.info("fileName: " + fileName);
 
 		File file = new File(fileName);
+		
+		System.out.println("여기냐");
 		// File file = new File(("D:/upload") + fileName);
 
 		log.info("file: " + file);

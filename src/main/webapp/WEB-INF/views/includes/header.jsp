@@ -44,6 +44,8 @@
 </head>
 <body>
 <script type="text/javascript">
+
+	/*
 	// 안읽은 메세지 카운트 가져오기
 	function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -56,7 +58,7 @@
 					memberId : '${memberId}' // data로 넘겨주기
 				},
 				url: "${contextPath}/message/getNewNoticeCnt.do",
-				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
 				beforeSend : function(xhr){
 					xhr.setRequestHeader(header, token);
 	            },
@@ -97,6 +99,7 @@
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
 	});
+	*/
 	
 	</script>
 
