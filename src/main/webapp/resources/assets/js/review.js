@@ -111,6 +111,21 @@
 		});
 	}
 	
+	// 리뷰 평점 
+	function getScore(hId, callback, error){
+		
+		$.get("/homegym/score/" + hId + ".do", function(result){
+			if(callback){
+				callback(result);
+			}
+		}).fail(function(xhr, status, err){
+			if(error){
+				console.log(err);
+				error();
+			}
+		});
+	}
+
 	// 시간 처리
 	function displayTime(timeValue){
 	
@@ -143,6 +158,7 @@
 		remove: remove,
 		update: update,
 		get: get,
+		getScore: getScore,
 		displayTime: displayTime
 	};
 })();

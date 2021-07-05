@@ -47,7 +47,7 @@
 									<span></span>
 									<span></span>
 								</h3> -->
-								<h5> ${board.memberId}님의 홈짐 위치</h5>
+								<h5> ${board.nickName}님의 홈짐 위치</h5>
 								<br>
 								
 								<!-- 홈짐 위치 나오는 div -->
@@ -67,7 +67,7 @@
 									
 									<div class="row">
 										<div class="col-8">
-										<h2>리뷰 <span style="font-size: 30px;">⭐ ${score.hr_score }</span> </h2>	
+										<h2>리뷰 <span id="score" style="font-size: 30px;"></span> </h2>	
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
@@ -91,7 +91,7 @@
 						<div class="widget popular-feeds" style="position: relative; top: 30px;">
 							<div class="info">
 								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.memberId }님의 홈짐
+									<i class="lni lni-apartment"></i> ${board.nickName }님의 홈짐
 								</h4>
 								<br>
 								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
@@ -134,7 +134,7 @@
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
-							value="borrowerId" placeholder="${member_memberId}" readonly>
+							value="borrowerId" placeholder="<sec:authentication property="principal.nickname" />" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>
@@ -240,6 +240,16 @@
 				
 			})();			
 			
+			// 리뷰평점을 보여주는 즉시 실행함수
+			(function(){
+
+				var hId = ${board.HId};
+				reviewService.getScore(hId, function(result){
+					console.log(result);
+					$("#score").text("⭐" + result)
+				});
+			})();
+			
 			// 해쉬태그 분리 
 			var hashtag = '<c:out value='${board.HHashtag}'/>';
 			var afterSplit = hashtag.split(', ');
@@ -267,6 +277,10 @@
 				
 				}
 			}	
+			
+			// 리뷰 평점 불러오기 
+			
+			
 			
 			// 리뷰 목록 가져오기
 			
@@ -376,7 +390,7 @@
 						hrScore: $("input[name='hrScore']:checked").val(),
 						hid: hIdValue,
 						memberId: memberId,
-						borrowerId: "${member_memberId}"
+						borrowerId: "${member_nickName}"
 				};
 				
 				// 평점이 없을시 입력해달라는 요청메시지 보내기
@@ -384,8 +398,10 @@
 					alert("평점을 입력해주세요!");
 					return $("#myModal").modal("show");
 				}
-			
+				
+				// 리뷰 등록하기
 				reviewService.add(review, function(result){
+					
 					
 					alert("리뷰가 등록되었습니다");
 					
@@ -393,6 +409,13 @@
 					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
 					modal.modal("hide");
 					
+					// 리뷰 평점 비동기 업데이트
+					var hId = ${board.HId};
+					reviewService.getScore(hId, function(result){
+						console.log(result);
+						$("#score").text("⭐" + result)
+					});
+	
 					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
 				});
 			});
@@ -424,13 +447,28 @@
 				
 				var review = {reviewId: modal.data("reviewid")
 							, hrContent: modalInputReview.val()
-							, hrScore: $("input[name='hrScore']:checked").val() };
+							, hrScore: $("input[name='hrScore']:checked").val()
+							};
+				
+				if(review.hrScore === undefined){
+					alert("평점을 입력해주세요!");
+					return $("#myModal").modal("show");
+				}
 				
 				reviewService.update(review, function(result){
+					
 					
 					alert("수정되었습니다");
 					
 					modal.modal("hide");
+
+					//리뷰 평점 비동기 업데이트
+					var hId = ${board.HId};
+					reviewService.getScore(hId, function(result){
+						console.log(result);
+						$("#score").text("⭐" + result)
+					});
+					
 					showList(99999);
 				});
 			});
@@ -447,7 +485,7 @@
 					showList(99999);
 				});
 			});
-						
+		
 		});
 	</script>
 		<!-- ========================= 카카오 지도 ========================= -->

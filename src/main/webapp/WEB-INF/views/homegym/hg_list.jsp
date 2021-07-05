@@ -50,16 +50,6 @@
 					<div class="row">
 						<div class="col-lg-8 col-12">
 							<!-- Start Event Details Content -->
-
-							<form class="d-flex search-form" action="homegymListView.do"
-								method="get">
-								<input class="form-control me-2" type="search" name="keyword"
-									placeholder="동네 이름을 검색해보세요!" aria-label="Search"> 
-								<button id="search-hg"class="btn btn-outline-success" type="submit">
-									<i class="lni lni-search-alt"></i>
-								</button>
-							</form>
-							<br>
 							<div id="map" style="width: 100%; height: 650px;"></div>
 							<div class="details-content">
 								<!--  맵 나오는 곳 -->
@@ -88,7 +78,7 @@
 														alt="Event Image"></a>
 												</div>
 												<div class="info">
-													<span class="date"><i class="lni lni-apartment"></i>${board.memberId }님의
+													<span class="date"><i class="lni lni-apartment"></i>${board.nickName }님의
 														홈짐</span>
 													<h6 class="title">
 														<a class='move' href='<c:out value="${board.h_id}"/>'><c:out
