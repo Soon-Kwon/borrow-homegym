@@ -63,6 +63,9 @@
 	    font-weight: 500;
 	}
 	
+	#backBtn{
+		border-radius : 30px;
+	}
 
 	</style>
 </head>
@@ -95,15 +98,16 @@
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-12" style="margin-left: 170px;">
                     <div class="form-main" style="margin-left: 200px;">
-                        <h3 class="title" ><span style="color: #2f3e83;">집에서 만나는 헬스장!</span>
-                            	🔔 홈짐 예약 요청이 도착했습니다.  </h3>
+                        <h3 class="title">🔔 홈짐 예약 요청이 도착했습니다.</h3>
                        
                         <input type="hidden" name="hId" value="${hId }"/>
 							<div class="row" >
 								<div class="col-lg-10 col-10">
-									<label>🙍‍♀️🙍‍♂️  성별</label>
-									<c:if test="${myRequest.sex == 'f'}">여성</c:if>
-									<c:if test="${myRequest.sex == 'm'}">남성</c:if>
+									<div class="form-group">
+										<label>🙍‍♀️🙍‍♂️  성별</label>
+											<c:if test="${myRequest.sex == 'F'}">여성</c:if>
+											<c:if test="${myRequest.sex == 'M'}">남성</c:if>
+									</div>
 								</div>
 								<div class="col-lg-10 col-10">
 									<div class="form-group">

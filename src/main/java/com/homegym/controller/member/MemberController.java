@@ -8,37 +8,40 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.homegym.biz.homegym.HomegymDetailVO;
-import com.homegym.biz.homegym.HomegymReviewVO;
-import com.homegym.biz.homegym.HomegymVO;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
+import com.homegym.biz.member.OAuthToken;
 import com.homegym.biz.member.PageMakerDTO;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
-import com.homegym.security.CustomAuthenticationProvider;
 import com.homegym.security.CustomUserDetails;
 
 import lombok.Setter;
@@ -51,7 +54,7 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder pwencoder;
 	
-	// 로그
+	// 로그인
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
@@ -144,6 +147,53 @@ public class MemberController {
 				return "FAIL";
 			} 
 	    }
+		
+		@GetMapping("/kakao/callback")
+		public @ResponseBody String kakaoCallback(String code) { //Data를 리턴해주는 컨트롤러 함수
+			
+			// POST방식으로 key=value 데이터를 요청(카카오쪽으로)			
+			RestTemplate rt = new RestTemplate();
+			
+			// HttpHeader 오브젝트 생성
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			
+			// HttpBody 오브젝트 생성
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			params.add("grant_type", "authorization_code");
+			params.add("client_id", "d16ab68241565d7f23be9b45065f5a1b");
+			params.add("redirect_uri", "http://localhost:8090/user/kakao/callback");
+			params.add("code", code);
+			
+			// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+			HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = 
+					new HttpEntity<>(params, headers);
+			
+			// Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음
+			ResponseEntity<String> response = rt.exchange(
+				"https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST,
+				kakaoTokenRequest,
+				String.class
+			);
+			
+			// Gson, Json Simple, ObjectMapper
+			ObjectMapper objectMapper = new ObjectMapper();
+			OAuthToken oauthToken = null;
+			try {
+				oauthToken = objectMapper.readValue(response.getBody(),OAuthToken.class);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("카카오 엑세스 토큰:"+oauthToken.getAccess_token());
+			
+			return response.getBody();
+		}
 
 //	// 로그아웃 이동
 //	@RequestMapping("/logout.do")
@@ -219,7 +269,6 @@ public class MemberController {
 		return "/user/profile";
 	}
 
-
 	/* 1.마이페이지 회원정보 수정페이지 이동 */
 	
 //	@GetMapping("mypage/profile_update")
@@ -251,7 +300,7 @@ public class MemberController {
 		return "user/profile_update";
 	}
 
-	/* 1-2.마이페이지 회원정보 수정 요청 */
+/* 1-2.마이페이지 회원정보 수정 요청 */
 	
 	@ResponseBody
 	@PostMapping("mypage/update")
@@ -297,7 +346,6 @@ public class MemberController {
 		return map;
 
 	}
-
 	/* 1-3. 프로필 이미지 등록 */
 	
 	  @PostMapping("mypage/userImgUpload") 
@@ -326,7 +374,7 @@ public class MemberController {
 	  
 	  memberService.userImgUpload(paramMap);
 	  
-	  return "redirect:/user/mypage/profile_update.do?memberId=${member.memberId}";
+	  return "redirect:/user/mypage/profile_update.do";
 	  }
 	  
 	/* 1-4.프로필 이미지 삭제 (DB + 서버)*/
@@ -410,9 +458,22 @@ public class MemberController {
 	
 	@GetMapping("mypage/myactiv")
 	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		/*
+		 * String memberId = request.getParameter("memberId");
+		 * session.setAttribute("memberId", memberId);
+		 */
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
+		String memberId = loginMemberVO.getMemberId();
+		/*
+		 * CustomUserDetails vo = new CustomUserDetails(); vo =
+		 * memberService.getUser(loginMemberVO.getUsername());
+		 */
+		
+		/* model.addAttribute("member", vo); */
+		
 		//수락 대기중 
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		for(int i =0; i<waitingHG.size();i++) {
@@ -496,8 +557,11 @@ public class MemberController {
 	
 	@GetMapping("mypage/mywrite")
 	public String mywrite(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+
+		String memberId = loginMemberVO.getMemberId();
 
 		//내가 쓴글 리스트
 		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId, cri);

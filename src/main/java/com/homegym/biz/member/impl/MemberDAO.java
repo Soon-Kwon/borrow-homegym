@@ -94,28 +94,27 @@ public class MemberDAO {
 	}
 
 	// 비밀번호 체크
-	public boolean checkPw(String memberId, String password) {
-		boolean result = false;
-		Map<String, String> map = new HashMap<String, String>();
-		
-		CustomUserDetails vo = new CustomUserDetails();
-		
-		vo = sqlsession.selectOne("MemberDAO.selectUserById", memberId);
+		public boolean checkPw(String memberId, String password) {
+			boolean result = false;
+			Map<String, String> map = new HashMap<String, String>();
+			
+			CustomUserDetails vo = new CustomUserDetails();
+			
+			vo = sqlsession.selectOne("MemberDAO.selectUserById", memberId);
 
-		BCryptPasswordEncoder pwencoder = new BCryptPasswordEncoder();
-		
-		if(vo == null) {
-			result = false;
-		} else {
-			if(pwencoder.matches(password, vo.getPassword())) {
-				result = true;
-			} else {
+			BCryptPasswordEncoder pwencoder = new BCryptPasswordEncoder();
+			
+			if(vo == null) {
 				result = false;
+			} else {
+				if(pwencoder.matches(password, vo.getPassword())) {
+					result = true;
+				} else {
+					result = false;
+				}
 			}
+			return result;
 		}
-		return result;
-	}
-	
 	// 내가 쓴 게시글 조회 
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
 		Map<String,Object> map = new HashMap<String,Object>();

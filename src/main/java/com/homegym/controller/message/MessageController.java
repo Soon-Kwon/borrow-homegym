@@ -33,9 +33,6 @@ public class MessageController {
 
 	@Autowired
 	private MessageService messageService;
-	/*
-	 * @Autowired private MemberService memberService;
-	 */
 
 	/* message main화면 */
 	@RequestMapping("/msgMain.do")
@@ -62,8 +59,7 @@ public class MessageController {
 		model.addAttribute("list", list);
 		
 		for (MessageVO vos : list) {
-
-			System.out.println("msgMain VO : " + vos);
+			log.info("msgMain.do : "+vos);
 		}
 
 		return "message/message_main";
@@ -79,8 +75,7 @@ public class MessageController {
 		ArrayList<MessageVO> list = messageService.getMessageAll(vo);
 		model.addAttribute("list", list);
 		for (MessageVO vos : list) {
-
-			System.out.println("msgList VO : " + vos);
+			log.info("msgList.do : "+vos);
 		}
 		return "message/message_list";
 	}
@@ -98,8 +93,7 @@ public class MessageController {
 		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
 		model.addAttribute("clist", clist);
 		for (MessageVO vos : clist) {
-
-			System.out.println("msgContent VO : " + vos);
+			log.info("msgContent.do : "+vos);
 		}
 
 		return "message/message_content";
@@ -115,7 +109,7 @@ public class MessageController {
 		vo.setSendId((String) session.getAttribute("memberId"));
 		vo.setRecvId(otherId);
 		vo.setMsgContent(msgContent);
-		System.out.println("msgSend.do의 vo : " + vo);
+		log.info("msgSend.do의 vo : " + vo);
 
 		int flag = messageService.sendMsgInList(vo);
 
@@ -139,6 +133,9 @@ public class MessageController {
 		// 채팅방번호에 따른 메세지 내용 가져오기 
 		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
 		model.addAttribute("clist", clist);
+		for(MessageVO vos : clist) {
+			log.info("msgContentByAsking.do : " + vos);
+		}
 		
 		return "message/message_content";
 	}
@@ -165,11 +162,12 @@ public class MessageController {
 	@ResponseBody
 	@PostMapping("/getNewNoticeCnt.do")
 	public String getNewNoticeCnt(@RequestParam String memberId) {
+		log.info("getNewNoticeCnt.do의 memberId : "+memberId);
 		return messageService.getNewNoticeCnt(memberId);
 	}
 
 	// 임시, DB에서 등록된 유저있는지 확인
-	/* message list(왼쪽)에서 member찾기*/
+	/* message list(왼쪽)에서 등록된 member찾기*/
 	@RequestMapping("/searchUser.do")
 	public String searchUser() {
 		return "message/message_search";

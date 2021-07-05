@@ -200,32 +200,31 @@
 				
 
                 <!-- Course Details Wrapper Start -->
-                <div class="col-lg-8 col-12">
+                 <div class="col-lg-8 col-12">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      
-                         <li class="nav-item" role="presentation"><a href="#tab1">
+                        <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
-                                data-bs-target="#overview" type="button" role="tab" tabindex="1" aria-controls="borrow"
-                                aria-selected="true">홈짐관리</button></a>
+                                data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
+                                aria-selected="true">홈짐 관리</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
-                                data-bs-target="#curriculum" type="button" role="tab" tabindex="2" aria-controls="curriculum"
+                                data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum"
                                 aria-selected="false">빌려준 홈짐</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
-                                data-bs-target="#instructor" type="button" role="tab" tabindex="3" aria-controls="instructor"
+                                data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
                                 aria-selected="false">빌린 홈짐</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <!-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                                type="button" role="tab" aria-controls="reviews" aria-selected="false">진행중 홈짐</button>
-                        </li>
+                                type="button" role="tab" aria-controls="reviews" aria-selected="false">완료된 홈짐</button>
+                        </li> -->
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel" id="tab-1"
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" 
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
                                 
@@ -270,13 +269,13 @@
                                                                     <c:choose>
                                                                     <c:when test="${waitingHomegym.agreeYN == 'Y' }"> 
                                                            			 	 <div class="button accept">
-			                                                                        <button class="btn" id="accept" value="${waitingHomegym.d_id}" >수락됨</button>
+			                                                                        <button class="btn" id="accept" value="${waitingHomegym.d_id}" >수락함</button>
 			                                                                 </div>
 			                                                                  
 																		</c:when>
                                                            			 <c:when test="${waitingHomegym.agreeYN == 'N'}"> 
                                                            			 		<div class="button rejectBtn">
-			                                                                        <button class="btn" id="reject" value="${waitingHomegym.d_id}" >거절됨</button>
+			                                                                        <button class="btn" id="reject" value="${waitingHomegym.d_id}" >거절함</button>
 			                                                                 </div>
 			                                                                  
 																		</c:when>
@@ -303,7 +302,7 @@
                                     </div>
                                     
                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                     	<input type="hidden" name="memberId"/>
+                                     	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${wait_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${wait_pageMaker.cri.amount}">
                                     </form> 
@@ -350,7 +349,7 @@
 															<p style="margin:40px; font-weight: bold;">아직 빌려준 홈짐이 없습니다.😥</p>
 															<div class="flex-box">
                                                                   <div class="button accept-btn">
-                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌려주러 가기</a>
+                                                                      <a href="/homegym/registerView.do" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌려주러 가기</a>
                                                                    </div>
                                                             </div>
 														</div>
@@ -362,7 +361,7 @@
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
+                                                                <a href="/homegym/homegymDetailView.do?hId=${lendHomegym.h_id}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>
@@ -379,12 +378,9 @@
                                                             
                                                             <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-                                                                	
-                                                                  
-                                                           			 	<div class="button accept-btn">
-			                                                                        <button class="btn" id="detailBtn2" value="${homegym.HId}" onclick="changeHomegymStatus(this);">상세보기</button>
-			                                                                    </div>
-			                                                   
+                                                           			 <div class="button accept-btn">
+			                                                            <button class="btn" id="detailBtn2" value="${homegym.HId}" onClick="location.href='/homegym/homegymDetailView.do?hId=${lendHomegym.h_id}'">상세보기</button>
+			                                                         </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -394,7 +390,11 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+<<<<<<< HEAD
                                       	<input type="hidden" name="memberId" />
+=======
+                                      	<input type="hidden" name="memberId" value="${member}"/> <!-- 세션 받으면 바꾸기 -->
+>>>>>>> ee85d6369c4b7280cf2592eaf5f704a8b921f52d
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
@@ -444,7 +444,7 @@
 															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p>
 															<div class="flex-box">
                                                                   <div class="button accept-btn">
-                                                                      <a href="blog-single-sidebar.html" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌리러 가기</a>
+                                                                      <a href="/homegym/homegymListView.do" class="btn" style="border-radius:30px; background-color:lightsteelblue">빌리러 가기</a>
                                                                    </div>
                                                             </div>
 														</div>
@@ -456,7 +456,7 @@
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
                                                             data-wow-delay=".4s">
                                                             <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
+                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}"><img class="thumb"
                                                                         src="https://via.placeholder.com/1050x700"
                                                                         alt="#"></a>
                                                             </div>
@@ -471,28 +471,29 @@
                                                             </div>    
                                                             <!-- 버튼 시작 -->
                                                                 <div class="flex-box">
-                                                                    <c:if test="${rentHomegym.payYN =='N'}"> 
+                                                                    <c:if test="${rentHomegym.payYN =='N' and rentHomegym.agreeYN == 'Y'}"> 
 																			<div class="button accept-btn">
-			                                                                        <button class="btn" id="payBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 하기</button>
-			                                                                    </div>
-			                                                                   <!--  <div class="button deny-btn">
-			                                                                        <button class="btn" id="denyBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락 취소</button>
-			                                                                    </div>  -->
-																		 </c:if>
-                                                           		 	  <c:if test="${rentHomegym.payYN =='Y'}"> 
+			                                                                     <button class="btn" id="payBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 하기</button>
+			                                                                </div>
+																	</c:if>
+                                                           		 	 <c:if test="${rentHomegym.payYN =='Y'}"> 
                                                            			 	<div class="button accept-btn">
-			                                                                        <button class="btn" id="payOK" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 완료</button>
-			                                                                    </div>
-			                                                                   <div class="button deny-btn">
-			                                                                        <button class="btn" id="reviewBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">리뷰쓰기</button>
-			                                                                    </div> 
-																		</c:if>   
-																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 
+			                                                                 <button class="btn" id="payOK" value="${homegym.HId}" onclick="changeHomegymStatus(this);">결제 완료</button>
+			                                                            </div>
+			                                                             <div class="button deny-btn">
+			                                                                  <button class="btn" id="reviewBtn" value="${homegym.HId}" onclick="changeHomegymStatus(this);">리뷰쓰기</button>
+			                                                              </div> 
+																	</c:if>   
+																	<c:if test="${rentHomegym.agreeYN == 'N'}"> 
                                                            			 	<div class="button accept-btn">
-			                                                                        <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절됨</button>
-			                                                                    </div>
-			                                                                    
-																		</c:if> 
+			                                                                   <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">거절 됨</button>
+			                                                             </div>
+																	</c:if> 
+																	<c:if test="${rentHomegym.agreeYN == null}"> 
+                                                           			 	<div class="button accept-btn">
+			                                                                   <button class="btn" id="reject" value="${homegym.HId}" onclick="changeHomegymStatus(this);">수락 대기중</button>
+			                                                             </div>
+																	</c:if> 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -532,7 +533,7 @@
                      
                      <!-- 진행중인 홈짐 끝 & 완료된 홈짐 시작 -->   
                         
-                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                       <%--  <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="course-reviews">
                                 <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
@@ -613,9 +614,9 @@
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
-                </div>
+                </div> 
 
 
 

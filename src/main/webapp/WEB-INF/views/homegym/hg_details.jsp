@@ -134,7 +134,7 @@
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
-							value="임시: 로그인한 유저" placeholder="임시: 로그인한 유저" readonly>
+							value="borrowerId" placeholder="${member_memberId}" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>
@@ -272,7 +272,7 @@
 			
 			var hIdValue = '<c:out value="${board.HId}"/>';
 			var memberId = '<c:out value="${board.memberId}"/>';
-			var borrowerId = "임시: 로그인 된 유저";
+			var borrowerId = '<c:out value="${member_memberId}"/>';
 			var reviewUL = $(".comments-list");
 		
 			var viewMoreReviewBtn = $("#re_plus"); // 더보기 버튼 
@@ -376,7 +376,7 @@
 						hrScore: $("input[name='hrScore']:checked").val(),
 						hid: hIdValue,
 						memberId: memberId,
-						borrowerId: borrowerId
+						borrowerId: "${member_memberId}"
 				};
 				
 				// 평점이 없을시 입력해달라는 요청메시지 보내기

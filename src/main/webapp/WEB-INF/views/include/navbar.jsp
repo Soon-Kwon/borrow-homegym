@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
 	String memberId = request.getParameter("memberId");
 session.setAttribute("memberId", memberId);
@@ -47,6 +48,7 @@ session.setAttribute("memberId", memberId);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
 <!-- 웹소켓 -->
 <script
 	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
@@ -65,6 +67,8 @@ session.setAttribute("memberId", memberId);
 <script type="text/javascript">
 	// 안읽은 메세지 카운트 가져오기
 	function getUnread(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 				type:"POST",
 				async:"true",
@@ -73,6 +77,10 @@ session.setAttribute("memberId", memberId);
 					memberId : '${memberId}' // data로 넘겨주기
 				},
 				url: "${contextPath}/message/getNewNoticeCnt.do",
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
 				success:function(result){
 					// 안읽은게 1개 이상이면
 					if(result >= 1){
@@ -113,7 +121,6 @@ session.setAttribute("memberId", memberId);
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
 		
-		getNewNoticeCnt();
 		// 웹소켓 연결
 		/* sock = new SockJS("<c:url value="/notice-ws"/>");
 		socket = sock;

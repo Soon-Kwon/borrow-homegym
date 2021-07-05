@@ -151,7 +151,7 @@
                                     </table>
                                     
                                    <form id="actionForm" action="user/mypage/mywrite.do" method="get">
-                                     	<input type="hidden" name="memberId"/>
+                                     	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
                                     </form> 
@@ -180,7 +180,7 @@
                                         <table class="table table-hover" style="text-align: center; line-height: 35px;">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th>홈짐번호</th>
+                                                <th>홈짐이름</th>
                                                 <th>리뷰내용</th>
                                                 <th>별점</th>
                                                 <th>리뷰 작성일</th>
@@ -199,24 +199,24 @@
                                     			<c:otherwise>
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
-				                                            <td>${myReviews.Htitle}</td>
-				                                            <td><a href="course-details.html">${myReviews.hrContent}</a></td>
-					                                            <c:if test="${myReviews.hrScore==1}">
+				                                            <td>${myReviews.h_title}</td>
+				                                            <td><a href="course-details.html">${myReviews.hr_content}</a></td>
+					                                            <c:if test="${myReviewshr_score==1}">
 					                                            	<td>⭐</td><
 					                                            </c:if>
-					                                            <c:if test="${myReviews.hrScore==2}">
+					                                            <c:if test="${myReviews.hr_score==2}">
 					                                            	<td>⭐⭐</td>
 					                                            </c:if>
-					                                            <c:if test="${myReviews.hrScore==3}">
+					                                            <c:if test="${myReviews.hr_score==3}">
 					                                            	<td>⭐⭐⭐</td>
 					                                            </c:if>
-					                                            <c:if test="${myReviews.hrScore==4}">
+					                                            <c:if test="${myReviews.hr_score==4}">
 					                                            	<td>⭐⭐⭐⭐</td>
 					                                            </c:if>
-					                                            <c:if test="${myReviews.hrScore==5}">
+					                                            <c:if test="${myReviews.hr_score==5}">
 					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
 					                                            </c:if>
-				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hrRegdate}" /></td>
+				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hr_regdate}" /></td>
 		                                       		    </tr>
                                     			   </c:forEach>
                                     	     	</c:otherwise>

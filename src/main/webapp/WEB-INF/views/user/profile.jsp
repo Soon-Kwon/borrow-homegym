@@ -1,14 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-	<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
 <%-- <%
  	String memberId = session.getAttribute("memberId").toString();
- %> 
- --%>
+ %>  --%>
+
 <html class="no-js" lang="zxx">
 
 <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>빌려줘! 홈짐 - 마이페이지</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
+    
     
 <%--     <script>
     	var memberId = '<%=memberId %>';
@@ -56,6 +77,7 @@
 .img-circle {
   border-radius: 50%;
 }
+
 
 </style>
 </head>
@@ -158,17 +180,17 @@
                         
                         <div class="single-feature">
                             
-                            <c:if test="${empty member_image}">
+                            <c:if test="${empty member.imagePath}">
 				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
 				             </c:if>
-				            <c:if test="${not empty member_image}">
-				                    <div id="userphoto"><img src="${member_imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
+				            <c:if test="${not empty member.imagePath}">
+				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
 				            </c:if>
                             <h4 style="margin-left:30px;">${member.name}님</h4>
-                            <span id="auth">🏋️‍♂️${member_nickname}</span><br> 
-                            <span id="memberId">${member_memberId} <span>
+                            <span id="auth">🏋️‍♂️${member.nickname}</span><br> 
+                            <span id="memberId">${member.memberId} <span>
                             <div class="button">
-                                <a href="profile_update.do?memberId=${member.memberId}" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
+                                <a href="profile_update.do" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -182,7 +204,11 @@
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
+
                                 <a href="myactiv.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+=======
+                                <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+>>>>>>> ee85d6369c4b7280cf2592eaf5f704a8b921f52d
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -196,10 +222,13 @@
                             <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 리뷰</p>
                             <h1 style="margin-top: 20px;">${myReviewCnt}</h1>
                             <div class="button">
-                                <a href="mywrite.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mywrite.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
+                        
+                                             
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -264,6 +293,8 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
+    
+
 </body>
 
 </html>
