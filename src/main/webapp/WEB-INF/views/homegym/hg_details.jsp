@@ -105,7 +105,7 @@
 								<input type="button" value="지금 예약하러 가기"
 								 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn btn-time">
 								<br /> <br />
-									<input type="button" value="집주인에게 문의하기" class="btn btn-time">
+									<button id="showMessageContent" class="btn btn-time msg_send_btn_profile">집주인에게 문의하기</button>
 								</div>
 						</div>
 						<!--/ End Single Widget -->
@@ -159,6 +159,8 @@
 		</div>
 	</div>
 	<!-- /.modal -->
+	
+	
 
 		<!-- Start Footer Area -->
 		<footer class="footer style2">
@@ -485,6 +487,27 @@
 					showList(99999);
 				});
 			});
+			
+			// 집주인에게 문의하기
+			// 리뷰쓰기 버튼 누르면 동작
+			$("#showMessageContent").on("click", function(e){
+				
+				//기존에 존재하던 값들은 지워준다
+				modal.find("input[name != 'hrScore']").val("");
+				modal.find("input:radio[name = 'hrScore']").prop('checked', false);
+				modal.find("textarea[name ='hrContent']").val("");
+				modal.find("button[id != 'modalCloseBtn']").hide();
+				
+				modalRegisterBtn.show();
+				
+				$("#myModal").modal("show");
+			});
+			
+			// 닫기 버튼 누르면 동작
+			$("#modalCloseBtn").on("click", function(e){
+				$("#myModal").modal("hide");				
+			});
+			
 		
 		});
 	</script>
