@@ -1,8 +1,10 @@
 package com.homegym.controller.homegym;
 
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,8 +41,8 @@ public class HomegymController {
 	private HomegymService homegymService;
 	
 
-	private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
-	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
+	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
 
 	// 글쓰기 페이지로 이동
@@ -93,7 +97,7 @@ public class HomegymController {
 	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
 			@RequestParam("hId") int hId ) {
 		model.addAttribute("board", homegymService.get(vo, hId));
-		model.addAttribute("score", homegymService.getScore(hId));
+		//model.addAttribute("score", homegymService.getScore(hId));
 		
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";
@@ -187,4 +191,18 @@ public class HomegymController {
 			}
 		});
 	}
+	
+	// 리뷰 평점구하기 
+	@RequestMapping(value="/score/{hId}.do", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE}, method= {RequestMethod.GET})
+	@ResponseBody
+	public BigDecimal getScore(@PathVariable("hId") int hId ){
+		
+		log.info("리뷰 평점 컨트롤러: " + hId);
+		HashMap<?,?> score = homegymService.getScore(hId);
+		
+		score.get("hr_score");
+		
+		return (BigDecimal) score.get("hr_score");
+	}
+			
 }
