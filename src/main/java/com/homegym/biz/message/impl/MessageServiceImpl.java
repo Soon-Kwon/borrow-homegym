@@ -38,5 +38,9 @@ public class MessageServiceImpl implements MessageService {
 		return messageDAO.getNewNoticeCnt(memberId);
 	}
 
+	@Override
+	public String getBoardWriterId(int hId) {
+		return messageDAO.getBoardWriterId(hId);
+	}
 
 }

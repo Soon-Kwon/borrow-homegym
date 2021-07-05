@@ -18,5 +18,8 @@ public interface MessageService {
 	// 새 메세지 알림 조회
 	public String getNewNoticeCnt(String memberId);
 
+	// 홈짐 글 번호를 통해 memberId 조회
+	public String getBoardWriterId(int hId);
+
 
 }

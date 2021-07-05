@@ -127,6 +127,12 @@ public class MessageDAO {
 		log.info("DAO의 getNewNoticeCnt();");
 		return sqlSession.selectOne("MessageDAO.unReadCntAll", memberId);
 	}
+
+	/*1:1대화할 멤버 아이디를 글 번호로 검색*/
+	public String getBoardWriterId(int hId) {
+		log.info("DAO의 getOtherId();");
+		return sqlSession.selectOne("MessageDAO.getBoardWriterId", hId);
+	}
 	
 	/* 
 	 * 1:1 문의하기
@@ -134,8 +140,6 @@ public class MessageDAO {
 	 * 1-1. 이력있으면 (반환값이 1이상) 그때의 채팅방 번호가져와서 대화내용 불러오기
 	 * 1-2. 이력없으면 (반환값이 0이면) 현존하는 채팅방번호 중 max +1 해서 새롭게 만들기
 	 * */
-//	public String 
-	
-	/**/
+
 
 }

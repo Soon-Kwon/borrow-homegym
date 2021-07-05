@@ -1,6 +1,7 @@
 package com.homegym.controller.message;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.homegym.biz.member.MemberService;
+import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.message.MessageService;
 import com.homegym.biz.message.MessageVO;
+import com.homegym.biz.message.NoticeService;
+import com.homegym.biz.message.NoticeVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -33,6 +36,8 @@ public class MessageController {
 
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private NoticeService noticeService;
 
 	/* message main화면 */
 	@RequestMapping("/msgMain.do")
@@ -122,8 +127,13 @@ public class MessageController {
 		
 		System.out.println("1:1문의하기를 통한 메세지 내용 가져오기");
 		
-		String otherId = request.getParameter("otherId");
+		// 글 번호를 통해 otherId 세팅하기
+		String hId = request.getParameter("hId");
+//		HomegymVO hVo = new HomegymVO();
+//		hVo.setHId(Integer.parseInt(hId));
 		
+		// DB에서 해당 글을 쓴 아이디 가져오기
+		String otherId = messageService.getBoardWriterId(Integer.parseInt(hId));
 		// 문의할 id(번호)
 		vo.setRecvId(otherId);
 		System.out.println("otherId" + otherId);
@@ -174,19 +184,38 @@ public class MessageController {
 	}
 	
 	
-	
+	/*웹소켓*/
 
-	/* 임시 */
-	@RequestMapping("/msg.do")
-	public String msg(HttpServletRequest request, HttpSession session, Model model) {
-		return "message/websocket_connectionTest";
-	}
-
-	/* 임시 */
-	@RequestMapping("/chat.do")
-	public String chat() {
-		// 글을 쓴 사람을 임시로 test5라고 하자
+	/* 1:1대화 */
+	@RequestMapping("/msg-ws.do")
+	public String msg() {
 		return "message/chat";
 	}
+
+	/* 알림 */
+	 @RequestMapping("/notice-ws.do") 
+	 public String notice() { 
+		 return "message/message_notice"; 
+	}
+	 
+//	 // 알림조회(전체)
+//	 @RequestMapping("/notice.do")
+//	 public ModelAndView noticeInit(@RequestParam(defaultValue="1") int curPage, HttpServletRequest request) throws Exception{
+//		 ModelAndView mav = new ModelAndView()
+//	 }
+//	 
+	 // notice DB저장
+	 @RequestMapping("/saveNotice.do")
+	 @ResponseBody
+	 public void saveNotify(@RequestParam Map<String, String> param) throws Exception{
+		 NoticeVO vo = new NoticeVO();
+		 vo.setNTarget(param.get("target"));
+		 vo.setNContent(param.get("content"));
+		 vo.setNType(param.get("type"));
+		 vo.setNUrl(param.get("url"));
+		 noticeService.insertNotify(vo);
+	 }
+	 
+
 
 }

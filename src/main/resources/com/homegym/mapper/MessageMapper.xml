@@ -112,6 +112,11 @@
 		LIMIT 0,1
 	</select>
 	
+	<!-- 기존 채팅방이 없으면 채팅방 가져오기 -->
+	<!-- <insert id="makeNewMsgRoom" >
+		INSERT INTO MESSAGE
+	</insert> -->
+	
 	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
 	<select id="unReadCntAll" parameterType="string"
 		resultType="String">
@@ -121,12 +126,10 @@
 	</select>
 	
 	<!-- 1:1문의) 해당 글을 작성한 번호를 통해 그 글의 memberId가져오기 -->
-	<!-- <select id="boardWriterId" parameterType="" resultType="String">
-		SELECT MEMBERID FROM MEMBER
-		WHERE 
-		기존 방이 있으면
-		기존 방이 없으면
-	</select> -->
+	<select id="getBoardWriterId" parameterType="int" resultType="String">
+		SELECT MEMBERID FROM HOMEGYM_BOARD
+		WHERE h_id = #{hId}
+	</select>
 
 
 

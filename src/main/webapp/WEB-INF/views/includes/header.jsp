@@ -35,10 +35,48 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     
-    <!-- message 관련 -->
+    <!-- message, 알림 관련 -->
     <script src="/resources/assets/js/message.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script type="text/javascript">
+    	var socket = null;
+    	
+    	// comma
+    	function pointToNumFormat(num){
+    		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	}
+    	
+    	$(document).ready(function(){
+    		// 웹소켓 연결
+    		sock = new SockJS("<c:url value="/notice-ws.do"/>");
+    		socket = sock;
+    		
+    		console.log(sock);
+    		
+    		// 데이터 전달 받았을 떄
+    		sock.onmessage = onMessage; // toast생성
+    		
+    	});
+    	
+    	// 실시간 알림 받았을 시
+    	function onMessage(evt){
+    		var data = evt.data
+    		
+    		// toast
+    		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+    	    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+    	    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+    	    toast += "<span aria-hidden='true'>&times;</span></button>";
+    	    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+    	    $("#msgStack").append(toast);
+    	    $(".toast").toast({"adnimation":true, "autohide":false});
+    	    $(".toast").toast('show');
+    	    $("#newNoticeCnt").text($("#newNoticeCnt").text()*1+1);
+    	}
+    	
+    </script>
     
 	
 </head>
@@ -223,3 +261,6 @@
             </div> <!-- row -->
         </div> <!-- container -->
     </header>
+    
+    <!-- 알림받는 영역 -->
+    <div id="msgStack"></div>

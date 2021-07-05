@@ -47,9 +47,7 @@
 <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/main.css" />
 
-<!-- 웹소켓 -->
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
 <script type="text/javascript">
 	function findFunction(){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -347,6 +345,7 @@
 		function getInfiniteChat(){
 			setInterval(function(){
 				MessageList();
+				// 선택된 방이 있을때만 채팅방 번호 보내기
 				if(selectedMsgRoomNo != null && selectedMsgRoomNo != '')
 					ShowMessageContent(selectedMsgRoomNo);
 			}, 3000);
