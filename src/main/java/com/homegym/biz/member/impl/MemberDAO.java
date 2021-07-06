@@ -187,6 +187,15 @@ public class MemberDAO {
 		return sqlsession.selectList("MemberDAO.getMyProgressHomegym",map);
 	}
 	
+	//내가 쓴 댓글 조회
+	public List<Map<String, String>> getMyReviewsPaging(String memberId,Criteria cri){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("memberId", memberId);
+		map.put("cri", cri);
+		return sqlsession.selectList("MemberDAO.getMyReviewsPaging",map);
+	}
+	
 
 	//결제 여부 변경
 	public void payUpdate(HomegymDetailVO vo) {
@@ -199,11 +208,7 @@ public class MemberDAO {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
 	}
 	
-	//내가 쓴 댓글 조회
-	public List<Map<String, String>> getMyReviews(String memberId){
-		
-		return sqlsession.selectList("MemberDAO.getMyReviews",memberId);
-	}
+
 	
 	//요청 홈짐 예약 폼 조회
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId) {

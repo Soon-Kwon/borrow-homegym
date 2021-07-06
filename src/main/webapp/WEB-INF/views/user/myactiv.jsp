@@ -69,6 +69,7 @@
 		    border-radius: 40px;
 		    background-color:#5c6dbd;
 		 }
+		 
     </style>
 
 </head>
@@ -243,7 +244,7 @@
                                                 
                                                 <div class="row">
                                                 <c:choose>
-                                    				<c:when test ="${fn:length(waitingHomegym)==0}">
+                                    				<c:when test ="${wait_total==0 }">
 	                                    				<div style="font-size: 20px; text-align:center;">
 															<p style="margin:40px; font-weight: bold;">관리할 홈짐이 없습니다.😥</p></td>
 															
@@ -254,18 +255,17 @@
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
+                                                            data-wow-delay=".1s">
                                                             <div class="image">
-                                                                <a href="/user/mypage/reservationForm.do?d_id=${waitingHomegym.d_id}"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
+                                                                <a href="/user/mypage/reservationForm.do?d_id=${waitingHomegym.d_id}">
+                                                                <img src="${pageContext.request.contextPath }/resources/assets/images/mypage/formImg.PNG" style="height:260px;"></a>
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
                                                                     <ul style="font-weight:bold; font-size:15px;">
                                                                         <%-- <li>📌${homegym.h_title}</li> --%>
-                                                                        <li>📌${waitingHomegym.h_title}</li>
-                                                                        <li>🏡위치 : ${waitingHomegym.h_addr}</li>
+                                                                        <li>📌${waitingHomegym.h_title}</li><br>
+                                                                        <li>🏡위치 : ${waitingHomegym.h_addr}</li><br>
                                                                         <li>📆 대여일: ${waitingHomegym.rental_date}</li>
                                                                     </ul>
                                                                 </div>
@@ -350,7 +350,7 @@
                                                 
                                                 <div class="row">
                                                 <c:choose>
-                                    				<c:when test ="${fn:length(lendHomegym)==0}">
+                                    				<c:when test ="${ld_total == 0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
 															<p style="margin:40px; font-weight: bold;">아직 빌려준 홈짐이 없습니다.😥</p>
 															<div class="flex-box">
@@ -365,18 +365,17 @@
                                                  <div class="col-lg-6 col-12">
                                                         <!-- Single News -->
                                                         <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
+                                                            data-wow-delay=".1s">
                                                             <div class="image">
-                                                                <a href="/homegym/homegymDetailView.do?hId=${lendHomegym.h_id}"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
+                                                                <a href="/homegym/homegymDetailView.do?hId=${lendHomegym.h_id}">
+                                                                <img src="/display.do?fileName=${lendHomegym.uploadPath}${lendHomegym.uuid}_${lendHomegym.fileName}" style="height:260px;"></a>
                                                             </div>
                                                             <div class="content-body">
                                                                 <div class="meta-data">
                                                                     <ul style="font-weight:bold; font-size:15px;">
-                                                                        <li>💜${lendHomegym.h_title}</li>
+                                                                        <li>💜${lendHomegym.h_title}</li><br>
                                                                         <li>💜위치 : ${lendHomegym.h_addr}</li><br>
-                                                                        <li>💜조회수  ${lendHomegym.h_cnt}</li>
+                                                                        <li>💜홈짐 등록일 : <fmt:formatDate value="${lendHomegym.h_regdate}" pattern="yyyy-MM-dd"/></li>
                                                                        
                                                                     </ul>
                                                                 </div>
@@ -396,7 +395,7 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                      	<input type="hidden" name="memberId" value="${member_memberId}"/> 
+                                      	<input type="hidden" name="memberId" value="${member_memberId}"> 
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
@@ -441,7 +440,7 @@
                                                 
                                                 <div class="row">
                                                  <c:choose>
-                                    				<c:when test ="${fn:length(rentHomegym)==0}">
+                                    				<c:when test ="${rt_total == 0}">
 	                                    				<div style="font-size: 20px; text-align:center;">
 															<p style="margin:40px; font-weight: bold;">아직 빌린 홈짐이 없습니다.😥</p>
 															<div class="flex-box">
@@ -464,16 +463,16 @@
 	                                                 <div class="col-lg-6 col-12">
 	                                                        <!-- Single News -->
 	                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-	                                                            data-wow-delay=".4s">
+	                                                            data-wow-delay=".1s">
 	                                                            <div class="image">
 	                                                                <a href="/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}">
-	                                                                <img class="thumb" src="https://via.placeholder.com/1050x700" alt="#"></a>
+	                                                                <img class="listImage" src="/display.do?fileName=${rentHomegym.uploadPath}${rentHomegym.uuid}_${rentHomegym.fileName}" style="height:260px;"></a>
 	                                                            </div>
 	                                                            <div class="content-body">
 	                                                                <div class="meta-data">
 	                                                                    <ul style="font-weight:bold; font-size:15px;">
-	                                                                        <li>📌${rentHomegym.h_title}</li>
-	                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li>
+	                                                                        <li>📌${rentHomegym.h_title}</li><br>
+	                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li><br>
 	                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
 	                                                                    </ul>
 	                                                                </div>
@@ -685,20 +684,17 @@
     
     <script type="text/javascript">
     	$(document).ready(function(){
-    /* 		var actionForm= $("#actionForm");
+    		var actionForm= $("#actionForm");
 
 			/* 페이징 */    		
-    	/* 	$(".pagination-list a").on("click",function(e){
+    	 	$(".pagination-list a").on("click",function(e){
     			e.preventDefault();
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/myactiv.do");
     			actionForm.submit();
-    		}); */
+    		}); 
 			/* 결제 api */
-				 
-
-
     			$(document).on("click", "#acceptBtn > button ", function() {
 					
     				var idx = $(this).attr("data-attr");
@@ -709,8 +705,6 @@
 					var price   = $("#price_"+idx).val();
 					var phone   = $("#phoneNum_"+idx).val(); 
 					var dId = $("#dId_"+idx).val();
-					
-					alert("name :: " + name + "email :: " + email + "address :: " + address + "price :: " + price + "phone :: " + phone + "dId :::" + dId);
 					
 			 		var IMP = window.IMP; // 생략가능
 					IMP.init('imp97132347');
@@ -732,7 +726,7 @@
 					}, function (rsp) {
 						console.log(rsp);
 						if (rsp.success) {
-							var msg = '홈짐 결제가 완료되었습니다.';
+							var msg = '홈짐 결제가 완료되었습니다.☺;
 							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
 							/* msg += '고유ID : ' + rsp.imp_uid;
 							msg += '상점 거래ID : ' + rsp.merchant_uid;
@@ -740,7 +734,6 @@
 							msg += '카드 승인번호 : ' + rsp.apply_num; */
 						} else {
 							var msg = '홈짐 결제에 실패하였습니다. 다시 시도해주세요 !';
-							msg += '에러내용 : ' + rsp.error_msg;
 							location.href="/user/mypage/myactiv.do?payYN=N";
 						}
 							alert(msg);

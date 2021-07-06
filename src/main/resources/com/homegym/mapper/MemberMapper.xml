@@ -193,12 +193,20 @@
 	
 	<!-- 내가 빌린 홈짐 리스트-->
 	<select id="getMyRentHG" resultType="hashmap" parameterType="String">
-		SELECT b.*, d.*
-		FROM homegym_board b INNER JOIN homegym_detail d
+		SELECT b.h_title,
+		 b.h_addr,
+		 d.rental_date,
+		 min(f.uuid) as uuid,
+		min(f.fileName) as fileName,
+		max(f.uploadPath) as uploadPath
+		FROM homegym_board b 
+		INNER JOIN homegym_detail d
 		ON b.h_id = d.h_id
-		WHERE borrowerId= #{memberId} 
+		INNER JOIN homegym_attach f
+		ON b.h_id = f.h_id
+		WHERE borrowerId= #{memberId}
+		group by b.h_title, b.h_addr, d.rental_date
 		ORDER BY d_id DESC
-
 	</select>
 	
 	<!-- 진행중인 홈짐 리스트 -->
@@ -255,19 +263,7 @@
 	
 	</select>
 	
-	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardPaging" resultType="trainer" >
-		<![CDATA[
-		SELECT *
-		FROM (
-				SELECT *
-				FROM trainer_board
-				WHERE memberId = #{memberId}
-				ORDER BY tno desc
-				)as tb
-  		LIMIT #{cri.skip}, #{cri.amount}
-  		]]>
-	</select>
+
 
 	<!-- 홈짐 관리 리스트 페이징 -->
 	<select id="getWaitingHGPaging" resultType="hashMap">
@@ -286,25 +282,25 @@
 	
 	<!-- 빌려준 홈짐 리스트 페이징   -->
 	<select id="getLendHGPaging" resultType="HashMap">
-<!--   	<![CDATA[
-  		SELECT *
-  		FROM (
-  				SELECT distinct b.h_id,b.h_title,b.h_addr,b.h_cnt
-				FROM homegym_board b INNER JOIN homegym_detail d
-				WHERE memberId = #{memberId}
-			)as lh
-  		LIMIT #{cri.skip}, #{cri.amount}
-  				
-  ]]> -->
-		  <![CDATA[
-		  SELECT * 
-		  from(
-		  		SELECT distinct h_id,h_title,h_addr,h_cnt
-		  		FROM homegym_board 
-		  		WHERE memberId=#{memberId}
-		  	)as lh
-		  LIMIT #{cri.skip}, #{cri.amount}
-		  ]]>
+	<![CDATA[
+	  		SELECT *
+			FROM (
+				 SELECT
+				 	 b.h_title,
+					 b.h_addr,
+					 b.h_regdate,
+					 b.h_id,
+					 min(f.uuid) as uuid,
+					 min(f.fileName) as fileName,
+					 max(f.uploadPath) as uploadPath
+				FROM homegym_board b INNER JOIN homegym_attach f
+					ON b.h_id = f.h_id
+				WHERE memberId= #{memberId}
+					GROUP BY b.h_title, b.h_addr, b.h_regdate
+					ORDER BY b.h_regdate DESC
+				)as lh
+	  		LIMIT #{cri.skip}, #{cri.amount}
+ 		 ]]>
 	</select>
 	
 	<!-- 빌린 홈짐 리스트 페이징 -->
@@ -312,32 +308,54 @@
 	  	<![CDATA[
 	  		SELECT *
 	  		FROM (
-	  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN,d.rental_date,d.agreeYN,b.h_id,d.phoneNum,b.h_price,d.d_id
-					FROM homegym_board b INNER JOIN homegym_detail d
+	  			SELECT b.h_id,b.h_title,b.h_addr,d.rental_date,
+	  				d.agreeYN, d.payYN, d.d_id, d.phoneNum, b.h_price,
+                    min(f.uuid) as uuid,
+					min(f.fileName) as fileName,
+					max(f.uploadPath) as uploadPath
+					FROM homegym_board b 
+					INNER JOIN homegym_detail d
 					ON b.h_id = d.h_id
+					INNER JOIN homegym_attach f
+					ON b.h_id = f.h_id
 					WHERE borrowerId= #{memberId}
+					ORDER BY d_id DESC
 				)as rh
 	  		LIMIT #{cri.skip}, #{cri.amount}
-  				
-  ]]>
+ 		 ]]>
+	</select>
+	
+	<!-- 내가 쓴 게시물 목록  -->
+	<select id="getMyBoardPaging" resultType="trainer" >
+		<![CDATA[
+		SELECT *
+		FROM (
+				SELECT *
+				FROM trainer_board
+				WHERE memberId = #{memberId}
+				ORDER BY tno desc
+				)as tb
+  		LIMIT #{cri.skip}, #{cri.amount}
+  		]]>
 	</select>
 	
 	<!-- 내가 쓴 리뷰 리스트 조회-->
-	<select id="getMyReviews" resultType="HashMap">
-		SELECT *
-		FROM(
+	<select id="getMyReviewsPaging" resultType="HashMap">
+	<![CDATA[
+	SELECT *
+		FROM( 
 			SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate,hr.h_id
 			FROM homegym_board hb INNER JOIN homegym_review hr
 			ON hb.h_id = hr.h_id
 			WHERE borrowerId= #{memberId}
 			ORDER BY hr_regdate DESC
 		)as rv
-		LIMIT #{start},
+		LIMIT #{cri.skip}, #{cri.amount}
+		]]>
 	</select>
 	
 	<!-- 요청 홈짐예약 폼 조회 -->
 	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
-
 		SELECT * 
 		FROM homegym_detail
 		WHERE d_id = #{dId}

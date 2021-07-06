@@ -20,7 +20,11 @@
 	    color: #5c6dbd;
 	    font-weight: 400;
 	}
-
+	
+	/* .fouc{
+		display: none;
+	}
+ */
 </style>
 <body>
     <!--[if lte IE 9]>
@@ -124,7 +128,7 @@
                     </ul>
                     
                   <!-- 게시글 탭 -->
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content fouc" id="myTabContent">
                         <div class="tab-pane fade show active" id="overview" role="tabpanel"
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
@@ -208,6 +212,7 @@
 													</div>
                                     			</c:when>
                                     			<c:otherwise>
+                                    			
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
@@ -236,8 +241,29 @@
                                      		
                                			  </tbody>
                                        </table>
-                                       
-                                         <button id="addBtn" class="btn btn-outline-secondary">더보기</button>
+                                        <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                     	<input type="hidden" name="memberId" value="${member_memberId}"/>
+                                    	<input type="hidden" name="pageNum" value="${rv_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${rv_pageMaker.cri.amount}">
+                                    </form> 
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                   <c:if test ="${rv_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${rv_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${rv_pageMaker.startPage}" end="${rv_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${rv_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${rv_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${rv_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+		                                       </div>  
+		                                </div> 
+		                            </div>
+		                        </div>
+                                      
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -301,44 +327,8 @@
     
      <script type="text/javascript">
      $(document).ready(function(){
-        /*  $("#addBtn").click(function(){
-             alert("Hello jQuery!");
-             //var startNum=$("#listBody tr").length; //마지막 리스트 번호 알아냄
- 			// var addListHtml ="";
-             
-             var startIndex = 1;
-             var addStep = 5;
- 			 alert(startNum);
- 			
- 			$ajax({
-				url:"/user/mypage/mywrite.do",
-				type:"post",
-				dataType:"json",
-				data:{"startNum":startNum},
-				
-				success:function(data){
-					if(data.length<10){
-						$("addBtn").remove();
-					}else{
-						var addListHtml="";
-						if(data.length>0){
-							for(var i=0; i<data.length; i++){
-								var idx = Number(startNum)+Number(i)+1;
-								addListHtml += "<tr>";
-								addListHtml += "<td>" + idx + "</td>";
-								addListHtml += "<td>" + data[i].title + "</td>";
-								addListHtml += "<td>" + data[i].description + "</td>";
-								addListHtml += "</tr>"
-							}
-							$("#listBody").append(addListHtml);
-						}
-					}
-				}
-
- 			}); 
-         });
-      }); */
- \   		var actionForm= $("#actionForm");
+     
+   		var actionForm= $("#actionForm");
 
     		
     		$(".pagination-list a").on("click",function(e){
@@ -347,7 +337,7 @@
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/mywrite.do");
     			actionForm.submit();
-    		}); \
+    		}); 
     		
     	/*  	$(document).on("#addBtn", function() {
     		$("#addBtn").click(function(){
@@ -362,6 +352,7 @@
     	});
     	 */
   
+ 
 
     </script>
 </body>

@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <c:set var="memberId"  value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberId}"  />
+<c:set var="imagePath"  value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.imagePath}"  />
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -141,7 +142,15 @@
                                 <sec:authorize access="hasRole('ROLE_MEMBER')">
 									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tbList">트레이너</a></li>
-									<a class="circle-image" href="/user/mypage/profile.do"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
+									
+									 <c:if test="${empty member.imagePath}">
+									 	<a class="circle-image" href="/user/mypage/profile.do">
+									 	<img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" style="height: 50px; width: 50px;"></a>
+				           			 </c:if>
+				          			 <c:if test="${not empty member.imagePath}">
+				                    	<a class="circle-image" href="/user/mypage/profile.do"> <img src="${member.imagePath}" style="height: 50px; width: 50px;"></a>
+				            		</c:if>
+									
 									<li class="nav-item">
                                         <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"

@@ -77,7 +77,7 @@ public interface MemberService {
 //	public List<HomegymVO> getMyFinishedHomegym(String memberId);
 	
 	//내가 쓴 리뷰 조회
-	public List<Map<String, String>> getMyReviews(String memberId);
+	public List<Map<String, String>> getMyReviewsPaging(String memberId,Criteria cri);
 	
 	// 결제 상태 변경 
 	public void payUpdate(HomegymDetailVO vo);
