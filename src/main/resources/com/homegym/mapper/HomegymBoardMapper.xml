@@ -90,7 +90,7 @@
 	
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="hId" order="BEFORE" resultType="int">
-			select max(h_id) + 1 from homegym_board
+			select IFNULL(max(h_id),0) + 1 from homegym_board
 		</selectKey>
 		insert into homegym_board (h_id, memberId, h_title, h_content, h_price, 
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag, nickName)
@@ -115,8 +115,8 @@
                 		h_addr like concat('%', #{keyword}, '%') 
 	</select>
 	
-	<select id="getScore" resultType="Hashmap">
-		select h_id, ROUND(avg(hr_score), 2) as hr_score
+	<select id="getScore" resultType="com.homegym.biz.homegym.HomegymReviewVO">
+		select h_id, ROUND(avg(hr_score), 2) as avgScore
 		from homegym_review
 		where h_id = #{hId}
 		group by h_id

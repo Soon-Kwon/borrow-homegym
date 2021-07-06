@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.homegym.biz.homegym.HomegymDetailService;
 import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -20,5 +21,11 @@ public class HomegymDetailServiceImpl implements HomegymDetailService {
 		
 		log.info("홈짐예약 글작성 SERVICE:" + vo);
 		detailDAO.insert(vo);
+	}
+	
+	// 주소 받아오기 
+	public HomegymVO getAddr(int hId) {
+
+		return detailDAO.select(hId);
 	}
 }

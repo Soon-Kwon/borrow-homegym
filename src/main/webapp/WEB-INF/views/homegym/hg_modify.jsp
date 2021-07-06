@@ -42,7 +42,7 @@
 							<form id="submitForm" class="form">
 							<input type="hidden" name="hId" value='${board.HId }'>
 							<input type="hidden" name="nickName" value="${member_nickName}"/>
-							<input type="hidden" name="memberId" value="${member_memberId }"/>
+							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
@@ -381,6 +381,11 @@
 					}
 				}	
 				
+				// input창에서 숫자 천단위 콤마 적용하기 & 숫자만 입력받기
+				$("input:text[name='hPrice']").on("keyup", function(){
+					$(this).val(addComma($(this).val().replace(/[^0-9]/g,"")));
+				})
+				
 				// 파일 업로드
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				var maxSize = 5242880;
@@ -400,7 +405,7 @@
 					return true;
 				}
 				
-				// (수정하려는 양식에 원래 업로드된 글정보 보여주기)
+				// (*****수정하려는 양식에 원래 업로드된 글정보 보여주기*****)
 				
 				var hid = '<c:out value="${board.HId}"/>';
 				
@@ -418,7 +423,14 @@
 					var strOne = ""; // 대표이미지
 					var str = ""; // 일반이미지들
 					
-						
+					// 가격에 콤마를 생성해서 보여주는 부분
+					var price = $("#price").val();
+					
+					price = addComma(price);
+					
+					$("#price").val(price);
+					
+					// 이미지 처리	
 					$(arr).each(function(i, attach){
 						
 						// 원래 등록되어 있던 대표 이미지 파일 불러오기	
@@ -461,7 +473,7 @@
 				
 				// (수정등록)파일 업로드하기
 				
-				var index = 0; // 대표이미지 파일 개수제한용 index (전역변수)
+				var index = 1; // 대표이미지 파일 개수제한용 index (전역변수)
 				
 				// 대표 이미지 파일 업로드
 				$("input[id='img_one']").change(function(e){
@@ -619,6 +631,7 @@
 				
 				if(confirm("사진을 삭제하시겠습니까?")){
 					var targetLi = $(this).closest("li");
+					index--;
 					targetLi.remove();
 				}
 			});
@@ -631,6 +644,20 @@
 		// 스프링 시큐리티 csrf 토큰 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		// 천단위마다 콤마생성
+		function addComma(data){
+		    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 콤마제거 함수
+		function removeCommas(data){
+			if(!data || data.length == 0){
+		    	return "";
+		    }else{
+		    	return data.split(",").join("");
+		    }
+		}
 		
 		// 글 수정시 실행되는 update	()함수
 		function update(){
@@ -658,6 +685,12 @@
 			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
 			$('textarea').val(str);
+			
+			// 가격 콤마 제거
+			
+			var originalPrice = removeCommas($("#price").val());
+			
+			$("#price").val(originalPrice);
 			
 			// 첨부파일 hidden으로 값 넘겨주기
 			

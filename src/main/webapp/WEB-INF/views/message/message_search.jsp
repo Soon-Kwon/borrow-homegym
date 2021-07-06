@@ -3,12 +3,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- ajax이용한 메세지 list처리(왼쪽 영역) -->
+<%--  ajax이용한 메세지 list처리(왼쪽 영역) --%>
 <c:forEach var="tmp" items="${list}">
 	<div class="chat_list_box${tmp.msgRoomNo} chat_list_box">
 		<div type="button" class="chat_list" msgRoomNo="${tmp.msgRoomNo }"
 			otherId="${tmp.otherId }">
-			<!-- active-chat -->
+			<%-- active-chat --%>
 			<div class="chat_people">
 				<div class="chat_img">
 					<a href="#"> 
@@ -51,5 +51,3 @@
 		</div>
 	</div>
 </c:forEach>
-
-<

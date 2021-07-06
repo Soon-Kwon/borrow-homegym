@@ -38,7 +38,7 @@ public class UploadController {
 	private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
 	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
-
+	//private static final String UPLOAD_FOLDER = "C:/hg_ImgUpload/";
 
 	// 파일 업로드
 	@PostMapping(value= "/uploadAjaxAction.do",  produces = MediaType
