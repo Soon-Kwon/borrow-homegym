@@ -145,8 +145,11 @@ ul li.tag-item {
                 // input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
                 if (e.key === "Enter" || e.keyCode == 32) {
 
+                	
                     var tagValue = self.val();
 
+                    
+                    
                     // 해시태그 값 없으면 x
                     if (tagValue !== "") {
 
@@ -335,7 +338,7 @@ ul li.tag-item {
 									<ul id="tag-list"></ul>
 
 									<div class="form-group">
-										<input type="text" id="tag"  name="tbActivTag1" size="7" placeholder="Ex)종로구" style="width: 300px;"/>
+										<input type="text" id="tag"  name="tbActivTag1" size="7" placeholder="Ex)종로구" style="width: 300px; margin-top:5px;"/>
 									</div>
 								</div>
 
@@ -375,8 +378,8 @@ ul li.tag-item {
 									<div>
 										<input type="file" id="img_upload" name="tbImg"
 											accept="image/*" style="margin-bottom: 30px;">
+										<img src="/resources/imgUpload/${trainerBoard.tbImg}" />
 										<div id="image_container"></div>
-										<%-- <img src="/resources/imgUpload/${trainerBoard.tbImg}"/> --%>
 									</div>
 									<div class="form-group">
 										<label style="font-size: 20px;">자기 소개사진 등록
@@ -449,7 +452,6 @@ ul li.tag-item {
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-	
 
 </body>
 

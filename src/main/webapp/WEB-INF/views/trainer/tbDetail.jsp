@@ -72,6 +72,29 @@ p {
 	left: 300px;
 	top: 20px;
 }
+
+
+/* caroucsel  */
+
+.carousel-item,
+.carousel-inner,
+.carousel-inner img {
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-item {
+  text-align: center;
+}
+.carousel {
+  height: 566px;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: auto;
+}
+
 </style>
 
 
@@ -108,13 +131,13 @@ p {
 			<div class="row">
 				<div class="col-lg-8 col-12">
 					<br>
-					<h2 style="font-weight: bold;">${trainerBoard.tbTitle}</h2>
+					<h2 style="font-weight: bold; margin-bottom:0px;">${trainerBoard.tbTitle}</h2>
 					<div class="single-inner"></div>
 					<br>
 
 					<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
-					<div style="width: 300px; margin: 100px;">
+					<div style="width: 750px; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
 						<!-- carousel는 특이하게 id를 설정해야 한다.-->
 						<div id="carousel-example-generic" class="carousel slide">
@@ -183,7 +206,7 @@ p {
 
 
 			
-				<div class="post-details">
+				<div class="post-details" style="margin-top:30px;">
 							<div class="detail-inner">
 								<h2 class="post-title">
 									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
@@ -210,7 +233,7 @@ p {
 							style="position: relative; top: 90px;">
 							<div class="tr_image" style="position: relative; left: 10px;">
 								<img src="/resources/assets/images/gym/re2.jpg" alt="#"
-									style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 80px">
+									style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 50px">
 							</div>
 							<div>
 								<br>
@@ -225,19 +248,18 @@ p {
 									<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
 										<span>~</span> ${trainerBoard.sunTimef}</li>
 								</ul>
-								<div class="button" data-wow-delay="1s"
-									style="position: relative; left: 100px;">
+								<div class="button" data-wow-delay="1s" style="position: relative; left: 55px; ">
 									<button type="button" class="btn" data-toggle="modal"
-										data-target="#myModal"
-										style="background-color: #5c6dbd; margin-left: 20px;">
+										data-target="#myModal" style="background-color: #5c6dbd; text-align:cent; margin-left: 30px; border-radius:5px;">
 										1:1 채팅</button>
 
 								</div>
 							</div>
-							<div style="margin-top: 20px; text-align: center;">
+							<div style="margin-top: 5px; text-align: center;">
 							<div class="button">
-                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:28px;"> 수정 </a>
-                                <a href="/trainer/deleteBoard.do" class="btn" style="margin-top:28px;">삭제</a>
+                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:10px; border-radius:5px;"> 수정 </a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="/trainer/deleteBoard.do" class="btn" style="margin-top:5px; border-radius:10px;">삭제</a>
                             </div>
 
 							</div>
@@ -294,8 +316,7 @@ p {
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<p class="modal-title" style="font-size: 30px;">트레이너의 정보를
-						받아보세요!😊</p>
+					<p class="modal-title" style="font-size: 30px;">트레이너의 정보를 받아보세요!😊</p>
 					<!-- 사용자 지정 부분② : 타이틀 -->
 				</div>
 
