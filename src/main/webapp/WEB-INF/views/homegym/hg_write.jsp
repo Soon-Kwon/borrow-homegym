@@ -78,6 +78,7 @@
 										</div>
 										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
 									</div>
+									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
 												<labal style="color:black; font-size: 13px;">사용 가능한 시설을 체크해주세요</label>

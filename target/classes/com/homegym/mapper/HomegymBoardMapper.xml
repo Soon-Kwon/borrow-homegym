@@ -121,4 +121,15 @@
 		where h_id = #{hId}
 		group by h_id
 	</select>
+	
+	<!-- 리뷰 쓸 권한이 있는지 확인 -->
+	<select id="authToWriteReview" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+		<![CDATA[
+			select hd.borrowerId
+			from homegym_detail as hd
+			join homegym_board as hb
+			on hb.h_id = hd.h_id
+			where hb.h_id = #{hId} and payYN = 'Y'
+		]]>
+	</select>
 </mapper>

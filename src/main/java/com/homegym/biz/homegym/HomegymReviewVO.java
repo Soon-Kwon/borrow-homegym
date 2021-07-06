@@ -16,6 +16,7 @@ public class HomegymReviewVO {
 	private String hrContent;
 	private Date hrRegdate;
 	private Date hrUpdatedate;
-	private double avgScore; // 평균
 	
+	private double avgScore; // 평균
+	private String imagePath; // 프로필 이미지 사진 불러오기 위한 필드
 }
