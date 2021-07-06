@@ -78,66 +78,6 @@
 										</div>
 										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
 									</div>
-									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
-									<div class="row">
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>예약가능날짜</label>
-												<input type='date' id="now_date" name='today' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>시작 시간 : </label>
-												<input type='time' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>종료 시간 : </label>
-												<input type='time' /><br>
-											</div>
-										</div>
-										<div class="col-lg-2 col-12" style="justify-content: center;">
-											<button type="button" class="btn btn-warning btnAdd"
-												style="margin-top: 1.6rem; padding: .80rem .100rem;"
-												onclick="add_item()">추가하기</button>
-										</div>
-									</div>
-									<div id="append-form" style="display:none">
-										<div class="row">
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>예약가능날짜</label>
-													<input type='date' id="now_date" name='today' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>시작 시간 : </label>
-													<input type='time' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>종료 시간 : </label>
-													<input type='time' /><br>
-												</div>
-											</div>
-											<div class="col-lg-2 col-12">
-												<button type="button" class="btn btn-warning btnAdd"
-													style="margin-top: 28px; padding: .80rem .100rem;"
-													onclick="remove_item(this)">삭제하기</button>
-											</div>
-										</div>
-									</div>
-									
-									
-									추가 공간
-									<div class="row" id="field">
-									</div>
-									-->
-									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
 												<labal style="color:black; font-size: 13px;">사용 가능한 시설을 체크해주세요</label>

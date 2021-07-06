@@ -375,7 +375,8 @@
 			
 			function showList(page){
 				
-				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다. 
+				// getList로부터 넘어오는 값은 리뷰 갯수(reviewCnt)와 리스트(list)로 데이터가 구성되어있다.
+				// url에서 전달받은 hId와 매핑을 하는 것이기 때문에 hId로 적는다. vo객체랑 매핑시키려면 hid로 적어야한다. 
 				reviewService.getList({hId: hIdValue, page: page || 1}, function(reviewCnt, list){
 					
 					// 댓글 등록, 수정, 삭제시 1페이지를 리로딩하기 위한 함수..
