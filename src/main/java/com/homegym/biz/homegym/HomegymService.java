@@ -1,6 +1,5 @@
 package com.homegym.biz.homegym;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface HomegymService {
@@ -26,5 +25,8 @@ public interface HomegymService {
 	
 	// 첨부파일 리스트 보여주기 
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO attach, int hId);
+	
+	// 리뷰 쓸 권한 체크
+	public List<HomegymDetailVO> authToWriteReview(int hId);
 
 }
