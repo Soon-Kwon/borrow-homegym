@@ -15,5 +15,7 @@ public interface HomegymReviewService {
 	public List<HomegymReviewVO> getList(Criteria cri, int hId);
 	
 	public ReviewDTO getListWithPaging(Criteria cri, int hId);
+	
+	public boolean exist(HomegymReviewVO vo);
 
 }

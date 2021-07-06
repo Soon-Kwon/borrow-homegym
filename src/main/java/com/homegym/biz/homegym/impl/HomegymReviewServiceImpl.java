@@ -53,4 +53,9 @@ public class HomegymReviewServiceImpl implements HomegymReviewService {
 		
 		return new ReviewDTO(reviewDAO.getCount(hId), reviewDAO.getListWithPaging(cri, hId));
 	}
+	
+	public boolean exist(HomegymReviewVO vo) {
+		
+		return reviewDAO.exist(vo);
+	}
 }

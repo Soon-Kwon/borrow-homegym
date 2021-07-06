@@ -43,7 +43,7 @@
 							</h3>
 							<form id="submitForm" class="form">
 							<input type="hidden" name="nickName" value="${member_nickName}"/>
-							<input type="hidden" name="memberId" value="${member_memberId }"/>
+							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
@@ -281,6 +281,11 @@
 						}
 					}				
 				});
+				
+				// input창에서 숫자 천단위 콤마 적용하기 & 숫자만 입력받기
+				$("input:text[name='hPrice']").on("keyup", function(){
+					$(this).val(addComma($(this).val().replace(/[^0-9]/g,"")));
+				})
 				
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				var maxSize = 5242880;
@@ -539,6 +544,20 @@
 		</script>
 		<script>
 		
+		// 천단위마다 콤마생성
+		function addComma(data){
+		    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 콤마제거 함수
+		function removeCommas(data){
+			if(!data || data.length == 0){
+		    	return "";
+		    }else{
+		    	return data.split(",").join("");
+		    }
+		}
+		
 		// 글 작성후 버튼 클릭시 실행되는 save()함수
 		
 		function save(){
@@ -568,6 +587,12 @@
 			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
 			$('textarea').val(str);
+			
+			// 가격 콤마 제거
+			
+			var originalPrice = removeCommas($("#price").val());
+			
+			$("#price").val(originalPrice);
 			
 			// 첨부파일 hidden	 
 			
@@ -613,7 +638,7 @@
 			var formObj = $("#submitForm");
 			
 			formObj.append(str);
-						
+			
 			var data = formObj.serialize();
 			var csrfHeaderName = "${_csrf.headerName}";
 			var csrfTokenValue = "${_csrf.token}";

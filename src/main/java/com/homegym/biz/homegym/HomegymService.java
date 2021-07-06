@@ -22,7 +22,7 @@ public interface HomegymService {
 	public int getTotal(Criteria cri);
 	
 	// 리뷰 평점 보여주기
-	public HashMap<?, ?> getScore(int hId);
+	public HomegymReviewVO getScore(int hId);
 	
 	// 첨부파일 리스트 보여주기 
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO attach, int hId);

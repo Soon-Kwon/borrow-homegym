@@ -67,7 +67,12 @@
 									
 									<div class="row">
 										<div class="col-8">
-										<h2>리뷰 <span id="score" style="font-size: 30px;"></span> </h2>	
+										<span id="count" style="font-size: 45px; color: black;"> </span>	
+										<span style="font-size: 30px; color: black;">
+											개의 리뷰 
+										</span>
+										<span id="score" style="font-size: 30px; color: black; padding-left: 15px;"></span> 
+										
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
@@ -99,7 +104,7 @@
 							</div>
 								<h6>1시간당 가격</h6>
 								<br>
-								<div style="text-align: right; color: black;">${board.HPrice } 원</div>
+								<div id="price" style="text-align: right; color: black;">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
 								<!-- 집주인일 경우 나오는 수정/삭제버튼 
@@ -148,7 +153,7 @@
 					</div>
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name="memberId"
-							value="borrowerId" placeholder="<sec:authentication property="principal.nickname" />" readonly>
+							 placeholder="<sec:authentication property="principal.nickname" />" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>
@@ -301,15 +306,30 @@
 				});
 				
 			})();			
+			// 가격정보에 콤마를 붙여 변환시킨 후 화면에 출력
+			var originalPrice = ${board.HPrice };
+			
+			function addComma(data){
+			    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+			
+			var printPrice = addComma(originalPrice);
+			$("#price").text(printPrice + "원");
 			
 			// 리뷰평점을 보여주는 즉시 실행함수
 			(function(){
 
 				var hId = ${board.HId};
+				//리뷰 개수
+				reviewService.getList({hId: hId, page: 1}, function(reviewCnt, list){
+					$("#count").text(reviewCnt);
+				});
+				// 리뷰 평점
 				reviewService.getScore(hId, function(result){
 					console.log(result);
 					$("#score").text("⭐" + result)
 				});
+				
 			})();
 			
 			// 해쉬태그 분리 
@@ -339,10 +359,6 @@
 				
 				}
 			}	
-			
-			// 리뷰 평점 불러오기 
-			
-			
 			
 			// 리뷰 목록 가져오기
 			
@@ -382,7 +398,7 @@
 					for(var i = 0, len = list.length || 0; i < len; i++){
 						str += "<li><div class='comment-img><img src='https://via.placeholder.com/100x100'"
 						+ "alt='img' style='width: 100px;'></div>";
-						str += "<div class='comment-desc'><div class='desc-top'><h5>" + list[i].borrowerId + "</h5>";
+						str += "<div class='comment-desc'><div class='desc-top'><h5>" + list[i].borrowerName + "</h5>";
 						if(list[i].hrScore == 1) {str += "<span>⭐️</span>";
 						}else if(list[i].hrScore == 2){str += "<span>⭐⭐</span>";
 						}else if(list[i].hrScore == 3){str += "<span>⭐️⭐⭐</span>";
@@ -391,7 +407,9 @@
 
 						str += "<span class='date'>" + reviewService.displayTime(list[i].hrUpdatedate) + "</span>";
 						// HTML data속성을 이용해 reviewid 값을 자바스크립트에서 쓸 수 있다.  
+						if(list[i].borrowerId == "${member_memberId}"){
 						str += "<a class='reply-link' data-reviewid='" + list[i].reviewId + "'><i class='lni lni-reply'></i>수정하기</a>";
+						}
 						str += "</div><p>" + list[i].hrContent + "</p></div></li>";
 					}
 					
@@ -452,7 +470,8 @@
 						hrScore: $("input[name='hrScore']:checked").val(),
 						hid: hIdValue,
 						memberId: memberId,
-						borrowerId: "${member_nickName}"
+						borrowerId: "${member_memberId}",
+						borrowerName: "${member_nickName}"
 				};
 				
 				// 평점이 없을시 입력해달라는 요청메시지 보내기
@@ -464,21 +483,33 @@
 				// 리뷰 등록하기
 				reviewService.add(review, function(result){
 					
-					
 					alert("리뷰가 등록되었습니다");
 					
 					// input의 값들을 모두 지운다.
 					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
 					modal.modal("hide");
 					
-					// 리뷰 평점 비동기 업데이트
+					// 리뷰 평점/개수 비동기 업데이트
 					var hId = ${board.HId};
+					
+					//리뷰 개수
+					reviewService.getList({hId: hId, page: 1}, function(reviewCnt, list){
+						$("#count").text(reviewCnt);
+					});
+					// 리뷰 평점
 					reviewService.getScore(hId, function(result){
 						console.log(result);
 						$("#score").text("⭐" + result)
 					});
 	
 					showList(99999); // 새로 등록된 리뷰들을 불러낸다.
+				}, function(result){
+					// 이미 등록된 댓글이 있으면 오류발생
+						console.log(result);
+						
+						alert("이미 등록된 리뷰가 있습니다!");
+						modal.modal("hide");
+					
 				});
 			});
 			
@@ -526,6 +557,11 @@
 
 					//리뷰 평점 비동기 업데이트
 					var hId = ${board.HId};
+					//리뷰 개수
+					reviewService.getList({hId: hId, page: 1}, function(reviewCnt, list){
+						$("#count").text(reviewCnt);
+					});
+					//리뷰 평점
 					reviewService.getScore(hId, function(result){
 						console.log(result);
 						$("#score").text("⭐" + result)
@@ -543,6 +579,19 @@
 				reviewService.remove(reviewId, function(result){
 					
 					alert("삭제되었습니다");
+					
+					//리뷰 평점 비동기 업데이트
+					var hId = ${board.HId};
+					//리뷰 개수
+					reviewService.getList({hId: hId, page: 1}, function(reviewCnt, list){
+						$("#count").text(reviewCnt);
+					});
+					//리뷰 평점
+					reviewService.getScore(hId, function(result){
+						console.log(result);
+						$("#score").text("⭐" + result)
+					});
+					
 					modal.modal("hide");
 					showList(99999);
 				});

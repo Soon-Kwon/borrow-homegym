@@ -4,8 +4,8 @@
 <mapper namespace="HomegymReviewDAO">
 	
 	<insert id="insert">
-		insert into homegym_review (h_id, memberId, borrowerId, hr_score, hr_content)
-		values (#{hId}, #{memberId}, #{borrowerId}, #{hrScore}, #{hrContent})
+		insert into homegym_review (h_id, memberId, borrowerId, borrowerName, hr_score, hr_content)
+		values (#{hId}, #{memberId}, #{borrowerId}, #{borrowerName}, #{hrScore}, #{hrContent})
 	</insert>
 	
 	<select id="read" resultType="com.homegym.biz.homegym.HomegymReviewVO">
@@ -45,5 +45,13 @@
 		select count(review_id)
 		from homegym_review
 		where h_id = #{hId}
+	</select>
+	
+	<select id="exist" resultType="boolean">
+		<![CDATA[
+		select if(count(*)>0, 1, 0)
+		from homegym_review
+		where borrowerId = "${borrowerId}" and h_id =#{hId}
+		]]>
 	</select>
 </mapper>

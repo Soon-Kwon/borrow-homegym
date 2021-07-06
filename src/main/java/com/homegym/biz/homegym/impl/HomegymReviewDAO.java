@@ -67,5 +67,10 @@ public class HomegymReviewDAO {
 		
 		return mybatis.selectOne("HomegymReviewDAO.getCount", hId);
 	}
+	
+	public boolean exist(HomegymReviewVO vo) {
+		
+		return mybatis.selectOne("HomegymReviewDAO.exist", vo);
+	}
 
 }

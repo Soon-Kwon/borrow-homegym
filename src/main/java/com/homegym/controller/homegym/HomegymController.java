@@ -90,7 +90,7 @@ public class HomegymController {
 		// 페이징할 때 필요한 cri 인스턴스와 전체 게시물을 담은 total 인스턴스 변수를 모델에 담는다.
 		int total = homegymService.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
-	
+				
 		log.info("게시판 리스트: " + model);
 		return "/homegym/hg_list";
 	}
@@ -198,14 +198,17 @@ public class HomegymController {
 	// 리뷰 평점구하기 
 	@RequestMapping(value="/score/{hId}.do", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE}, method= {RequestMethod.GET})
 	@ResponseBody
-	public BigDecimal getScore(@PathVariable("hId") int hId ){
+	public double getScore(@PathVariable("hId") int hId ){
 		
 		log.info("리뷰 평점 컨트롤러: " + hId);
-		HashMap<?,?> score = homegymService.getScore(hId);
+		HomegymReviewVO score = homegymService.getScore(hId);
 		
-		score.get("hr_score");
+		if(score == null) { // 리뷰가 존재하지 않을 때
+			return 0;
+		}
 		
-		return (BigDecimal) score.get("hr_score");
+		return score.getAvgScore();
+
 	}
 			
 }
