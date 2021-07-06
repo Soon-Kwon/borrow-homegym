@@ -77,6 +77,48 @@
 	font-size: 20px;
 }
 
+/* 파일이 없습니다 메시지 지우기 */
+input[id='img_one'] {
+  color: transparent;
+}
+
+input[id='img_upload'] {
+  color: transparent;
+}
+/* 업로드 섬네일 이미지 css */
+
+.uploadOneResult{
+	width:100%;
+	background-color: white;
+}
+
+.uploadOneResult ul{
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadOneResult ul li{
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadOneResult ul li img{
+	width: 80px;
+	heigh: 80px;
+}
+.uploadOneResult .btn {
+	padding: 1px;
+	margin: 0px;
+	border-radius: .90erm;
+	color: black;
+	background-color: white;
+	border-color: white;
+	border: 0px;
+}
+
+
 .uploadResult{
 	width:100%;
 	background-color: white;
@@ -187,6 +229,35 @@
 
 #manipulateBtn{
 	text-align: right;
+}
+
+/*수정/삭제, 목록, 문의버튼, 예약버튼*/
+
+#updateBtn, #showMsgContent{
+	width: 350px;
+    height: 50px;
+    bottom: 20px;
+    background-color: #656f98;
+    color: white;
+    border-radius: 20px;
+} 
+
+#listBtn, #reserveBtn{
+	width: 350px;
+    height: 50px;
+    bottom: 20px;
+    border: solid 1px;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+#addReviewBtn{
+	width: 150px;
+	height: 50px;
+	bottom: 20px;
+	border: solid 1px;
+	margin-top: 10px;
+	border-radius: 20px;
 }
 
 /*===================홈짐 예약 페이지========================*/

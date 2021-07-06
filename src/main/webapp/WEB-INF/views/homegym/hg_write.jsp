@@ -42,6 +42,8 @@
 								<span>내 홈짐을 공유해보세요!</span>홈짐등록 게시판
 							</h3>
 							<form id="submitForm" class="form">
+							<input type="hidden" name="nickName" value="${member_nickName}"/>
+							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
@@ -76,74 +78,6 @@
 										</div>
 										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
 									</div>
-										<div class="row">
-										<div class="col-lg-4 col-11">
-											<div class="form-group">
-												<label>임시아이디</label><input type="text" name="memberId" class="form-control"
-													placeholder="아이디" required="true" />
-											</div>
-										</div>
-									</div>
-									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
-									<div class="row">
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>예약가능날짜</label>
-												<input type='date' id="now_date" name='today' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>시작 시간 : </label>
-												<input type='time' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>종료 시간 : </label>
-												<input type='time' /><br>
-											</div>
-										</div>
-										<div class="col-lg-2 col-12" style="justify-content: center;">
-											<button type="button" class="btn btn-warning btnAdd"
-												style="margin-top: 1.6rem; padding: .80rem .100rem;"
-												onclick="add_item()">추가하기</button>
-										</div>
-									</div>
-									<div id="append-form" style="display:none">
-										<div class="row">
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>예약가능날짜</label>
-													<input type='date' id="now_date" name='today' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>시작 시간 : </label>
-													<input type='time' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>종료 시간 : </label>
-													<input type='time' /><br>
-												</div>
-											</div>
-											<div class="col-lg-2 col-12">
-												<button type="button" class="btn btn-warning btnAdd"
-													style="margin-top: 28px; padding: .80rem .100rem;"
-													onclick="remove_item(this)">삭제하기</button>
-											</div>
-										</div>
-									</div>
-									
-									
-									추가 공간
-									<div class="row" id="field">
-									</div>
-									-->
-									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
 												<labal style="color:black; font-size: 13px;">사용 가능한 시설을 체크해주세요</label>
@@ -176,7 +110,24 @@
 											<input type="hidden" name="hHashtag" id="hashtag" value=""/>
 										</div>
 									</div>
-
+									
+									<!-- 대표 이미지 등록 -->
+									<div class="col-lg-12 col-12">
+										<div class="form-group">
+											<label style="margin-top:10px;">대표 이미지 첨부</label>
+										</div>
+										<div class="uploadDiv">
+											<input type='file' id='img_one' name='uploadFile' 
+											style="margin-bottom: 30px;">
+										</div>
+										<div class="uploadOneResult">
+											<ul>
+											
+											</ul>
+										</div>
+									</div>
+									
+									<!-- 서브파일 업로드 -->
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
 											<label style="margin-top:10px;">이미지 첨부</label>
@@ -271,6 +222,11 @@
 					}				
 				});
 				
+				// input창에서 숫자 천단위 콤마 적용하기 & 숫자만 입력받기
+				$("input:text[name='hPrice']").on("keyup", function(){
+					$(this).val(addComma($(this).val().replace(/[^0-9]/g,"")));
+				})
+				
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				var maxSize = 5242880;
 				
@@ -290,15 +246,81 @@
 					return true;
 				}
 				
+				var index = 0; // 대표이미지 파일 개수제한용 index 
 				
-				// 업로드된 파일 보여주기
-				$("input[type='file']").change(function(e){
+				// 대표 이미지 파일 업로드
+				$("input[id='img_one']").change(function(e){
+					
+					if(index > 0){
+						alert("한 개의 파일만 업로드가 가능합니다. ");
+						
+					}else{
+						// 시큐리티 토큰
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+					
+						var formData = new FormData();
+						
+						var inputFile = $("input[id='img_one']");
+						
+						// 파일 목록을 보는 .files (jQuery)
+						var files = inputFile[0].files;
+						
+						for(var i = 0; i < files.length; i++ ){
+							
+							if(!checkExtension(files[i].name, files[i].size)){
+								return false;
+								console.log(files[i].name);	
+								console.log(files[i].size);
+							}
+							
+							formData.append("uploadFile", files[i]);
+		
+						}
+						
+						for (let key of formData.keys()) {
+							  console.log(key);
+							}
+		
+							// FormData의 value 확인
+							for (let value of formData.values()) {
+							  console.log(value);
+							}	
+						
+						$.ajax({
+							url: '/uploadOneAjaxAction.do',
+							processData: false,
+							contentType: false,
+							data: formData,
+							type: 'POST',
+							dataType: 'json',
+							/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+							beforeSend : function(xhr){
+								xhr.setRequestHeader(header, token);
+				            },
+							success: function(result){
+								console.log(result);
+								showUploadResultOne(result); // 업로드 결과 처리 함수 (섬네일 보여주기)
+								$("#img_one").val(""); // 값을 지워주지 않으면 일반 파일 업로드를 별개로 할 수 없다. 
+								index++;
+							}, 
+							error: function(error){
+								console.log(error);
+							}
+						});
+					}
+				});
+				
+				// 파일 업로드 하기
+				$("input[id='img_upload']").change(function(e){
 					// 시큐리티 토큰
 					var token = $("meta[name='_csrf']").attr("content");
 					var header = $("meta[name='_csrf_header']").attr("content");
+				
 					var formData = new FormData();
 					
-					var inputFile = $("input[name='uploadFile']");
+					var inputFile = $("input[id='img_upload']");
+					
 					
 					// 파일 목록을 보는 .files (jQuery)
 					var files = inputFile[0].files;
@@ -310,9 +332,18 @@
 						}
 					
 						formData.append("uploadFile", files[i]);
-				
 					}
 					
+
+					for (let key of formData.keys()) {
+					  console.log(key);
+					}
+
+					// FormData의 value 확인
+					for (let value of formData.values()) {
+					  console.log(value);
+					}		
+						
 					$.ajax({
 						url: '/uploadAjaxAction.do',
 						processData: false,
@@ -327,9 +358,40 @@
 						success: function(result){
 							console.log(result);
 							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일)
+							$("#img_upload").val("");
 						}, 
 						error: function(error){
 							console.log(error);
+						}
+					});
+				});
+				
+				// x를 누르면 업로드된 파일 삭제(대표이미지)
+				$(".uploadOneResult").on("click", "button", function(e){
+					
+					console.log("delete file");
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					
+					/* data속성을 이용해 파일 이름과 타입을 구한다*/
+					var targetFile = $(this).data("file");
+					var type = $(this).data("type");
+					
+					var targetLi = $(this).closest("li");
+					
+					$.ajax({
+						url: '/deleteFile.do',
+						data: {fileName: targetFile, type: type},
+						dataType: 'text',
+						type: 'POST',
+						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(header, token);
+						},
+						success: function(result){
+							alert(result);
+							targetLi.remove();
+							index--;
 						}
 					});
 				});
@@ -422,7 +484,21 @@
 		</script>
 		<script>
 		
-		// 제출시 실행되는 save()함수
+		// 천단위마다 콤마생성
+		function addComma(data){
+		    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 콤마제거 함수
+		function removeCommas(data){
+			if(!data || data.length == 0){
+		    	return "";
+		    }else{
+		    	return data.split(",").join("");
+		    }
+		}
+		
+		// 글 작성후 버튼 클릭시 실행되는 save()함수
 		
 		function save(){
 			
@@ -439,16 +515,30 @@
 			
 			$('#hashtag').val(hashTag);
 			
+			// 필수 내용 입력 확인
 			if($('#price').val() == '' || $('#title').val() == ''){
 				alert("꼭 필요한 내용들을 적어주세요");
 				return;
 			}
 			
+			// textarea 개행처리
+			var str = $('textarea').val();
+
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+			$('textarea').val(str);
+			
+			// 가격 콤마 제거
+			
+			var originalPrice = removeCommas($("#price").val());
+			
+			$("#price").val(originalPrice);
+			
 			// 첨부파일 hidden	 
 			
 			var str = "";
 			
-			$(".uploadResult ul li").each(function(i, obj){
+			$(".uploadOneResult ul li").each(function(i, obj){
 				
 				var jobj = $(obj);
 				
@@ -464,6 +554,22 @@
 						+ jobj.data("type") +"'>";
 			});
 			
+			$(".uploadResult ul li").each(function(i, obj){
+				
+				var jobj = $(obj);
+				
+				console.dir(jobj);
+				
+				str += "<input type='hidden' name='attachList[" + (i+1) + "].fileName' value ='" 
+						+ jobj.data("filename") +"'>";
+				str += "<input type='hidden' name='attachList[" + (i+1) + "].uuid' value ='" 
+						+ jobj.data("uuid") +"'>";
+				str += "<input type='hidden' name='attachList[" + (i+1) + "].uploadPath' value ='" 
+						+ jobj.data("path") +"'>";
+				str += "<input type='hidden' name='attachList[" + (i+1) + "].fileType' value ='" 
+						+ jobj.data("type") +"'>";
+			});
+			
 			if(str == null || str == ""){
 				alert("최소 한 장 이상의 사진을 올려주세요!");
 				return;
@@ -472,7 +578,7 @@
 			var formObj = $("#submitForm");
 			
 			formObj.append(str);
-						
+			
 			var data = formObj.serialize();
 			var csrfHeaderName = "${_csrf.headerName}";
 			var csrfTokenValue = "${_csrf.token}";
@@ -489,7 +595,7 @@
 				success: function(data) {
 					if(data == 'OK') {
 						alert('글 작성에 성공하였습니다.');
-						window.location.replace("/homegym/homegymListView.do${cri.getListLink() }");
+						window.location.replace("/homegym/homegymListView.do?pageNum=1&amount=4&keyword=");
 					}
 				},
 				error: function(e) {
@@ -498,6 +604,44 @@
 				}
 			});
 		}
+		
+		// 대표이미지 업로드 결과 처리 함수
+		
+		function showUploadResultOne(uploadResultArr){
+			console.log("확인");
+
+			if(!uploadResultArr || uploadResultArr.length == 0){ return;}
+			console.log("확인");
+			var uploadOneUL = $(".uploadOneResult ul");
+			
+			var str = "";
+
+			$(uploadResultArr).each(function(i, obj){
+				
+				//image type
+				if(obj.fileType){
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
+							+ obj.uuid + "_" + obj.fileName);
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+							+ "'data-type='" + obj.fileType + "'";
+					str += "><div>";
+					str +="<span> " + obj.fileName + "</span>";
+					str +="<button type='button' data-file=\'" + fileCallPath 
+					+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+					+ "<i class='lni lni-cross-circle'></i></button><br>";
+					str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+					str += "</div>";
+					str += "</li>";
+				}else{
+					alert("이미지 파일이 아닙니다.");
+				}
+			});
+			
+			uploadOneUL.append(str);
+		}
+		
 		
 		// 업로드 결과 처리 함수
 		function showUploadResult(uploadResultArr){

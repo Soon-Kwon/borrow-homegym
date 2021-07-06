@@ -41,6 +41,8 @@
 							</h3>
 							<form id="submitForm" class="form">
 							<input type="hidden" name="hId" value='${board.HId }'>
+							<input type="hidden" name="nickName" value="${member_nickName}"/>
+							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
@@ -52,11 +54,11 @@
 									<div class="col-lg-6 col-10">
 										<div class="form-group">
 											<label>주소</label> <input type="text" id="sample5_address"
-												class="form-control" name="hAddr" placeholder="새로 등록해 주세요" required="required"
-												readonly="readonly" />
+												class="form-control" name="hAddr" placeholder="${board.HAddr }"
+												value="${board.HAddr }" required="required" readonly="readonly" />
 										</div>
-										<input type="hidden" id="x-coordinate" name="hLocateX" />
-										<input type="hidden" id="y-coordinate" name="hLocateY" />
+										<input type="hidden" id="x-coordinate" name="hLocateX" value="${board.HLocateX }" />
+										<input type="hidden" id="y-coordinate" name="hLocateY" value="${board.HLocateY }" />
 									</div>
 									<div class="col-lg-2 col-2">
 										<input type="button" onclick="sample5_execDaumPostcode()"
@@ -74,14 +76,6 @@
 											</div>
 										</div>
 										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
-									</div>
-										<div class="row">
-										<div class="col-lg-4 col-11">
-											<div class="form-group">
-												<label>임시아이디</label><input type="text" name="memberId" class="form-control"
-													placeholder="아이디" required="true" />
-											</div>
-										</div>
 									</div>
 									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
 									<div class="row">
@@ -149,32 +143,50 @@
 											</p>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-												<input type="checkbox" id='homegym_op' name='homegym_options' value='주차가능' >
+												<input type="checkbox" id='homegym_op1' name='homegym_options' value='주차가능' >
 												<p>주차가능</p>
 											</label>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-												<input type="checkbox" id='homegym_op' name='homegym_options' value='와이파이가능'> 
+												<input type="checkbox" id='homegym_op2' name='homegym_options' value='와이파이가능'> 
 												<p>와이파이가능</p>
 											</label>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-												<input type="checkbox" id='homegym_op' name='homegym_options' value='샤워가능'>
+												<input type="checkbox" id='homegym_op3' name='homegym_options' value='샤워가능'>
 												<p>샤워가능</p>
 											</label>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-												<input type="checkbox" id='homegym_op' name='homegym_options' value='정수기보유'>
+												<input type="checkbox" id='homegym_op4' name='homegym_options' value='정수기보유'>
 												<p>정수기보유</p>
 											</label>
 											<label class="btn btn-outline-secondary"
 												style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-												<input type="checkbox" id='homegym_op' name='homegym_options' value='에어컨보유'>
+												<input type="checkbox" id='homegym_op5' name='homegym_options' value='에어컨보유'>
 												<p>에어컨보유</p>
 											</label>
 											<input type="hidden" name="hHashtag" id="hashtag" value=""/>
 										</div>
 									</div>
+
+									<!-- 대표 이미지 등록 -->
+									<div class="col-lg-12 col-12">
+										<div class="form-group">
+											<label style="margin-top:10px;">대표 이미지 첨부</label>
+										</div>
+										<div class="uploadDiv">
+											<input type='file' id='img_one' name='uploadFile' 
+											style="margin-bottom: 30px;">
+										</div>
+										<div class="uploadOneResult">
+											<ul>
+											
+											</ul>
+										</div>
+									</div>
+									
+									<!-- 서브파일 업로드 -->
 
 									<div class="col-lg-12 col-12">
 										<div class="form-group">
@@ -243,17 +255,7 @@
 		</footer>
 		<!--/ End Footer Area -->
 		
-		<!-- ========================= scroll-top ========================= -->
-		<a href="#" class="scroll-top btn-hover"> <i class="lni lni-chevron-up"></i>
-		</a>
-
-		<!-- ========================= JS here ========================= -->
-		<script src="/resources/assets/js/bootstrap.min.js"></script>
-		<script src="/resources/assets/js/count-up.min.js"></script>
-		<script src="/resources/assets/js/wow.min.js"></script>
-		<script src="/resources/assets/js/tiny-slider.js"></script>
-		<script src="/resources/assets/js/glightbox.min.js"></script>
-		<script src="/resources/assets/js/main.js"></script>
+		
 		<!-- 다음 주소 api & 지도 api-->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script
@@ -318,15 +320,13 @@
 		</script>
 		
 		  <script>
-			var chkArray = new Array();
+			
+		  var chkArray = new Array();
+			
+			
 			$(document).ready(function () {
 				
-				
-				// 스프링 시큐리티 csrf 토큰 
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				
-				// 체크박스 색 조정
+				// 체크박스 색 조정 + 체크된 것 배열로 처리
 				$("input[name=homegym_options]").click(function () {
 					//this.checked = true; //checked 처리
 					if ($(this).is(":checked")) {
@@ -336,12 +336,55 @@
 						$(this).parent().removeClass("checkColor");
 						for(var i = 0; i < chkArray.length; i++) {
 							if(chkArray[i] == this.value) {
-								chkArray.splice(i, 1);
-								i--;
+								chkArray.splice(i, 1); // 해당 인덱스의 배열을 삭제 
+								i--; // 삭제된 인덱스가 채워지므로 해당 인덱스를 다시 한번 검사해야 한다.
 							}
 						}
 					}				
 				});
+				
+				// 해쉬태그 분리 
+				var hashtag = '<c:out value='${board.HHashtag}'/>';
+				var afterSplit = hashtag.split(', ');
+				
+				str = "";
+				
+				for(var i = 0 ; i < afterSplit.length ; i++){
+					switch(afterSplit[i]){
+					case "주차가능":
+						$("input[id='homegym_op1']").prop("checked", true); 
+						$("input[id='homegym_op1']").parent().addClass("checkColor"); 
+						chkArray.push($("input[id='homegym_op1']").val()); // 비어있는 배열을 채워놔야 된다.
+					break;
+					case "와이파이가능":
+						$("input[id='homegym_op2']").prop("checked", true);
+						$("input[id='homegym_op2']").parent().addClass("checkColor");
+						chkArray.push($("input[id='homegym_op2']").val());
+					break;
+					case "샤워가능":
+						$("input[id='homegym_op3'").prop("checked", true);
+						$("input[id='homegym_op3']").parent().addClass("checkColor");
+						chkArray.push($("input[id='homegym_op3']").val());
+					break;
+					case "정수기보유":
+						$("input[id='homegym_op4']").prop("checked", true);
+						$("input[id='homegym_op4']").parent().addClass("checkColor");
+						chkArray.push($("input[id='homegym_op4']").val());
+					break;
+					case "에어컨보유":
+						$("input[id='homegym_op5']").prop("checked", true);
+						$("input[id='homegym_op5']").parent().addClass("checkColor");
+						chkArray.push($("input[id='homegym_op5']").val());
+					break;
+					default:
+					
+					}
+				}	
+				
+				// input창에서 숫자 천단위 콤마 적용하기 & 숫자만 입력받기
+				$("input:text[name='hPrice']").on("keyup", function(){
+					$(this).val(addComma($(this).val().replace(/[^0-9]/g,"")));
+				})
 				
 				// 파일 업로드
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -362,20 +405,53 @@
 					return true;
 				}
 				
-				// (수정하려는 양식에 원래 업로드된 글정보 보여주기)
+				// (*****수정하려는 양식에 원래 업로드된 글정보 보여주기*****)
 				
 				var hid = '<c:out value="${board.HId}"/>';
 				
 				// hid값을 활용하여 첨부파일 리스트를 보여주는 ajax를 호출하고, 데이터에 hid 값을 넣어서 보내준다.  
 				$.getJSON("/homegym/getAttachList.do?hId=" + hid, {hid: hid}, function(arr){
 					
-					var str = "";
+					// <br>태그를 공백으로 바꾸어주는 부분
+					var text = $('textarea').val();
+
+					text = text.split('<br/>').join("\r\n");
+
+					$('textarea').val(text);
 					
+					
+					var strOne = ""; // 대표이미지
+					var str = ""; // 일반이미지들
+					
+					// 가격에 콤마를 생성해서 보여주는 부분
+					var price = $("#price").val();
+					
+					price = addComma(price);
+					
+					$("#price").val(price);
+					
+					// 이미지 처리	
 					$(arr).each(function(i, attach){
 						
-						// 이미지 타입일때 
-						if(attach.fileType){
-							
+						// 원래 등록되어 있던 대표 이미지 파일 불러오기	
+						if(i == 0){
+							var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" 
+									+ attach.uuid + "_" + attach.fileName);
+							strOne += "<li data-path='" + attach.uploadPath + "'";
+							strOne += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
+									+ "'data-type='" + attach.fileType + "'";
+							strOne += "><div>";
+							strOne +="<span> " + attach.fileName + "</span>";
+							strOne +="<button type='button' data-file=\'" + fileCallPath 
+							+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+							+ "<i class='lni lni-cross-circle'></i></button><br>";
+							strOne += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+							strOne += "</div>";
+							strOne += "</li>";
+						
+							$(".uploadOneResult ul").html(strOne);
+						 
+						}else{
 							var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" 
 									+ attach.uuid + "_" + attach.fileName);
 							str += "<li data-path='" + attach.uploadPath + "'";
@@ -389,37 +465,90 @@
 							str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
 							str += "</div>";
 							str += "</li>";
-						}else{ // 파일일 때 
-							var fileCallPath = encodeURIComponent(attach.uploadPath + "/" + attach.uuid
-									+ "_" + attach.fileName);
-							var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
-							
-							str += "<li data-path='" + attach.uploadPath + "'";
-							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
-									+ "'data-type='" + attach.fileType + "'";
-							str += "><div>";
-							str +="<span> " + attach.fileName + "<span>";
-							str +="<button type='button' data-file=\'" + fileCallPath 
-							+ "\'data-type='file' class='btn btn-warning btn-circle'>"
-							+ "<i class='lni lni-cross-circle'></i></button><br>";
-							str += "<img src='/assets/images/common/attach.png'></a>";
-							str += "</div>";
-							str += "</li>";
+						
+							$(".uploadResult ul").html(str);
 						}
-					});
-					
-					$(".uploadResult ul").html(str);
+					});				
 				});
 				
-				// 수정시 업로드한 파일 보여주기
-				$("input[type='file']").change(function(e){
+				// (수정등록)파일 업로드하기
+				
+				var index = 1; // 대표이미지 파일 개수제한용 index (전역변수)
+				
+				// 대표 이미지 파일 업로드
+				$("input[id='img_one']").change(function(e){
 					
+					if(index > 0){
+						alert("한 개의 파일만 업로드가 가능합니다. ");
+					}else{
+						// 시큐리티 토큰
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+					
+						var formData = new FormData();
+						
+						var inputFile = $("input[id='img_one']");
+						
+						// 파일 목록을 보는 .files (jQuery)
+						var files = inputFile[0].files;
+						
+						for(var i = 0; i < files.length; i++ ){
+							
+							if(!checkExtension(files[i].name, files[i].size)){
+								return false;
+								console.log(files[i].name);	
+								console.log(files[i].size);
+							}
+							
+							formData.append("uploadFile", files[i]);
+	
+						}
+						
+						for (let key of formData.keys()) {
+							  console.log(key);
+							}
+	
+							// FormData의 value 확인
+							for (let value of formData.values()) {
+							  console.log(value);
+							}	
+						
+						$.ajax({
+							url: '/uploadOneAjaxAction.do',
+							processData: false,
+							contentType: false,
+							data: formData,
+							type: 'POST',
+							dataType: 'json',
+							/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+							beforeSend : function(xhr){
+								xhr.setRequestHeader(header, token);
+				            },
+							success: function(result){
+								console.log(result);
+								showUploadResultOne(result); // 업로드 결과 처리 함수 (섬네일 보여주기)
+								$("#img_one").val(""); // 값을 지워주지 않으면 일반 파일 업로드를 별개로 할 수 없다. 
+								index++;
+							}, 
+							error: function(error){
+								console.log(error);
+							}
+						});
+					}
+				});
+				
+				// 파일 업로드 하기
+				$("input[id='img_upload']").change(function(e){
+					// 시큐리티 토큰
 					var token = $("meta[name='_csrf']").attr("content");
 					var header = $("meta[name='_csrf_header']").attr("content");
+				
 					var formData = new FormData();
 					
-					var inputFile = $("input[name='uploadFile']");
+					var inputFile = $("input[id='img_upload']");
 					
+					
+					// 파일 목록을 보는 .files (jQuery)
 					var files = inputFile[0].files;
 					
 					for(var i = 0; i < files.length; i++ ){
@@ -429,17 +558,23 @@
 						}
 					
 						formData.append("uploadFile", files[i]);
-				
 					}
 					
+
+					for (let key of formData.keys()) {
+					  console.log(key);
+					}
+
+					// FormData의 value 확인
+					for (let value of formData.values()) {
+					  console.log(value);
+					}		
+						
 					$.ajax({
 						url: '/uploadAjaxAction.do',
 						processData: false,
 						contentType: false,
 						data: formData,
-						/* beforeSend: function(xhr){
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						}, */
 						type: 'POST',
 						dataType: 'json',
 						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
@@ -448,7 +583,8 @@
 			            },
 						success: function(result){
 							console.log(result);
-							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일 등)
+							showUploadResult(result); // 업로드 결과 처리 함수 (섬네일)
+							$("#img_upload").val("");
 						}, 
 						error: function(error){
 							console.log(error);
@@ -485,8 +621,22 @@
 						}
 					}); */
 				});
+				
+				// 대표 이미지 사진 화면에서 제거
+				$(".uploadOneResult").on("click", "button", function(e){
+				
+				console.log("delete file");
+				
+				var targetLi = $(this).closest("li");
+				
+				if(confirm("사진을 삭제하시겠습니까?")){
+					var targetLi = $(this).closest("li");
+					index--;
+					targetLi.remove();
+				}
 			});
-		
+		});
+	
 		</script>
 		
 		<script>
@@ -495,11 +645,26 @@
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		
+		// 천단위마다 콤마생성
+		function addComma(data){
+		    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 콤마제거 함수
+		function removeCommas(data){
+			if(!data || data.length == 0){
+		    	return "";
+		    }else{
+		    	return data.split(",").join("");
+		    }
+		}
+		
 		// 글 수정시 실행되는 update	()함수
 		function update(){
 		
 			// 해쉬태그 데이터 베이스 저장
 			var hashTag = '';
+			
 			for(var i = 0; i < chkArray.length; i++) {
 				hashTag += chkArray[i];
 				if(i < chkArray.length - 1) {
@@ -514,28 +679,55 @@
 				return;
 			}
 			
+			// textarea 개행처리
+			var str = $('textarea').val();
+
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+			$('textarea').val(str);
+			
+			// 가격 콤마 제거
+			
+			var originalPrice = removeCommas($("#price").val());
+			
+			$("#price").val(originalPrice);
+			
 			// 첨부파일 hidden으로 값 넘겨주기
 			
 			var str = "";
 			
-			$(".uploadResult ul li").each(function(i, obj){
-				
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				var jobj = $(obj);
-				
-				console.dir(jobj);
-				
-				str += "<input type='hidden' name='attachList[" + i + "].fileName' value ='" 
-						+ jobj.data("filename") +"'>";
-				str += "<input type='hidden' name='attachList[" + i + "].uuid' value ='" 
-						+ jobj.data("uuid") +"'>";
-				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value ='" 
-						+ jobj.data("path") +"'>";
-				str += "<input type='hidden' name='attachList[" + i + "].fileType' value ='" 
-						+ jobj.data("type") +"'>";
-			});
+			$(".uploadOneResult ul li").each(function(i, obj){
 			
+			var jobj = $(obj);
+			
+			console.dir(jobj);
+			
+			str += "<input type='hidden' name='attachList[" + i + "].fileName' value ='" 
+					+ jobj.data("filename") +"'>";
+			str += "<input type='hidden' name='attachList[" + i + "].uuid' value ='" 
+					+ jobj.data("uuid") +"'>";
+			str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value ='" 
+					+ jobj.data("path") +"'>";
+			str += "<input type='hidden' name='attachList[" + i + "].fileType' value ='" 
+					+ jobj.data("type") +"'>";
+			});
+		
+		$(".uploadResult ul li").each(function(i, obj){
+			
+			var jobj = $(obj);
+			
+			console.dir(jobj);
+			
+			str += "<input type='hidden' name='attachList[" + (i+1) + "].fileName' value ='" 
+					+ jobj.data("filename") +"'>";
+			str += "<input type='hidden' name='attachList[" + (i+1) + "].uuid' value ='" 
+					+ jobj.data("uuid") +"'>";
+			str += "<input type='hidden' name='attachList[" + (i+1) + "].uploadPath' value ='" 
+					+ jobj.data("path") +"'>";
+			str += "<input type='hidden' name='attachList[" + (i+1) + "].fileType' value ='" 
+					+ jobj.data("type") +"'>";
+			});
+		
 			if(str == null || str == ""){
 				alert("최소 한 장 이상의 사진을 올려주세요!");
 				return;
@@ -600,7 +792,43 @@
 			}
 			
 		}
-		// 업로드 결과 처리 함수
+		
+		// 대표이미지 업로드 결과 처리 함수(섬네일)
+		function showUploadResultOne(uploadResultArr){
+
+			if(!uploadResultArr || uploadResultArr.length == 0){ return;}
+			
+			var uploadOneUL = $(".uploadOneResult ul");
+			
+			var str = "";
+
+			$(uploadResultArr).each(function(i, obj){
+				
+				//image type
+				if(obj.fileType){
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
+							+ obj.uuid + "_" + obj.fileName);
+					str += "<li data-path='" + obj.uploadPath + "'";
+					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
+							+ "'data-type='" + obj.fileType + "'";
+					str += "><div>";
+					str +="<span> " + obj.fileName + "</span>";
+					str +="<button type='button' data-file=\'" + fileCallPath 
+					+ "\'data-type='image' class='btn btn-warning btn-circle'>"
+					+ "<i class='lni lni-cross-circle'></i></button><br>";
+					str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
+					str += "</div>";
+					str += "</li>";
+				}else{
+					alert("이미지 파일이 아닙니다.");
+				}
+			});
+			
+			uploadOneUL.append(str);
+		}
+	
+		// 업로드 결과 처리 함수(섬네일)
 		function showUploadResult(uploadResultArr){
 			
 			if(!uploadResultArr || uploadResultArr.length == 0){ return;}
@@ -640,7 +868,7 @@
 					str +="<button type='button' data-file=\'" + fileCallPath 
 					+ "\'data-type='file' class='btn btn-warning btn-circle'>"
 					+ "<i class='lni lni-cross-circle'></i></button><br>";
-					str += "<img src='/assets/images/common/attach.png'></a>";
+					str += "<img src='/resources/assets/images/common/attach.png'></a>";
 					str += "</div>";
 					str += "</li>";
 				}
@@ -651,6 +879,17 @@
 	
 		</script>
 
-	</body>
+<!-- ========================= scroll-top ========================= -->
+<a href="#" class="scroll-top btn-hover"> <i class="lni lni-chevron-up"></i>
+</a>
+
+<!-- ========================= JS here ========================= -->
+<script src="/resources/assets/js/bootstrap.min.js"></script>
+<script src="/resources/assets/js/count-up.min.js"></script>
+<script src="/resources/assets/js/wow.min.js"></script>
+<script src="/resources/assets/js/tiny-slider.js"></script>
+<script src="/resources/assets/js/glightbox.min.js"></script>
+<script src="/resources/assets/js/main.js"></script>
+</body>
 
 </html>

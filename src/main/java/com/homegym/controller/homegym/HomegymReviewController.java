@@ -32,6 +32,13 @@ public class HomegymReviewController {
 		// RequestBody가 json데이터를 자바객체로 변환시켜준 값을 확인하고 service를 호출한다.
 		log.info("HomegymReviewVO: " + vo);
 		
+		// 이미 존재하는 리뷰가 있는가 체크
+		boolean exist = service.exist(vo);
+		
+		if(exist) {
+			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		int insertCount = service.register(vo);
 		
 		log.info("insertCount: " + insertCount);
@@ -95,5 +102,5 @@ public class HomegymReviewController {
 				new ResponseEntity<>("success", HttpStatus.OK) 
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-		
+	
 }

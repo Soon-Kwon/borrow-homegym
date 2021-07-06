@@ -111,6 +111,21 @@
 		});
 	}
 	
+	// 리뷰 평점 
+	function getScore(hId, callback, error){
+		
+		$.get("/homegym/score/" + hId + ".do", function(result){
+			if(callback){
+				callback(result);
+			}
+		}).fail(function(xhr, status, err){
+			if(error){
+				console.log(err);
+				error();
+			}
+		});
+	}
+
 	// 시간 처리
 	function displayTime(timeValue){
 	
@@ -124,10 +139,10 @@
 			
 			var hh = dateObj.getHours();
 			var mi = dateObj.getMinutes();
-			var ss = dateObj.getSeconds();
+			//var ss = dateObj.getSeconds(); // 초 단위는 안보여주기
 			
-			return [(hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi,
-				':', (ss > 9 ? '' : '0') + ss].join('');
+			return [(hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi].join('');
+				//':', (ss > 9 ? '' : '0')+ ss].join('');
 		}else {
 			var yy = dateObj.getFullYear();
 			var mm = dateObj.getMonth() + 1; // getMonth()는 0이 1월을 의미
@@ -143,6 +158,7 @@
 		remove: remove,
 		update: update,
 		get: get,
+		getScore: getScore,
 		displayTime: displayTime
 	};
 })();

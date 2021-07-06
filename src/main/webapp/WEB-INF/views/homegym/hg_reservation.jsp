@@ -79,8 +79,7 @@
                         <div class="single-info">
                             <i class="lni lni-map-marker"></i>
                             <h4>잠깐! 홈짐의 위치를 확인하세요</h4>
-                            <p class="no-margin-bottom">서울시 종로구 인사동
-                            아이유하우스
+                            <p class="no-margin-bottom">${address.HAddr }
                         </div>
                         <!-- End Single Info -->
                     </div>

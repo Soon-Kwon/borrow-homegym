@@ -96,7 +96,7 @@ public class HomegymDAO {
 	}
 	
 	// 리뷰 테이블에서 리뷰 평점 구하기
-	public HashMap<?,?> getScore(int hId) {
+	public HomegymReviewVO getScore(int hId) {
 		
 		return mybatis.selectOne("HomegymDAO.getScore", hId);
 	}
