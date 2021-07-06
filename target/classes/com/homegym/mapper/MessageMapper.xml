@@ -78,7 +78,7 @@
 		</choose>
 	</update>
 
-	<!-- 메세지리스트(왼쪽)에서 메세지 보내기 -->
+	<!-- 메세지리스트(왼쪽)에서 메세지 보내기(대화내용 추가) -->
 	<insert id="sendMsgInList" parameterType="message">
 		INSERT INTO MESSAGE VALUES(NULL, #{msgRoomNo}, #{sendId}, #{recvId}, 
 		#{msgContent}, NOW(), NOW(), 0)
@@ -112,10 +112,19 @@
 		LIMIT 0,1
 	</select>
 	
-	<!-- 기존 채팅방이 없으면 채팅방 가져오기 -->
-	<!-- <insert id="makeNewMsgRoom" >
+	<!-- 기존 채팅방이 없으면 채팅방 개설하기 -->
+	<insert id="makeNewMsgRoom" >
 		INSERT INTO MESSAGE
-	</insert> -->
+		VALUES(
+			NULL,
+			(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP)  +1,
+			#{sendId},
+			#{recvId},
+			#{msgContent},
+			NOW(),
+			NOW(),
+			0);
+	</insert>
 	
 	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
 	<select id="unReadCntAll" parameterType="string"
@@ -130,7 +139,14 @@
 		SELECT MEMBERID FROM HOMEGYM_BOARD
 		WHERE h_id = #{hId}
 	</select>
-
+	
+	<!-- 찾고자 하는 memberId가 존재하는지 확인 -->
+	<select id="getMemberId" parameterType="message" resultType="String">
+		SELECT MEMBERID FROM MEMBER
+		WHERE memberId = #{otherId}
+	</select>
+	
+	<!--  -->
 
 
 </mapper> 

@@ -204,7 +204,7 @@
 							<div class='type_msg'>
 								<div class='input_msg_write row'>
 									<div class='col-11'>
-										<input type='text' class='write_msg form-control'
+										<input type='text' name="" class='write_msg form-control'
 											placeholder='메세지를 입력해주세요' />
 									</div>
 									<div class='col-1'>
@@ -556,12 +556,14 @@
 				console.log("showMessageContent보여주기");
 				
 				
+				
 			});
 			
 			// 1:1 문의할 때, 엔터로 메세지 보내기
-			$('.write_msg').keydown(function(){
-				if(event.keyCode == 13){
-					SendMessage(otherId, curId);
+			$('.write_msg').keydown(function(e){
+				if(e.keyCode == 13){
+					e.preventDefault();
+					$('.msg_send_btn').trigger('click');
 				} 
 			});
 			
@@ -598,6 +600,8 @@
 			
 			// 해당 채팅방의 메세지 내용을 읽었음으로 읽음처리 
 			$('.unread' + msgRoomNo).empty();
+			
+			
 		};
 		
 		// 1:1문의할 떄, 메세지 전송하기

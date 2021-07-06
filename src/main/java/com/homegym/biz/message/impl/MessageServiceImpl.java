@@ -49,4 +49,15 @@ public class MessageServiceImpl implements MessageService {
 	public int getMsgRoomNo(MessageVO vo) {
 		return messageDAO.getMsgRoomNo(vo);
 	}
+	
+	/*찾고자 하는 Id가 DB에 있는지 조회*/
+	@Override
+	public String getMemberId(MessageVO vo) {
+		return messageDAO.getMemberId(vo);
+	}
+	
+	/*찾고자 하는 Id와의 채팅방 존재 여부 확인 - 1이상이면 존재*/
+	public int checkMsgHistory(String findId) {
+		return messageDAO.checkMsgHistory(findId);
+	}
 }

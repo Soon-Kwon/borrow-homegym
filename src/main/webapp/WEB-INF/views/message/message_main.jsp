@@ -11,7 +11,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Message</title>
+
 <link rel="stylesheet" href="/resources/ad_assets/css/message.css">
 <!--부트스트랩 설정-->
 
@@ -52,12 +55,15 @@
 	function findFunction(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-		var memberId = $('#findId').val();
+		
+		// 여기서 findId는 닉네임으로? id로,,?
+		var findId = $('#findId').val();
+		console.log("findId"+findId);
 		$.ajax({
 			type:"POST",
-			url:"checkUser.do",
+			url:"searchUser.do",
 			data:{
-				memberId : memberId
+				findId : findId
 			},
 			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
 			beforeSend : function(xhr){
@@ -65,23 +71,51 @@
             },
 			success: function(result){
 				if(result == 0 ){
-					getFriend(memberId);
+					console.log("result"+result);
+					/* $('#checkMessage').html('친구찾기에 성공했습니다.');
+					$('#checkType').attr('class', 'modal-content panel-success'); */
+					alert('친구찾기에 성공했습니다.');
+					getFriend(findId);
 				} else {
+					/* $('#checkMessage').html('친구를 찾을 수 없습니다.');
+					$('#checkType').attr('class', 'modal-content panel-warning'); */
 					alert('해당 친구를 찾을 수 없습니다.');
 					failFriend();
 				}
+				/* $('#checkModal').modal('show'); */
 				
+			},
+			error:function(result){
+				console.log("result" + result);
+				alert('findFunction에러,,')
 			}
 		});
 	}
 	
+	
+	
 	function getFriend(findId){
 		
+		let userList = '';
+		userList = '<div class="chat_list active_chat">';
+		userList = '	<div class="chat_people">';
+		userList = '		<div class="chat_img"> ';
+		userList = '			<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="sunil">';
+		userList = '		</div>';
+		userList = '	</div>';
+		userList = '    <div class="chat_ib">';
+		userList = '		<h5>'+findId+' <span class="chat_date">Dec 25</span></h5>';
+		userList = '        <p>Test, which is a new approach to have all solutions</p>';
+		userList = '	</div>';
+		userList = '</div>';
+		
+		$('.inbox_chat').html(userList);
 	}
 	
 	function failFriend(){
-		
+		$('.inbox_chat').html('');
 	}
+	
 </script>
 </head>
 <body>
@@ -98,12 +132,12 @@
 							<h4>Recent</h4>
 						</div>
 
-						<!-- 메세지 검색 영역 -->
+						<!-- 메세지 검색 영역 : message_search.jsp-->
 						<div class="srch_bar">
 							<div class="stylish-input-group">
-								<input id="findId" type="text" class="search-bar" placeholder="Search">
+								<input id="findId" type="text" class="search-bar" placeholder="아이디 검색하기">
 								<span class="input-group-addon">
-									<button type="button" onclick="searchUser();">
+									<button type="button" onclick="findFunction();">
 										<i class="fa fa-search" aria-hidden="true"></i>
 									</button>
 								</span>
@@ -115,6 +149,7 @@
 					<div class="inbox_chat">
 						
 					</div>
+					
 				</div>
 
 				<!-- 메세지 내용(content) 영역 : message_content.jsp -->

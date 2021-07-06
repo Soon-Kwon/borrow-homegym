@@ -140,12 +140,16 @@ public class MessageDAO {
 		return sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
 	}
 	
-	/* 
-	 * 1:1 문의하기
-	 * 1. 메세지 이력있는지 검색
-	 * 1-1. 이력있으면 (반환값이 1이상) 그때의 채팅방 번호가져와서 대화내용 불러오기
-	 * 1-2. 이력없으면 (반환값이 0이면) 현존하는 채팅방번호 중 max +1 해서 새롭게 만들기
-	 * */
+	/*memberId찾기*/
+	public String getMemberId(MessageVO vo) {
+		log.info("DAO의 getMemberId();");
+		return sqlSession.selectOne("MessageDAO.getMemberId", vo);
+	}
+	
+	/*찾은 memberId와의 채팅방 존재 여부 확인 - 1이상이면 존재*/
+	public int checkMsgHistory(String findId) {
+		return sqlSession.selectOne("MessageDAO.checkMsgHistory", findId);
+	}
 
 
 }

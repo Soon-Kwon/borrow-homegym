@@ -117,7 +117,7 @@ public class MessageController {
 		log.info("msgSend.do의 vo : " + vo);
 
 		int flag = messageService.sendMsgInList(vo);
-
+		System.out.println("flag : " + flag);
 		return flag;
 	}
 	
@@ -167,7 +167,7 @@ public class MessageController {
 		
 	}
 	
-	/* 안읽은 전체 메세지 navbar에 표시*/
+	/* 로그인한 유저가 안읽은 전체 메세지 navbar에 표시*/
 	@ResponseBody
 	@PostMapping("/getNewNoticeCnt.do")
 	public String getNewNoticeCnt(@RequestParam String memberId) {
@@ -175,17 +175,51 @@ public class MessageController {
 		return messageService.getNewNoticeCnt(memberId);
 	}
 
-	// 임시, DB에서 등록된 유저있는지 확인
-	/* message list(왼쪽)에서 등록된 member찾기*/
+	/* message list(왼쪽)에서 검색한 memberId찾기*/
+	@ResponseBody
 	@RequestMapping("/searchUser.do")
-	public String searchUser() {
-		return "message/message_search";
+	public int searchUser(@RequestParam String findId, MessageVO vo) {
+		log.info("searchUser()의 findId : "+ findId);
+		
+		// vo에 otherId세팅
+		vo.setOtherId(findId);
+		
+		// findId가 member DB에 있는 Id인지 확인
+		String otherId = messageService.getMemberId(vo);
+		System.out.println("searchUser()의 찾고자 하는 otherId : "+otherId);
+		
+		int checkId = 0;
+		// 찾고자하는 id가 없을 경우에만 -1로 세팅
+		if(otherId == null) {
+			checkId = -1;
+		}
+		
+		System.out.println("searchUser()의 checkId : "+ checkId);
+		return checkId;
+		
+		/*
+		 * // 찾고자하는 id와의 채팅방 존재여부 확인, 1이상이면 존재 int chkMsgHistory =
+		 * messageService.checkMsgHistory(otherId);
+		 * 
+		 * 
+		 * // 존재하지 않는 Id if(otherId == null) { // 존재하지 않는 id면 1세팅 vo.setUserChk(-1);
+		 * 
+		 * 
+		 * } else { // 존재하는 id면 0세팅 vo.setUserChk(0); vo.setOtherId(otherId);
+		 * 
+		 * // otherId와의 채팅방이 존재하지 않으면 if(chkMsgHistory == 0) { // 새롭게 채팅방 개설한 후(max
+		 * msgRoomNo+1), 대화하기
+		 * 
+		 * } else { // otherId와의 채팅방이 존재하면 // 기존의 채팅방번호 가져온 후, 대화하기 } }
+		 */
+		
+//		return "message/message_search";
 	}
 	
 	
 	/*웹소켓*/
 
-	/* 1:1대화 */
+	/* 1:1대화 - 지우기 */
 	@RequestMapping("/msg-ws.do")
 	public String msg() {
 		return "message/chat";
@@ -197,12 +231,7 @@ public class MessageController {
 		 return "message/message_notice"; 
 	}
 	 
-//	 // 알림조회(전체)
-//	 @RequestMapping("/notice.do")
-//	 public ModelAndView noticeInit(@RequestParam(defaultValue="1") int curPage, HttpServletRequest request) throws Exception{
-//		 ModelAndView mav = new ModelAndView()
-//	 }
-//	 
+
 	 // notice DB저장
 	 @RequestMapping("/saveNotice.do")
 	 @ResponseBody

@@ -21,7 +21,14 @@ public interface MessageService {
 	// 홈짐 글 번호를 통해 memberId 조회
 	public String getBoardWriterId(int hId);
 
+	// 채팅방 번호 조회
 	public int getMsgRoomNo(MessageVO vo);
+	
+	// 찾고자하는 Id가 DB에 있는지 조회
+	public String getMemberId(MessageVO vo);
+	
+	// 찾고자하는 Id와 대화한 이력있는지 확인 - 1이상이면 존재
+	public int checkMsgHistory(MessageVO vo);
 
 
 }
