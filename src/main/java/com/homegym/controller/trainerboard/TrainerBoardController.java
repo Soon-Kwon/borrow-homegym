@@ -573,6 +573,7 @@ public class TrainerBoardController {
 
 		try {
 
+			//HTTPHeader 객체를 생성하여 헤더에 ""CONTENT_TYPE"를 추가 (이미지임을 알려주기 위함)
 			HttpHeaders header = new HttpHeaders();
 
 			header.add("Content-Type", Files.probeContentType(file.toPath()));

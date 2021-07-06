@@ -139,9 +139,9 @@ ul li.tag-item {
 	border-color: white;
 	border: 0px;
 }
-}
+
 <!--//해시태그 끝-->
-<<<<<<< HEAD
+
 </style>
 
 </head>

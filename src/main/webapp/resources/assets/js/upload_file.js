@@ -47,7 +47,7 @@ function save() {
 			xhr.setRequestHeader(header, token);
 		},
 		success : function(data) {
-			alert(data);
+			//alert(data);
 			if (data == 'OK') {
 				alert('글 작성에 성공하였습니다.');
 				window.location.replace("/trainer/tbList.do");

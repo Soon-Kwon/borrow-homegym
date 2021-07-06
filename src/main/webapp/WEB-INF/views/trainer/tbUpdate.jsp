@@ -107,6 +107,40 @@ ul li.tag-item {
 	cursor: pointer;
 	margin-left: 8px;
 }
+
+/* 파일업로드 css  */
+.uploadResult {
+	width: 100%;
+	background-color: white;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadResult ul li img {
+	width: 80px;
+	heigh: 80px;
+}
+
+.uploadResult .btn {
+	padding: 1px;
+	margin: 0px;
+	border-radius: .90erm;
+	color: black;
+	background-color: white;
+	border-color: white;
+	border: 0px;
+}
+
 </style>
 <!--//해시태그 끝-->
 
@@ -232,8 +266,16 @@ ul li.tag-item {
                     $(this).parent().removeClass("checkColor");
                 }
             });
-            
-        });
+        
+            //이미지삭제
+            $('#imgg').click(function (e) {
+            	alert("이미지를 삭제합니다.");
+                document.getElementById( 'imgg' ).src= $('#imgg').attr('src', '');
+/*                 document.getElementById( 'imgg' ).src= $('#imgg').removeProp('src'); */
+            });        
+   
+        }); 
+        
     </script>
 
 </head>
@@ -373,17 +415,18 @@ ul li.tag-item {
 								<!-- 사진 업로드 -->
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label style="font-size: 20px;">대표사진 등록</label>
+										<label style="font-size: 20px; margin-top:10px">대표사진 등록</label>
+										<p style="font-size:8px;">이미지를 삭제를 원하실 경우  사진을 클릭해주세요!</p>
 									</div>
 									<div>
-										<input type="file" id="img_upload" name="tbImg"
-											accept="image/*" style="margin-bottom: 30px;">
-										<img src="/resources/imgUpload/${trainerBoard.tbImg}" />
-										<div id="image_container"></div>
+										<img src="/resources/imgUpload/${trainerBoard.tbImg}"  id="imgg" style=" margin-left: 10px; margin-bottom:10px; width:100px; height:100px;"/>
+										<br>
+										<input type="file" name="tbImg" id="mainUplod"  accept="image/*" >
 									</div>
 									<div class="form-group">
+									<br>
 										<label style="font-size: 20px;">자기 소개사진 등록
-											<p>(최대 3장 업로드 가능)</p>
+											<p style="font-size:10px; margin-left:5px;">(최대 3장 업로드 가능)</p>
 										</label>
 									</div>
 									<div>
@@ -396,8 +439,8 @@ ul li.tag-item {
 
 
 								<div class="col-12">
-									<div class="form-group button" style="text-align: center;">
-										<button type="submit" class="btn"style="background-color: #3428A5; width: 110px;">등록</button>
+						 <div class="form-group button" style="text-align: center;">
+										<div class="btn" type="submit" style="background-color: #3428A5; width: 100px; border-radius:5px;">수정 </div>
 									</div>
 								</div>
 							</div>
@@ -452,6 +495,7 @@ ul li.tag-item {
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	<script src="/resources/assets/js/upload_file.js"></script>
 
 </body>
 
