@@ -80,7 +80,7 @@
 	<!-- 글 삭제 -->
 	<delete id="deleteBoard">
 	<![CDATA[
-		DELETE TRAINER_BOARD 
+		DELETE FROM TRAINER_BOARD 
 		WHERE 
 				TNO = #{tno}
 		]]>

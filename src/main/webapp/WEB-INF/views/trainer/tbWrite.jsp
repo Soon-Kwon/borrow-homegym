@@ -285,7 +285,7 @@ ul li.tag-item {
 										<br> <label style="font-size: 15px;">대표사진 등록</label>
 									</div>
 									<div>
-										<input type="file" id="img_upload" name="tbImg"
+										<input type="file" name="tbImg"
 											accept="image/*" style="margin-bottom: 30px;">
 									</div>
 
@@ -391,7 +391,7 @@ ul li.tag-item {
 		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
 		if (e.key === "Enter" || e.keyCode == 32) {
 
-			if ($(".tag-item").size() == 3) {
+			if ($(".tag-item").length == 3) {
 
 				alert('최대 입력 개수는 3개입니다.');
 

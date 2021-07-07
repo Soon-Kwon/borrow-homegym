@@ -60,6 +60,74 @@ function save() {
 	});
 }
 
+//수정 저장
+function modify() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var str = "";
+
+	var formObj = $("#submitForm2");
+	
+	console.log($('#tno').val());
+
+	$(".uploadResult ul li")
+			.each(
+					function(i, obj) {
+
+						var jobj = $(obj);
+
+						console.dir(jobj);
+
+						str += "<input type='hidden' name='attachList[" + i
+								+ "].fileName' value ='"
+								+ jobj.data("filename") + "'>";
+						str += "<input type='hidden' name='attachList[" + i
+								+ "].uuid' value ='" + jobj.data("uuid") + "'>";
+						str += "<input type='hidden' name='attachList[" + i
+								+ "].uploadPath' value ='" + jobj.data("path")
+								+ "'>";
+						str += "<input type='hidden' name='attachList[" + i
+								+ "].fileType' value ='" + jobj.data("type")
+								+ "'>";
+					});
+
+	if (str == null || str == "") {
+		alert("최소 한 장 이상의 사진을 올려주세요!");
+		return;
+	}
+
+	formObj.append(str);
+
+	var data = formObj.serialize();
+
+	$.ajax({
+		type : 'POST',
+		url : '/trainer/tbUpdate.do',
+		// url : 'tbWrite.do',
+		dataType : 'text',
+		data : data,
+		 //데이터를 전송하기 전에 헤더에 csrf값을 설정한다 
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(data) {
+			//alert(data);
+			if (data == 'OK') {
+				alert('글 작성에 성공하였습니다.');
+				window.location.replace("/trainer/tbList.do");
+			}
+		},
+		error : function(e) {
+			alert(e);
+			console.log(e);
+		}
+	});
+}
+
+
+
+
+
 // 업로드 결과 처리 함수/대표사진
 function showUploadResult(uploadResultArr) {
 
@@ -202,6 +270,10 @@ $(document).ready(function() {
 
 	$("input[name='uploadFile']").change(function(e) {
 		// $("input[type='file']").change(function(e) {
+		
+		$('.uploadShow').empty();
+		
+		
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 

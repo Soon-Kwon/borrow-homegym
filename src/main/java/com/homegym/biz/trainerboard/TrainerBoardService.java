@@ -13,7 +13,7 @@ public interface TrainerBoardService {
 	void getTbUpdate(TrainerBoardVO vo);
 
 	// 글 삭제
-	void deleteBoard(TrainerBoardVO vo);
+	void deleteBoard(int tno);
 
 	// 글 상세조회
 	TrainerBoardVO getTbDetail(int tno);

@@ -34,13 +34,7 @@ public class TrainerBoardServiceImpl implements TrainerBoardService {
 		boardDAO.getTbUpdate(vo);
 
 	}
-
-	// 글 삭제
-	@Override
-	public void deleteBoard(TrainerBoardVO vo) {
-		boardDAO.deleteBoard(vo);
-
-	}
+	 
 
 	// 글 상세보기
 	@Override
@@ -77,6 +71,13 @@ public class TrainerBoardServiceImpl implements TrainerBoardService {
 		System.out.println("게시글 번호에 해당하는 첨부파일 가져오기 실행");
 //		log.info("게시글 번호에 해당하는 첨부파일 가져오기");
 		return attachDAO.findByTno(vo, tno);
+	}
+
+	//글삭제
+	@Override
+	public void deleteBoard(int tno) {
+		boardDAO.deleteBoard(tno);
+		
 	}
 
 	

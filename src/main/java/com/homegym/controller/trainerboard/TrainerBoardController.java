@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,12 +29,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homegym.biz.homegym.Criteria;
+import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.trainerboard.MediaUtils;
 import com.homegym.biz.trainerboard.TrainerAttachVO;
 import com.homegym.biz.trainerboard.TrainerBoardService;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
@@ -139,15 +145,63 @@ public class TrainerBoardController {
 		return "trainer/tbUpdate";
 
 	}
+	
+	// 첨부파일 리스트 요청시 작동 
+	/*
+	 * @GetMapping(value = "/getAttachList.do", produces =
+	 * MediaType.APPLICATION_JSON_UTF8_VALUE)
+	 * 
+	 * @ResponseBody public ResponseEntity<List<TrainerAttachVO>>
+	 * getAttachList(TrainerAttachVO vo, @RequestParam("tno") int tno){
+	 * 
+	 * log.info("첨부파일 가져오기: " + tno); return new
+	 * ResponseEntity<List<TrainerAttachVO>>(boardService.getAttachList(vo, tno),
+	 * HttpStatus.OK); }
+	 * 
+	 * // 첨부파일 데이터 삭제 메서드 private void deleteFiles(List<TrainerAttachVO> attachList)
+	 * {
+	 * 
+	 * // 첨부파일 존재 유무 확인 if(attachList == null || attachList.size() == 0) { return; }
+	 * 
+	 * log.info("첨부파일 삭제.....");
+	 * 
+	 * attachList.forEach(attach -> {
+	 * 
+	 * try {
+	 * 
+	 * // java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근) //
+	 * attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다. //Path file =
+	 * Paths.get(UPLOAD_FOLDER + attach.getUploadPath() //+ "/" + attach.getUuid() +
+	 * "_" + attach.getFileName());
+	 * 
+	 * // java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다. //Files.deleteIfExists(file);
+	 * 
+	 * // 이미지 파일이면 섬네일도 지워준다. //if(Files.probeContentType(file).startsWith("image"))
+	 * { //Path thumbNail = Paths.get(UPLOAD_FOLDER + attach.getUploadPath() //+
+	 * "/s_" + attach.getUuid() + "_" + attach.getFileName());
+	 * 
+	 * //Files.delete(thumbNail); //} }catch(Exception e) { log.error("첨부파일 삭제 오류" +
+	 * e.getMessage()) ; } }); }
+	 */
+	
+	
+	// 글 삭제
+		@RequestMapping("/deleteBoard.do")
+		public String deleteBoard(@RequestParam("tno")int tno, 
+								  HttpServletRequest request, 
+								  HttpSession session,
+								  TrainerBoardVO vo) {
 
-	@PostMapping("/tbUpdater")
-	public String getTbUpdater(HttpServletRequest request, HttpSession session, TrainerBoardVO vo) {
+			System.out.println("글 삭제 처리");
 
-		System.out.println("게시판 수정하기");
-		boardService.getTbUpdate(vo);
-		System.out.println("게시판 수정완료");
-		return "redirect:/trainer/tbList.do";
-	}
+			boardService.deleteBoard(tno);
+			
+			return "redirect:tbList";
+			/* redirect:/user/mypage/profile_update.do */
+			
+		}
+	
+	
 
 	// 글상세페이지
 	// http://localhost:8090/trainer/tbDetail.do
@@ -178,6 +232,7 @@ public class TrainerBoardController {
 	@GetMapping("/tbList")
 	public String getTbLists(TrainerCriteria cri, Model model, TrainerBoardVO vo) {
 
+		System.out.println("리스트 페이지");
 		System.out.println("tbList : " + cri);
 
 		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
@@ -585,5 +640,108 @@ public class TrainerBoardController {
 
 		return result;
 	}
+	
+	
+	@PostMapping(value = "/deleteMain.do")
+	@ResponseBody
+	public ResponseEntity<String> deleteMain(HttpServletRequest request, @RequestParam("img_name") String fileName) {
+		log.info("delete file" + fileName);
+		
+		/*
+		String formatName = fileName.substring(fileName.indexOf(".") + 1);
+		MediaType mType = MediaUtils.getMediaType(formatName);
+		
+		// 이미지 타입이라면
+		if (mType != null) {
+			String front = fileName.substring(0, 12);
+			String end = fileName.substring(14);
+			// 썸네일 이미지 삭제
+			new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
+		}
+		*/
+		
+		//getRealPath("/") : webapp 폴더까지
+		String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
+		String attachPath = "resources/imgUpload/";
+		String uploadFolder = imgUploadPath + attachPath;
+		//File uploadFile = new File(imgUploadPath + attachPath + file.getOriginalFilename());
+		
+		// 타입 상관없이, 원본 파일 삭제
+		log.info("path : " + uploadFolder + fileName.replace('/', File.separatorChar));
+		new File(uploadFolder + fileName.replace('/', File.separatorChar)).delete();
+		//new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
+		
+		return new ResponseEntity<>("deleted", HttpStatus.OK);
+	}
 
-}
+	
+	@PostMapping("/tbUpdate")
+	@ResponseBody
+	public String getTbUpdate(HttpServletRequest request, TrainerBoardVO vo) throws Exception {
+
+		//System.out.println("게시글 작성");
+		//System.out.println(vo);
+		
+		log.info("게시글 수정");
+		log.info(vo);
+		
+		
+		// 해시태그 저장
+		String[] tagList = vo.getTagList();
+		System.out.println(Arrays.toString(tagList));
+
+		HttpSession session = request.getSession();
+
+		
+		// 아래 참조해서 session 등록하는 부분 체크
+		
+		String mainFileName = session.getAttribute("mainFileName").toString();
+		List<String> fileNameList = (List<String>) session.getAttribute("fileNameList");
+
+		System.out.println(mainFileName);
+		for (int i = 0; i < fileNameList.size(); i++) {
+			System.out.println(fileNameList.get(i));
+		}
+
+		vo.setTbImg(mainFileName);
+
+		if (tagList.length == 1) {
+
+			vo.setTbActivTag1(tagList[0]);
+
+		} else if (tagList.length == 2) {
+
+			vo.setTbActivTag1(tagList[0]);
+			vo.setTbActivTag2(tagList[1]);
+
+		} else if (tagList.length == 3) {
+			vo.setTbActivTag1(tagList[0]);
+			vo.setTbActivTag2(tagList[1]);
+			vo.setTbActivTag3(tagList[2]);
+		}
+		// 해시태그 끝
+
+		// 사진 업로드
+		if (fileNameList.size() == 1) {
+			vo.setTbPhoto1(fileNameList.get(0));
+		} else if (fileNameList.size() == 2) {
+			vo.setTbPhoto1(fileNameList.get(0));
+			vo.setTbPhoto2(fileNameList.get(1));
+		} else if (fileNameList.size() >= 3) {
+			vo.setTbPhoto1(fileNameList.get(0));
+			vo.setTbPhoto2(fileNameList.get(1));
+			vo.setTbPhoto3(fileNameList.get(2));
+		}
+
+		//boardService.getTbWrite(vo);
+		boardService.getTbUpdate(vo);
+		
+		//System.out.println("게시판 수정완료");
+		log.info("게시판 수정완료");
+
+		return "OK";
+
+		}
+	}
+
+

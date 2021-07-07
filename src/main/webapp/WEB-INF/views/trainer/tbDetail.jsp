@@ -259,7 +259,7 @@ p {
 							<div class="button">
                                 <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:10px; border-radius:5px;"> 수정 </a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="/trainer/deleteBoard.do" class="btn" style="margin-top:5px; border-radius:10px;">삭제</a>
+                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:10px;">삭제</a>
                             </div>
 
 							</div>
@@ -387,7 +387,7 @@ p {
 			$('#carousel-example-generic').carousel({
 				// 슬리아딩 자동 순환 지연 시간
 				// false면 자동 순환하지 않는다.
-				interval : 1000,
+				interval : 2000,
 				// hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
 				pause : "hover",
 				// 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복

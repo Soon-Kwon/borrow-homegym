@@ -28,7 +28,7 @@ public interface MessageService {
 	public String getMemberId(MessageVO vo);
 	
 	// 찾고자하는 Id와 대화한 이력있는지 확인 - 1이상이면 존재
-	public int checkMsgHistory(MessageVO vo);
+	//public int checkMsgHistory(MessageVO vo);
 
 
 }

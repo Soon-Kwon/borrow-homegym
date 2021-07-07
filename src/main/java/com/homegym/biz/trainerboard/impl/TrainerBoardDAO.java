@@ -30,9 +30,9 @@ public class TrainerBoardDAO {
 	}
 
 	// 글삭제
-	public void deleteBoard(TrainerBoardVO vo) {
+	public void deleteBoard(int tno) {
 		System.out.println("===>Mybatis로  게시글 삭제 기능 처리");
-		mybatis.delete("TrainerBoardDAO.deleteBoard", vo);
+		mybatis.delete("TrainerBoardDAO.deleteBoard", tno);
 	}
 
 	// 글 상세조회
