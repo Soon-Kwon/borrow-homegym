@@ -10,7 +10,22 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-
+<style>
+	#addBtn{
+		height: 50px;
+	    width: 150px;
+	    font-size: 18px;
+	    margin-left: 350px;
+	    border-color: #5c6dbd;
+	    color: #5c6dbd;
+	    font-weight: 400;
+	}
+	
+	/* .fouc{
+		display: none;
+	}
+ */
+</style>
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -58,23 +73,23 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title">마이페이지</h3>
+                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
                                             <h6 class="title"><a
-                                                    href="course-details.html">나의 활동내역</a></h6>
+                                                    href="myactiv">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -113,7 +128,7 @@
                     </ul>
                     
                   <!-- 게시글 탭 -->
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content fouc" id="myTabContent">
                         <div class="tab-pane fade show active" id="overview" role="tabpanel"
                             aria-labelledby="overview-tab">
                             <div class="course-overview">
@@ -140,7 +155,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbContent}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
@@ -151,7 +166,7 @@
                                     </table>
                                     
                                    <form id="actionForm" action="user/mypage/mywrite.do" method="get">
-                                     	<input type="hidden" name="memberId" value="${member.memberId}"/>
+                                     	<input type="hidden" name="memberId" value="${member_memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
                                     </form> 
@@ -186,7 +201,7 @@
                                                 <th>리뷰 작성일</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="listBody">
                                    				 <c:choose>
                                     				<c:when test ="${fn:length(myReviews)==0}">
                                     				<div style="font-size: 20px">
@@ -197,10 +212,11 @@
 													</div>
                                     			</c:when>
                                     			<c:otherwise>
+                                    			
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
-				                                            <td><a href="course-details.html">${myReviews.hr_content}</a></td>
+				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}" style="color:black;">${myReviews.hr_content}</a></td>
 					                                            <c:if test="${myReviewshr_score==1}">
 					                                            	<td>⭐</td><
 					                                            </c:if>
@@ -214,15 +230,40 @@
 					                                            	<td>⭐⭐⭐⭐</td>
 					                                            </c:if>
 					                                            <c:if test="${myReviews.hr_score==5}">
-					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
+					                                            	<td>⭐⭐⭐⭐⭐</td>
 					                                            </c:if>
 				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hr_regdate}" /></td>
 		                                       		    </tr>
                                     			   </c:forEach>
+                                    			  
                                     	     	</c:otherwise>
                                      		 </c:choose>
+                                     		
                                			  </tbody>
                                        </table>
+                                        <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                     	<input type="hidden" name="memberId" value="${member_memberId}"/>
+                                    	<input type="hidden" name="pageNum" value="${rv_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${rv_pageMaker.cri.amount}">
+                                    </form> 
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                   <c:if test ="${rv_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${rv_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${rv_pageMaker.startPage}" end="${rv_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${rv_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${rv_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${rv_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+		                                       </div>  
+		                                </div> 
+		                            </div>
+		                        </div>
+                                      
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -285,8 +326,9 @@
     
     
      <script type="text/javascript">
-    	$(document).ready(function(){
-    		var actionForm= $("#actionForm");
+     $(document).ready(function(){
+     
+   		var actionForm= $("#actionForm");
 
     		
     		$(".pagination-list a").on("click",function(e){
@@ -295,11 +337,23 @@
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/mywrite.do");
     			actionForm.submit();
-    		});
+    		}); 
+     });
+    		
+    	/*  	$(document).on("#addBtn", function() {
+    		$("#addBtn").click(function(){
+    			alert("ddddd"); 
+    			 var startNum=$("#listBody tr").length; //마지막 리스트 번호 알아냄
+    			var addListHtml ="";
+    			consol.log("startNum",startNum);
+    			 */
+
+/*     		});
 
     	});
-    	
+    	 */
   
+ 
 
     </script>
 </body>

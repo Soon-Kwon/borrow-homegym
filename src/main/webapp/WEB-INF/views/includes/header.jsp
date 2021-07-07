@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <c:set var="memberId"  value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberId}"  />
+<c:set var="imagePath"  value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.imagePath}"  />
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -98,8 +99,9 @@
 					memberId : '${memberId}' // data로 넘겨주기
 				},
 				url: "${contextPath}/message/getNewNoticeCnt.do",
-				// 데이터를 전송하기 전에 헤더에 csrf값을 설정한다
-				beforeSend : function(xhr){
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				/*beforeSend : function(xhr){
+
 					xhr.setRequestHeader(header, token);
 	            },
 				success:function(result){
@@ -112,10 +114,10 @@
 					}
 				}
 			})
-	}
+	} */
 	
 	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-	function getInfiniteUnread(){
+	/* function getInfiniteUnread(){
 		setInterval(function(){
 			getUnread();
 		}, 4000); // 4초마다 요청
@@ -138,6 +140,7 @@
 	$(document).ready(function() {
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
+
 	}); */
 	
 	</script>
@@ -183,7 +186,15 @@
                                 <sec:authorize access="hasRole('ROLE_MEMBER')">
 									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
 									<li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tbList">트레이너</a></li>
-									<a class="circle-image" href="/user/mypage/profile.do"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
+									
+									 <c:if test="${empty member.imagePath}">
+									 	<a class="circle-image" href="/user/mypage/profile.do">
+									 	<img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" style="height: 50px; width: 50px;"></a>
+				           			 </c:if>
+				          			 <c:if test="${not empty member.imagePath}">
+				                    	<a class="circle-image" href="/user/mypage/profile.do"> <img src="${member.imagePath}" style="height: 50px; width: 50px;"></a>
+				            		</c:if>
+									
 									<li class="nav-item">
                                         <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
                                         data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
@@ -203,7 +214,7 @@
                                         <ul class="sub-menu collapse" id="submenu-1-4" style="width: 150px;">
                                         	<li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>
                                        	 	<li class="nav-item"><a href="/user/mypage/profile_update">&nbsp &nbsp &nbsp 내 정보 수정</a></li>
-                                         	<li class="nav-item"><a href="/user/mypage/myactiv">&nbsp &nbsp &nbsp 활동 내역</a></li>
+                                         	<li class="nav-item"><a href="/user/mypage/homegymCheck.do?selectedBtnId=overview-tab">&nbsp &nbsp &nbsp 활동 내역</a></li>
                                        	 	<li class="nav-item"><a href="/user/mypage/mywrite">&nbsp &nbsp &nbsp 글 관리</a></li>
                                         	<li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
                                         </ul>

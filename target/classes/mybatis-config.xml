@@ -15,6 +15,7 @@
 		<typeAlias alias="attachVO" type="com.homegym.biz.homegym.HomegymAttachVO"/>
 		<typeAlias alias="message" type="com.homegym.biz.message.MessageVO" />
 		<typeAlias alias="authmember" type="com.homegym.security.CustomUserDetails" />
+		<typeAlias alias="homegymDetail" type="com.homegym.biz.homegym.HomegymDetailVO"/>
 		<typeAlias alias="notice" type="com.homegym.biz.message.NoticeVO" />
 	</typeAliases>
 

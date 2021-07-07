@@ -389,7 +389,7 @@ public class MemberController {
 	}
 
 	/*예약 상세내용 이동*/
-	@GetMapping("mypage/reservationForm.do")
+	@GetMapping("mypage/reservationForm")
 	public String getMyRequest(@RequestParam("d_id") int dId, HomegymDetailVO vo,HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
@@ -398,88 +398,109 @@ public class MemberController {
 		model.addAttribute("myRequest", homegymDetailVO);
 		
 		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
+		
 		return "user/reservation_detail";
 	}
 	
 	
 	/* 마이페이지 홈짐 활동내역 이동 */
 	
-	@GetMapping("mypage/myactiv")
-	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		/*
-		 * String memberId = request.getParameter("memberId");
-		 * session.setAttribute("memberId", memberId);
-		 */
+	
+	/*관리할 홈짐 리스트 (수락/거절)*/
+	@GetMapping("mypage/homegymCheck")
+	public String homegymCheck(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
 		String memberId = loginMemberVO.getMemberId();
-		/*
-		 * CustomUserDetails vo = new CustomUserDetails(); vo =
-		 * memberService.getUser(loginMemberVO.getUsername());
-		 */
+
 		
-		/* model.addAttribute("member", vo); */
-		
-		//수락 대기중 
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
-		for(int i =0; i<waitingHG.size();i++) {
-			System.out.println(waitingHG.get(i));
-		}
 		model.addAttribute("waitingHomegym", waitingHG);
 		
 		int wait_total = memberService.getMyWaitngHomegymCnt(memberId);
 		PageMakerDTO wait_pageMaker = new PageMakerDTO(cri,wait_total);
 		model.addAttribute("wait_pageMaker", wait_pageMaker);
+		model.addAttribute("wait_total", wait_total);
 		
 		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
-
-		//빌려준 홈짐  (Map으로 받을 때는 camelCase 사용 X)
+		
+		return "user/myactiv";
+	}
+	
+	/*빌려준 홈짐 리스트 */
+	@GetMapping("mypage/lendHomegym")
+	public String lendHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		String memberId = loginMemberVO.getMemberId();
+		
 		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
-		for(int i=0; i < lendHG.size(); i++) {
-			System.out.println(lendHG.get(i));
-		}
 		model.addAttribute("lendHomegym", lendHG);
 
 		int ld_total = memberService.getLendHomeGymCnt(memberId);
 		PageMakerDTO ld_pageMaker = new PageMakerDTO(cri, ld_total);
+		model.addAttribute("ld_total", ld_total);
 		model.addAttribute("ld_pageMaker", ld_pageMaker);
 
 		System.out.println("ld_pageMaker::::::" + ld_pageMaker);
+		
+		return "user/myactiv";
 
-		// 빌린 홈짐 
+	}
+	
+	/*빌린 홈짐 리스트 */
+	@GetMapping("mypage/rentHomegym")
+	public String rentHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		String memberId = loginMemberVO.getMemberId();
+		
+		
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
-		for(int i=0; i < rentHG.size(); i++) {
-			System.out.println(rentHG.get(i));
-		}
 		model.addAttribute("rentHomegym", rentHG);
-
+		
 		int rt_total = memberService.getRentHomeGymCnt(memberId);
 		PageMakerDTO rt_pageMaker = new PageMakerDTO(cri, rt_total);
+		model.addAttribute("rt_total", rt_total);
 		model.addAttribute("rt_pageMaker", rt_pageMaker);
-
-		System.out.println("rt_pageMaker ::::::" + rt_pageMaker);
-
-		/* 진행중인 홈짐 */
-		/*
-		 * List<HomegymVO> progressHomegym =
-		 * memberService.getMyProgressHomegym(memberId, cri);
-		 * model.addAttribute("progressHomegym", progressHomegym);
-		 */
-		// 완료된 홈짐
-		// List<HomegymVO> finishedHomegym =
-		// memberService.getMyFinishedHomegym(memberId);
+		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 
 		return "user/myactiv";
 	}
 
+	
+	/* 결제 상태값 변화  */
+	
+	@GetMapping("/payUpdate")
+	public String payUpdate(@RequestParam(value="d_id",required=false) int dId,@RequestParam(value="payYN",required=false) String payYN,HttpServletRequest request, HttpSession session) {
+		
+		System.out.println("결제 vo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dId);
+		System.out.println("결제 payYN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + payYN);
+		
+		HomegymDetailVO vo = new HomegymDetailVO();
+		
+		vo.setDId(dId);
+		vo.setPayYN(payYN);
+		memberService.payUpdate(vo);
+		
+		
+		return "redirect:/user/mypage/myactiv";
+	}
+	
+	/*결제 완료시 (jsp 페이지 보여줌) */
+	@GetMapping("/payOk")
+	public String payOK() {
+	
+		return "user/payOk";
+	}
+	
 	/* 수락 거절 상태값 변화 */
 	
 	@ResponseBody
 	@PostMapping("/acceptCheck")
-	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,
-			HttpSession session, Model model) {
+	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -526,11 +547,17 @@ public class MemberController {
 
 		
 		//내가 쓴 리뷰 리스트
-		List<Map<String, String>> myReviews = memberService.getMyReviews(memberId);
+		List<Map<String, String>> myReviews = memberService.getMyReviewsPaging(memberId,cri);
 		model.addAttribute("myReviews", myReviews);
+		
+		int reviewTotal = memberService.getMyAllReviewCnt(memberId);
+		PageMakerDTO rv_pageMaker = new PageMakerDTO(cri,reviewTotal);
+		model.addAttribute("rv_pageMaker",rv_pageMaker);
 		
 		System.out.println("myReviews :::::" + myReviews);
 		return "user/mywrite";
 	}
+	
+	/* 댓글 더보기 */
 
 }
