@@ -104,7 +104,7 @@
 								<h6> </h6>
 								<br>
 								<div id="text-price">1회 이용가격</div>
-								<div id="price">${board.HPrice } 원</div>
+								<div id="detail-price">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
 								<c:choose>
