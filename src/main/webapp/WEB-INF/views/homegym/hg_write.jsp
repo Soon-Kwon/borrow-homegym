@@ -36,23 +36,23 @@
 		<section id="contact-us" class="contact-us section">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-12">
+					<div class="col-lg-8 col-12" style="float: none; margin: 0 auto;">
 						<div class="form-main">
 							<h3 class="title">
-								<span>내 홈짐을 공유해보세요!</span>홈짐등록 게시판
+								<span>내 홈짐을 공유해보세요!</span>홈짐등록하기
 							</h3>
 							<form id="submitForm" class="form">
 							<input type="hidden" name="nickName" value="${member_nickName}"/>
 							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
-									<div class="col-lg-12 col-12">
+									<div class="col-lg-10 col-12">
 										<div class="form-group">
 											<label>글제목</label> <input name="hTitle" type="text" id="title" placeholder=""
 												required="required">
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-10">
+									<div class="col-lg-8 col-10">
 										<div class="form-group">
 											<label>주소</label> <input type="text" id="sample5_address"
 												class="form-control" name="hAddr" placeholder="주소" required="true"
@@ -62,21 +62,19 @@
 										<input type="hidden" id="y-coordinate" name="hLocateY" />
 									</div>
 									<div class="col-lg-2 col-2">
-										<input type="button" onclick="sample5_execDaumPostcode()"
-											class="btn btn-warning" style="margin-top: 28px; padding: .80rem .100rem;"
-											value="주소 검색"> <br>
+										<input type="button" onclick="sample5_execDaumPostcode()" id="addrBtn"
+											class="btn btn-warning" value="주소 검색"> <br>
 									</div>
-									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none">
+									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; margin-left: 30px; display: none;">
 									</div>
-									<p></p>
 									<div class="row">
 										<div class="col-lg-4 col-11">
 											<div class="form-group">
-												<label>가격 책정</label><input type="text" id="price" class="form-control"
+												<br><label>가격 책정</label><input type="text" id="price" class="form-control"
 													name="hPrice" placeholder="가격" required="true" />
 											</div>
 										</div>
-										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
+											<div class="col-lg-1 col-1 font-general" style="margin-top: 27px;"><br>원</div>
 									</div>
 									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
@@ -150,7 +148,7 @@
 										</div>
 									</div>
 									<div class="col-12">
-										<div class="form-group button">
+										<div class="form-group button" style="text-align: center;">
 											<button class="btn" type="button" onclick="save();">게시물 등록</button>
 										</div>
 									</div>

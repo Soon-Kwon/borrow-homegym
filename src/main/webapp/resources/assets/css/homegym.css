@@ -39,7 +39,7 @@
 }
 
 .intro .intro-content .page-title {
-	font-size: 30px;
+	font-size: 40px;
 	margin-bottom: 5px;
 	color: #fff;
 }
@@ -118,7 +118,6 @@ input[id='img_upload'] {
 	border: 0px;
 }
 
-
 .uploadResult{
 	width:100%;
 	background-color: white;
@@ -150,6 +149,17 @@ input[id='img_upload'] {
 	border: 0px;
 }
 
+
+/* 주소 검색하기 버튼 */
+#addrBtn{
+	color: white;
+	margin-top: 27px;
+	width: 100px; 
+	height: 55px;
+	bottom: 20px;
+	border: solid 1px;
+    background-color: #656f98;
+}
 /*===================홈짐 리스트========================*/
 
 .thumbnail .image {
@@ -160,6 +170,17 @@ input[id='img_upload'] {
 /* 헤더에 가리는 부분 */
 #hg-list-section{
 	margin-top: 100px;
+}
+
+/* 글쓰기 버튼 */
+#writeBtn{
+	width: 150px;
+	height: 50px;
+	bottom: 20px;
+	border: solid 1px;
+	margin-top: 10px;
+	border-radius: 20px;
+    background-color: #656f98;
 }
 
 /*===================홈짐 상세보기========================*/
@@ -185,6 +206,7 @@ input[id='img_upload'] {
 	object-fit: cover;
 }
 
+/* 더보기 버튼 */
 #re_plus {
 	background-color: #9ea9d8;
 	width: 150px;
@@ -196,9 +218,26 @@ input[id='img_upload'] {
 	margin-top: 30px;
 }
 
+/* 사이드 바 고정 */
 .sidebar {
 	position: sticky;
-	top: 30px;
+	top: 120px;
+}
+/* 사이드바 주소 폰트 */
+#text-addr{
+	color: black; 
+	font-size: 20px;
+}
+/* 사이드바 가격 폰트 */
+#text-price{
+	text-align: right;
+	color: black;	
+}
+
+#price {
+	text-align: right; 
+	color: black;
+	font-size: 30px;
 }
 
 .btn-time {
@@ -225,6 +264,12 @@ input[id='img_upload'] {
 
 .icon-tag .fas{
 	font-size: 40px;
+}
+
+/* 본문 글자 색 */
+
+.detail-inner {
+	color: black;
 }
 
 #manipulateBtn{

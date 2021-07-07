@@ -27,29 +27,19 @@
 						</div>
 							<div class="detail-inner">
 								<!-- post meta -->
-								<h2 class="post-title">
-									<p style="font-size: 25px;">${board.HTitle }</p>
-								</h2>
+								<h4> 🥇 홈짐 소개  </h4>
+								<p style="font-size: 20px;">${board.HTitle }</p>
 								<p>${board.HContent }</p>
 								<br>
-								<h5> 이용 가능한 시설들</h5>
-								<br>
+								<h4> 🥈 이용 가능한 시설들</h4>
+								<br><br>
 								
 								<div class="icon-tag row">
-									
+								<!-- 이용 가능한 시설 아이콘 출력 공간 -->	
 								</div>
 								<br><br>
-
-								<!-- <h3>
-									<span></span> 
-									<span></span> 
-									<span><i class="fas fa-tint"></i>정수기</span>
-									<span></span>
-									<span></span>
-								</h3> -->
-								<h5> ${board.nickName}님의 홈짐 위치</h5>
+								<h4> 🥉️ ${board.nickName}님의 홈짐 위치</h4>
 								<br>
-								
 								<!-- 홈짐 위치 나오는 div -->
 								<div id="map" style="width: 100%; height: 450px;"></div>
 								<br>
@@ -102,22 +92,21 @@
 				<aside class="col-lg-4 col-md-12 col-12">
 					<div class="sidebar" id="sidebar">
 						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 50px;">
+						<div class="widget popular-feeds" >
 							<div class="info">
 								<h4 class="date">
 									<i class="lni lni-apartment"></i> ${board.nickName }님의 홈짐
 								</h4>
 								<br>
-								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
+									<div id="text-addr">${board.HAddr}에 위치한 홈짐입니다</div>
 								<br>
 							</div>
-								<h6>1시간당 가격</h6>
+								<h6> </h6>
 								<br>
-								<div id="price" style="text-align: right; color: black;">${board.HPrice } 원</div>
+								<div id="text-price">1회 이용가격</div>
+								<div id="price">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<!-- 집주인일 경우 나오는 수정/삭제버튼 
-								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
 								<c:choose>
 									<c:when test="${board.memberId ne memberId }">
 										<input type="button" id="reserveBtn" value="지금 예약하러 가기"
@@ -131,9 +120,6 @@
 										class="btn">
 									</c:when>
 								</c:choose>
-								<input type="button" id="listBtn" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
-										class="btn">
-								
 								</div>
 						</div>
 						<!--/ End Single Widget -->
@@ -161,8 +147,8 @@
 							</textarea>
 					</div>
 					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name="memberId" 
-							 placeholder="<sec:authentication property="principal.nickname" />" readonly>
+						<label>작성자</label> <input class="form-control" name="${member_nickName}" 
+							 placeholder="${member_nickName }" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>

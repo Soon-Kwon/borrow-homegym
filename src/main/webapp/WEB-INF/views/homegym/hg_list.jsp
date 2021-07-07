@@ -24,9 +24,9 @@
 			<c:when test="${empty list}">
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-8 col-12">
-							<h3>검색 결과가 없습니다. 우리동네 홈짐을 등록해보세요!🏠</h3>
-							<br> <br>
+						<div class="col-lg-8 col-12" style="float: none; margin: 0 auto; text-align:center">
+							<h3>검색 결과가 없습니다.<br> 우리동네 홈짐을 등록해보세요!🏠</h3>
+							<br><br>
 							<form class="d-flex search-form" action="homegymListView.do"
 								method="get">
 								<input class="form-control me-2" type="search" name="keyword"
@@ -37,9 +37,9 @@
 							</form>
 							<br>
 							<div class="write" style="text-align: center;">
-								<button class="btn btn-primary" type="button"
-									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
-									홈짐을 등록해볼까요? 글쓰러 가기!</button>
+								<button class="btn btn-primary" type="button" id="writeBtn"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">
+									홈짐 등록하기</button>
 							</div>
 						</div>
 					</div>
@@ -55,9 +55,9 @@
 								<!--  맵 나오는 곳 -->
 							</div>
 							<div class="write" style="text-align: center;  margin-top: 30px;">
-								<button class="btn btn-primary" type="button"
-									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
-									홈짐도 등록해볼까요? 글쓰러 가기!!</button>
+								<button class="btn btn-primary" type="button" id="writeBtn"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">
+									홈짐 등록하기</button>
 							</div>
 						</div>
 						<!-- End Event Details Content -->
