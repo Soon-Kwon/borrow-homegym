@@ -6,6 +6,9 @@
 	<![CDATA[
 		INSERT INTO TRAINER_BOARD
 		( 
+			MEMBERID,
+			NAME,
+			IMAGE,
 			TBTITLE,  
 			TBCONTENT, 
 			TBPROGRAM, 
@@ -28,6 +31,9 @@
 		)
 		VALUES
 		( 
+			#{memberId},
+			#{name},
+			#{image},
 			#{tbTitle}, 
 			#{tbContent}, 
 			#{tbProgram},
@@ -97,6 +103,7 @@
 	<select id="getTbDetail" resultType="trainer">
 	<![CDATA[
 		SELECT * FROM TRAINER_BOARD WHERE TNO = #{tno} 
+		
 		]]>
 	</select>
 	

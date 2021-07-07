@@ -6,15 +6,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-
 import java.util.List;
-
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,25 +19,26 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.homegym.biz.homegym.Criteria;
-import com.homegym.biz.homegym.HomegymAttachVO;
-import com.homegym.biz.trainerboard.MediaUtils;
+import com.homegym.biz.member.MemberService;
+import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.trainerboard.TrainerAttachVO;
 import com.homegym.biz.trainerboard.TrainerBoardService;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 import com.homegym.biz.trainerboard.TrainerCriteria;
 import com.homegym.biz.trainerboard.TrainerPageDTO;
+import com.homegym.security.CustomUserDetails;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -55,7 +50,11 @@ public class TrainerBoardController {
 
 	@Autowired
 	private TrainerBoardService boardService;
-
+	
+	@Autowired
+	private MemberService memberService;
+	
+	
 	// 글 등록
 	// http://localhost:8090/trainer/tbUpdate.do
 	@GetMapping("/tbWrite")
@@ -76,6 +75,7 @@ public class TrainerBoardController {
 		
 		log.info("게시글 작성");
 		log.info(vo);
+		System.out.println("image >>>>>>>> " + vo.getImage());
 		
 		
 		// 해시태그 저장
@@ -206,10 +206,9 @@ public class TrainerBoardController {
 	// 글상세페이지
 	// http://localhost:8090/trainer/tbDetail.do
 	@GetMapping("/tbDetail")
-	public String getTbDetail(HttpServletRequest request, HttpSession session, TrainerBoardVO vo, Model model) {
+	public String getTbDetail(HttpServletRequest request, HttpSession session, MemberVO m, TrainerBoardVO vo, Model model) {
 
-		System.out.println("상세 페이지 이동");
-
+		System.out.println(m);
 		TrainerBoardVO trainerBoardVO = boardService.getTbDetail(vo.getTno());
 		model.addAttribute("trainerBoard", trainerBoardVO);
 

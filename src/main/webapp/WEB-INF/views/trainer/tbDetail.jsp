@@ -232,14 +232,15 @@ p {
 						<div class="widget popular-feeds"
 							style="position: relative; top: 90px;">
 							<div class="tr_image" style="position: relative; left: 10px;">
-								<img src="/resources/assets/images/gym/re2.jpg" alt="#"
+								<img src="${member_image}" alt="#"
 									style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 50px">
 							</div>
 							<div>
 								<br>
 								<p
 									style="font-size: 23px; font-weight: bold; text-align: center;">
-									<span>${name}</span> 트레이너
+									<span>${trainerBoard.name}</span> 트레이너
+<%-- 									<span>${member.nickname}</span> 트레이너 --%>
 								</p>
 								<ul style="text-align: center; font-size: 16px; margin: 10px;">
 									<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}

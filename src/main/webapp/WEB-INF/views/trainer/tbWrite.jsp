@@ -181,6 +181,9 @@ ul li.tag-item {
 				<div class="col-lg-13 col-md-12 col-12">
 					<div class="form-main">
 						<form class="form" id="submitForm" method="post" action="tbWrite.do">
+						<input type="hidden" name="memberId" value="${member_memberId}">
+						<input type="hidden" name="name" value="${member_name}">
+						<input type="hidden" name="image" value="${member_image}">
 							<div class="row">
 								<h3 class="title">
 									<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
