@@ -389,7 +389,7 @@ public class MemberController {
 	}
 
 	/*예약 상세내용 이동*/
-	@GetMapping("mypage/reservationForm.do")
+	@GetMapping("mypage/reservationForm")
 	public String getMyRequest(@RequestParam("d_id") int dId, HomegymDetailVO vo,HttpServletRequest request, HttpSession session, Model model) {
 		String memberId = request.getParameter("memberId");
 		session.setAttribute("memberId", memberId);
@@ -398,21 +398,24 @@ public class MemberController {
 		model.addAttribute("myRequest", homegymDetailVO);
 		
 		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
+		
 		return "user/reservation_detail";
 	}
 	
 	
 	/* 마이페이지 홈짐 활동내역 이동 */
 	
-	@GetMapping("mypage/myactiv")
-	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+	
+	/*관리할 홈짐 리스트 (수락/거절)*/
+	@GetMapping("mypage/homegymCheck")
+	public String homegymCheck(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
 		String memberId = loginMemberVO.getMemberId();
 
-		/*관리할 홈짐 리스트 (수락/거절)*/
+		
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		model.addAttribute("waitingHomegym", waitingHG);
 		
@@ -422,8 +425,17 @@ public class MemberController {
 		model.addAttribute("wait_total", wait_total);
 		
 		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
-
-		/*빌려준 홈짐 리스트 */
+		
+		return "user/myactiv";
+	}
+	
+	/*빌려준 홈짐 리스트 */
+	@GetMapping("mypage/lendHomegym")
+	public String lendHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		String memberId = loginMemberVO.getMemberId();
+		
 		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
 		model.addAttribute("lendHomegym", lendHG);
 
@@ -433,8 +445,19 @@ public class MemberController {
 		model.addAttribute("ld_pageMaker", ld_pageMaker);
 
 		System.out.println("ld_pageMaker::::::" + ld_pageMaker);
+		
+		return "user/myactiv";
 
-		/*빌린 홈짐 리스트 */
+	}
+	
+	/*빌린 홈짐 리스트 */
+	@GetMapping("mypage/rentHomegym")
+	public String rentHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
+		String memberId = loginMemberVO.getMemberId();
+		
+		
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
 		model.addAttribute("rentHomegym", rentHG);
 		
@@ -442,17 +465,7 @@ public class MemberController {
 		PageMakerDTO rt_pageMaker = new PageMakerDTO(cri, rt_total);
 		model.addAttribute("rt_total", rt_total);
 		model.addAttribute("rt_pageMaker", rt_pageMaker);
-
-
-		/* 진행중인 홈짐 */
-		/*
-		 * List<HomegymVO> progressHomegym =
-		 * memberService.getMyProgressHomegym(memberId, cri);
-		 * model.addAttribute("progressHomegym", progressHomegym);
-		 */
-		// 완료된 홈짐
-		// List<HomegymVO> finishedHomegym =
-		// memberService.getMyFinishedHomegym(memberId);
+		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 
 		return "user/myactiv";
 	}

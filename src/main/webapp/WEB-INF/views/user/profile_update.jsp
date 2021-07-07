@@ -92,19 +92,25 @@ position: absolute;
 }
 
 #zip_codeBtn{
-	background-color: #5f7ab9;
+	background-color: #7c97d8;
     color: white;
     }
     
-#updateBtn{
+#member_updateBtn{
     height: 50px;
     width: 100px;
     margin-right: 10px;
+    background-color: #3f4f9a;
+    border: none;
+    font-weight: bold;
 }
 
-#deleteBtn{
+#member_deleteBtn{
 	height: 50px;
     width: 100px;
+    background-color: #3f4f9a;
+    border: none;
+    font-weight: bold;
 }
 
 .form-group form-control {
@@ -138,7 +144,7 @@ $(document).ready(function () {
 });
 /*  $("#imgFile").change(function(){
 	 readURL(this);
- });  */
+ }); 
  
  //
  // 업로드 버튼 활성화
@@ -450,10 +456,10 @@ function execPostCode() {
                                       
                             		<div class="single-feature" style="padding: 20px">
                             			<c:if test="${empty member.imagePath}">
-				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px; width: 140px; height: 140px"></div>
+				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px; width: 140px; height: 140px; border-radius:100px;"></div>
 				                    	</c:if>
 				                    	<c:if test="${not empty member.imagePath}">
-				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 140px;"></div>
+				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 140px; border-radius:100px;"></div>
 				                    	</c:if>
                             		
                             		
@@ -595,8 +601,8 @@ function execPostCode() {
                                     
                                         <div class="form-group">
                                             <div class="submit_btn" style="margin-left: 160px; margin-top: 30px;">
-                                                <input type="button" id="updateBtn" value="수정하기" onclick="updateInfo();" class="btn btn-block btn-primary" >
-                                                <input type="button" id="deleteBtn" value="탈퇴하기" onclick="deleteInfo();" class="btn btn-block btn-primary" > 
+                                                <input type="button" id="member_updateBtn" value="수정하기" onclick="updateInfo();" class="btn btn-block btn-primary" >
+                                                <input type="button" id="member_deleteBtn" value="탈퇴하기" onclick="deleteInfo();" class="btn btn-block btn-primary" > 
                                             </div>
                                         </div>
                                         </form>

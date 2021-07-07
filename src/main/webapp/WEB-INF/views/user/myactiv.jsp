@@ -212,17 +212,17 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
                                 data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
-                                aria-selected="true">홈짐 관리</button>
+                                aria-selected="true" onclick="fnGetBtnId(this)">홈짐 관리</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
                                 data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum"
-                                aria-selected="false">빌려준 홈짐</button>
+                                aria-selected="false" onclick="fnGetBtnId(this)">빌려준 홈짐</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
                                 data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
-                                aria-selected="false">빌린 홈짐</button>
+                                aria-selected="false" onclick="fnGetBtnId(this)">빌린 홈짐</button>
                         </li>
                         <!-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
@@ -307,13 +307,14 @@
                                     </div>
                                     </div>
                                     
-                                     <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+                                     <form id="actionForm" action="user/mypage/homegymCheck.do" method="get">
                                      	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${wait_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${wait_pageMaker.cri.amount}">
+                                    	<input type="hidden" name="selectedBtnId" id="selectedBtnId" value="${selectedBtnId }"/>
                                     </form> 
                                                <!-- Pagination -->
-                                                <div class="pagination center">
+                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
 	                                                   <c:if test ="${wait_pageMaker.prev}">
 	                                                        <li class="pageInfo_btn previous"><a href="${wait_pageMaker.startPage-1}">Prev</a></li>
@@ -325,7 +326,7 @@
 	                                                        <li class="paginate_button next"><a href="${wait_pageMaker.endPage+1}">Next</a></li>
 	                                                    </c:if>
 	                                                    </ul>
-                                                </div>  
+                                                </div>
                                                 <!-- End Pagination -->     
                                             </div>
                                             </div>
@@ -338,6 +339,7 @@
                        <!-- 수락대기중 끝 & 빌려준 홈짐 시작--> 
                         
                         
+                
                         
                         <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                             <div class="course-curriculum">
@@ -394,13 +396,14 @@
                                           </c:otherwise>
                                     </c:choose>
                                                                 
-                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-                                      	<input type="hidden" name="memberId" value="${member_memberId}"> 
+                                      <form id="actionForm" action="user/mypage/lendHomegym.do" method="get">
+                                      	<input type="hidden" name="memberId" value="${member_memberId}" id="ld_memberId"> 
                                       	<input type="hidden" name="tabindex" value="2">
-                                    	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
-                                    	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
-                                    </form> 
-                                               <!-- Pagination -->
+                                    	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}" id="ld_pageNum">
+                                    	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}" id="ld_pageNum">
+                                    	<input type="hidden" name="selectedBtnId" id="selectedBtnId" value="${selectedBtnId }"/>
+                                    </form>  
+                                                <!-- Pagination -->
                                                 <div class="pagination center">
                                                     <ul class="pagination-list">
 	                                                    <c:if test ="${ld_pageMaker.prev}">
@@ -424,12 +427,11 @@
                                 <!-- End Blog Singel Area -->
                             </div>
                         </div>
-                       
 
                         <!-- 빌려준 홈짐 끝 & 빌린 홈짐 시작 -->
                         
                         
-                        <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
+                         <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                             <div class="course-instructor">
      <!-- Start Blog Singel Area -->
                                 <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
@@ -508,10 +510,11 @@
 	                                                        </div>
 	      
 	                                           </c:forEach>
-	                                           		       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+	                                           		       <form id="actionForm" action="user/mypage/rentHomegym.do" method="get">
 						                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
 						                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
 						                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
+						                                    	<input type="hidden" name="selectedBtnId" id="selectedBtnId" value="${selectedBtnId }"/>
                                     					  </form>
 			                                               <!-- Pagination -->
 			                                                <div class="pagination center">
@@ -538,7 +541,7 @@
                                 <!-- End Blog Singel Area -->
                             </div>
                             
-                        </div>
+                        </div> 
                      
                      <!-- 진행중인 홈짐 끝 & 완료된 홈짐 시작 -->   
                         
@@ -683,17 +686,36 @@
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
     
     <script type="text/javascript">
+    	var selectedBtnId = 'overview-tab';
     	$(document).ready(function(){
+    		$('#'+$('#selectedBtnId').val()).trigger('click');
+    		
     		var actionForm= $("#actionForm");
-
+    		
+    		var memberId= $("#ld_memberId").val;
+    		var pageNum = $("#ld_pageNum").val;
+    		
 			/* 페이징 */    		
-    	 	$(".pagination-list a").on("click",function(e){
+    	 	/* $(".pagination-list a").on("click",function(e){
     			e.preventDefault();
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/myactiv.do");
+    			
+    			$.ajax({
+    				url: "/user/mypage/lendHomegymList",
+    				dataTyp: "JSON",
+    				type:"POST",
+    				data: {
+							memberId : memberId,
+							pageNum : pageNum
+    					}
+    				contentType: "application/json",
+    			})
+    			
     			actionForm.submit();
-    		}); 
+    		});  */
+			
 			/* 결제 api */
     			$(document).on("click", "#acceptBtn > button ", function() {
 					
@@ -726,7 +748,7 @@
 					}, function (rsp) {
 						console.log(rsp);
 						if (rsp.success) {
-							var msg = '홈짐 결제가 완료되었습니다.☺;
+							var msg = '홈짐 결제가 완료되었습니다.☺';
 							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
 							/* msg += '고유ID : ' + rsp.imp_uid;
 							msg += '상점 거래ID : ' + rsp.merchant_uid;
@@ -739,8 +761,42 @@
 							alert(msg);
 						});
 					}); 
-    		});
+    	});
+			
+			/* 	$("#overview-tab").on("click", function(e){
+	    			e.preventDefault();
 
+	    			window.location.href="/user/mypage/myactiv.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab"
+				}); */
+				
+
+	function fnGetBtnId(obj) {
+		selectedBtnId = obj.id;
+		$('#selectedBtnId').val(selectedBtnId);
+		
+		var url = '';
+		
+		if(selectedBtnId == 'overview-tab') {
+			url = 'user/mypage/homegymCheck.do';
+		} else if(selectedBtnId == 'curriculum-tab') {
+			url = 'user/mypage/lendHomegym.do';
+		} else if(selectedBtnId == 'instructor-tab') {
+			url = 'user/mypage/rentHomegym.do';
+		}
+		
+		$.ajax({
+			type: 'GET',
+			data: {'selectdBtnId' : selectedBtnId},
+			dataType: 'text',
+			url: url,
+			success: function() {
+				
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
 
     </script>
 </body>

@@ -338,6 +338,7 @@
     			actionForm.attr("action","/user/mypage/mywrite.do");
     			actionForm.submit();
     		}); 
+     });
     		
     	/*  	$(document).on("#addBtn", function() {
     		$("#addBtn").click(function(){

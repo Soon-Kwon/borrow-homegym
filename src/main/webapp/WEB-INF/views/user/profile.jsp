@@ -138,8 +138,7 @@
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="homegymCheck.do">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
@@ -178,10 +177,10 @@
                         <div class="single-feature">
                             
                             <c:if test="${empty member.imagePath}">
-				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
+				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="border-radius:100px;"></div>
 				             </c:if>
 				            <c:if test="${not empty member.imagePath}">
-				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
+				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px; border-radius:100px;"></div>
 				            </c:if>
                             <h4 style="margin-left:30px;">${member.name}님</h4>
                             <span id="auth">🏋️‍♂️${member.nickname}</span><br> 
