@@ -31,7 +31,7 @@
 <!-- ======================모달=============================== -->
 
 <style>
-p {
+/* p {
 	font-size: 17px;
 	line-height: 1.6;
 	letter-spacing: -0.6px;
@@ -71,7 +71,7 @@ p {
 	position: relative;
 	left: 300px;
 	top: 20px;
-}
+} */
 
 
 /* caroucsel  */
@@ -135,7 +135,7 @@ p {
 					<div class="single-inner"></div>
 					<br>
 
-					<!-- test start -->
+				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
 					<div style="width: 750px; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
@@ -204,8 +204,7 @@ p {
 					</div>
 					<!-- test end -->
 
-
-			
+	
 				<div class="post-details" style="margin-top:30px;">
 							<div class="detail-inner">
 								<h2 class="post-title">
@@ -232,7 +231,7 @@ p {
 						<div class="widget popular-feeds"
 							style="position: relative; top: 90px;">
 							<div class="tr_image" style="position: relative; left: 10px;">
-								<img src="${member_image}" alt="#"
+								<img src="${trainerBoard.image}" alt="#"
 									style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 50px">
 							</div>
 							<div>

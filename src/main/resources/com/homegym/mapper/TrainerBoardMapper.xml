@@ -33,7 +33,11 @@
 		( 
 			#{memberId},
 			#{name},
-			#{image},
+			(
+				SELECT IMAGE
+			 	   FROM MEMBER
+			 	WHERE memberId = #{memberId}
+			),
 			#{tbTitle}, 
 			#{tbContent}, 
 			#{tbProgram},
