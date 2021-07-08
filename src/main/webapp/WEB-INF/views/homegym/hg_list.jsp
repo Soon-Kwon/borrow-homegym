@@ -152,17 +152,17 @@
     <!-- Start Footer Area -->
     <footer class="footer style2">
         <!-- Start Footer Bottom -->
-        <div class="footer-bottom">
+        <div class="footer-bottom" >
             <div class="container">
                 <div class="inner">
                     <div class="row">
-                        <div class="col-md-6" style="text-align: start;">
+                        <div class="col-md-6" style="text-align: start;  ">
                             <div class="logo">
                                 <br><br>
                                 <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
-                        <div class="col-md-6" style="text-align: end;">
+                        <div class="col-md-6" style="text-align: end; ">
                             <p>
                                 <br>
                                 <a href="faq.html"> 자주묻는 질문</a>

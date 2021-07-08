@@ -31,7 +31,12 @@ function save() {
 	}
 
 	var formObj = $("#submitForm");
-
+	
+	/*// textarea 개행처리
+	var str = $("textarea[name='tbContent']").val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+	$("textarea[name='tbContent']").val(str);
+	*/
 	formObj.append(str);
 
 	var data = formObj.serialize();
@@ -67,7 +72,7 @@ function modify() {
 	var str = "";
 
 	var formObj = $("#submitForm2");
-	
+
 	console.log($('#tno').val());
 
 	$(".uploadResult ul li")

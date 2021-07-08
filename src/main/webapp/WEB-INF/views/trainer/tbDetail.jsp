@@ -11,27 +11,29 @@
 
 <head>
 
+
+
 <!-- ========================= CSS here ========================= -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- 캐러셀  -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <!-- ======================모달=============================== -->
 
 <style>
-/* p {
+
+
+ p {
 	font-size: 17px;
 	line-height: 1.6;
 	letter-spacing: -0.6px;
@@ -71,29 +73,34 @@
 	position: relative;
 	left: 300px;
 	top: 20px;
-} */
+} 
 
 
 /* caroucsel  */
 
-.carousel-item,
+ .carousel-item,
 .carousel-inner,
 .carousel-inner img {
-  height: 100%;
-  width: 100%;
+  height:100%;
+  width: 750px;
+ 
 }
 
 .carousel-item {
   text-align: center;
 }
 .carousel {
-  height: 566px;
+  height: 483px;
 }
 
 .carousel-inner img {
   width: 100%;
   height: auto;
 }
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
+
 
 </style>
 
@@ -137,18 +144,17 @@
 
 				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
-					<div style="width: 750px; ">
+					<div style="width: 100%; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
 						<!-- carousel는 특이하게 id를 설정해야 한다.-->
-						<div id="carousel-example-generic" class="carousel slide">
+						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
 							<!-- carousel의 지시자 -->
 							<!-- 지시자라고는 하는데 ol태그의 class에 carousel-indicators를 넣는다. -->
 							<ol class="carousel-indicators">
 								<!-- li는 이미지 개수만큼 추가하고 data-target은 carousel id를 가르킨다. -->
 								<!-- data-slide-to는 순서대로 0부터 올라가고 0은 active를 설정한다. -->
 								<!-- 딱히 이 부분은 옵션별로 설정하게 없다. -->
-								<li data-target="#carousel-example-generic" data-slide-to="0"
-									class="active"></li>
+								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 								<c:if test="${not empty trainerBoard.tbPhoto2}">
 									<li data-target="#carousel-example-generic" data-slide-to="1"></li>
 								</c:if>
@@ -158,28 +164,25 @@
 							</ol>
 							<!-- 실제 이미지 아이템 -->
 							<!-- class는 carousel-inner로 설정하고 role은 listbox에서 설정한다. -->
-							<div class="carousel-inner" role="listbox">
+							<div class="carousel-inner" role="listbox" style="height:483px;">
 								<!-- 이미지의 개수만큼 item을 만든다. 중요한 포인트는 carousel-indicators의 li 태그 개수와 item의 개수는 일치해야 한다. -->
 								<div class="item active">
 									<!-- 이미지 설정- -->
-									<img src="/resources/imgUpload/${trainerBoard.tbPhoto1}"
-										style="width: 100%">
+									<img src="/resources/imgUpload/${trainerBoard.tbPhoto1}" style="width: 100%; height:483px; text-align:center;">
 									<!-- 캡션 설정 (생략 가능) -->
 									<!-- 글자 색은 검은색 -->
 									<div class="carousel-caption" style="color: black;"></div>
 								</div>
 								<c:if test="${not empty trainerBoard.tbPhoto2}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto2}"
-											style="width: 100%">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto2}" style="max-width: 100%; height:483px; text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
 								</c:if>
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}"
-											style="width: 100%">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;  text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
@@ -188,8 +191,7 @@
 							</div>
 							<!-- 왼쪽 화살표 버튼 -->
 							<!-- href는 carousel의 id를 가르킨다. -->
-							<a class="left carousel-control" href="#carousel-example-generic"
-								role="button" data-slide="prev"> 
+							<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
 								<!-- 왼쪽 화살표 --> 
 								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 							</a>
@@ -210,7 +212,7 @@
 								<h2 class="post-title">
 									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
 								</h2>
-								<p style="font-size: 20px; line-height: 30px;">
+								<p style="font-size: 20px; line-height: 30px; margin-bottom:15px;">
 									${trainerBoard.tbContent}</p>
 								<hr>
 								<br>
@@ -228,18 +230,15 @@
 
 						<!--/ End Single Widget -->
 						<!-- Single Widget -->
-						<div class="widget popular-feeds"
-							style="position: relative; top: 90px;">
+						<div class="widget popular-feeds" style="position: relative; top: 90px; margin-bottom:0px;
+						">
 							<div class="tr_image" style="position: relative; left: 10px;">
-								<img src="${trainerBoard.image}" alt="#"
-									style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 50px">
+								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
 							</div>
 							<div>
 								<br>
-								<p
-									style="font-size: 23px; font-weight: bold; text-align: center;">
+								<p style="font-size: 23px; font-weight: bold; text-align: center; color:#323232">
 									<span>${trainerBoard.name}</span> 트레이너
-<%-- 									<span>${member.nickname}</span> 트레이너 --%>
 								</p>
 								<ul style="text-align: center; font-size: 16px; margin: 10px;">
 									<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}
@@ -248,28 +247,33 @@
 									<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
 										<span>~</span> ${trainerBoard.sunTimef}</li>
 								</ul>
-								<div class="button" data-wow-delay="1s" style="position: relative; left: 55px; ">
-									<button type="button" class="btn" data-toggle="modal"
-										data-target="#myModal" style="background-color: #5c6dbd; text-align:cent; margin-left: 30px; border-radius:5px;">
-										1:1 채팅</button>
-
-								</div>
-							</div>
-							<div style="margin-top: 5px; text-align: center;">
-							<div class="button">
-                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:10px; border-radius:5px;"> 수정 </a>
-                                &nbsp;&nbsp;&nbsp;
-                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:10px;">삭제</a>
-                            </div>
-
-							</div>
+								
+									<c:choose>
+										<c:when test="${trainerBoard.memberId ne memberId }">
+											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
+												<button type="button" class="btn" data-toggle="modal" data-target="#myModal" style="background-color: #5c6dbd; text-align:center; border-radius:5px;">
+													1:1 채팅</button>
+											</div>
+										 </c:when>
+							
+										<c:when test="${trainerBoard.memberId eq memberId }">
+							
+											<div class="button" style="text-align:center;">
+				                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;"> 수정 </a>
+				                                &nbsp;&nbsp;&nbsp;
+				                          
+				                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
+											</div>
+									</c:when>
+							</c:choose>
+							</div>	
 						</div>
 						<!--/ End Single Widget -->
 
 						<!--/ End Single Widget -->
 						<!-- 해시태그 -->
 						<div class="widget popular-tag-widget"
-							style="position: relative; top: 70px; margin:">
+							style="position: relative;  margin-top:100px; ">
 							<div class="tags"
 								style="font-size: 17px; font-weight: bold; color: black; border-radius: 20px;">
 								<p>활동 지역</p>
@@ -348,8 +352,8 @@
 					<div class="row">
 						<div class="col-md-6" style="text-align: start;">
 							<div class="logo">
-								<br> <br> <a href="index.html"><img
-									src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
+								<br> <br> <a href="index.html">
+								<img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
 							</div>
 						</div>
 						<div class="col-md-6" style="text-align: end;">
@@ -374,9 +378,7 @@
 	</a>
 	<!--========================= 캐러셀 ================================ -->
 	<!-- Bootstrap cdn 설정 -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script>

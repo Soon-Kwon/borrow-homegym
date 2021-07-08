@@ -108,15 +108,16 @@
 					<div class="col-lg-4 col-md-6 col-12">
 						<!-- Start Single Course -->
 						<div class="single-course wow fadeInUp" data-wow-delay=".2s">
-							<div class="course-image" style="width: 416px; height: 328px;">
-								<a href="tbDetail.do?tno=${trBoard.tno}"
-									style="width: 100%; height: 80%;"> <img
-									src="/resources/imgUpload/${trBoard.tbImg}"> <%-- <img src="/trainer/display/main.do?fileName=${trBoard.tbImg}" > --%>
+							<div class="course-image" style="width: 100%; ">
+								<a href="tbDetail.do?tno=${trBoard.tno}" style="width: 100%; "> 
+									<img src="/resources/imgUpload/${trBoard.tbImg}" style="height:400px;">
+									<%-- <img src="/trainer/display/main.do?fileName=${trBoard.tbImg}" > --%>
 								</a>
 
 							</div>
 							<div class="content" style="height: 230px;">
-								<h3>${trBoard.tbTitle}</h3>
+								<h4>${trBoard.tbTitle}</h4>
+								<br>
 								<p>${trBoard.tbContent}</p>
 							</div>
 						</div>

@@ -23,6 +23,7 @@ p {
 	color: #6c757d;
 	background-color: #ededf2;
 	border-color: #ededf2;
+	border-radius:10px;
 }
 
 .btn-outline-secondary {
@@ -176,116 +177,106 @@ ul li.tag-item {
 	</div>
 	<!-- Start Features Area -->
 	<section id="contact-us" class="contact-us section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-13 col-md-12 col-12">
+		 <div class="container"> 
+			<!-- <div class="row"> -->
+				<div class="col-lg-8 col-12" style="float: none; margin: 0 auto;" >
 					<div class="form-main">
 						<form class="form" id="submitForm" method="post" action="tbWrite.do">
 						<input type="hidden" name="memberId" value="${member_memberId}">
 						<input type="hidden" name="name" value="${member_name}">
 						<input type="hidden" name="image" value="${member_image}">
-							<div class="row">
-								<h3 class="title">
+							<!-- <div class="row"> -->
+								<h2 class="title" style="margin-left:50px;">
 									<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
-								</h3>
-								<div class="col-lg-6 col-12">
+								</h2>
+								<div class="col-10" style="margin-left:50px; margin-top:20px;">
 									<div class="form-group">
-										<label style="font-size: 20px;">제목</label> 
+										<label style="font-size: 18px; color:#323232"><b>제목</b></label>
 										<input name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 "
-											required="required">
+											required="required" style="border-radius:3px;">
 									</div>
 								</div>
 
-								<div class="col-12">
-									<div class="form-group message">
-										<label style="font-size: 20px;">트레이너 소개</label>
-										<textarea name="tbContent"
-											placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. "></textarea>
+								<div class="col-11" >
+									<div class="form-group message" style="margin-left:50px;">
+									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
+										<textarea wrap="hard" name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. " style="border-radius:3px;"></textarea>
 									</div>
 								</div>
 
-								<div class="col-12">
-									<div class="form-group message">
-										<label style="font-size: 20px;">프로그램 소개</label>
-										<textarea name="tbProgram" placeholder="프로그램에 대해 소개해주세요."></textarea>
+								<div class="col-11">
+									<div class="form-group message" style="margin-left:50px;">
+									<label style="font-size: 18px; color:#323232"><b>프로그램 소개</b></label>
+										<textarea  wrap="hard" name="tbProgram" placeholder="프로그램에 대해 소개해주세요." style="border-radius:3px;"></textarea>
 									</div>
 								</div>
 								<!-- 스케줄 (시간)-->
 								<div class="time">
-									<div class="form-group">
-										<label style="font-size: 20px;">트레이너 스케줄</label> <strong>평일
-											(월~토)</strong>
+									<div class="form-group" style="margin-left:50px;" >
+										<label style="font-size: 18px; color:#323232"><b>트레이너 스케줄</b></label>
+										 <strong>평일 (월~토)</strong>
 										<div>
-											<input type="time" style="width: 300px;" id="time1"
-												name="dayTimes"> <strong> ~ </strong> <input
-												type="time" style="width: 300px;" id="time1" name="dayTimef">
+											<input type="time" style="width: 44%;" id="time1" name="dayTimes" style="border-radius:3px;"> 
+											<strong> ~ </strong> 
+											<input type="time" style="width: 44%;" id="time1" name="dayTimef" style="border-radius:3px;">
 										</div>
 									</div>
 								</div>
 								<div class="time">
-									<div class="form-group">
+									<div class="form-group" style="margin-left:50px;">
 										<strong>일요일</strong>
 										<div>
-											<input type="time" style="width: 300px;" name="sunTimes">
-											<strong> ~ </strong> <input type="time" style="width: 300px;"
-												name="sunTimef">
+											<input type="time" style="width: 44%;" name="sunTimes" style="border-radius:3px;">
+											<strong> ~ </strong> 
+											<input type="time" style="width: 44%;" name="sunTimef" style="border-radius:3px;">
 										</div>
 									</div>
 								</div>
-
-
+								
 								<!--활동 지역 해시태그 -->
-								<div class="tr_hashTag_area">
+								<div class="tr_hashTag_area" style="margin-left:50px; margin-top:15px;">
+									<label style="font-size: 18px; color:#323232"><b>활동지역</b></label>
 									<p>
-										<strong>활동지역</strong>
-									</p>
-									<p>
-										📢입력 후 <strong style="color: darkblue">엔터 또는 스페이스바</strong>로
+										📢 입력 후 <strong style="color: darkblue">엔터 또는 스페이스바</strong>로
 										등록해주세요.
 									</p>
 									<div class="form-group">
 										<input type="hidden" value="" name="tag" id="rdTag" />
 									</div>
-									
-									<ul id="tag-list"></ul>
-									<br>
-									
+									<ul id="tag-list"></ul>									
 									<div class="form-group">
 										<input type="text" id="tag" size="7" placeholder="Ex)종로구"
-											style="width: 300px;" />
+											style="width: 300px; margin-top: 5px; border-radius:3px;" />
 									</div>
 								</div>
 
 								<!--활동 범위 체크박스 -->
 								<div class="tr_options">
-									<div class="btn-group-toggle" data-toggle="buttons">
-										<p>
-											<strong>활동 범위를 체크해주세요.</strong>
-										</p>
-										<label class="btn btn-outline-secondary"
-											style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-											<input type="checkbox" id="check" name="tbActivChk1"
-											value="홈짐방문">
-											<p>홈짐방문</p>
-										</label> <label class="btn btn-outline-secondary"
-											style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-											<input type="checkbox" id="check" name="tbActivChk2"
-											value="헬스장">
-											<p>헬스장</p>
-										</label> <label class="btn btn-outline-secondary"
-											style="margin: 5px 10px 5px 0px; padding: 0px 15px 0px 15px;">
-											<input type="checkbox" id="check" name="tbActivChk3"
-											value="홈짐보유">
-											<p>홈짐보유</p>
+									<div class="btn-group-toggle" data-toggle="buttons" style="margin-left:50px;">
+										<label style="font-size: 18px; color:#323232"><b>활동 범위를 체크해주세요.</b></label>
+										<br>
+										
+										<label class="btn btn-outline-secondary" style="margin-top:10px;">
+											<input type="checkbox" id="check" name="tbActivChk1" value="홈짐방문" >
+											<p style="width:69px;">홈짐 방문</p>
+										</label> 
+										<label class="btn btn-outline-secondary" style="margin-top:10px;">
+											<input type="checkbox" id="check" name="tbActivChk2" value="헬스장" >
+											<p style="width:69px;">헬스장</p>
+										</label> 
+										<label class="btn btn-outline-secondary" style="margin-top:10px;">
+											<input type="checkbox" id="check" name="tbActivChk3" value="홈짐보유" >
+											<p style="width:69px;">홈짐보유</p>
 										</label>
-
+										
 									</div>
 								</div>
 
 								<!-- 사진 업로드 -->
-								<div class="col-lg-6 col-12">
+								<div class="col-lg-11" style="margin-left:50px;">
 									<div class="form-group">
-										<br> <label style="font-size: 15px;">대표사진 등록</label>
+									<br><br>
+										<label style="font-size: 18px; color:#323232"><b>대표 사진🏋️‍♂‍</b></label>
 									</div>
 									<div>
 										<input type="file" name="tbImg"
@@ -293,8 +284,7 @@ ul li.tag-item {
 									</div>
 
 									<div class="form-group">
-										<label style="font-size: 15px; margin-top: 5px;">자기소개
-											사진 </label>
+										<label style="font-size: 18px; color:#323232"><b>자기소개 사진🏋️‍♂‍</b></label>
 									</div>
 									<div class="uploadDiv">
 										<input type='file' name='uploadFile' multiple>
@@ -309,16 +299,16 @@ ul li.tag-item {
 							
 
 								<div class="col-12">
-									<div class="form-group button" style="text-align: center;">
+									<div class="form-group button" style="text-align: center; margin-bottom:0px; margin-top:40px;">
 										<button type="button" onclick="save();" class="btn" style="background-color: #3428A5; border-radius:10px; width: 90px;">등록</button>
 									</div>
 								</div>
-							</div>
+							<!-- </div> --> <!-- ROW -->
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</form>
 					</div>
-				</div>
-			</div>
+				<!-- </div> -->  <!-- ROW -->
+			 </div>
 		</div>
 	</section>
 	<!-- /End Features Area -->
@@ -358,12 +348,11 @@ ul li.tag-item {
 		class="lni lni-chevron-up"></i>
 	</a>
 	
-	<script src="https://code.jquery.com/jquery-1.12.4.js"
-	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-	crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 	<script>
 	$(document).ready(function() {
-
+	
+		//해시태그
 		var tag = {};
 		var counter = 0;
 	
