@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -157,8 +156,15 @@
 					<!--/ End Pagination -->
 				</div>
 				<div class="button" style="margin-top: 30px; text-align: center">
-					<a href="tbWrite.do" class="btn" style="border-radius:5px;">글쓰기 </a>
+					<a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
 				</div>
+				<!-- 로그인  정보가 있을 때 글쓰기 작성할 수 있게 막는 것  -->
+<%-- 				<c:if test="${member.memberId eq null}">
+				<div class="button" style="margin-top: 30px; text-align: center">
+					<a href="tbWrite.do" class="btn" style="border-radius:5px;" onclick="logCheck();">글쓰기 </a>
+				</div>
+				</c:if> --%>
+			
 			</div>
 	</section>
 	<!-- End Events Area-->
@@ -179,9 +185,10 @@
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
-								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
-								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
+								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 
+								서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> 
+								(주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345 
+								<br> © 2021. All Rights Reserved.
 							</p>
 
 						</div>
@@ -194,8 +201,8 @@
 
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i
-		class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> 
+	<i class="lni lni-chevron-up"></i>
 	</a>
 
 	<!-- ========================= JS here ========================= -->
@@ -205,6 +212,13 @@
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+<!-- 	<script type="text/javascript">
+	$(document).on("click", function(){
+		alert("로그인이 필요합니다.");
+		location.href="/user/loginpage.do"
+	});
+	
+	</script> -->
 </body>
 
 </html>

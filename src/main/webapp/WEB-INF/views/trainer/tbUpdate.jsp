@@ -550,14 +550,14 @@ ul li.tag-item {
 							<div class="col-11">
 								<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
-									<textarea wrap="hard" name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요."  style="border-radius:3px;"><pre>${trainerBoard.tbContent}</pre></textarea>
+									<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요."  style="border-radius:3px;">${trainerBoard.tbContent}</textarea>
 								</div>
 							</div>
 
 							<div class="col-11">
 								<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>프로그램 소개</b></label>
-									<textarea wrap="hard" name="tbProgram" placeholder="프로그램에 대해 소개해주세요." style="border-radius:3px;"><pre>${trainerBoard.tbProgram}</pre></textarea>
+									<textarea name="tbProgram" placeholder="프로그램에 대해 소개해주세요." style="border-radius:3px;">${trainerBoard.tbProgram}</textarea>
 								</div>
 							</div>
 							<!-- 스케줄 (시간)-->

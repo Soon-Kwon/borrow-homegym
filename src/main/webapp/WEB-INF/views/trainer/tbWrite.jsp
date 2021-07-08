@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
@@ -200,14 +199,14 @@ ul li.tag-item {
 								<div class="col-11" >
 									<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
-										<textarea wrap="hard" name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. " style="border-radius:3px;"></textarea>
+										<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. " style="border-radius:3px;"></textarea>
 									</div>
 								</div>
 
 								<div class="col-11">
 									<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>프로그램 소개</b></label>
-										<textarea  wrap="hard" name="tbProgram" placeholder="프로그램에 대해 소개해주세요." style="border-radius:3px;"></textarea>
+										<textarea name="tbProgram" placeholder="프로그램에 대해 소개해주세요." style="border-radius:3px;"></textarea>
 									</div>
 								</div>
 								<!-- 스케줄 (시간)-->

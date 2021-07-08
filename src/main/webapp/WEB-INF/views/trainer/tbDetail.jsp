@@ -89,9 +89,6 @@
 .carousel-item {
   text-align: center;
 }
-.carousel {
-  height: 483px;
-}
 
 .carousel-inner img {
   width: 100%;
@@ -212,7 +209,7 @@
 								<h2 class="post-title">
 									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
 								</h2>
-								<p style="font-size: 20px; line-height: 30px; margin-bottom:15px;">
+								<p style="font-size: 20px; line-height: 30px;">
 									${trainerBoard.tbContent}</p>
 								<hr>
 								<br>

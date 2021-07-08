@@ -32,11 +32,14 @@ function save() {
 
 	var formObj = $("#submitForm");
 	
-	/*// textarea 개행처리
+	// textarea 개행처리
 	var str = $("textarea[name='tbContent']").val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 	$("textarea[name='tbContent']").val(str);
-	*/
+	var str = $("textarea[name='tbProgram']").val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+	$("textarea[name='tbProgram']").val(str);
+	
 	formObj.append(str);
 
 	var data = formObj.serialize();
