@@ -123,6 +123,8 @@ ul li.tag-item {
 	flex-flow: row;
 	justify-content: center;
 	align-items: center;
+	width:300px;
+	
 }
 
 .uploadResult ul li {
@@ -157,6 +159,7 @@ ul li.tag-item {
 	flex-flow: row;
 	justify-content: center;
 	align-items: center;
+	width:300px;
 }
 
 .uploadShow ul li {

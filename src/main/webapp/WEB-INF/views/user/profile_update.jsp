@@ -142,7 +142,7 @@ $(document).ready(function () {
     }
     
 });
-/*  $("#imgFile").change(function(){
+  $("#imgFile").change(function(){
 	 readURL(this);
  }); 
  
