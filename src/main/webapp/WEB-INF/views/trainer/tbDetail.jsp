@@ -90,12 +90,15 @@
   text-align: center;
 }
 .carousel {
-  height: 545px;
+  height: 483px;
 }
 
 .carousel-inner img {
   width: 100%;
   height: auto;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none
 }
 
 
@@ -144,7 +147,7 @@
 					<div style="width: 100%; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
 						<!-- carousel는 특이하게 id를 설정해야 한다.-->
-						<div id="carousel-example-generic" class="carousel slide">
+						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
 							<!-- carousel의 지시자 -->
 							<!-- 지시자라고는 하는데 ol태그의 class에 carousel-indicators를 넣는다. -->
 							<ol class="carousel-indicators">
@@ -161,25 +164,25 @@
 							</ol>
 							<!-- 실제 이미지 아이템 -->
 							<!-- class는 carousel-inner로 설정하고 role은 listbox에서 설정한다. -->
-							<div class="carousel-inner" role="listbox">
+							<div class="carousel-inner" role="listbox" style="height:483px;">
 								<!-- 이미지의 개수만큼 item을 만든다. 중요한 포인트는 carousel-indicators의 li 태그 개수와 item의 개수는 일치해야 한다. -->
 								<div class="item active">
 									<!-- 이미지 설정- -->
-									<img src="/resources/imgUpload/${trainerBoard.tbPhoto1}" style="width: 100%; height:545px; text-align:center;">
+									<img src="/resources/imgUpload/${trainerBoard.tbPhoto1}" style="width: 100%; height:483px; text-align:center;">
 									<!-- 캡션 설정 (생략 가능) -->
 									<!-- 글자 색은 검은색 -->
 									<div class="carousel-caption" style="color: black;"></div>
 								</div>
 								<c:if test="${not empty trainerBoard.tbPhoto2}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto2}" style="max-width: 100%; height:545px; text-align:center;">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto2}" style="max-width: 100%; height:483px; text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
 								</c:if>
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:545px;  text-align:center;">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;  text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
@@ -188,8 +191,7 @@
 							</div>
 							<!-- 왼쪽 화살표 버튼 -->
 							<!-- href는 carousel의 id를 가르킨다. -->
-							<a class="left carousel-control" href="#carousel-example-generic"
-								role="button" data-slide="prev"> 
+							<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
 								<!-- 왼쪽 화살표 --> 
 								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 							</a>
@@ -210,7 +212,7 @@
 								<h2 class="post-title">
 									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
 								</h2>
-								<p style="font-size: 20px; line-height: 30px;">
+								<p style="font-size: 20px; line-height: 30px; margin-bottom:15px;">
 									${trainerBoard.tbContent}</p>
 								<hr>
 								<br>
@@ -228,7 +230,8 @@
 
 						<!--/ End Single Widget -->
 						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 90px;">
+						<div class="widget popular-feeds" style="position: relative; top: 90px; margin-bottom:0px;
+						">
 							<div class="tr_image" style="position: relative; left: 10px;">
 								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
 							</div>

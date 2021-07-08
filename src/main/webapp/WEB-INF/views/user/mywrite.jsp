@@ -155,7 +155,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbTitle}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
