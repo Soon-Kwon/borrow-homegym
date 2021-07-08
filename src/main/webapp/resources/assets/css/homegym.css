@@ -2,7 +2,7 @@
 /***********************홈짐 게시판 관련 css 정리 **************************/
 /**********************************************************************/
 
-/*===================홈짐 글쓰기 게시판========================*/
+/*===================홈짐 글쓰기 / 글수정 게시판========================*/
 
 /*체크박스 CSS*/
 .btn-group-toggle>.btn input[type=checkbox]
@@ -158,7 +158,50 @@ input[id='img_upload'] {
 	height: 55px;
 	bottom: 20px;
 	border: solid 1px;
+	border-radius: 25px;
     background-color: #656f98;
+    
+}
+
+/* 글 삭제&수정 버튼*/
+#removeBoardBtn{
+	color:white; 
+	background-color:#bd4d3e;
+	border-color:rgb(255, 151, 151);
+	border-radius: 20px;
+}
+
+#updateBoardBtn{
+	color:white; 
+	background-color: #656f98;
+	border-color:rgb(255, 151, 151);
+	border-radius: 20px;
+}
+
+
+#updateBoardBtn::before{
+	background-color: rgb(125, 120, 120);
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    content: "";
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    z-index: -1;
+}
+#removeBoardBtn::before{
+	background-color: rgb(125, 120, 120);
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    content: "";
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    z-index: -1;
 }
 /*===================홈짐 리스트========================*/
 
@@ -223,10 +266,17 @@ input[id='img_upload'] {
 	position: sticky;
 	top: 120px;
 }
+/* 사이드바 OO님의 홈짐 폰튼 */
+#text-nickName{
+	color: black;
+	font-size: 24px;
+	text-align: center;
+}
 /* 사이드바 주소 폰트 */
 #text-addr{
 	color: black; 
 	font-size: 20px;
+	text-align: center;
 }
 /* 사이드바 가격 폰트 */
 #text-price{
@@ -276,7 +326,7 @@ input[id='img_upload'] {
 	text-align: right;
 }
 
-/*수정/삭제, 목록, 문의버튼, 예약버튼*/
+/*수정&삭제, 목록, 문의버튼, 예약버튼*/
 
 #updateBtn, #showMsgContent{
 	width: 350px;
@@ -297,14 +347,79 @@ input[id='img_upload'] {
 }
 
 #addReviewBtn{
-	width: 150px;
-	height: 50px;
-	bottom: 20px;
-	border: solid 1px;
-	margin-top: 10px;
-	border-radius: 20px;
+	width: 100px;
+	height: 40px;
+	margin-top: 20px;
+	border-radius: 18px;
+    background-color: #656f98;
+    color: white;
 }
 
+
+/* 리뷰 평점 별모양 출력 CSS */
+.rating .rate_radio + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    background-image: url('/resources/assets/images/common/starrate.png');
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.rating .rate_radio:checked + label {
+    background-color: #ffc107;
+}
+
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+
+/* 모달창 수정&삭제 버튼 */
+.modal-content {
+	color: black;
+}
+#modalModBtn{
+	width: 60px;
+	height: 40px;
+	border-radius: 18px;
+    background-color: #656f98;
+    color: white;
+}
+
+#modalRemoveBtn{
+	width: 60px;
+	height: 40px;
+	border-radius: 18px;
+    background-color: #bd4d3e;
+    color: white;
+}
+#modalRegisterBtn{
+	border: solid 1px;
+	width: 60px;
+	height: 40px;
+	border-radius: 18px;
+    background-color: #656f98;
+    color: white;
+}
+#modalCloseBtn{
+	border: solid 1px;
+	width: 60px;
+	height: 40px;
+	border-radius: 18px;
+}
 /*===================홈짐 예약 페이지========================*/
 
 /*라디오 버튼 CSS*/
@@ -317,10 +432,10 @@ input[id='img_upload'] {
 .select input[type=radio]+label{
     display: inline-block;
     cursor: pointer;
-    height: 24px;
+    height: 34px;
     width: 90px;
     border: 1px solid #333;
-    line-height: 24px;
+    line-height: 34px;
     text-align: center;
     font-weight:bold;
     font-size:13px;
@@ -340,6 +455,28 @@ input[id='img_upload'] {
     color: #081828;
     font-size: 13px;
     font-weight: 500;
+}
+
+#reservationFormBtn{
+	width: 130px;
+	height: 50px;
+	border: solid 1px;
+	margin-top: 20px;
+	border-radius: 20px;
+    background-color: #656f98;
+}
+
+#reservationFormBtn::before{
+	background-color: rgb(125, 120, 120);
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    content: "";
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    z-index: -1;
 }
 /**********************************************************************/
 /**********************************************************************/

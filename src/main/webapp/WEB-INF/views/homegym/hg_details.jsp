@@ -27,18 +27,18 @@
 						</div>
 							<div class="detail-inner">
 								<!-- post meta -->
-								<h4> 🥇 홈짐 소개  </h4>
+								<h4> <i class="lni lni-apartment"></i> 홈짐 소개  </h4>
 								<p style="font-size: 20px;">${board.HTitle }</p>
 								<p>${board.HContent }</p>
 								<br>
-								<h4> 🥈 이용 가능한 시설들</h4>
+								<h4> <i class="lni lni-checkmark-circle"></i> 이용 가능한 시설들</h4>
 								<br><br>
 								
 								<div class="icon-tag row">
 								<!-- 이용 가능한 시설 아이콘 출력 공간 -->	
 								</div>
 								<br><br>
-								<h4> 🥉️ ${board.nickName}님의 홈짐 위치</h4>
+								<h4> <i class="lni lni-map"></i> ${board.nickName}님의 홈짐 위치</h4>
 								<br>
 								<!-- 홈짐 위치 나오는 div -->
 								<div id="map" style="width: 100%; height: 450px;"></div>
@@ -94,11 +94,11 @@
 						<!-- Single Widget -->
 						<div class="widget popular-feeds" >
 							<div class="info">
-								<h4 class="date">
-									<i class="lni lni-apartment"></i> ${board.nickName }님의 홈짐
-								</h4>
+								<div id="text-nickName">
+									<strong><i class="lni lni-map-marker"></i>${board.nickName }</strong>님의 홈짐
+								</div>
 								<br>
-									<div id="text-addr">${board.HAddr}에 위치한 홈짐입니다</div>
+									<div id="text-addr"><strong>"${board.HAddr}"</strong><br>에 위치한 홈짐입니다</div>
 								<br>
 							</div>
 								<h6> </h6>
@@ -130,34 +130,45 @@
 	</section>
 	<!-- End Blog Singel Area -->
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">리뷰 등록</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>리뷰 남기기</label> 
-							<textarea class="form-control" name="hrContent" placeholder="다른 유저에게 도움이 될 후기를 남겨주세요">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">리뷰 등록</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>리뷰 남기기</label>
+					<textarea class="form-control" name="hrContent"
+						placeholder="다른 유저에게 도움이 될 후기를 남겨주세요">
 							</textarea>
+				</div>
+				<br>
+				<div class="form-group">
+					<label>작성자</label> <input class="form-control"
+						name="${member_nickName}" placeholder="${member_nickName }"
+						readonly>
+				</div>
+				<br>
+				<div class="review-rating">
+					<div class="intro-message"><i class="lni lni-star"></i> 별점을 선택해주세요</div>
+					<div class="rating">
+						<input type="checkbox" name="hrScore" id="rating1"
+							class="rate_radio" value="1"> <label for="rating1"></label>
+						<input type="checkbox" name="hrScore" id="rating2"
+							class="rate_radio" value="2"> <label for="rating2"></label>
+						<input type="checkbox" name="hrScore" id="rating3"
+							class="rate_radio" value="3"> <label for="rating3"></label>️
+						<input type="checkbox" name="hrScore" id="rating4"
+							class="rate_radio" value="4"> <label for="rating4"></label>
+						<input type="checkbox" name="hrScore" id="rating5"
+							class="rate_radio" value="5"> <label for="rating5"></label>
 					</div>
-					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name="${member_nickName}" 
-							 placeholder="${member_nickName }" readonly>
-					</div>
-						<label>평점주기</label>
-						<div>
-						<input type="radio" name="hrScore" value="1"> ⭐️
-						<input type="radio" name="hrScore" value="2"> ⭐⭐
-						<input type="radio" name="hrScore" value="3"> ⭐⭐⭐
-						<input type="radio" name="hrScore" value="4"> ⭐⭐⭐⭐									
-						<input type="radio" name="hrScore" value="5"> ⭐⭐⭐⭐⭐
-						</div>		
+					<div></div>
 					<div class="modal-footer">
 						<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
 						<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
@@ -172,107 +183,111 @@
 			<!-- /.modal-dialog -->
 		</div>
 	</div>
-	<!-- /.modal -->
+</div>
+<!-- /.modal -->
 	<!-- 메세지 보내기 모달창 -->
-		<!-- Modal -->
-		<div class="modal fade" id="messageModal" tabindex="-1"
-			aria-labelledby="messageModalLabel" aria-hidden="true">
-			<div class="modal-dialog ">
-				<div class="modal-content">
-					<div class="modal-header">
-						<span id="m_writer_profile">
-							<div class="message-box">
-								<!-- 상대방 프로필 경로잡아주기 -->
-								<img src="/resources/assets/images/gym/re3.png" alt="상대방 프로필"
-									class="avatar img_circle img-profile" alt="avatar">
+	<!-- Modal -->
+	<div class="modal fade" id="messageModal" tabindex="-1"
+		aria-labelledby="messageModalLabel" aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span id="m_writer_profile">
+						<div class="message-box">
+							<!-- 상대방 프로필 경로잡아주기 -->
+							<img src="/resources/assets/images/gym/re3.png" alt="상대방 프로필"
+								class="avatar img_circle img-profile" alt="avatar">
 
-							</div>
-						</span>
-						<h5 class="modal-title" id="messageModalLabel">&nbsp; ${board.nickName}</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body ">
-						<!-- 메세지 내용 영역 -->
-						<div class="mesgs col-12">
-							<!-- 메세지 내용 목록 -->
-							<div class="msg_history" name="contentList">
-								<!-- 메세지 내용이 올 자리 -->
-							</div>
-							<div class="send_message"></div>
-							<!-- 메세지 입력란이 올자리 -->
-							<div class='type_msg'>
-								<div class='input_msg_write row'>
-									<div class='col-11'>
-										<input type='text' name="" class='write_msg form-control'
-											placeholder='메세지를 입력해주세요' />
-									</div>
-									<div class='col-1'>
-										<button class='msg_send_btn' type='button' onclick="sendMessage('${board.memberId}', '${memberId}');">
-											<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
-										</button>
-									</div>
+						</div>
+					</span>
+					<h5 class="modal-title" id="messageModalLabel">&nbsp;
+						${board.nickName}</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body ">
+					<!-- 메세지 내용 영역 -->
+					<div class="mesgs col-12">
+						<!-- 메세지 내용 목록 -->
+						<div class="msg_history" name="contentList">
+							<!-- 메세지 내용이 올 자리 -->
+						</div>
+						<div class="send_message"></div>
+						<!-- 메세지 입력란이 올자리 -->
+						<div class='type_msg'>
+							<div class='input_msg_write row'>
+								<div class='col-11'>
+									<input type='text' name="" class='write_msg form-control'
+										placeholder='메세지를 입력해주세요' />
+								</div>
+								<div class='col-1'>
+									<button class='msg_send_btn' type='button'
+										onclick="sendMessage('${board.memberId}', '${memberId}');">
+										<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
+									</button>
 								</div>
 							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Start Footer Area -->
+	<footer class="footer style2">
+		<!-- Start Footer Bottom -->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-md-6" style="text-align: start;">
+							<div class="logo">
+								<br> <br> <a href="main_index.html"><img
+									src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
+							</div>
+						</div>
+						<div class="col-md-6" style="text-align: end;">
+							<p>
+								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
+								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
+								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
+							</p>
 
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	
-
-		<!-- Start Footer Area -->
-		<footer class="footer style2">
-			<!-- Start Footer Bottom -->
-			<div class="footer-bottom">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-md-6" style="text-align: start;">
-								<div class="logo">
-									<br>
-									<br> <a href="main_index.html"><img
-										src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
-								</div>
-							</div>
-							<div class="col-md-6" style="text-align: end;">
-								<p>
-									<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
-									강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
-									사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
-								</p>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<!--/ End Footer Area -->
+	</footer>
+	<!--/ End Footer Area -->
 
 
-		<!-- ========================= scroll-top ========================= -->
-		<a href="#" class="scroll-top btn-hover"> <i
-			class="lni lni-chevron-up"></i>
-		</a>
+	<!-- ========================= scroll-top ========================= -->
+	<a href="#" class="scroll-top btn-hover"> <i
+		class="lni lni-chevron-up"></i>
+	</a>
 
-		<!-- ========================= JS here ========================= -->
-		<script src="/resources/assets/js/bootstrap.min.js"></script>
-		<script src="/resources/assets/js/count-up.min.js"></script>
-		<script src="/resources/assets/js/wow.min.js"></script>
-		<script src="/resources/assets/js/tiny-slider.js"></script>
-		<script src="/resources/assets/js/glightbox.min.js"></script>
-		<script src="/resources/assets/js/main.js"></script>
-		<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
-		<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
-		<!-- 제이쿼리 -->
-		<script src="https://code.jquery.com/jquery-3.6.0.js"
-			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-		<!-- =========================리뷰 처리 js============================ -->
-		<script src="/resources/assets/js/review.js"></script>
-		
-		<script type="text/javascript">
+	<!-- ========================= JS here ========================= -->
+	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	<script src="/resources/assets/js/count-up.min.js"></script>
+	<script src="/resources/assets/js/wow.min.js"></script>
+	<script src="/resources/assets/js/tiny-slider.js"></script>
+	<script src="/resources/assets/js/glightbox.min.js"></script>
+	<script src="/resources/assets/js/main.js"></script>
+	<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
+	<script src="https://kit.fontawesome.com/a0fcc69da7.js"
+		crossorigin="anonymous"></script>
+	<!-- 제이쿼리 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+		crossorigin="anonymous"></script>
+	<!-- =========================리뷰 처리 js============================ -->
+	<script src="/resources/assets/js/review.js"></script>
+
+	<script type="text/javascript">
 		
 		$(document).ready(function () {
 
@@ -309,8 +324,8 @@
 			}
 			
 			var printPrice = addComma(originalPrice);
-			$("#price").text(printPrice + "원");
-			
+			$("#detail-price").text(printPrice + "원");
+		
 			// 리뷰평점을 보여주는 즉시 실행함수
 			(function(){
 
@@ -454,7 +469,7 @@
 				
 				//기존에 존재하던 값들은 지워준다
 				modal.find("input[name != 'hrScore']").val("");
-				modal.find("input:radio[name = 'hrScore']").prop('checked', false);
+				modal.find("input:checkbox[name = 'hrScore']").prop('checked', false);
 				modal.find("textarea[name ='hrContent']").val("");
 				modal.find("button[id != 'modalCloseBtn']").hide();
 				
@@ -470,9 +485,14 @@
 			
 			// 등록 버튼 누르면 동작
 			modalRegisterBtn.on("click", function(e){
+
+				// textarea 개행처리
+				var str = modalInputReview.val();
+				str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+				
 				var review ={
-						hrContent: modalInputReview.val(),
-						hrScore: $("input[name='hrScore']:checked").val(),
+						hrContent: str,
+						hrScore: rating.rate,
 						hid: hIdValue,
 						memberId: memberId,
 						borrowerId: "${member_memberId}",
@@ -480,7 +500,7 @@
 				};
 				
 				// 평점이 없을시 입력해달라는 요청메시지 보내기
-				if(review.hrScore === undefined){
+				if(review.hrScore === undefined || review.hrScore == 0){
 					alert("평점을 입력해주세요!");
 					return $("#myModal").modal("show");
 				}
@@ -531,13 +551,18 @@
 				
 				reviewService.get(reviewId, function(review){
 					
+					/* <br> 태그 제거 */
+					var text = review.hrContent
+					text = text.split('<br/>').join("\r\n");
+					
 					//현재 .json으로 json데이터를 불러와야하는데
 					//.do로 호출하기 때문에 그 값(review.xxx)을 못불러 온다. 
 					//그래서 컨트롤러의 produces 값에서 xml을 빼고 json만 쓰면 json데이터만 반환되므로 .do를 사용해도 가능하다. 
-					modalInputReview.val(review.hrContent);
+					modalInputReview.val(text);
 					modalInputReviewer.val(review.borrowerId);
 					modal.data("reviewid", review.reviewId);
 					
+					/* 버튼 보이기/숨기기 */
 					modal.find("button[id != 'modalCloseBtn']").hide();
 					modalModBtn.show();
 					modalRemoveBtn.show();
@@ -549,13 +574,17 @@
 			// 댓글 수정 
 			modalModBtn.on("click", function(e){
 				
+				// textarea 개행처리
+				var str = modalInputReview.val();
+				str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+				
 				var review = {reviewId: modal.data("reviewid")
-							, hrContent: modalInputReview.val()
-							, hrScore: $("input[name='hrScore']:checked").val()
+							, hrContent: str
+							, hrScore: rating.rate
 							};
 				
 				// 평점이 없을 경우
-				if(review.hrScore === undefined){
+				if(review.hrScore === undefined || review.hrScore == 0){
 					alert("평점을 입력해주세요!");
 					return $("#myModal").modal("show");
 				}
@@ -567,7 +596,6 @@
 				}
 				
 				reviewService.update(review, function(result){
-					
 					
 					alert("수정되었습니다");
 					
@@ -621,8 +649,6 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				
-				
 				
 			});
 			
@@ -711,11 +737,11 @@
 		
 		
 	</script>
-		<!-- ========================= 카카오 지도 ========================= -->
+	<!-- ========================= 카카오 지도 ========================= -->
 
-		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
-		<script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
+	<script>
 		var container = document.getElementById('map');
 		
 		var options = {
@@ -742,7 +768,36 @@
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);  
 	</script>
-
-</body>
-
+	<script>
+	/* 별점 평점 선택 기능 구현 JS*/
+	function Rating(){};
+	Rating.prototype.rate = 0;
+	Rating.prototype.setRate = function(newrate){
+		// 별점 마킹: 클릭한 별 이하 모든 별 체크처리
+		this.rate = newrate;
+		let items = document.querySelectorAll('.rate_radio');
+		items.forEach(function(item, idx){
+			if(idx < newrate){
+				item.checked = true;
+			}else{
+				item.checked = false;
+			}
+		});
+	}
+	let rating = new Rating(); // 별점 인스턴스 생성
+	/* Rating.rate는 선택한 별점 값을 저장하는 변수
+	setRate() 메서드는 클릭한 별점을 포함해 왼쪽에 있는 모든 별점의 체크박스를 체크하는 기
+	*/
+	
+	/*별점 클릭 이벤트 리스너를 등록해 별 이미지를 클릭하면 별점 모듈의 setRate() 메서드를 호출하도록 한다.*/
+	document.addEventListener('DOMContentLoaded', function(){
+		document.querySelector('.rating').addEventListener('click', function(e){
+			let elem = e.target;
+			if(elem.classList.contains('rate_radio')){
+				rating.setRate(parseInt(elem.value));
+			}
+		})
+	})
+	</script>
+	</body>
 </html>

@@ -34,24 +34,24 @@
 		<section id="contact-us" class="contact-us section">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-12">
+					<div class="col-lg-8 col-12" style="float: none; margin: 0 auto;">
 						<div class="form-main">
 							<h3 class="title">
-								<span>변경사항이 있으신가요? 내 홈짐의 정보를 수정해보세요!</span>홈짐수정 게시판
+								<span>변경사항이 있으신가요? 내 홈짐의 정보를 수정해보세요!</span>홈짐수정하기
 							</h3>
 							<form id="submitForm" class="form">
 							<input type="hidden" name="hId" value='${board.HId }'>
 							<input type="hidden" name="nickName" value="${member_nickName}"/>
 							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
-									<div class="col-lg-12 col-12">
+									<div class="col-lg-10 col-12">
 										<div class="form-group">
 											<label>글제목</label> <input name="hTitle" type="text" id="title" value="${board.HTitle }"
 												required="required">
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-10">
+									<div class="col-lg-8 col-10">
 										<div class="form-group">
 											<label>주소</label> <input type="text" id="sample5_address"
 												class="form-control" name="hAddr" placeholder="${board.HAddr }"
@@ -61,9 +61,8 @@
 										<input type="hidden" id="y-coordinate" name="hLocateY" value="${board.HLocateY }" />
 									</div>
 									<div class="col-lg-2 col-2">
-										<input type="button" onclick="sample5_execDaumPostcode()"
-											class="btn btn-warning" style="margin-top: 28px; padding: .80rem .100rem;"
-											value="주소 검색"> <br>
+										<input type="button" onclick="sample5_execDaumPostcode()" id="addrBtn"
+										class="btn btn-warning" value="주소 검색"> <br>
 									</div>
 									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none">
 									</div>
@@ -75,67 +74,9 @@
 													name="hPrice" value="${board.HPrice }" required="required" />
 											</div>
 										</div>
-										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
-									</div>
-									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
-									<div class="row">
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>예약가능날짜</label>
-												<input type='date' id="now_date" name='today' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>시작 시간 : </label>
-												<input type='time' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>종료 시간 : </label>
-												<input type='time' /><br>
-											</div>
-										</div>
-										<div class="col-lg-2 col-12" style="justify-content: center;">
-											<button type="button" class="btn btn-warning btnAdd"
-												style="margin-top: 1.6rem; padding: .80rem .100rem;"
-												onclick="add_item()">추가하기</button>
-										</div>
-									</div>
-									<div id="append-form" style="display:none">
-										<div class="row">
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>예약가능날짜</label>
-													<input type='date' id="now_date" name='today' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>시작 시간 : </label>
-													<input type='time' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>종료 시간 : </label>
-													<input type='time' /><br>
-												</div>
-											</div>
-											<div class="col-lg-2 col-12">
-												<button type="button" class="btn btn-warning btnAdd"
-													style="margin-top: 28px; padding: .80rem .100rem;"
-													onclick="remove_item(this)">삭제하기</button>
-											</div>
-										</div>
+										<div class="col-lg-1 col-1 font-general" style="margin-top: 27px;">원</div>
 									</div>
 									
-									
-									추가 공간
-									<div class="row" id="field">
-									</div>
-									-->
 									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
@@ -209,10 +150,9 @@
 										</div>
 									</div>
 									<div class="col-12">
-										<div class="form-group button" style="text-align: right;">
-											<button class="btn" type="button" onclick="update();">게시물 수정</button>
-											<button class="btn" type="button" onclick="remove();" style="color:white; 
-											background-color:red; border-color:red;">게시물 삭제</button>
+										<div class="form-group button" style="text-align: center;">
+											<button id="updateBoardBtn" class="btn" type="button" onclick="update();">게시물 수정</button>
+											<button id="removeBoardBtn" class="btn" type="button" onclick="remove();">게시물 삭제</button>
 										</div>
 									</div>
 								</div>

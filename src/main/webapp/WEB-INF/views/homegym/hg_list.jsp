@@ -44,6 +44,7 @@
 						</div>
 					</div>
 				</div>
+				<br><br><br><br><br>
 			</c:when>
 			<c:otherwise>
 				<div class="container">
@@ -66,7 +67,7 @@
 							<div class="event-sidebar">
 								<!-- Start Single Widget -->
 								<div class="single-widget other-event-wedget">
-									<h3 class="sidebar-widget-title" style="margin-bottom: 0px;">
+									<h3 class="sidebar-widget-title" style="margin-bottom: 0px; ">
 										플레이스🏠</h3>
 									<div style="margin: 30px 0px;"></div>
 									<ul class="other-event">

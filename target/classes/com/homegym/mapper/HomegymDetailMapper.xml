@@ -9,7 +9,7 @@
 	</insert>
 	
 	<select id="selectAddr" resultType="com.homegym.biz.homegym.HomegymVO">
-		SELECT h_addr
+		SELECT h_addr, h_locate_x, h_locate_y
 		FROM homegym_board
 		WHERE h_id = #{hId}
 	</select>

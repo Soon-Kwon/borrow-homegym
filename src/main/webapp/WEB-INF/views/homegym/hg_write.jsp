@@ -149,7 +149,7 @@
 									</div>
 									<div class="col-12">
 										<div class="form-group button" style="text-align: center;">
-											<button class="btn" type="button" onclick="save();">게시물 등록</button>
+											<button class="btn" type="button" style="background-color: #656f98;" onclick="save();">게시물 등록</button>
 										</div>
 									</div>
 								</div>
