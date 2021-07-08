@@ -35,9 +35,14 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class UploadController {
 	
 	// 업로드 폴더 경로 
+<<<<<<< HEAD
 	private static final String UPLOAD_FOLDER = "D:/upload/";
 	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
 	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";
+=======
+	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 	// private static final String UPLOAD_FOLDER = "C:\final_bitProject\.metadata\.plugins\org.eclipse.wst.server.core\tmp3\wtpwebapps\borrow_homegym\resources";
 	//private static final String UPLOAD_FOLDER = "C:/hg_ImgUpload/";
 

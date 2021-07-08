@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymDetailVO;
 import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
@@ -37,6 +38,12 @@ public class HomegymController {
 
 	@Autowired
 	private HomegymService homegymService;
+<<<<<<< HEAD
+=======
+	
+	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 
 	private static final String UPLOAD_FOLDER = "D:/upload/";
 	// private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
@@ -95,11 +102,24 @@ public class HomegymController {
 
 	// 상세 게시글 보여주기
 	@GetMapping("/homegymDetailView.do")
+<<<<<<< HEAD
 	public String getView(Model model, HomegymVO vo, @ModelAttribute("cri") Criteria cri,
 			@RequestParam("hId") int hId) {
 		model.addAttribute("board", homegymService.get(vo, hId));
 		// model.addAttribute("score", homegymService.getScore(hId));
 
+=======
+	public String getView(Model model, HomegymVO vo, @ModelAttribute ("cri") Criteria cri, 
+			@RequestParam("hId") int hId ) {
+		
+		HomegymVO detail = homegymService.get(vo, hId);
+		
+		model.addAttribute("board", detail);
+
+		// 리뷰 쓸 권한이 있는지 확인하기
+		model.addAttribute("authToWriteReview", homegymService.authToWriteReview(hId));
+		
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";
 	}
@@ -113,8 +133,13 @@ public class HomegymController {
 		log.info("수정하기: " + model);
 		return "/homegym/hg_modify";
 	}
+<<<<<<< HEAD
 
 	// 수정 완료 요청시 작동
+=======
+	
+	// 수정 요청시 작동
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 	@ResponseBody
 	@PostMapping("/homegymModify.do")
 	public String modify(HomegymVO vo, @ModelAttribute("cri") Criteria cri) { // ModelAttribute가 없어도 된다.
@@ -127,8 +152,13 @@ public class HomegymController {
 
 		return "ERROR";
 	}
+<<<<<<< HEAD
 
 	// 삭제 완료 요청시 작동
+=======
+	
+	// 삭제 요청시 작동
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 	@ResponseBody
 	@PostMapping("/homegymRemove.do")
 	public String remove(@RequestParam("hId") int hId, @ModelAttribute("cri") Criteria cri // ModelAttribute가 없어도 된다.
@@ -138,18 +168,30 @@ public class HomegymController {
 
 		// 첨부파일 리스트 획득
 		List<HomegymAttachVO> attachList = homegymService.getAttachList(attach, hId);
+<<<<<<< HEAD
 
 		if (homegymService.remove(hId)) {
 
 			// deleteFiles 메서드를 이용해서 해당 게시물에 속하는 첨부파일을 삭제해준다.
+=======
+		
+		if(homegymService.remove(hId)) {
+			
+			// deleteFiles 메서드를 이용해서 해당 게시물에 속하는 첨부파일 데이터를 삭제해준다.
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 			deleteFiles(attachList);
 			return "OK";
 		}
 
 		return "ERROR";
 	}
+<<<<<<< HEAD
 
 	// 첨부파일 리스트 요청시 작동
+=======
+	
+	/* 첨부파일 리스트 요청시 작동 */
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 	@GetMapping(value = "/getAttachList.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HomegymAttachVO>> getAttachList(HomegymAttachVO vo, @RequestParam("hId") int hId) {
@@ -157,8 +199,13 @@ public class HomegymController {
 		log.info("첨부파일 가져오기: " + hId);
 		return new ResponseEntity<List<HomegymAttachVO>>(homegymService.getAttachList(vo, hId), HttpStatus.OK);
 	}
+<<<<<<< HEAD
 
 	// 첨부파일 데이터 삭제 메서드
+=======
+	
+	/* 첨부파일 데이터 삭제 메서드 */
+>>>>>>> a92ceb705e6e2f312fc573c0aeeff19ec7dfbe41
 	private void deleteFiles(List<HomegymAttachVO> attachList) {
 
 		// 첨부파일 존재 유무 확인
