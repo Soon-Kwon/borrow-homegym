@@ -27,29 +27,19 @@
 						</div>
 							<div class="detail-inner">
 								<!-- post meta -->
-								<h2 class="post-title">
-									<p style="font-size: 25px;">${board.HTitle }</p>
-								</h2>
+								<h4> 🥇 홈짐 소개  </h4>
+								<p style="font-size: 20px;">${board.HTitle }</p>
 								<p>${board.HContent }</p>
 								<br>
-								<h5> 이용 가능한 시설들</h5>
-								<br>
+								<h4> 🥈 이용 가능한 시설들</h4>
+								<br><br>
 								
 								<div class="icon-tag row">
-									
+								<!-- 이용 가능한 시설 아이콘 출력 공간 -->	
 								</div>
 								<br><br>
-
-								<!-- <h3>
-									<span></span> 
-									<span></span> 
-									<span><i class="fas fa-tint"></i>정수기</span>
-									<span></span>
-									<span></span>
-								</h3> -->
-								<h5> ${board.nickName}님의 홈짐 위치</h5>
+								<h4> 🥉️ ${board.nickName}님의 홈짐 위치</h4>
 								<br>
-								
 								<!-- 홈짐 위치 나오는 div -->
 								<div id="map" style="width: 100%; height: 450px;"></div>
 								<br>
@@ -75,7 +65,16 @@
 										
 										</div>
 										<div class="col-4" style="text-align: right;">
-										<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
+										<!-- 리뷰를 쓸 수 있는 권한을 가지고 있으면 리뷰쓰기 버튼을 노출시킨다. -->
+										<c:forEach var="list" items="${authToWriteReview }">
+											<c:choose>
+												<c:when test="${list.borrowerId eq member_memberId }">
+													<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>										
+												</c:when>
+												<c:otherwise>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
 										</div>
 									</div>
 									<hr>
@@ -93,22 +92,21 @@
 				<aside class="col-lg-4 col-md-12 col-12">
 					<div class="sidebar" id="sidebar">
 						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 30px;">
+						<div class="widget popular-feeds" >
 							<div class="info">
 								<h4 class="date">
 									<i class="lni lni-apartment"></i> ${board.nickName }님의 홈짐
 								</h4>
 								<br>
-								<h6 class="title">${board.HAddr}에 위치한 김하우스입니다</h6>
+									<div id="text-addr">${board.HAddr}에 위치한 홈짐입니다</div>
 								<br>
 							</div>
-								<h6>1시간당 가격</h6>
+								<h6> </h6>
 								<br>
-								<div id="price" style="text-align: right; color: black;">${board.HPrice } 원</div>
+								<div id="text-price">1회 이용가격</div>
+								<div id="detail-price">${board.HPrice } 원</div>
 								<br>
 								<div class="row">
-								<!-- 집주인일 경우 나오는 수정/삭제버튼 
-								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
 								<c:choose>
 									<c:when test="${board.memberId ne memberId }">
 										<input type="button" id="reserveBtn" value="지금 예약하러 가기"
@@ -122,9 +120,6 @@
 										class="btn">
 									</c:when>
 								</c:choose>
-								<input type="button" id="listBtn" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
-										class="btn">
-								
 								</div>
 						</div>
 						<!--/ End Single Widget -->
@@ -152,8 +147,8 @@
 							</textarea>
 					</div>
 					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name="memberId"
-							 placeholder="<sec:authentication property="principal.nickname" />" readonly>
+						<label>작성자</label> <input class="form-control" name="${member_nickName}" 
+							 placeholder="${member_nickName }" readonly>
 					</div>
 						<label>평점주기</label>
 						<div>
@@ -397,8 +392,17 @@
 					}
 					
 					for(var i = 0, len = list.length || 0; i < len; i++){
-						str += "<li><div class='comment-img><img src='https://via.placeholder.com/100x100'"
-						+ "alt='img' style='width: 100px;'></div>";
+					
+						if(list[i].imagePath == null || list[i].imagePath == ""){
+							str += "<li><div class='comment-img'><img src='" 
+							str += "/resources/assets/images/mypage/basicImg.png'" 
+							str += "style='width: 100px;'></div>";
+						}else{
+							str += "<li><div class='comment-img'><img src='" + list[i].imagePath
+							str += "' alt='img' style='width: 100px;'></div>";
+						}
+						
+						
 						str += "<div class='comment-desc'><div class='desc-top'><h5>" + list[i].borrowerName + "</h5>";
 						if(list[i].hrScore == 1) {str += "<span>⭐️</span>";
 						}else if(list[i].hrScore == 2){str += "<span>⭐⭐</span>";
@@ -481,6 +485,12 @@
 					return $("#myModal").modal("show");
 				}
 				
+				// 리뷰 내용이 없을 경우 
+				if(review.hrContent == ""){
+					alert("리뷰 내용을 남겨주세요");
+					return $("#myModal").modal("show");
+				}
+				
 				// 리뷰 등록하기
 				reviewService.add(review, function(result){
 					
@@ -544,8 +554,15 @@
 							, hrScore: $("input[name='hrScore']:checked").val()
 							};
 				
+				// 평점이 없을 경우
 				if(review.hrScore === undefined){
 					alert("평점을 입력해주세요!");
+					return $("#myModal").modal("show");
+				}
+				
+				// 리뷰 내용이 없을 경우 
+				if(review.hrContent == ""){
+					alert("리뷰 내용을 남겨주세요");
 					return $("#myModal").modal("show");
 				}
 				
@@ -725,49 +742,7 @@
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);  
 	</script>
-		<script>
-		
-	// 리뷰테스트 코드
-		var hIdValue = '<c:out value="${board.HId}"/>';
-/* 		
-		reviewService.add(
-				{memberId: "아메리카노", borrowerId: "라떼", hrScore: 3, 
-					hrContent: "깨끗해요", hid: hIdValue}
-				, function(result){
-					alert("결과: " + result);
-				}); */
-		
-		console.log("리뷰목록 보여주기 테스트");
-		// url의 hId와 매핑을 하는 것이기 때문에 hId로 적는다. vo객체랑 매핑시키려면 hid로 적어야한다. 
-		reviewService.getList(
-				{hId: hIdValue, page:1}, function(list){
-					
-					for(var i = 0, len = list.length || 0; i < len; i++){
-						console.log(list[i]);
-					}
-				});
-		/* reviewService.remove(8,function(count){
-			
-			console.log(count);
-			
-			if(count==="success" ){
-				alert("제거");
-			}
-		},
-		function(err){
-			alert("에러");
-		}) */
-		
-		/* reviewService.update(
-				{reviewId: 9, hid: 378, hrContent: "수정하는 내용"}
-				, function(result){
-					alert("수정완료");
-				}); */
-	/* 	reviewService.get(9, function(data){
-			console.log(data);
-		}) */
-		
-	</script>
+
 </body>
 
 </html>

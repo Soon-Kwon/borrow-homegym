@@ -22,10 +22,12 @@
 	</select>
 	
 	<select id="getListWithPaging" resultType="com.homegym.biz.homegym.HomegymReviewVO">
-		select *
-		from homegym_review
-		where h_id = ${hId}
-		order by hr_updatedate desc 
+		select hr.*, m.image as imagePath
+		from homegym_review as hr
+		join member as m
+		on hr.borrowerId = m.memberId
+		where hr.h_id = ${hId}
+		order by hr.hr_updatedate desc 
 		LIMIT #{cri.amount} OFFSET #{cri.skip}
 	</select>
 	
@@ -33,6 +35,12 @@
 		delete 
 		from homegym_review 
 		where review_id = #{reviewId}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete
+		from homegym_review
+		where h_id = #{hId}
 	</delete>
 	
 	<update id="update">

@@ -85,6 +85,8 @@
 </head>
 <body>
 <script type="text/javascript">
+
+	/*
 	// 안읽은 메세지 카운트 가져오기
 	/* function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");

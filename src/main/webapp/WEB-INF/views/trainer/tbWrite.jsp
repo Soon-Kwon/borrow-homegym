@@ -8,9 +8,6 @@
 
 <head>
 
-
-
-
 <style>
 p {
 	margin: 10px 5px;
@@ -142,15 +139,11 @@ ul li.tag-item {
 	border-color: white;
 	border: 0px;
 }
-}
 
-</style>
 <!--//해시태그 끝-->
 
-<!--해시태그-->
+</style>
 
-	
-	
 </head>
 
 <body>
@@ -187,15 +180,18 @@ ul li.tag-item {
 			<div class="row">
 				<div class="col-lg-13 col-md-12 col-12">
 					<div class="form-main">
-						<form class="form" id="submitForm" method="post" action="tbWriter.do">
+						<form class="form" id="submitForm" method="post" action="tbWrite.do">
+						<input type="hidden" name="memberId" value="${member_memberId}">
+						<input type="hidden" name="name" value="${member_name}">
+						<input type="hidden" name="image" value="${member_image}">
 							<div class="row">
 								<h3 class="title">
 									<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
 								</h3>
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label style="font-size: 20px;">제목</label> <input
-											name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 "
+										<label style="font-size: 20px;">제목</label> 
+										<input name="tbTitle" type="text" placeholder="예) 확찐자 맞춤 트레이닝 "
 											required="required">
 									</div>
 								</div>
@@ -250,9 +246,10 @@ ul li.tag-item {
 									<div class="form-group">
 										<input type="hidden" value="" name="tag" id="rdTag" />
 									</div>
-
+									
 									<ul id="tag-list"></ul>
-
+									<br>
+									
 									<div class="form-group">
 										<input type="text" id="tag" size="7" placeholder="Ex)종로구"
 											style="width: 300px;" />
@@ -291,7 +288,7 @@ ul li.tag-item {
 										<br> <label style="font-size: 15px;">대표사진 등록</label>
 									</div>
 									<div>
-										<input type="file" id="img_upload" name="tbImg"
+										<input type="file" name="tbImg"
 											accept="image/*" style="margin-bottom: 30px;">
 									</div>
 
@@ -353,6 +350,8 @@ ul li.tag-item {
 		</div>
 	</footer>
 	<!--/ End Footer Area -->
+<!--해시태그-->
+
 
 	<!-- ========================= scroll-top ========================= -->
 	<a href="#" class="scroll-top btn-hover"> <i
@@ -395,7 +394,7 @@ ul li.tag-item {
 		// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
 		if (e.key === "Enter" || e.keyCode == 32) {
 
-			if ($(".tag-item").size() == 3) {
+			if ($(".tag-item").length == 3) {
 
 				alert('최대 입력 개수는 3개입니다.');
 
@@ -445,8 +444,8 @@ ul li.tag-item {
 		}
 	});
 });
-</script>
 
+</script>
 
 	<!-- ========================= JS here ========================= -->
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
