@@ -95,14 +95,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                          <div class="sidebar-widget">
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
-                                    </form>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +152,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbTitle}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
@@ -165,7 +162,7 @@
                                 		</tbody>
                                     </table>
                                     
-                                   <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                   <form id="actionForm" action="/user/mypage/mywrite.do" method="get">
                                      	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
@@ -242,7 +239,7 @@
                                      		
                                			  </tbody>
                                        </table>
-                                        <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                        <form id="actionForm" action="/user/mypage/mywrite.do" method="get">
                                      	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${rv_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${rv_pageMaker.cri.amount}">
@@ -308,7 +305,6 @@
             </div>
         </div>
     </footer>
-    <!--/ End Footer Area -->
 
     <!--/ End Footer Area -->
 
@@ -327,12 +323,12 @@
     
     
     
-        <script type="text/javascript">/* 
-    	var selectedBtnId = 'overview-tab'; */
+        <script type="text/javascript">
+    	var selectedBtnId = 'overview-tab';
     	
     	$(document).ready(function(){
-    /* 		$('#'+$('#selectedBtnId').val()).trigger('click');
-    		 */
+     		$('#'+$('#selectedBtnId').val()).trigger('click');
+    		
     		var actionForm= $("#actionForm");
     		
     		
@@ -342,29 +338,29 @@
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/mywrite.do");
-    			
-    	
+    		
     			actionForm.submit();
     		}); 
 	
-/*      	 	$("#overview-tab").on("click", function(e){
+     	 	$("#overview-tab").on("click", function(e){
 				e.preventDefault();
 
-				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab"
+				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab";
 			});
 
     	 	
     		$("#instructor-tab").on("click", function(e){
 				e.preventDefault();
 
-				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=instructor-tab"
+				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=instructor-tab";
 			});
     		
-  	function fnGetBtnId(obj) {
-		selectedBtnId = obj.id;
-		$('#selectedBtnId').val(selectedBtnId);
-	} 
-    	});  */
+  	});
+    	
+    	function fnGetBtnId(obj) {
+    		selectedBtnId = obj.id;
+    			$('#selectedBtnId').val(selectedBtnId);
+        	}
     </script>
 </body>
 

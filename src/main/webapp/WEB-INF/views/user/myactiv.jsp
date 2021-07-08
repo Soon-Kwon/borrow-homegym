@@ -190,14 +190,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                         <div class="sidebar-widget">
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="/user/payOk.do">
-                                        <input type="text" placeholder="Search...">
-                                        <button><a href="/user/payOk.do"></a></button>
-                                    </form>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -224,10 +221,7 @@
                                 data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
                                 aria-selected="false" onclick="fnGetBtnId(this)">빌린 홈짐</button>
                         </li>
-                        <!-- <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                                type="button" role="tab" aria-controls="reviews" aria-selected="false">완료된 홈짐</button>
-                        </li> -->
+                        
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
@@ -396,7 +390,7 @@
                                           </c:otherwise>
                                     </c:choose>
                                                                 
-                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+                                      <form id="actionForm" action="user/mypage/lendHomegym.do" method="get">
                                       	<input type="hidden" name="memberId" value="${member_memberId}" id="ld_memberId"> 
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}" id="ld_pageNum">
@@ -510,7 +504,7 @@
 	                                                        </div>
 	      
 	                                           </c:forEach>
-	                                           		       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
+	                                           		       <form id="actionForm" action="user/mypage/rentHomegym.do" method="get">
 						                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
 						                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
 						                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">

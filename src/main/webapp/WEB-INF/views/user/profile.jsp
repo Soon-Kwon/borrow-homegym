@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
-<%-- <%
- 	String memberId = session.getAttribute("memberId").toString();
- %>  --%>
 
 <html class="no-js" lang="zxx">
 
@@ -144,22 +141,22 @@
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="homegymCheck.do">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">자주 묻는 질문</h3>
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <p>FAQ 보러가기</p>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -263,7 +260,7 @@
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="faq.html"> 자주묻는 질문</a>
+                                <a href="/user/FAQ.do"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345

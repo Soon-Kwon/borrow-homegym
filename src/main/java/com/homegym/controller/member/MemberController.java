@@ -517,6 +517,7 @@ public class MemberController {
 		int writeTotal = memberService.getMyAllBoardCnt(memberId);
 		PageMakerDTO tb_pageMaker = new PageMakerDTO(cri,writeTotal);
 		model.addAttribute("tb_pageMaker", tb_pageMaker);
+		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 
 		System.out.println("tb_pageMaker::::::" + tb_pageMaker);
 
@@ -524,13 +525,22 @@ public class MemberController {
 		//내가 쓴 리뷰 리스트
 		List<Map<String, String>> myReviews = memberService.getMyReviewsPaging(memberId,cri);
 		model.addAttribute("myReviews", myReviews);
-		
+		for(int i=0; i < myReviews.size(); i++) {
+			System.out.println(myReviews.get(i));
+		}
 		int reviewTotal = memberService.getMyAllReviewCnt(memberId);
 		PageMakerDTO rv_pageMaker = new PageMakerDTO(cri,reviewTotal);
 		model.addAttribute("rv_pageMaker",rv_pageMaker);
 		
 		System.out.println("myReviews :::::" + rv_pageMaker);
+		
 		return "user/mywrite";
+	}
+	
+	/* FAQ 이동 */
+	@GetMapping("FAQ")
+	public String FAQ() {
+		return "others/FAQ";
 	}
 	
 
