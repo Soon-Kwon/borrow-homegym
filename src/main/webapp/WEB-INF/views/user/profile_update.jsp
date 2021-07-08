@@ -496,7 +496,7 @@ function execPostCode() {
                      
                                      
                                      <!-- 폼 전송 -->      
-                   						 <form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
+                   		<form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="userId">
@@ -611,22 +611,18 @@ function execPostCode() {
                         </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-              </form>
-            
                 </section>
                 <!-- /End Features Area -->
-
-
-               
-            <!-- End Course Details Wrapper -->
 
         </div>
     </div>
     </div>
+    </div>
+    
     <!-- Course Details Section End -->
 
     <!-- Start Footer Area -->
-    <footer class="footer style2">
+  <footer class="footer style2">
         <!-- Start Footer Bottom -->
         <div class="footer-bottom">
             <div class="container">
@@ -654,6 +650,7 @@ function execPostCode() {
             </div>
         </div>
     </footer>
+
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->

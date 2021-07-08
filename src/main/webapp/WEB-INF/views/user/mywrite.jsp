@@ -83,13 +83,12 @@
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -272,8 +271,7 @@
                 
             </div>
         </div>
-    </div>
-</div>
+    
     <!-- Course Details Section End -->
 
 <!-- Start Footer Area -->

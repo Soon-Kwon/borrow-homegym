@@ -178,13 +178,12 @@
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
@@ -534,97 +533,9 @@
                                 </section>
                                 <!-- End Blog Singel Area -->
                             </div>
-                            
                         </div> 
-                     
-                     <!-- 진행중인 홈짐 끝 & 완료된 홈짐 시작 -->   
-                        
-                       <%--  <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                            <div class="course-reviews">
-                                <!-- Start Blog Singel Area -->
-                                <section class="section latest-news-area blog-grid-page" style="padding-top:40px;">
-                                    <div class="container">
-                                        <!-- <h3 class="comment-title">Reviews</h3> -->
-                                        <div class="row">
-                                        	<div class="col-lg-12 col-md-12 col-12">
-                                                
-                                                <div class="row">
-                                                <c:choose>
-                                    				<c:when test ="${fn:length(progressHomegym)==0}">
-	                                    				<div style="font-size: 20px; text-align:center;">
-															<p style="margin:40px; font-weight: bold;">아직 진행중인 홈짐이 없습니다.😥</p></td>
-															
-														</div>
-                                    				</c:when>
-                                    			<c:otherwise>
-                                    		<c:forEach var="homegym" items="${progressHomegym}" varStatus="status">
-                                                 <div class="col-lg-6 col-12">
-                                                        <!-- Single News -->
-                                                        <div class="single-news custom-shadow-hover wow fadeInUp"
-                                                            data-wow-delay=".4s">
-                                                            <div class="image">
-                                                                <a href="blog-single-sidebar.html"><img class="thumb"
-                                                                        src="https://via.placeholder.com/1050x700"
-                                                                        alt="#"></a>
-                                                            </div>
-                                                            <div class="content-body">
-                                                                <div class="meta-data">
-                                                                    <ul>
-                                                                        <li><i class="lni lni-tag"></i>
-                                                                            ${homegym.HTitle}
-                                                                        </li>
-                                                                        <li>
-                                                                            <!-- <i class="lni lni-tag22"></i> -->
-                                                                            ${homegym.HAddr}
-                                                                        </li>
-                                                                        <li>
-                                                                            <i class="lni lni-calendar"></i>
-                                                                            ${homegym.status}
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>    
-                                                            
-                                                            <!-- 버튼 시작 -->
-                                                                <div class="flex-box">
-                                                                    <div class="button accept-btn">
-                                                                        <a href="blog-single-sidebar.html" class="btn">취소하기</a>
-                                                                    
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-        
-                                           </c:forEach>
-                                          </c:otherwise>
-                                    </c:choose>
-                                               <!-- Pagination -->
-                                               <div class="pagination center">
-                                                    <ul class="pagination-list">
-	                                                    <c:if test ="${pageMaker.prev}">
-	                                                        <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Prev</a></li>
-	                                                    </c:if>
-	                                                    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	                                                        <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active" :""}"><a href="${num}">${num}</a></li>
-	                                                    </c:forEach>
-	                                                    <c:if test="${pageMaker.next}">
-	                                                        <li class="pageInfo_btn next"><a href="${pageMaker.endPage+1}">Next</a></li>
-	                                                    </c:if>
-	                                                </ul>
-                                                </div>    
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                                
-                                </section>
-                                <!-- End Blog Singel Area -->
-                            </div>
-                        </div>--%>
                     </div>
                 </div> 
-
-
 
             </div>
         </div>
@@ -732,10 +643,6 @@
 						if (rsp.success) {
 							var msg = '홈짐 결제가 완료되었습니다.☺';
 							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
-							/* msg += '고유ID : ' + rsp.imp_uid;
-							msg += '상점 거래ID : ' + rsp.merchant_uid;
-							msg += '결제 금액 : ' + rsp.paid_amount;
-							msg += '카드 승인번호 : ' + rsp.apply_num; */
 						} else {
 							var msg = '홈짐 결제에 실패하였습니다. 다시 시도해주세요 !';
 							location.href="/user/mypage/myactiv.do?payYN=N";
