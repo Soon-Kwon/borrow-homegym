@@ -483,20 +483,20 @@
 																		</c:if>
 	                                                           		 	 <c:if test="${rentHomegym.payYN =='Y'}"> 
 	                                                           			 	<div class="button accept-btn">
-				                                                                 <button class="btn" id="payOK" value="${homegym.HId}">결제 완료</button>
+				                                                                 <button class="btn" id="payOK">결제 완료</button>
 				                                                            </div>
 				                                                             <div class="button review-btn">
-				                                                                  <button class="btn" id="reviewBtn" value="${homegym.HId}">리뷰쓰기</button>
+				                                                                  <button class="btn" id="reviewBtn" onClick="location.href='/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}'">리뷰쓰기</button>
 				                                                              </div> 
 																		</c:if>   
 																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 
 	                                                           			 	<div class="button deny-btn">
-				                                                                   <button class="btn" id="reject" value="${homegym.HId}">거절 됨</button>
+				                                                                   <button class="btn" id="reject">거절 됨</button>
 				                                                             </div>
 																		</c:if> 
 																		<c:if test="${rentHomegym.agreeYN == null}"> 
 	                                                           			 	<div class="button wait-btn">
-				                                                                   <button class="btn" id="reject" value="${homegym.HId}">수락 대기중</button>
+				                                                                   <button class="btn" id="reject" >수락 대기중</button>
 				                                                             </div>
 																		</c:if> 
 	                                                                </div>

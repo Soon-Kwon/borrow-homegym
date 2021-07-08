@@ -533,6 +533,8 @@ public class MemberController {
 		model.addAttribute("rv_pageMaker",rv_pageMaker);
 		
 		System.out.println("myReviews :::::" + rv_pageMaker);
+
+		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 		
 		return "user/mywrite";
 	}

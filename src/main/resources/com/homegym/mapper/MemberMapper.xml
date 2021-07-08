@@ -308,18 +308,17 @@
 	  	<![CDATA[
 	  		SELECT *
 	  		FROM (
-	  			SELECT b.h_id,b.h_title,b.h_addr,d.rental_date,
-	  				d.agreeYN, d.payYN, d.d_id, d.phoneNum, b.h_price,
-                    min(f.uuid) as uuid,
-					min(f.fileName) as fileName,
-					max(f.uploadPath) as uploadPath
-					FROM homegym_board b 
-					INNER JOIN homegym_detail d
-					ON b.h_id = d.h_id
-					INNER JOIN homegym_attach f
-					ON b.h_id = f.h_id
+	  			 SELECT b.h_id, b.h_price, b.h_title,b.h_addr,d.rental_date,
+		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum, 
+	                    min(f.uuid) as uuid,
+						min(f.fileName) as fileName,
+						max(f.uploadPath) as uploadPath
+					FROM homegym_board b INNER JOIN homegym_detail d
+						ON b.h_id = d.h_id
+					INNER JOIN homegym_attach f ON b.h_id = f.h_id
 					WHERE borrowerId= #{memberId}
-					ORDER BY d_id DESC
+					GROUP BY d.d_id
+					ORDER BY d.d_id DESC
 				)as rh
 	  		LIMIT #{cri.skip}, #{cri.amount}
  		 ]]>
