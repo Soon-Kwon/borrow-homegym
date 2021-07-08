@@ -95,8 +95,7 @@
 	<section class="courses section grid-page">
 		<div class="container">
 			<form class="d-flex search-form">
-				<input class="form-control me-2" type="search" placeholder="트레이너 검색"
-					aria-label="Search">
+				<input class="form-control me-2" type="search" placeholder="트레이너 검색" aria-label="Search" style="width: 326px;">
 				<button class="btn btn-outline-success" type="submit">
 					<i class="lni lni-search-alt"></i>
 				</button>
