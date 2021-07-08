@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homegym.biz.homegym.HomegymDetailVO;
-import com.homegym.biz.homegym.HomegymReviewVO;
-import com.homegym.biz.homegym.HomegymVO;
 import com.homegym.biz.member.Criteria;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
@@ -407,14 +405,13 @@ public class MemberController {
 	
 	
 	/*관리할 홈짐 리스트 (수락/거절)*/
-	@GetMapping("mypage/homegymCheck")
-	public String homegymCheck(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
+	@GetMapping("mypage/myactiv")
+	public String myactiv(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 
 		String memberId = loginMemberVO.getMemberId();
-
 		
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		model.addAttribute("waitingHomegym", waitingHG);
@@ -423,18 +420,8 @@ public class MemberController {
 		PageMakerDTO wait_pageMaker = new PageMakerDTO(cri,wait_total);
 		model.addAttribute("wait_pageMaker", wait_pageMaker);
 		model.addAttribute("wait_total", wait_total);
-		
 		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
 		
-		return "user/myactiv";
-	}
-	
-	/*빌려준 홈짐 리스트 */
-	@GetMapping("mypage/lendHomegym")
-	public String lendHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
-		String memberId = loginMemberVO.getMemberId();
 		
 		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
 		model.addAttribute("lendHomegym", lendHG);
@@ -445,18 +432,6 @@ public class MemberController {
 		model.addAttribute("ld_pageMaker", ld_pageMaker);
 
 		System.out.println("ld_pageMaker::::::" + ld_pageMaker);
-		
-		return "user/myactiv";
-
-	}
-	
-	/*빌린 홈짐 리스트 */
-	@GetMapping("mypage/rentHomegym")
-	public String rentHomegym(Criteria cri, HttpServletRequest request, HttpSession session, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
-		String memberId = loginMemberVO.getMemberId();
-		
 		
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
 		model.addAttribute("rentHomegym", rentHG);
@@ -469,7 +444,7 @@ public class MemberController {
 
 		return "user/myactiv";
 	}
-
+	
 	
 	/* 결제 상태값 변화  */
 	
@@ -554,10 +529,9 @@ public class MemberController {
 		PageMakerDTO rv_pageMaker = new PageMakerDTO(cri,reviewTotal);
 		model.addAttribute("rv_pageMaker",rv_pageMaker);
 		
-		System.out.println("myReviews :::::" + myReviews);
+		System.out.println("myReviews :::::" + rv_pageMaker);
 		return "user/mywrite";
 	}
 	
-	/* 댓글 더보기 */
 
 }

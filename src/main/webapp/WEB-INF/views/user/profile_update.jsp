@@ -117,6 +117,10 @@ position: absolute;
 	border-radius: 15px;
 }
 
+.features.style2 .single-feature::before {
+	background-color : #ffffff; !important
+	}
+
 </style>
 
 <!-- 프로필 사진 미리보기 -->
@@ -142,12 +146,11 @@ $(document).ready(function () {
     }
     
 });
-/*  $("#imgFile").change(function(){
+  $("#imgFile").change(function(){
 	 readURL(this);
  }); 
  
- //
- // 업로드 버튼 활성화
+ //업로드 버튼 활성화
  function btnAbled() {
 	 $('#uploadBtn').attr('disabled', false);
  }
@@ -637,14 +640,13 @@ function execPostCode() {
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="others/faq.jsp"> 자주묻는 질문</a>
-                                
+                                <a href="faq.html"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345

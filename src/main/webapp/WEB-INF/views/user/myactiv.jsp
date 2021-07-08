@@ -307,7 +307,7 @@
                                     </div>
                                     </div>
                                     
-                                     <form id="actionForm" action="user/mypage/homegymCheck.do" method="get">
+                                     <form id="actionForm" action="user/mypage/myactiv.do" method="get">
                                      	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${wait_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${wait_pageMaker.cri.amount}">
@@ -396,7 +396,7 @@
                                           </c:otherwise>
                                     </c:choose>
                                                                 
-                                      <form id="actionForm" action="user/mypage/lendHomegym.do" method="get">
+                                      <form id="actionForm" action="user/mypage/myactiv.do" method="get">
                                       	<input type="hidden" name="memberId" value="${member_memberId}" id="ld_memberId"> 
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}" id="ld_pageNum">
@@ -510,7 +510,7 @@
 	                                                        </div>
 	      
 	                                           </c:forEach>
-	                                           		       <form id="actionForm" action="user/mypage/rentHomegym.do" method="get">
+	                                           		       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
 						                                     	<input type="hidden" name="memberId" value="${member_memberId }"/>
 						                                    	<input type="hidden" name="pageNum" value="${rt_pageMaker.cri.pageNum}">
 						                                    	<input type="hidden" name="amount" value="${rt_pageMaker.cri.amount}">
@@ -637,7 +637,7 @@
     </div>
     <!-- Course Details Section End -->
 
-    <!-- Start Footer Area -->
+   <!-- Start Footer Area -->
     <footer class="footer style2">
         <!-- Start Footer Bottom -->
         <div class="footer-bottom">
@@ -647,13 +647,13 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="/index.jsp"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href=""> 자주묻는 질문</a>
+                                <a href="faq.html"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
@@ -692,29 +692,17 @@
     		
     		var actionForm= $("#actionForm");
     		
-    		var memberId= $("#ld_memberId").val;
-    		var pageNum = $("#ld_pageNum").val;
     		
 			/* 페이징 */    		
-    	 	/* $(".pagination-list a").on("click",function(e){
+    	 	 $(".pagination-list a").on("click",function(e){
     			e.preventDefault();
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/myactiv.do");
     			
-    			$.ajax({
-    				url: "/user/mypage/lendHomegymList",
-    				dataTyp: "JSON",
-    				type:"POST",
-    				data: {
-							memberId : memberId,
-							pageNum : pageNum
-    					}
-    				contentType: "application/json",
-    			})
-    			
+    	
     			actionForm.submit();
-    		});  */
+    		}); 
 			
 			/* 결제 api */
     			$(document).on("click", "#acceptBtn > button ", function() {
@@ -761,41 +749,29 @@
 							alert(msg);
 						});
 					}); 
-    	});
 			
-			/* 	$("#overview-tab").on("click", function(e){
-	    			e.preventDefault();
+    		   	$("#overview-tab").on("click", function(e){
+    				e.preventDefault();
 
-	    			window.location.href="/user/mypage/myactiv.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab"
-				}); */
+    				window.location.href="/user/mypage/myactiv.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab"
+    			});
+    		   	
+    		   	$("#curriculum-tab").on("click", function(e){
+    				e.preventDefault();
+
+    				window.location.href="/user/mypage/myactiv.do?memberId=&pageNum=1&amount=4&selectedBtnId=curriculum-tab"
+    			});
+    			$("#instructor-tab").on("click", function(e){
+    				e.preventDefault();
+
+    				window.location.href="/user/mypage/myactiv.do?memberId=&pageNum=1&amount=4&selectedBtnId=instructor-tab"
+    			});
+    	});
 				
 
 	function fnGetBtnId(obj) {
 		selectedBtnId = obj.id;
 		$('#selectedBtnId').val(selectedBtnId);
-		
-		var url = '';
-		
-		if(selectedBtnId == 'overview-tab') {
-			url = 'user/mypage/homegymCheck.do';
-		} else if(selectedBtnId == 'curriculum-tab') {
-			url = 'user/mypage/lendHomegym.do';
-		} else if(selectedBtnId == 'instructor-tab') {
-			url = 'user/mypage/rentHomegym.do';
-		}
-		
-		$.ajax({
-			type: 'GET',
-			data: {'selectdBtnId' : selectedBtnId},
-			dataType: 'text',
-			url: url,
-			success: function() {
-				
-			},
-			error: function(e) {
-				console.log(e);
-			}
-		});
 	}
 
     </script>
