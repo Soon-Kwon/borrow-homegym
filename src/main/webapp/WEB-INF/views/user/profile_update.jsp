@@ -117,6 +117,26 @@ position: absolute;
 	border-radius: 15px;
 }
 
+.features.style2 .single-feature::before {
+	background-color : #ffffff; !important
+	}
+
+.checkBtn{
+	background-color: #7c97d8;
+    width: 100px;
+    height: 40px;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    
+    position: absolute;
+    left: 225px;
+    bottom: 363px;
+}
+
+.form-control {
+	width:84%;
+}
 </style>
 
 <!-- 프로필 사진 미리보기 -->
@@ -146,8 +166,7 @@ $(document).ready(function () {
 	 readURL(this);
  }); 
  
- //
- // 업로드 버튼 활성화
+ //업로드 버튼 활성화
  function btnAbled() {
 	 $('#uploadBtn').attr('disabled', false);
  }
@@ -414,26 +433,22 @@ function execPostCode() {
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                          <div class="sidebar-widget">
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
-                                    </form>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -481,7 +496,7 @@ function execPostCode() {
                      
                                      
                                      <!-- 폼 전송 -->      
-                   						 <form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
+                   		<form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="userId">
@@ -551,14 +566,13 @@ function execPostCode() {
                                                 </div>
                                                 <br>
                                                 <div class="form-group">
-                                                    <div class="col-xs-6">
                                                         <label for="nickname">
                                                             <h6>닉네임</h6>
                                                         </label>
-                                                        <input type="text" class="form-control" name="nickname" style="border-radius: 15px;"
+                                                        <input type="text" class="form-control" id="nickname" name="nickname" style="border-radius: 15px; width:200px;"
                                                          value="${member.nickname}">
+                                                         <button type="button" id="nickChk" class="checkBtn" onclick="nickCheck();">중복 확인</button>
                                                     </div>
-                                                </div>
                                                 <br>
                                                 
                                                
@@ -572,23 +586,7 @@ function execPostCode() {
                                                     </div>
                                                 </div>
                                                 <br>
-                                               <!--  <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="adress">
-                                                            <h6>주소</h6>
-                                                        </label>
-                                                        <p>
-                                                            <input type="text" class="zip_code" id="zipNo" readonly style="width:70%; height: 30px; border: 1px solid #ced4da; border-radius: .25rem;" >
-                                                            <button type="button" class="zip_code_btn"
-                                                                onclick="javascript:goPopup();" style="height: 28px;
-                                                                width: 20%;">우편번호</button>
-                                                            <br><br><br>
-                                                            <br>
-                                                            <input type="text" placeholder="나머지 주소를 입력해 주세요" id="addrDetail" style="width: 70%;height: 30px; border: 1px solid #ced4da; border-radius: .25rem;">
-                                                        </p>
-                                                    </div>
-                                                </div> -->
-                                                
+                                    
                                                 <div class="form-group">  
                                                 <h6>주소</h6>                 
 													<input class="form-control" style="width: 30%; display: inline; border-radius: 15px; margin-bottom: 5px;" name="zipCode" value="${member.zipCode}" type="text" readonly="readonly"  >
@@ -613,22 +611,18 @@ function execPostCode() {
                         </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-              </form>
-            
                 </section>
                 <!-- /End Features Area -->
-
-
-               
-            <!-- End Course Details Wrapper -->
 
         </div>
     </div>
     </div>
+    </div>
+    
     <!-- Course Details Section End -->
 
     <!-- Start Footer Area -->
-    <footer class="footer style2">
+  <footer class="footer style2">
         <!-- Start Footer Bottom -->
         <div class="footer-bottom">
             <div class="container">
@@ -637,14 +631,13 @@ function execPostCode() {
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="../assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="others/faq.jsp"> 자주묻는 질문</a>
-                                
+                                <a href="faq.html"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
@@ -657,6 +650,7 @@ function execPostCode() {
             </div>
         </div>
     </footer>
+
     <!--/ End Footer Area -->
 
     <!-- ========================= scroll-top ========================= -->
@@ -672,6 +666,46 @@ function execPostCode() {
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
     
+    <script>
+	function nickCheck() {
+		console.log("진입");
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var nickname = $('#nickname').val();
+		
+		if(nickname.search(/\s/) != -1) {
+			alert("닉네임에는 공백이 들어갈 수 없습니다.");
+		} else {
+			if(nickname.trim().length != 0) {
+				$.ajax ({
+					type: 'POST',
+					url: '/user/nickCheck',
+					data: nickname,
+					dataType: 'text',
+					contentType: "application/json; charset=UTF-8",
+					/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+		            },
+					success: function(data) {
+						if(data == 'OK') {
+							alert("사용할 수 있는 닉네임입니다.")
+						} else {
+							alert("중복된 닉네임 입니다.")
+						}
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			} else {
+				alert("닉네임을 입력해주세요.");
+			}
+		}
+	}
+    
+    
+    </script>
 
 </body>
 </html>

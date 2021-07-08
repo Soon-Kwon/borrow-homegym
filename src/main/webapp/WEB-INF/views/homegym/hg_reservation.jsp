@@ -32,29 +32,32 @@
 							<div class="row">
 								<div class="col-lg-8 col-8 select">
 									<label>성별</label> 
-									<input type="radio" id='male' name='sex' value='M' ><label for="male">남</label>
-									<input type="radio" id='female' name='sex' value='F'><label for="female">여</label>
+									<input type="radio" id='male' name='sex' value='M' ><label for="male">남성</label>
+									<input type="radio" id='female' name='sex' value='F'><label for="female">여성</label>
 								</div>
-								<div class="col-lg-10 col-10">
+								<div class="col-lg-6 col-12">
 									<div class="form-group">
 										<label>전화번호</label> <input name="phoneNum" type="text"
 											placeholder="전화번호를 입력해주세요." required="required">
 									</div>
 								</div>
-								<div class="col-lg-10 col-12">
+								<div class="col-lg-6 col-12">
 									<div class="form-group">
 										<label>예약가능날짜</label> <input type='date' id="rentalDate"
 											name='rentalDate' required />
 									</div>
 								</div>
-								<div class="col-lg-5 col-12">
+								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label>시작 시간 : </label> <input type='time' name='startTime' required/>
+										<label>시작 시간 : </label> 
+										<input class="timepicker" name='startTime' required/>
 									</div>
 								</div>
-								<div class="col-lg-5 col-12">
+								
+								<div class="col-lg-6 col-12">
 									<div class="form-group">
-										<label>종료 시간 : </label> <input type='time' name='endTime' required/><br>
+										<label>종료 시간 : </label> 
+										<input class="timepicker" name='endTime' required/><br>
 									</div>
 								</div>
 								<div class="col-12">
@@ -63,9 +66,10 @@
 										<textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?"></textarea>
 									</div>
 								</div>
+								<br>
 								<div class="col-12">
 									<div class="form-group button" style="text-align: center;">
-										<button type="submit" class="btn">전송하기</button>
+										<button type="submit" class="btn" id="reservationFormBtn">신청하기</button>
 									</div>
 								</div>
 							</div>
@@ -81,6 +85,9 @@
                             <h4>잠깐! 홈짐의 위치를 확인하세요</h4>
                             <p class="no-margin-bottom">${address.HAddr }
                         </div>
+						<div id="map" style="width: 100%; height: 350px;">
+						<!-- 맵 공간 -->
+						</div>
                         <!-- End Single Info -->
                     </div>
                 </div>
@@ -123,8 +130,114 @@
         </div>
     </footer>
     <!--/ End Footer Area -->
+    <script>
+    	/* 타임피커 이용한 시간 출력조정*/
+    	$(document).ready(function(){
+    		$('.timepicker').timepicker({
+    		    timeFormat: 'HH:mm',
+    		    interval: 30,
+    		    minTime: '9',
+    		    maxTime: '19:00',
+    		    defaultTime: '11',
+    		    startTime: '09:00',
+    		    dynamic: false,
+    		    dropdown: true,
+    		    scrollbar: true
+    		});
+    	});
+    </script>
+	<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
+		<script>
+		var container = document.getElementById('map');
+		
+		var options = {
+			center: new kakao.maps.LatLng(${address.HLocateY}, ${address.HLocateX}),
+			level: 3
+		};
+		// 맵 생성
+		var map = new kakao.maps.Map(container, options);
 
-
+		var imageSrc = '/resources/assets/images/logo/logo.png' // 마커이미지의 주소입니다    
+	    imageSize = new kakao.maps.Size(54, 69), // 마커이미지의 크기입니다
+	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	      
+		// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		    markerPosition = new kakao.maps.LatLng(${address.HLocateY}, ${address.HLocateX}); // 마커가 표시될 위치입니다
+	
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition, 
+		    image: markerImage // 마커이미지 설정 
+		});
+	
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);  
+	</script>
+	<script>
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		 if(dd<10){
+		        dd='0'+dd
+		    } 
+		    if(mm<10){
+		        mm='0'+mm
+		    } 
+	
+		today = yyyy+'-'+mm+'-'+dd;
+		
+		var maxDay = new Date();
+		var mdd = maxDay.getDate() + 21; 
+		var mmm = maxDay.getMonth()+1; 
+		var myyyy = maxDay.getFullYear();
+		
+		if( mmm == 1 || mmm == 3 || mmm == 5 || mmm == 7 || mmm == 8 || mmm == 10 || mmm ==12 ){
+			if(mdd > 31) {
+				mdd = mdd - 31;
+				mmm += 1
+				if ( mmm == 12 && mdd > 31){
+					myyyyy += 1
+					mmm = 1 
+					mdd = mdd - 31;
+				}
+			}
+		}
+		
+		if( mmm == 4 || mmm == 6 || mmm == 8 || mmm == 9 || mmm == 11 ){
+			if(mdd > 30) {
+				mdd = mdd - 30;
+				mmm += 1
+			}
+		}
+		
+		if( mmm == 2){
+			if(mdd > 28) {
+				mdd = mdd - 28;
+				mmm += 1
+			}
+			if(myyyy == 2024 || 2028 || 2032 || 2036){
+				if(mdd > 29) {
+					mdd = mdd -29;
+					mmm += 1
+				}
+			}
+		}
+		
+		 if(mdd<10){
+		        mdd='0'+mdd
+		    } 
+		    if(mmm<10){
+		       mmm='0'+mmm
+		    } 
+		    
+		var maxDate = myyyy+'-'+mmm+'-'+mdd;
+		
+		document.getElementById("rentalDate").setAttribute("min", today);
+		document.getElementById("rentalDate").setAttribute("max", maxDate);
+	</script>
     <!-- ========================= scroll-top ========================= -->
     <a href="#" class="scroll-top btn-hover">
         <i class="lni lni-chevron-up"></i>
@@ -137,9 +250,8 @@
     <script src="/resources/assets/js/tiny-slider.js"></script>
     <script src="/resources/assets/js/glightbox.min.js"></script>
     <script src="/resources/assets/js/main.js"></script>
-    <script src="/resources/assets/js/main.js"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    
+	<!-- JQuery Timepicker -->
+	<script src="/resources/assets/js/jquery.timepicker.min.js"></script>
 </body>
-
 </html>

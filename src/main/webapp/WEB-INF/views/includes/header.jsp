@@ -29,6 +29,68 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 	rel="stylesheet">
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="/resources/assets/css/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/resources/assets/css/main.css" />
+    <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
+    <link rel="stylesheet" href="/resources/assets/css/seok.css" />
+    <link rel="stylesheet" href="/resources/assets/css/chat.css" />
+    
+    <!-- ========================JQuery Timepicker =================== -->
+    <link rel="stylesheet" href="/resources/assets/css/jquery.timepicker.css" />
+    
+    <!-- message, 알림 관련 -->
+    <script src="/resources/assets/js/message.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    
+    <script type="text/javascript">
+    	var socket = null;
+    	
+    	// comma
+    	function pointToNumFormat(num){
+    		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	}
+    	
+    	$(document).ready(function(){
+    		// 웹소켓 연결
+    		sock = new SockJS("<c:url value="/notice-ws.do"/>");
+    		socket = sock;
+    		
+    		console.log(sock);
+    		
+    		// 데이터 전달 받았을 떄
+    		sock.onmessage = onMessage; // toast생성
+    		
+    	});
+    	
+    	// 실시간 알림 받았을 시
+    	function onMessage(evt){
+    		var data = evt.data
+    		
+    		// toast
+    		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+    	    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+    	    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+    	    toast += "<span aria-hidden='true'>&times;</span></button>";
+    	    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+    	    $("#msgStack").append(toast);
+    	    $(".toast").toast({"adnimation":true, "autohide":false});
+    	    $(".toast").toast('show');
+    	    $("#newNoticeCnt").text($("#newNoticeCnt").text()*1+1);
+    	}
+    	
+    </script>
+    
+	
+</head>
+<body>
+<script type="text/javascript">
 
 <!-- ========================= CSS here ========================= -->
 <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
