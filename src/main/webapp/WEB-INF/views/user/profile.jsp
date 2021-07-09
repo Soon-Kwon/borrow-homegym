@@ -188,7 +188,7 @@
                             <p id="sub" >🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-                                <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="myactiv.do?selectedBtnId=overview-tab" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->
@@ -202,7 +202,7 @@
                             <p id="sub" >📌 내가 쓴 리뷰</p>
                             <h1 style="margin-top: 20px;">${myReviewCnt}</h1>
                             <div class="button">
-                                <a href="mywrite.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
+                                <a href="mywrite.do?selectedBtnId=overview-tab" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- End Single Feature -->  

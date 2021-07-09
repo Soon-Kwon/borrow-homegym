@@ -205,8 +205,8 @@
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
 				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}" style="color:black;">${myReviews.hr_content}</a></td>
-					                                            <c:if test="${myReviewshr_score==1}">
-					                                            	<td>⭐</td><
+					                                            <c:if test="${myReviews.hr_score==1}">
+					                                            	<td>⭐</td>
 					                                            </c:if>
 					                                            <c:if test="${myReviews.hr_score==2}">
 					                                            	<td>⭐⭐</td>

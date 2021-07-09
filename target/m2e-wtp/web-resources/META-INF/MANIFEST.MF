@@ -1,10 +1,15 @@
 Manifest-Version: 1.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 Built-By: YIM
 Build-Jdk: 1.8.0_271
 =======
 Built-By: hayeon
 Build-Jdk: 15.0.2
 >>>>>>> 697f60a76e479307d72c5fa93ea24bb4c8fe5740
+=======
+Built-By: ￪ﾹﾀ￬ﾝﾀ￫ﾹﾄ
+Build-Jdk: 1.8.0_271
+>>>>>>> 1d2e747f05a460751e7ede8e5679438e9193bfe6
 Created-By: Maven Integration for Eclipse
 
