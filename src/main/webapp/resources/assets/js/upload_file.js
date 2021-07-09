@@ -44,6 +44,7 @@ function save() {
 	
 	$("textarea[name='tbProgram']").html(text);
 	
+		
 	/*var str = $("textarea[name='tbContent']").val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 	$("textarea[name='tbContent']").val(str);

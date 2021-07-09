@@ -33,48 +33,6 @@
 <style>
 
 
- p {
-	font-size: 17px;
-	line-height: 1.6;
-	letter-spacing: -0.6px;
-	margin: 16px 0;
-	word-break: break-all;
-}
-
-.popular-feed-loop {
-	width: 250px;
-	height: 250px;
-	border-radius: 100%;
-	overflow: hidden
-}
-
-.trainner {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.modal-content {
-	font-size: 100px;
-}
-
-.sidebar {
-	position: sticky;
-	top: 30px;
-}
-
-#re_plus {
-	background-color: #9ea9d8;
-	width: 150px;
-	height: 50px;
-	font-size: 20px;
-	color: white;
-	font-weight: bold;
-	position: relative;
-	left: 300px;
-	top: 20px;
-} 
-
 
 /* caroucsel  */
 
@@ -130,10 +88,11 @@
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!-- Start Blog Singel Area -->
-	<section class="section blog-single">
+	<section class="section blog-single" >
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-12">
+				<div>			
+					<div class="col-lg-8 col-12">
 					<br><br><br>
 
 					<div class="single-inner"></div>
@@ -204,7 +163,7 @@
 					<!-- test end -->
 					
 					<br>
-				<div class="post-details" >
+				<div class="post-details" style="boarder-radius:4px;" >
 					<h2 style="font-weight: bold; ">${trainerBoard.tbTitle}</h2>
 					<br><br>
 							<div class="detail-inner">
@@ -301,8 +260,9 @@
 						<!--/ End Single Widget -->
 					</div>
 				</aside>
-			</div>
-		</div>
+				</div>
+			</div> <!-- row -->
+		</div><!-- container -->
 	</section>
 
 
@@ -329,12 +289,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
-	<br />
-	<br />
-
 
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
@@ -366,8 +320,8 @@
 
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i
-		class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> 
+	<i class="lni lni-chevron-up"></i>
 	</a>
 	<!--========================= 캐러셀 ================================ -->
 	<!-- Bootstrap cdn 설정 -->

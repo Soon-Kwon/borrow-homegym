@@ -8,9 +8,6 @@
 <head>
 
 <style>
-p {
-	margin: 10px 5px;
-}
 
 .checkColor {
 	background-color: #9ea9d8;
@@ -367,18 +364,7 @@ ul li.tag-item {
     
     <script>
  	// 글자 입력 수 제한
-    $(document).ready(function() {
-    	$('#textarea').on('keyup', function() {
-
-    		if($(this).val().length < 100) {
-
-    	alert("글자수는 50자로 이상로 작성해주세요!");
-
-   /*  			$(this).val($(this).val().substring(0, 200)); */
-
-    		}
-
-    	});
+    
     	
         /* $('#textarea').on('keyup', function() {
             $('#test_cnt').html("("+$(this).val().length+" / 100)");
@@ -392,9 +378,7 @@ ul li.tag-item {
                 }
             } */
            
-        });
-    });
-        
+   
     </script>
 
 	<script>
