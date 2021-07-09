@@ -485,7 +485,7 @@
 				                                                                 <button class="btn" id="payOK">결제 완료</button>
 				                                                            </div>
 				                                                             <div class="button review-btn">
-				                                                                  <button class="btn" id="reviewBtn" onClick="location.href='/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}'">리뷰쓰기</button>
+				                                                                  <button class="btn" id="reviewBtn" onClick="location.href='/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}#count'">리뷰쓰기</button>
 				                                                              </div> 
 																		</c:if>   
 																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 

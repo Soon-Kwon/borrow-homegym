@@ -132,4 +132,16 @@
 			where hb.h_id = #{hId} and payYN = 'Y'
 		]]>
 	</select>
+	
+	<!-- 메시지 프로필 불러오기 -->
+	<select id="getProfileImg" resultType="com.homegym.biz.member.MemberVO">
+		<![CDATA[
+		select m.memberId, m.image as imagePath
+		from homegym_board as hb
+		join member as m
+		on hb.memberId = m.memberId
+		where hb.memberId = #{memberId} 
+		LIMIT 1
+		]]>
+	</select>
 </mapper>

@@ -593,7 +593,7 @@
 	            },
 				success: function(data) {
 					if(data == 'OK') {
-						alert('글 작성에 성공하였습니다.');
+						//alert('글 작성에 성공하였습니다.');
 						window.location.replace("/homegym/homegymListView.do?pageNum=1&amount=4&keyword=");
 					}
 				},
