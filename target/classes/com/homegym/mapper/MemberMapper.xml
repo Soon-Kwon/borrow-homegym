@@ -112,6 +112,7 @@
 		WHERE 
 			memberId =#{memberId}
 	</update>
+	
 	<!-- 회원 탈퇴  처리-->
 	<delete id="memberDelete"  parameterType="member">
 		DELETE 
@@ -135,6 +136,7 @@
 		FROM homegym_board b INNER JOIN homegym_detail d
         ON b.h_id = d.h_id
 		WHERE memberId = #{memberId}
+		
 	</select>
 	
 	<!-- 내가 빌린 홈짐 갯수 -->
@@ -152,6 +154,7 @@
 		FROM homegym_board
 		WHERE memberId=#{memberId}
 	</select>
+	
 	<!-- 내가 쓴 댓글 갯수 -->
 	<select id="getMyAllReviewCnt" resultType="int">
 		SELECT 
@@ -168,63 +171,6 @@
 		WHERE memberId=#{memberId} 
 	</select> 
 	
-	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardList" resultType="trainer" parameterType="String">
-		SELECT *
-		FROM (
-			SELECT *
-			FROM trainer_board
-			WHERE memberId= #{memberId}
-			ORDER BY
-				tbRegDate 
-			)as tb
-  		LIMIT #{cri.skip}, #{cri.amount}
-
-	</select>
-
-	
-	
-	<!-- 내가 빌려준 홈짐 리스트 -->
-	<select id="getMyLendHG" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board
-		WHERE memberId = #{memberId}
-	</select>
-	
-	<!-- 내가 빌린 홈짐 리스트-->
-	<select id="getMyRentHG" resultType="hashmap" parameterType="String">
-		SELECT b.h_title,
-		 b.h_addr,
-		 d.rental_date,
-		 min(f.uuid) as uuid,
-		min(f.fileName) as fileName,
-		max(f.uploadPath) as uploadPath
-		FROM homegym_board b 
-		INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		INNER JOIN homegym_attach f
-		ON b.h_id = f.h_id
-		WHERE borrowerId= #{memberId}
-		group by b.h_title, b.h_addr, d.rental_date
-		ORDER BY d_id DESC
-	</select>
-	
-	<!-- 진행중인 홈짐 리스트 -->
-<!-- 	<select id="getMyProgressHomegym" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board b INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		WHERE memberId = #{memberId} OR borrowerId = #{memberId} 
-			AND status = 'ing'
-	</select> -->
-	
-	<!-- 완료된 홈짐 리스트 -->
-<!-- 	<select id="getMyFinishedHomegym" resultType="homegymVO" parameterType="String">
-		SELECT
-		FROM
-		ON
-		WHERE
-	</select> -->
 	
 	<!-- 결제 여부 변경 -->
 	<update id="payUpdate" parameterType="homegymDetail">
@@ -274,6 +220,7 @@
 				FROM homegym_board b INNER JOIN homegym_detail d
 				ON b.h_id = d.h_id
                 WHERE memberId = #{memberId}
+                ORDER BY d.d_id DESC
 			)as wh
 		LIMIT #{cri.skip}, #{cri.amount}
 	]]>
@@ -324,6 +271,7 @@
  		 ]]>
 	</select>
 	
+
 	<!-- 내가 쓴 게시물 목록  -->
 	<select id="getMyBoardPaging" resultType="trainer" >
 		<![CDATA[

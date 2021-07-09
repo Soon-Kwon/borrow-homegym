@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
    <!--Header -->
    <%@ include file="/WEB-INF/views/includes/header.jsp" %>
@@ -32,8 +33,8 @@
 							<div class="row">
 								<div class="col-lg-8 col-8 select">
 									<label>성별</label> 
-									<input type="radio" id='male' name='sex' value='M' ><label for="male">남성</label>
-									<input type="radio" id='female' name='sex' value='F'><label for="female">여성</label>
+									<input type="radio" id='male' name='sex' value='M' required ><label for="male">남성</label>
+									<input type="radio" id='female' name='sex' value='F' required><label for="female">여성</label>
 								</div>
 								<div class="col-lg-6 col-12">
 									<div class="form-group">
@@ -63,7 +64,7 @@
 								<div class="col-12">
 									<div class="form-group message">
 										<label>메세지📣</label>
-										<textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?"></textarea>
+										<textarea name="message" placeholder="호스트에게 문의할 사항이 있으신가요?" required></textarea>
 									</div>
 								</div>
 								<br>
@@ -78,19 +79,34 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
-                    <div class="contact-info">
+                	<div class="contact-info">
+                		<div class="single-info">
+							<div id="rez-timetable">📍이미 마감된 시간&nbsp;&nbsp;&nbsp;</div>
+							<br> 
+							<c:forEach items="${reservation}" var="rez">
+								<div id="rez-timetable-date">${rez.rentalDate }</div>
+								<div id="rez-timetable-time">
+								<fmt:parseDate pattern= "HH:mm" var="dateValue" value="${rez.startTime }" />
+								<fmt:formatDate value="${dateValue}" pattern="HH:mm"/>
+								~ 
+								<fmt:parseDate pattern= "HH:mm" var="dateValue2" value="${rez.endTime }" />
+								<fmt:formatDate value="${dateValue2 }" pattern="HH:mm"/>
+								</div>
+								<br>
+							</c:forEach>
+                		</div>
+                	</div>
+                	<div class="contact-info">
                         <!-- Start Single Info -->
-                        <div class="single-info">
-                            <i class="lni lni-map-marker"></i>
-                            <h4>잠깐! 홈짐의 위치를 확인하세요</h4>
-                            <p class="no-margin-bottom">${address.HAddr }
-                        </div>
-						<div id="map" style="width: 100%; height: 350px;">
-						<!-- 맵 공간 -->
+                       	 <div class="single-info">
+                            <span id="rez-stop"><i id="icon" class="lni lni-map-marker"></i>&nbsp;&nbsp;잠깐! 홈짐의 위치를 확인하세요</span>
+							<div id="map" style="width: 100%; height: 350px;">
+                      	  </div>
+                            <p class="no-margin-bottom" id="rez-stop-addr">${address.HAddr }
 						</div>
                         <!-- End Single Info -->
                     </div>
-                </div>
+				</div>
             </div>
         </div>
     </section>

@@ -40,8 +40,8 @@ public class HomegymController {
 	private HomegymService homegymService;
 
 	
-	private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
-	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
+	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
+	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
 	//private static final String UPLOAD_FOLDER = "D:/upload/";
 	// private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
 	// private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";
@@ -103,11 +103,14 @@ public class HomegymController {
 			@RequestParam("hId") int hId ) {
 		
 		HomegymVO detail = homegymService.get(vo, hId);
-		
+		// 상세 게시글 정보 
 		model.addAttribute("board", detail);
 
 		// 리뷰 쓸 권한이 있는지 확인하기
 		model.addAttribute("authToWriteReview", homegymService.authToWriteReview(hId));
+		
+		// 프로필 이미지 보여주기
+		model.addAttribute("profile", homegymService.getProfileImg(detail));
 		
 		log.info("상세화면 정보: " + model);
 		return "/homegym/hg_details";

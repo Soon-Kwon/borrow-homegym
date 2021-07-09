@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
-    <link rel="stylesheet" href="/resources/assets/css/chat.css" />
+    <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
     
     <!-- ========================JQuery Timepicker =================== -->
     <link rel="stylesheet" href="/resources/assets/css/jquery.timepicker.css" />
