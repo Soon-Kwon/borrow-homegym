@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class CustomAuthenticationProviderKakao implements AuthenticationProvider {
 	
 	@Autowired
     private UserDetailsService service;
@@ -24,7 +24,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         
         CustomUserDetails user = (CustomUserDetails) service.loadUserByUsername(memberId);
         System.out.println(user.getNickname());
-        System.out.println("11111111111111111111111111111"+user.getImagePath());
+        
         if(!matchPassword(password, user.getPassword())) {
             throw new BadCredentialsException(memberId);
         }
@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         System.out.println(user.getNickname());
         System.out.println(user.getName());
         System.out.println(user.getMemberId());
-        return new UsernamePasswordAuthenticationToken(memberId, password, user.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
     }
  
     @Override

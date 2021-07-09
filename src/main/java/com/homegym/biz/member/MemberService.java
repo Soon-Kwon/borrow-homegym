@@ -16,6 +16,12 @@ public interface MemberService {
 	//회원가입
     public void memberJoin(MemberVO member) throws Exception;
     
+    //카카오 회원가입
+    public void memberJoinKakao(CustomUserDetails kakaoMember) throws Exception;
+    
+    //카카오 프로필 정보가져오기
+  	public CustomUserDetails getUserKakao(String memberId);
+    
     //아이디 중복 체크
   	public int idCheck(String memberId) throws Exception;
   	
@@ -38,10 +44,10 @@ public interface MemberService {
 	public int userImgDelete(String memberId);
 	
 	//회원 탈퇴 처리
-	public int memberDelete(MemberVO vo);
+	public int memberDelete(CustomUserDetails vo);
 	
 	//비밀번호 체크
-	public boolean checkPw(String memberId,String password);
+	public boolean checkPw(String memberId, String password);
 
 	//내가 쓴 게시글 리스트 조회
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId, Criteria cri);
@@ -87,5 +93,7 @@ public interface MemberService {
 	
 	//홈짐 예약 요청 조회
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId);
+
+	
 
 }
