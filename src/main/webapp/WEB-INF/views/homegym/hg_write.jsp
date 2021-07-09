@@ -36,23 +36,23 @@
 		<section id="contact-us" class="contact-us section">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-12">
+					<div class="col-lg-8 col-12" style="float: none; margin: 0 auto;">
 						<div class="form-main">
 							<h3 class="title">
-								<span>내 홈짐을 공유해보세요!</span>홈짐등록 게시판
+								<span>내 홈짐을 공유해보세요!</span>홈짐등록하기
 							</h3>
 							<form id="submitForm" class="form">
 							<input type="hidden" name="nickName" value="${member_nickName}"/>
-							<input type="hidden" name="memberId" value="${member_memberId }"/>
+							<input type="hidden" name="memberId" value="${member_memberId}"/>
 								<div class="row">
-									<div class="col-lg-12 col-12">
+									<div class="col-lg-10 col-12">
 										<div class="form-group">
 											<label>글제목</label> <input name="hTitle" type="text" id="title" placeholder=""
 												required="required">
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-10">
+									<div class="col-lg-8 col-10">
 										<div class="form-group">
 											<label>주소</label> <input type="text" id="sample5_address"
 												class="form-control" name="hAddr" placeholder="주소" required="true"
@@ -62,81 +62,20 @@
 										<input type="hidden" id="y-coordinate" name="hLocateY" />
 									</div>
 									<div class="col-lg-2 col-2">
-										<input type="button" onclick="sample5_execDaumPostcode()"
-											class="btn btn-warning" style="margin-top: 28px; padding: .80rem .100rem;"
-											value="주소 검색"> <br>
+										<input type="button" onclick="sample5_execDaumPostcode()" id="addrBtn"
+											class="btn btn-warning" value="주소 검색"> <br>
 									</div>
-									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none">
+									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; margin-left: 30px; display: none;">
 									</div>
-									<p></p>
 									<div class="row">
 										<div class="col-lg-4 col-11">
 											<div class="form-group">
-												<label>가격 책정</label><input type="text" id="price" class="form-control"
+												<br><label>가격 책정</label><input type="text" id="price" class="form-control"
 													name="hPrice" placeholder="가격" required="true" />
 											</div>
 										</div>
-										<div class="col-lg-1 col-1 font-general" style="margin-top: 39px;">원</div>
+											<div class="col-lg-1 col-1 font-general" style="margin-top: 27px;"><br>원</div>
 									</div>
-									<!-- 사용 가능 날짜 설정 (기능 추가시 사용) 
-									<div class="row">
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>예약가능날짜</label>
-												<input type='date' id="now_date" name='today' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>시작 시간 : </label>
-												<input type='time' />
-											</div>
-										</div>
-										<div class="col-lg-3 col-12">
-											<div class="form-group">
-												<label>종료 시간 : </label>
-												<input type='time' /><br>
-											</div>
-										</div>
-										<div class="col-lg-2 col-12" style="justify-content: center;">
-											<button type="button" class="btn btn-warning btnAdd"
-												style="margin-top: 1.6rem; padding: .80rem .100rem;"
-												onclick="add_item()">추가하기</button>
-										</div>
-									</div>
-									<div id="append-form" style="display:none">
-										<div class="row">
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>예약가능날짜</label>
-													<input type='date' id="now_date" name='today' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>시작 시간 : </label>
-													<input type='time' />
-												</div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<div class="form-group">
-													<label>종료 시간 : </label>
-													<input type='time' /><br>
-												</div>
-											</div>
-											<div class="col-lg-2 col-12">
-												<button type="button" class="btn btn-warning btnAdd"
-													style="margin-top: 28px; padding: .80rem .100rem;"
-													onclick="remove_item(this)">삭제하기</button>
-											</div>
-										</div>
-									</div>
-									
-									
-									추가 공간
-									<div class="row" id="field">
-									</div>
-									-->
 									<div class="row home_options" style="margin-bottom: 18px;">
 										<div class="btn-group-toggle" data-toggle="buttons">
 											<p>
@@ -209,8 +148,8 @@
 										</div>
 									</div>
 									<div class="col-12">
-										<div class="form-group button">
-											<button class="btn" type="button" onclick="save();">게시물 등록</button>
+										<div class="form-group button" style="text-align: center;">
+											<button class="btn" type="button" style="background-color: #656f98;" onclick="save();">게시물 등록</button>
 										</div>
 									</div>
 								</div>
@@ -281,6 +220,11 @@
 						}
 					}				
 				});
+				
+				// input창에서 숫자 천단위 콤마 적용하기 & 숫자만 입력받기
+				$("input:text[name='hPrice']").on("keyup", function(){
+					$(this).val(addComma($(this).val().replace(/[^0-9]/g,"")));
+				})
 				
 				var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				var maxSize = 5242880;
@@ -539,6 +483,20 @@
 		</script>
 		<script>
 		
+		// 천단위마다 콤마생성
+		function addComma(data){
+		    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 콤마제거 함수
+		function removeCommas(data){
+			if(!data || data.length == 0){
+		    	return "";
+		    }else{
+		    	return data.split(",").join("");
+		    }
+		}
+		
 		// 글 작성후 버튼 클릭시 실행되는 save()함수
 		
 		function save(){
@@ -568,6 +526,12 @@
 			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 
 			$('textarea').val(str);
+			
+			// 가격 콤마 제거
+			
+			var originalPrice = removeCommas($("#price").val());
+			
+			$("#price").val(originalPrice);
 			
 			// 첨부파일 hidden	 
 			
@@ -613,7 +577,7 @@
 			var formObj = $("#submitForm");
 			
 			formObj.append(str);
-						
+			
 			var data = formObj.serialize();
 			var csrfHeaderName = "${_csrf.headerName}";
 			var csrfTokenValue = "${_csrf.token}";
@@ -629,7 +593,7 @@
 	            },
 				success: function(data) {
 					if(data == 'OK') {
-						alert('글 작성에 성공하였습니다.');
+						//alert('글 작성에 성공하였습니다.');
 						window.location.replace("/homegym/homegymListView.do?pageNum=1&amount=4&keyword=");
 					}
 				},

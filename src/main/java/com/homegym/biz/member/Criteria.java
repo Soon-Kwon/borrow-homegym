@@ -12,6 +12,7 @@ public class Criteria {
 	private int pageNum;
 	//한페이지당 보여줄 게시물 갯수
 	private int amount;
+	private String selectedBtnId;
 	
 	//스킵할 게시물수 (pageNume-1) * amount
 	private int skip;

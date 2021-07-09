@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="selectUserById" resultType="com.homegym.security.CustomUserDetails">            
-    Select * from member WHERE memberId = #{memberId}
+    Select memberId, password, name, nickname, phone, zipCode, address, image as imagePath, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
     </select>
     
     <select id="getUserKakao" resultType="com.homegym.security.CustomUserDetails">            
@@ -118,6 +118,7 @@
 		WHERE 
 			memberId =#{memberId}
 	</update>
+	
 	<!-- 회원 탈퇴  처리-->
 	<delete id="memberDelete"  parameterType="member">
 		DELETE 
@@ -141,6 +142,7 @@
 		FROM homegym_board b INNER JOIN homegym_detail d
         ON b.h_id = d.h_id
 		WHERE memberId = #{memberId}
+		
 	</select>
 	
 	<!-- 내가 빌린 홈짐 갯수 -->
@@ -158,6 +160,7 @@
 		FROM homegym_board
 		WHERE memberId=#{memberId}
 	</select>
+	
 	<!-- 내가 쓴 댓글 갯수 -->
 	<select id="getMyAllReviewCnt" resultType="int">
 		SELECT 
@@ -174,54 +177,16 @@
 		WHERE memberId=#{memberId} 
 	</select> 
 	
-	<!-- 내가 쓴 게시물 목록  -->
-	<select id="getMyBoardList" resultType="trainer" parameterType="String">
-		SELECT *
-		FROM (
-			SELECT *
-			FROM trainer_board
-			WHERE memberId= #{memberId}
-			ORDER BY
-				tbRegDate 
-			)as tb
-  		LIMIT #{cri.skip}, #{cri.amount}
-
-	</select>
-
 	
-	
-	<!-- 내가 빌려준 홈짐 리스트 -->
-	<select id="getMyLendHG" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board
-		WHERE memberId = #{memberId}
-	</select>
-	
-	<!-- 내가 빌린 홈짐 리스트-->
-	<select id="getMyRentHG" resultType="hashmap" parameterType="String">
-		SELECT b.*, d.*
-		FROM homegym_board b INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		WHERE borrowerId= #{memberId}
-
-	</select>
-	
-	<!-- 진행중인 홈짐 리스트 -->
-<!-- 	<select id="getMyProgressHomegym" resultType="homegymVO" parameterType="String">
-		SELECT *
-		FROM homegym_board b INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		WHERE memberId = #{memberId} OR borrowerId = #{memberId} 
-			AND status = 'ing'
-	</select> -->
-	
-	<!-- 완료된 홈짐 리스트 -->
-<!-- 	<select id="getMyFinishedHomegym" resultType="homegymVO" parameterType="String">
-		SELECT
-		FROM
-		ON
+	<!-- 결제 여부 변경 -->
+	<update id="payUpdate" parameterType="homegymDetail">
+		UPDATE 
+			homegym_detail
+		SET
+			payYN = #{payYN}
 		WHERE
-	</select> -->
+			d_id = #{dId}
+	</update>
 	
 	<!-- 홈짐 수락여부 상태값 변경 -->
 	<update id="HomegymAcceptUpdate" parameterType="HashMap" >
@@ -250,6 +215,69 @@
 	
 	</select>
 	
+
+
+	<!-- 홈짐 관리 리스트 페이징 -->
+	<select id="getWaitingHGPaging" resultType="hashMap">
+	<![CDATA[
+		SELECT *
+		FROM (
+				SELECT b.h_title,b.h_addr,d.rental_date, d.d_id,d.agreeYN
+				FROM homegym_board b INNER JOIN homegym_detail d
+				ON b.h_id = d.h_id
+                WHERE memberId = #{memberId}
+                ORDER BY d.d_id DESC
+			)as wh
+		LIMIT #{cri.skip}, #{cri.amount}
+	]]>
+	</select>
+	
+	
+	<!-- 빌려준 홈짐 리스트 페이징   -->
+	<select id="getLendHGPaging" resultType="HashMap">
+	<![CDATA[
+	  		SELECT *
+			FROM (
+				 SELECT
+				 	 b.h_title,
+					 b.h_addr,
+					 b.h_regdate,
+					 b.h_id,
+					 min(f.uuid) as uuid,
+					 min(f.fileName) as fileName,
+					 max(f.uploadPath) as uploadPath
+				FROM homegym_board b INNER JOIN homegym_attach f
+					ON b.h_id = f.h_id
+				WHERE memberId= #{memberId}
+					GROUP BY b.h_title, b.h_addr, b.h_regdate
+					ORDER BY b.h_regdate DESC
+				)as lh
+	  		LIMIT #{cri.skip}, #{cri.amount}
+ 		 ]]>
+	</select>
+	
+	<!-- 빌린 홈짐 리스트 페이징 -->
+		<select id="getRentdHGPaging" resultType="HashMap">
+	  	<![CDATA[
+	  		SELECT *
+	  		FROM (
+	  			 SELECT b.h_id, b.h_price, b.h_title,b.h_addr,d.rental_date,
+		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum, 
+	                    min(f.uuid) as uuid,
+						min(f.fileName) as fileName,
+						max(f.uploadPath) as uploadPath
+					FROM homegym_board b INNER JOIN homegym_detail d
+						ON b.h_id = d.h_id
+					INNER JOIN homegym_attach f ON b.h_id = f.h_id
+					WHERE borrowerId= #{memberId}
+					GROUP BY d.d_id
+					ORDER BY d.d_id DESC
+				)as rh
+	  		LIMIT #{cri.skip}, #{cri.amount}
+ 		 ]]>
+	</select>
+	
+
 	<!-- 내가 쓴 게시물 목록  -->
 	<select id="getMyBoardPaging" resultType="trainer" >
 		<![CDATA[
@@ -263,76 +291,24 @@
   		LIMIT #{cri.skip}, #{cri.amount}
   		]]>
 	</select>
-
-	<!-- 홈짐 관리 리스트 페이징 -->
-	<select id="getWaitingHGPaging" resultType="hashMap">
-	<![CDATA[
-		SELECT *
-		FROM (
-				SELECT b.h_title,b.h_addr,d.rental_date, d.d_id,d.agreeYN
-				FROM homegym_board b INNER JOIN homegym_detail d
-				ON b.h_id = d.h_id
-                WHERE memberId = #{memberId}
-			)as wh
-		LIMIT #{cri.skip}, #{cri.amount}
-	]]>
-	</select>
-	
-	
-	<!-- 빌려준 홈짐 리스트 페이징   -->
-	<select id="getLendHGPaging" resultType="HashMap">
-<!--   	<![CDATA[
-  		SELECT *
-  		FROM (
-  				SELECT distinct b.h_id,b.h_title,b.h_addr,b.h_cnt
-				FROM homegym_board b INNER JOIN homegym_detail d
-				WHERE memberId = #{memberId}
-			)as lh
-  		LIMIT #{cri.skip}, #{cri.amount}
-  				
-  ]]> -->
-		  <![CDATA[
-		  SELECT * 
-		  from(
-		  		SELECT distinct h_id,h_title,h_addr,h_cnt
-		  		FROM homegym_board 
-		  		WHERE memberId=#{memberId}
-		  	)as lh
-		  LIMIT #{cri.skip}, #{cri.amount}
-		  ]]>
-	</select>
-	
-	<!-- 빌린 홈짐 리스트 페이징 -->
-		<select id="getRentdHGPaging" resultType="HashMap">
-  	<![CDATA[
-  		SELECT *
-  		FROM (
-  				SELECT b.memberId,b.h_title,b.h_addr,d.payYN,d.rental_date,d.agreeYN,b.h_id
-				FROM homegym_board b INNER JOIN homegym_detail d
-				ON b.h_id = d.h_id
-				WHERE borrowerId= #{memberId}
-			)as rh
-  		LIMIT #{cri.skip}, #{cri.amount}
-  				
-  ]]>
-	</select>
 	
 	<!-- 내가 쓴 리뷰 리스트 조회-->
-	<select id="getMyReviews" resultType="HashMap">
-		SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate
-		FROM homegym_board hb INNER JOIN homegym_review hr
-		ON hb.h_id = hr.h_id
-		WHERE borrowerId= #{memberId}
+	<select id="getMyReviewsPaging" resultType="HashMap">
+	<![CDATA[
+	SELECT *
+		FROM( 
+			SELECT hb.h_title,hr.hr_content,hr.hr_score,hr.hr_regdate,hr.h_id
+			FROM homegym_board hb INNER JOIN homegym_review hr
+			ON hb.h_id = hr.h_id
+			WHERE borrowerId= #{memberId}
+			ORDER BY hr_regdate DESC
+		)as rv
+		LIMIT #{cri.skip}, #{cri.amount}
+		]]>
 	</select>
 	
-	<!-- 요청 홈짐예약 폼 조회 ( + 07/02 수정중) -->
+	<!-- 요청 홈짐예약 폼 조회 -->
 	<select id="getMyRequest" resultType="com.homegym.biz.homegym.HomegymDetailVO">
-		<!-- SELECT *
-		FROM homegym_board b INNER JOIN homegym_detail d
-		ON b.h_id = d.h_id
-		where b.memberId= #{memberId}
-		and d.d_id=#{d_id}; -->
-		
 		SELECT * 
 		FROM homegym_detail
 		WHERE d_id = #{dId}

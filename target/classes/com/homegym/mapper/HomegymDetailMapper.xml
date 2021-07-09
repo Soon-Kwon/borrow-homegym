@@ -7,4 +7,17 @@
 		VALUES (#{hId}, STR_TO_DATE(#{startTime}, '%H:%i'), STR_TO_DATE(#{endTime}, '%H:%i')
 		, STR_TO_DATE(#{rentalDate}, '%Y-%m-%d'), #{borrowerId}, #{sex}, #{phoneNum}, #{message})
 	</insert>
+	
+	<select id="selectAddr" resultType="com.homegym.biz.homegym.HomegymVO">
+		SELECT h_addr, h_locate_x, h_locate_y
+		FROM homegym_board
+		WHERE h_id = #{hId}
+	</select>
+	
+	<select id="selectReservationList" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+		SELECT start_time, end_time, rental_date 
+		FROM homegym_detail
+		WHERE h_id = #{hId} AND agreeYN = 'Y'
+		ORDER BY rental_date ASC
+	</select>
 </mapper>

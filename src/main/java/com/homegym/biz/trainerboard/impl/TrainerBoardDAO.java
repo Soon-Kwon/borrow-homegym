@@ -2,6 +2,7 @@ package com.homegym.biz.trainerboard.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class TrainerBoardDAO {
 	}
 
 	// 글삭제
-	public void deleteBoard(TrainerBoardVO vo) {
+	public void deleteBoard(int tno) {
 		System.out.println("===>Mybatis로  게시글 삭제 기능 처리");
-		mybatis.delete("TrainerBoardDAO.deleteBoard", vo);
+		mybatis.delete("TrainerBoardDAO.deleteBoard", tno);
 	}
 
 	// 글 상세조회
@@ -60,10 +61,10 @@ public class TrainerBoardDAO {
 		return mybatis.selectList("TrainerBoardDAO.getTbListPaging", params);
 	}
 
-	public int getTotalCount(TrainerCriteria cri) {
+	public int getTotalCount(Map<String, Object> paramMap) {
 
 		System.out.println("DAO의 getTotalCount()) 처리;");
-		return mybatis.selectOne("TrainerBoardDAO.getTotalCount", cri);
+		return mybatis.selectOne("TrainerBoardDAO.getTotalCount", paramMap);
 	}
 
 	// 파일 업로드

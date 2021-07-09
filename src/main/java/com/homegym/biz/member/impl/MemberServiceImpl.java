@@ -175,7 +175,12 @@ public class MemberServiceImpl implements MemberService {
 //	}
 
 
-	
+	/*결제 여부 변경*/
+	@Override
+	public void payUpdate(HomegymDetailVO vo) {
+		 memberDAO.payUpdate(vo);
+	}
+
 	/* 홈짐 수락 여부 변경*/
 	@Override
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
@@ -183,6 +188,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	/*  내 게시글 , 리뷰 내역  */
+	
 	// 내가 쓴 게시글 조회 
 	@Override
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
@@ -191,8 +197,8 @@ public class MemberServiceImpl implements MemberService {
 
 	//내가 쓴 리뷰 조회
 	@Override
-	public List<Map<String, String>> getMyReviews(String memberId) {
-		return memberDAO.getMyReviews(memberId);
+	public List<Map<String, String>> getMyReviewsPaging(String memberId,Criteria cri) {
+		return memberDAO.getMyReviewsPaging(memberId,cri);
 	}
 
 	//홈짐 요청 폼 조회
@@ -200,7 +206,8 @@ public class MemberServiceImpl implements MemberService {
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId) {
 		return memberDAO.getMyRequest(vo,hId);
 	}
-	
+
+
 
 
 

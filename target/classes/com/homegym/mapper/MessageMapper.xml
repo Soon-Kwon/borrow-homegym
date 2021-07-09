@@ -25,14 +25,19 @@
 	</select>
 
 
-	<!-- 메세지 list에서 상대방 이미지(프로필사진) 가져오기 -->
+	<!-- 메세지 list에서 상대방 이미지(프로필사진) 경로 가져오기 -->
+	<!-- DB 컬럼인 image는 실제 저장된 경로, MemberVO에서 imagePath와 대응
+			multipart파일은 꺼내올 수 없음  -->
 	<select id="getOtherImage" parameterType="message"
 		resultType="String">
-		SELECT IMAGE FROM MEMBER
+		SELECT image AS imagePath 
+		FROM MEMBER
 		<choose>
+			<!-- 로그인한 유저가 보낸사람일 때, -->
 			<when test="sendId == curId">
 				WHERE MEMBERID = #{recvId}
 			</when>
+			<!-- 로그인한 유저가 받은 사람일 때, -->
 			<otherwise>
 				WHERE MEMBERID = #{sendId}
 			</otherwise>
@@ -51,8 +56,9 @@
 			<when test="msgRoomNo != 0">
 				WHERE MSGROOMNO = #{msgRoomNo}
 			</when>
-			<!-- 기존에 없던 방이면 msgRoomNo = 0인 경우 -->
+			<!-- 기존에 없던 방이면 msgRoomNo = 0인 경우 현재 Id -->
 			<otherwise>
+			<!-- 현재 로그인한 Id 보낸Id이거나, 받는 Id일 때 -->
 				WHERE (RECVID = #{recvId} AND SENDID = #{curId})
 				OR (SENDID = #{sendId} AND RECVID = #{curId})
 			</otherwise>
@@ -78,13 +84,30 @@
 		</choose>
 	</update>
 
-	<!-- 메세지리스트(왼쪽)에서 메세지 보내기 -->
+	<!-- 메세지리스트(왼쪽)에서 메세지 보내기(대화내용 추가) -->
 	<insert id="sendMsgInList" parameterType="message">
-		INSERT INTO MESSAGE VALUES(NULL, #{msgRoomNo}, #{sendId}, #{recvId}, 
-		#{msgContent}, NOW(), NOW(), 0)
-		<!-- <choose> <when test="msgRoomNo != 0"> INSERT INTO MESSAGE VALUES(NULL, 
-			#{msgRoomNo}, #{recvId}, #{sendId}, #{content}, NOW(), NOW(), 0) </when> 
-			</choose> -->
+		
+		<choose> 
+			<!-- 기존에 방이 있는 경우 -->
+			<when test="msgRoomNo != 0"> 
+				INSERT INTO MESSAGE 
+				VALUES(NULL, #{msgRoomNo}, #{sendId}, #{recvId}, #{msgContent}, NOW(), NOW(), 0) 
+			</when> 
+			
+			<!-- 기존에 방이 없는 경우 -->
+			<otherwise>
+				INSERT INTO MESSAGE
+				VALUES(
+				NULL,
+				(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP)  +1,
+				#{sendId},
+				#{recvId},
+				#{msgContent},
+				NOW(),
+				NOW(),
+				0);
+			</otherwise>
+		</choose>
 	</insert>
 
 	<!-- 채팅방번호 최댓값 구하기 -->
@@ -104,13 +127,27 @@
 
 	<!-- 기존 메세지 내역의 "채팅방번호" 가져오기 -->
 	<select id="getMsgRoomNo" parameterType="message"
-		resultType="int">
+		resultType="String">
 		SELECT MSGROOMNO FROM MESSAGE
 		WHERE (RECVID = #{recvId}
 		AND SENDID = #{sendId})
 		OR (RECVID = #{sendId} AND SENDID = #{recvId})
 		LIMIT 0,1
 	</select>
+	
+	<!-- 기존 채팅방이 없으면 채팅방 개설하기 -->
+	<insert id="makeNewMsgRoom" >
+		INSERT INTO MESSAGE
+		VALUES(
+			NULL,
+			(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP)  +1,
+			#{sendId},
+			#{recvId},
+			#{msgContent},
+			NOW(),
+			NOW(),
+			0);
+	</insert>
 	
 	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
 	<select id="unReadCntAll" parameterType="string"
@@ -121,13 +158,26 @@
 	</select>
 	
 	<!-- 1:1문의) 해당 글을 작성한 번호를 통해 그 글의 memberId가져오기 -->
-	<!-- <select id="boardWriterId" parameterType="" resultType="String">
-		SELECT MEMBERID FROM MEMBER
-		WHERE 
-		기존 방이 있으면
-		기존 방이 없으면
-	</select> -->
-
-
+	<select id="getBoardWriterId" parameterType="int" resultType="String">
+		SELECT MEMBERID FROM HOMEGYM_BOARD
+		WHERE h_id = #{hId}
+	</select>
+	
+	<!-- nickname으로 찾고자 하는 memberId가 존재하는지 확인 -->
+	<select id="getMemberInfoByNickname" parameterType="message" resultType="member">
+		SELECT memberId
+			 , name
+			 , nickname
+			 , image AS imagePath
+		 FROM MEMBER
+		WHERE nickName = #{findNickname} 
+		<!-- LIKE CONCAT('%', #{otherId}, '%') -->
+	</select>
+	
+	<!-- 상대방 memberId의 정보 가져오기 -->
+	<select id="getMemberInfoById" parameterType="message" resultType="member">
+		SELECT * FROM MEMBER
+		WHERE memberId = #{otherId}
+	</select>
 
 </mapper> 

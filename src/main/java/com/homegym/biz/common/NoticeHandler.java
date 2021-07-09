@@ -6,13 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.websocket.server.ServerEndpoint;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import lombok.extern.log4j.Log4j;
 
 /*
  * @Title	웹소켓 - 알림 핸들러
@@ -20,7 +24,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  * @date	2021. 06. 30.
  * */
 
-// path="/notice-ws"
+@Component
+@Log4j
+@ServerEndpoint("/notice-ws.do")
 public class NoticeHandler extends TextWebSocketHandler { 
 
 	// memberId는 이메일
@@ -30,31 +36,22 @@ public class NoticeHandler extends TextWebSocketHandler {
 	// 로그인 중인 개별 유저
 	private Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 
-	private final Logger logger = LogManager.getLogger(getClass());
-
 	// 서버접속 성공시
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
-		String memberId = getMemberId(session);
+		String memberId = getMemberId(session); // 접속한 유저의 http세션을 조회해서 id얻는 함수
 		if(memberId != null) {
 			log(memberId + "연결");
-			users.put(memberId, session);
-			sessions.add(session);
+			users.put(memberId, session); // 로그인 중인 개별유저 저장
 		}
 		
 	}
 
-	// 클라이언트가 소켓에 메시지(data) 전송시
+	// 클라이언트가 data 전송시
 	@Override 
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		String memberId = getMemberId(session);
-		
-		// 모든 유저에게 보내기(브로드 캐스팅)
-//		log(memberId + " : " + message.getPayload());
-//		for(WebSocketSession sess : sessions) {
-//			sess.sendMessage(new TextMessage(message.getPayload()));
-//		}
 		
 		// 특정유저에게 보내기
 		String msg = message.getPayload();
@@ -64,18 +61,18 @@ public class NoticeHandler extends TextWebSocketHandler {
 			
 			if(strs != null && strs.length == 4) {
 				String type = strs[0]; // 홈짐, 트레이너, 메세지  ..
-				String target = strs[1]; // 알림 보내고자 하는 특정유저
-				String content = strs[2]; // 
+				String target = strs[1]; // 알림 보내고자 하는 특정유저(상대방)
+				String content = strs[2]; // 내용 - 알림이 있습니다.
 				String url = strs[3]; // ajax요청시 필요한 url
 				
-				WebSocketSession targetSession = users.get(target); // targetSession조회(특정유저)
+				WebSocketSession targetSession = users.get(target); // targetSession조회(특정유저) - 메세지 받을 세션 조회
 				System.out.println("=========targetSession :"+targetSession);
 				
 				// 실시간 접속시
 				if(targetSession != null) {
-					// 예) [홈짐]신청이 들어왔습니다.
+					// 예) [홈짐]알림이 있습니다.
 					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
-					targetSession.sendMessage(tmpMsg);
+					targetSession.sendMessage(tmpMsg); // 상대방에게 보내기
 				}
 				
 			}
@@ -106,10 +103,11 @@ public class NoticeHandler extends TextWebSocketHandler {
 		System.out.println(new Date() + " : "+logmsg);
 	}
 
-	// 웹소켓세션에 저장된 email(id)가져오기
+	// 웹소켓세션에 저장된 email(id)가져오기 - 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 	private String getMemberId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		String memberId = (String) httpSession.get("memberId");
 		return memberId == null ? null : memberId;
 	}
+	
 }

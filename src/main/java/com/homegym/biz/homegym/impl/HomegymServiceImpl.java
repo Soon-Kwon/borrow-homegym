@@ -1,6 +1,5 @@
 package com.homegym.biz.homegym.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymDetailVO;
+import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
+import com.homegym.biz.member.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,6 +25,9 @@ public class HomegymServiceImpl implements HomegymService{
 	
 	@Autowired
 	private HomegymAttachDAO attachDAO;
+	
+	@Autowired
+	private HomegymReviewDAO reviewDAO;
 	
 	@Transactional // 첨부파일 + 게시글 등록 트랜잭션 처리
 	public void register(HomegymVO vo) { 
@@ -69,6 +74,7 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.read(vo, hId);
 	}
 	
+	@Transactional
 	public boolean modify(HomegymVO vo) {
 		
 		log.info("글 수정하기.........");
@@ -93,11 +99,14 @@ public class HomegymServiceImpl implements HomegymService{
 		return modifyResult;
 	}
 	
+	@Transactional
 	public boolean remove(int hId) {
 		
 		log.info("글 삭제하기........");
 		
-		attachDAO.deleteAll(hId);
+		attachDAO.deleteAll(hId); // 첨부파일 삭제 
+		
+		reviewDAO.deleteAll(hId); // 댓글 삭제
 		
 		return homegymDAO.delete(hId) == 1;
 	}
@@ -108,15 +117,28 @@ public class HomegymServiceImpl implements HomegymService{
 	}
 	
 	// 리뷰 평점 구하기
-	public HashMap<?,?> getScore(int hId) {
+	public HomegymReviewVO getScore(int hId) {
 		
 		return homegymDAO.getScore(hId);
 	}
 	
+	// 첨부파일 리스트 가져오기
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO vo, int hId){
 		
 		log.info("게시글 번호로 해당되는 첨부파일 가져오기........");
 		return attachDAO.findByHId(vo, hId);
+	}
+	
+	// 리뷰 쓸 권한이 있는지 확인하기
+	public List<HomegymDetailVO> authToWriteReview(int hId) {
+
+		return homegymDAO.authToWriteReview(hId);
+	}
+	
+	// 프로필 이미지 가져오기
+	public MemberVO getProfileImg(HomegymVO vo) {
+		
+		return homegymDAO.getProfileImg(vo);
 	}
 	
 }

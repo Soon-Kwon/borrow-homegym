@@ -1,5 +1,5 @@
-package com.homegym.biz.homegym;
 
+package com.homegym.biz.homegym;
 import lombok.Data;
 
 @Data

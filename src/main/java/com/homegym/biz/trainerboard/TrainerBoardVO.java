@@ -13,6 +13,8 @@ public class TrainerBoardVO {
 	
 	private int tno;
 	private String memberId;
+	private String name;
+	private String image;
 	private String tbTitle;
 	private String nickName;
 	private String tbContent;
@@ -34,7 +36,6 @@ public class TrainerBoardVO {
 	private String tbPhoto2;
 	private String tbPhoto3;
 	private int tbCnt;
-	private String searchCondition;
 	private String searchKeyword;
 	
 	private List<TrainerAttachVO> attachList; // 첨부파일 VO 자료

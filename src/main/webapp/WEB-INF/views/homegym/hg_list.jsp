@@ -24,9 +24,9 @@
 			<c:when test="${empty list}">
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-8 col-12">
-							<h3>검색 결과가 없습니다. 우리동네 홈짐을 등록해보세요!🏠</h3>
-							<br> <br>
+						<div class="col-lg-8 col-12" style="float: none; margin: 0 auto; text-align:center">
+							<h3>검색 결과가 없습니다.<br> 우리동네 홈짐을 등록해보세요!🏠</h3>
+							<br><br>
 							<form class="d-flex search-form" action="homegymListView.do"
 								method="get">
 								<input class="form-control me-2" type="search" name="keyword"
@@ -37,13 +37,14 @@
 							</form>
 							<br>
 							<div class="write" style="text-align: center;">
-								<button class="btn btn-primary" type="button"
-									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
-									홈짐을 등록해볼까요? 글쓰러 가기!</button>
+								<button class="btn btn-primary" type="button" id="writeBtn"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">
+									홈짐 등록하기</button>
 							</div>
 						</div>
 					</div>
 				</div>
+				<br><br><br><br><br>
 			</c:when>
 			<c:otherwise>
 				<div class="container">
@@ -55,9 +56,9 @@
 								<!--  맵 나오는 곳 -->
 							</div>
 							<div class="write" style="text-align: center;  margin-top: 30px;">
-								<button class="btn btn-primary" type="button"
-									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">내
-									홈짐도 등록해볼까요? 글쓰러 가기!!</button>
+								<button class="btn btn-primary" type="button" id="writeBtn"
+									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">
+									홈짐 등록하기</button>
 							</div>
 						</div>
 						<!-- End Event Details Content -->
@@ -66,7 +67,7 @@
 							<div class="event-sidebar">
 								<!-- Start Single Widget -->
 								<div class="single-widget other-event-wedget">
-									<h3 class="sidebar-widget-title" style="margin-bottom: 0px;">
+									<h3 class="sidebar-widget-title" style="margin-bottom: 0px; ">
 										플레이스🏠</h3>
 									<div style="margin: 30px 0px;"></div>
 									<ul class="other-event">
@@ -152,17 +153,17 @@
     <!-- Start Footer Area -->
     <footer class="footer style2">
         <!-- Start Footer Bottom -->
-        <div class="footer-bottom">
+        <div class="footer-bottom" >
             <div class="container">
                 <div class="inner">
                     <div class="row">
-                        <div class="col-md-6" style="text-align: start;">
+                        <div class="col-md-6" style="text-align: start;  ">
                             <div class="logo">
                                 <br><br>
                                 <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
-                        <div class="col-md-6" style="text-align: end;">
+                        <div class="col-md-6" style="text-align: end; ">
                             <p>
                                 <br>
                                 <a href="faq.html"> 자주묻는 질문</a>

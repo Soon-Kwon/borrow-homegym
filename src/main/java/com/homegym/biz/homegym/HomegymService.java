@@ -1,7 +1,8 @@
 package com.homegym.biz.homegym;
 
-import java.util.HashMap;
 import java.util.List;
+
+import com.homegym.biz.member.MemberVO;
 
 public interface HomegymService {
 	
@@ -22,9 +23,15 @@ public interface HomegymService {
 	public int getTotal(Criteria cri);
 	
 	// 리뷰 평점 보여주기
-	public HashMap<?, ?> getScore(int hId);
+	public HomegymReviewVO getScore(int hId);
 	
 	// 첨부파일 리스트 보여주기 
 	public List<HomegymAttachVO> getAttachList(HomegymAttachVO attach, int hId);
+	
+	// 리뷰 쓸 권한 체크
+	public List<HomegymDetailVO> authToWriteReview(int hId);
+	
+	// 프로필 이미지 가져오기
+	public MemberVO getProfileImg(HomegymVO vo);
 
 }
