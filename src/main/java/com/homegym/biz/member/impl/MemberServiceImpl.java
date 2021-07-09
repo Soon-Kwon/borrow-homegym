@@ -31,6 +31,18 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.memberJoin(member);
 	}
 	
+	// 카카오 회원가입
+	@Override
+	public void memberJoinKakao(CustomUserDetails kakaoMember) throws Exception {
+		memberDAO.memberJoinKakao(kakaoMember);
+	}
+	
+	// 카카오 프로필 조회
+	@Override
+	public CustomUserDetails getUserKakao(String memberId) {
+		return memberDAO.getUserKakao(memberId);	
+	}
+	
 	// 아이디 중복 체크
 	@Override
 	public int idCheck(String memberId) throws Exception {
@@ -100,7 +112,6 @@ public class MemberServiceImpl implements MemberService {
 	public int memberUpdate(CustomUserDetails vo) {
 		System.out.println("패스워드 확인==========================>"+vo.getPassword());
 		return memberDAO.memberUpdate(vo);
-		
 	}
 
 	//회원이미지 업로드
@@ -118,7 +129,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 회원 탈퇴 처리
 	@Override
-	public int memberDelete(MemberVO vo) {
+	public int memberDelete(CustomUserDetails vo) {
 		return memberDAO.memberDelete(vo);
 		
 	}

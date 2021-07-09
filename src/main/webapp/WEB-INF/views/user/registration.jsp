@@ -124,12 +124,12 @@
                             </div>
                             <div class="form-group">
                                 <label>전화번호</label>
-                                <input class="margin-5px-bottom" type="text" id="phone" name="phone" placeholder="'-' 빼고 숫자만 입력" style="width:80%">
+                                <input class="margin-5px-bottom phone" type="text" id="phone" name="phone" placeholder="'-' 빼고 숫자만 입력" style="width:80%" maxlength="13">
                             </div>
                           
                             <div class="form-group">
                                 <label>생년월일</label>
-                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리 입력(ex.910101) " style="width:80%">
+                                <input class="margin-5px-bottom" type="text" id="birth" name="birth" placeholder="생년월일 6자리 입력(ex.910101) " style="width:80%" maxlength="6">
                             </div>
                             <div class="form-group">
                                 <label>주소</label>
@@ -142,8 +142,8 @@
                             
                             <div class="gender">
                                 <label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" id="gender" name="gender" value="남성" onclick="doOpenCheck(this);" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" id="gender" name="gender" value="여성" onclick="doOpenCheck(this);" > 여성</label>
+                                <label><input type="radio" id="gender1" name="gender" value="남성" checked="checked" onclick="doOpenCheck(this);" > 남성</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label><input type="radio" id="gender2" name="gender" value="여성" onclick="doOpenCheck(this);" > 여성</label>
                             </div>
 
                             <div class="button">
@@ -208,14 +208,14 @@
     <script>
     
     /* 성별 체크박스 하나만 선택하게 하기 */
-    function doOpenCheck(chk){
+    /* function doOpenCheck(chk){
         var obj = document.getElementsByName("gender");
         for(var i=0; i<obj.length; i++){
             if(obj[i] != chk){
                 obj[i].checked = false;
             }
         }
-    }
+    } */
    
 	/* 비밀번호 동일한지 체크 */
    $(function(){
@@ -236,6 +236,7 @@
 	});
 	
 	/* 아이디 중복 체크 */
+	var checked_id = '';
 	function idCheck() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -259,9 +260,11 @@
 						if(data == 'OK') {
 							$("#idCheck").text('사용가능한 아이디입니다.');
 							$("#idCheck").attr("style","color: green");
+							checked_id = 1;
 						} else {
 							$("#idCheck").text('중복된 아이디가 존재합니다.');
 							$("#idCheck").attr("style","color: red");
+							checked_id = 0;
 						}
 					},
 					error: function(e) {
@@ -275,6 +278,7 @@
 	}
 	
 	/* 닉네임 중복 체크 */
+	var checked_nick = '';
 	function nickCheck() {
 		console.log("진입");
 		var token = $("meta[name='_csrf']").attr("content");
@@ -299,9 +303,11 @@
 						if(data == 'OK') {
 							$("#nickCheck").text('사용가능한 닉네임입니다.');
 							$("#nickCheck").attr("style","color: green");
+							checked_nick = 1;
 						} else {
 							$("#nickCheck").text('중복된 닉네임이 존재합니다.');
 							$("#nickCheck").attr("style","color: red");
+							checked_nick = 0;
 						}
 					},
 					error: function(e) {
@@ -354,6 +360,77 @@
 			$("#pwCheck").text('');
 		}  
 	});
+	
+	
+	/* 전화번호 형식 체크 */
+   
+   	$(document).on("keyup", ".phone", function() { 
+      	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("—", "-") ); 
+  	 	});
+	
+	/* NULL 체크 */
+	$(document).ready(function() {
+				
+				$("#join_button").click(function() {
+					
+					 if ($('#memberId').val() == '') {
+				            alert("아이디를 입력해주세요");
+				            $('#memberId').focus();
+				            return false;
+				     } else if ($('#nickname').val() == '') {
+				            alert("닉네임를 입력해주세요");
+				            $('#nickname').focus();
+				            return false;
+				     } else if($('#password').val() == ''){
+							$('#password').focus();
+							alert('패스워드를 입력해주세요');
+							return false;
+				     } else if($('#name').val() == ''){
+							$('#name').focus();
+							alert('이름을 입력해주세요');
+							return false;
+				     } else if ($('#phone').val() == '') {
+				            alert("전화번호를 입력해주세요");
+				            $('#phone').focus();
+				            return false;
+				     } else if($('#birth').val() == ''){
+							$('#birth').focus();
+							alert('생년월일을 입력해주세요');
+							return false;
+				     } else if ($('#zipCode').val() == '') {
+				            alert("주소를 입력해주세요");
+				            $('#zipCode').focus();
+				            return false;
+				     } else  if(checked_id==''){
+				    	 	alert('아이디 중복 체크를 해주세요');
+							$('#memberId').focus();
+				            return false;
+				     }else if(checked_id==0){
+				    	 	alert('아이디 중복 확인을 해주세요');
+							$('#memberId').focus();
+				            return false;
+				     }else  if(checked_nick==''){
+				    	 	alert('닉네임 중복체크를 해주세요');
+							$('#nickname').focus();
+				            return false;
+				     }else if(checked_nick==0){
+				    	 	alert('닉네임 중복 확인을 해주세요');
+							$('#nickname').focus();
+				            return false;
+
+				    	 if (!($('#gender1').is(":checked")) || !($('#gender2').is(":checked"))) {
+							alert("성별을 체크해주세요");
+						
+						} else {
+							$("#join_form").attr("action", "/user/join");
+							$("#join_form").submit();
+							alert("회원가입이 완료되었습니다")
+						}
+				     }
+				});
+			});
+	
+	
 	        
 	</script>
     

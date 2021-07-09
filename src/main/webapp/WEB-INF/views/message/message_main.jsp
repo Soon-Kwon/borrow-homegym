@@ -293,7 +293,10 @@
 					success : function(data) {
 						console.log("SUCCESS : FirstMessageList() data : " + data);
 						
-
+						// 수정필요
+						/* if(data == null){
+							$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">대화중인 채팅방이 없습니다.</h6>');
+						} */
 						$('.inbox_chat').html(data);
 						
 						
@@ -340,11 +343,14 @@
 							$('.msg_send_btn').on('click',function() {
 									// 메세지 전송함수 호출(클릭한 채팅방 번호, 상대방 id)
 									SendMessage(msgRoomNo,otherId);
-								});
+							});
 
 							// 클릭한 채팅방 번호 넘겨주면 그 채팅방에 해당하는 메세지 보여주는 함수 호출()
 							ShowMessageContent(msgRoomNo);
 						});
+					}, 
+					error: function(){
+						alert("FirstMessageList() 에러");
 					}
 				});
 			
@@ -523,7 +529,6 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		console.log('죠르디,,');
 		// 메세지 리스트 리로드
 		FirstMessageList();
 		getInfiniteChat();

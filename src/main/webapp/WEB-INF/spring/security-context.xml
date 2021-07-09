@@ -10,14 +10,18 @@
 	<bean id="customAccessDenied" class="com.homegym.security.CustomAccessDeniedHandler"></bean>
 	<!-- <bean id="customLoginSuccess" class="com.homegym.security.CustomLoginSuccessHandler"></bean> -->
 	<bean id="userAuthProvider" class="com.homegym.security.CustomAuthenticationProvider"></bean>
+	<bean id="userAuthProviderKakao" class="com.homegym.security.CustomAuthenticationProviderKakao"></bean>
 <!-- 	<bean id="customPasswordEncoder" class="com.homegym.security.CustomNoOpPasswordEncoder"></bean> -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	<bean id="customUserDetailsService" class="com.homegym.security.CustomUserDetailsService"></bean>
+	<!-- <bean id="customOAuth2UserService" class="com.homegym.security.CustomOAuth2UserService"></bean> -->
+ 
 	
 	<security:http  auto-config="true">
 		<security:intercept-url pattern="/**" access="permitAll" />
-		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER', 'ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_MEMBER', 'ROLE_ADMIN', 'ROLE_KAKAO')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<!-- <security:intercept-url pattern="/homegym/**" access="hasRole('ROLE_MEMBER', 'ROLE_ADMIN')"/> -->
 		
 		<security:access-denied-handler ref="customAccessDenied"/>
 			
@@ -34,14 +38,20 @@
 		<security:logout 
 		logout-url="/logout" 
 		logout-success-url="/" 
-		delete-cookies=""
-		invalidate-session="true"/>
+		delete-cookies="JSESSIONID"
+		invalidate-session="true"
+		/>
+		
+		<!-- <security:oauth2Login
+		defaultSuccessUrl="/login-success"
+		/> -->
 		
 		<!-- csrf 비활성화
 		<security:csrf disabled="true"/> -->
 	</security:http>
 	 
-	<security:authentication-manager>
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="userAuthProviderKakao"/>
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 		
 		<!-- <security:jdbc-user-service data-source-ref="dataSource" /> -->
@@ -54,6 +64,6 @@
 			<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
 		</security:user-service> -->
 		</security:authentication-provider>
-		<security:authentication-provider ref="userAuthProvider"/>
+		
 	</security:authentication-manager>
 </beans>
