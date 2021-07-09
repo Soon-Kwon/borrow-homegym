@@ -36,6 +36,17 @@ public class MemberDAO {
 		System.out.println("회원가입");
 		sqlsession.insert("MemberDAO.memberJoin", vo);
 	}
+	
+	// 카카오 회원가입
+	public void memberJoinKakao(CustomUserDetails kakaoMember) {
+		System.out.println("회원가입");
+		sqlsession.insert("MemberDAO.memberJoinKakao", kakaoMember);
+	}
+	
+	// 사용자 정보 가져오기(카카오)
+	public CustomUserDetails getUserKakao(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getUserKakao", memberId);
+	}
 
 	//아이디 중복 체크
 	public int idCheck(String memberId) throws Exception {
@@ -79,7 +90,7 @@ public class MemberDAO {
 	}
 	
 	//회원 탈퇴
-	public int memberDelete(MemberVO vo) {
+	public int memberDelete(CustomUserDetails vo) {
 		return sqlsession.delete("MemberDAO.memberDelete", vo);
 	}
 

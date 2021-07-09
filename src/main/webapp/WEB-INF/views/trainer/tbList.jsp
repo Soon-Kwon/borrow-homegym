@@ -2,16 +2,27 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
+<style>
+.box{
+margin-top:15px;
+height:auto; 
+overflow:hidden; 
+text-overflow: ellipsis;
+/* white-space: nowrap; */
+display:-webkit-box; 
+-webkit-line-clamp: 5; 
+-webkit-box-orient: vertical; 
+}
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- 페이징 관련 자바스크립트 -->
 <script>
 	$(document)
@@ -95,9 +106,12 @@
 	<!-- Start Events Area-->
 	<section class="courses section grid-page">
 		<div class="container">
-			<form class="d-flex search-form">
-				<input class="form-control me-2" type="search" placeholder="트레이너 검색"
-					aria-label="Search">
+			<form class="d-flex search-form" action="/trainer/tbListSearch.do" method="get">
+				<input class="form-control me-2" type="search" placeholder="동네로 검색 GOGO! "
+				name="searchKeyword" aria-label="Search" style="width: 20%; margin-left:70%;">
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+					<input type='hidden' name='serchKeyword' value='${trBord.searchKeyword }'>
 				<button class="btn btn-outline-success" type="submit">
 					<i class="lni lni-search-alt"></i>
 				</button>
@@ -115,10 +129,10 @@
 								</a>
 
 							</div>
-							<div class="content" style="height: 230px;">
-								<h4>${trBoard.tbTitle}</h4>
-								<br>
-								<p>${trBoard.tbContent}</p>
+							<div class="content" style="height:190px;">
+							
+								<h5>${trBoard.tbTitle}</h5>
+								<p class="box">${trBoard.tbContent}</p>
 							</div>
 						</div>
 					</div>
@@ -152,13 +166,21 @@
 							<input type='hidden' name='pageNum'
 								value='${pageMaker.cri.pageNum }'> <input type='hidden'
 								name='amount' value='${pageMaker.cri.amount }'>
+						<input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
 						</form>
 					</div>
 					<!--/ End Pagination -->
 				</div>
 				<div class="button" style="margin-top: 30px; text-align: center">
-					<a href="tbWrite.do" class="btn" style="border-radius:5px;">글쓰기 </a>
+					<a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
 				</div>
+				<!-- 로그인  정보가 있을 때 글쓰기 작성할 수 있게 막는 것  -->
+<%-- 				<c:if test="${member.memberId eq null}">
+				<div class="button" style="margin-top: 30px; text-align: center">
+					<a href="tbWrite.do" class="btn" style="border-radius:5px;" onclick="logCheck();">글쓰기 </a>
+				</div>
+				</c:if> --%>
+			
 			</div>
 	</section>
 	<!-- End Events Area-->
@@ -179,9 +201,10 @@
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
-								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
-								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
+								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 
+								서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> 
+								(주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345 
+								<br> © 2021. All Rights Reserved.
 							</p>
 
 						</div>
@@ -194,8 +217,8 @@
 
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i
-		class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> 
+	<i class="lni lni-chevron-up"></i>
 	</a>
 
 	<!-- ========================= JS here ========================= -->
@@ -205,6 +228,13 @@
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+<!-- 	<script type="text/javascript">
+	$(document).on("click", function(){
+		alert("로그인이 필요합니다.");
+		location.href="/user/loginpage.do"
+	});
+	
+	</script> -->
 </body>
 
 </html>

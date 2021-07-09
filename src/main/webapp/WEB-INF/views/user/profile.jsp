@@ -27,14 +27,6 @@
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     
-    
-<%--     <script>
-    	var memberId = '<%=memberId %>';
-    	
-    	document.addEventListener("DOMContentLoaded", function(){
-    		// Handler when the DOM is fully loaded
-   		});
-    </script>  --%>
 <style>
 #auth{
     margin-right: 10px;
@@ -86,13 +78,6 @@
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
 
     <!-- Preloader -->
     <div class="preloader">
@@ -220,9 +205,7 @@
                                 <a href="mywrite.do?selectedBtnId=overview-tab" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>
-                        <!-- End Single Feature -->
-                        
-                                             
+                        <!-- End Single Feature -->  
                                                
                                             </div>
                                         </div>

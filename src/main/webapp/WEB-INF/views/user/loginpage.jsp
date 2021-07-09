@@ -55,7 +55,7 @@
 									type="password" name="password" id="password"
 									placeholder="비밀번호를 입력하세요">
 							</div>
-							<div class="check-and-pass">
+							<!-- <div class="check-and-pass">
 								<div class="row align-items-center">
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
@@ -64,15 +64,18 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</div> -->
+							
 							<div class="button">
 								<button type="submit" class="btn">LogIn</button>
-							</div>
+							</div><br>
+								<a href="https://kauth.kakao.com/oauth/authorize?client_id=d16ab68241565d7f23be9b45065f5a1b&redirect_uri=http://localhost:8090/user/kakao/callback&response_type=code
+"><img src="/resources/assets/images/logo/kakao_login_button_1.png"></a>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
 								<a href="/user/registration.do">회원가입 하기</a>
 							</p>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</div>
 				</div>

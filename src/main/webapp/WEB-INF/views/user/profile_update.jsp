@@ -1,94 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
- <%-- <%
- 	String memberId = session.getAttribute("memberId").toString();
- %>  --%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+	pageEncoding="UTF-8"%>
 
- <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <html class="no-js" lang="ko">
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <style>
 /* 프로필 사진 */
-
-#uploadBtn{
+#uploadBtn {
 	position: absolute;
-    left: 200px;
-    width: 80px;
+	left: 200px;
+	width: 80px;
 }
 
-#delImg{
-    margin-left:270px;
+#delImg {
+	margin-left: 270px;
 }
-#editImgBtn{
-    position: absolute;
-    width: 45px;
-    left: 300px;
-    top: 115px;
+
+#editImgBtn {
+	position: absolute;
+	width: 45px;
+	left: 300px;
+	top: 115px;
 }
+
 }
-.userphoto_menu label { 
-	display: inline-block; 
-	padding: .5em .75em; 
+.userphoto_menu label {
+	display: inline-block;
+	padding: .5em .75em;
 	color: #999;
 	font-size: inherit;
-	line-height: normal; 
-	vertical-align: middle; 
+	line-height: normal;
+	vertical-align: middle;
 	background-color: #fdfdfd;
-	cursor: pointer; 
+	cursor: pointer;
 	border: 1px solid #ebebeb;
 	border-bottom-color: #e2e2e2;
 	border-radius: .25em;
- } 
-
-.userphoto_menu input[type="file"] { 
-/* 파일 필드 숨기기 */ 
-position: absolute;
-	 width: 1px; 
-	 height: 1px;
-	  padding: 0;
-	   margin: -1px; 
-	   overflow: hidden; 
-	   clip:rect(0,0,0,0);
-	    border: 0; 
 }
 
-
+.userphoto_menu input[type="file"] {
+	/* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
 
 .img {
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 .img-img-thumbnail {
-  display: inline-block;
-  max-width: 100%;
-  height: auto;
-  padding: 4px;
-  line-height: 1.42857143;
-  background-color: #fff;
-  transition: all .2s ease-in-out;
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+	padding: 4px;
+	line-height: 1.42857143;
+	background-color: #fff;
+	transition: all .2s ease-in-out;
 }
 
 .img-circle {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 
 .btn-primary {
-  background-color: #2f3e83;
-  border-color: #2f3e83;
-  color: #fff;
-  margin-bottom: 50px;
+	background-color: #2f3e83;
+	border-color: #2f3e83;
+	color: #fff;
+	margin-bottom: 50px;
 }
 
-.btn-primary:hover,
-.btn-primary:focus {
-  border-color: #5c6dbd;
-  background-color: #5c6dbd;
-  color: #fff;
+.btn-primary:hover, .btn-primary:focus {
+	border-color: #5c6dbd;
+	background-color: #5c6dbd;
+	color: #fff;
 }
 
 #zip_codeBtn{
@@ -213,10 +209,10 @@ function deleteInfo() {
 
 /*ajax를 통한 회원정보 수정*/
 function updateInfo() {
-	
+	console.log($('#memberId').val());
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	var data = {memberId : $('input[name=memberId]').val(),
+	var data = {memberId : $('#memberId').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
@@ -225,7 +221,6 @@ function updateInfo() {
 				zipCode : $('input[name=zipCode]').val(),
 				address : $('input[name=address]').val()
 		}
-	
 	
 	 var pw = $("#newPassword").val();
 	 var num = pw.search(/[0-9]/g);
@@ -495,7 +490,7 @@ function execPostCode() {
                        
                      
                                      
-                                     <!-- 폼 전송 -->      
+                         <!-- 폼 전송 -->      
                    		<form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
@@ -509,6 +504,9 @@ function execPostCode() {
                                                     </div>
                                                 </div>
                                                 <br>
+
+												<!-- 일반 로그인 회원일 경우 -->
+												<sec:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="password">
@@ -543,6 +541,45 @@ function execPostCode() {
                                                     </div>
                                                 </div> 
                                                 <br>
+												</sec:authorize>
+
+												<!-- 키카오 로그인 회원일 경우 -->
+												<sec:authorize access="hasRole('ROLE_KAKAO')">
+												<div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="password">
+                                                            <h6>현재 비밀번호</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" value="${member.password}" id="password" name="password" style="border-radius: 15px;"
+                                                            placeholder="현재 비밀번호" title="현재 비밀번호입력은 필수입니다." >
+                                                    </div>
+                                                    <div>${msg}</div>
+                                                </div>
+                                                <br>
+                                                 <div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="new_password">
+                                                            <h6>새 비밀번호</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" name="newPassword" style="border-radius: 15px;"
+                                                            id="newPassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다" title="새 비밀번호를 입력해주세요.">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                
+                                                
+                                                <div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="re_password">
+                                                            <h6>새 비밀번호 재확인</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" name="rePassword" style="border-radius: 15px;"
+                                                            id="rePassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
+                                                            title="새 비밀번호 재입력해주세요.">
+                                                    </div>
+                                                </div> 
+                                                <br>
+												</sec:authorize>
                                                
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
@@ -707,5 +744,81 @@ function execPostCode() {
     
     </script>
 
+												<br>
+
+												<div class="form-group">
+													<div class="submit_btn"
+														style="margin-left: 160px; margin-top: 30px;">
+														<input type="button" id="updateBtn" value="수정하기"
+															onclick="updateInfo();" class="btn btn-block btn-primary">
+														<input type="button" id="deleteBtn" value="탈퇴하기"
+															onclick="deleteInfo();" class="btn btn-block btn-primary">
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- End Single Feature -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						</form>
+
+					</section>
+					<!-- /End Features Area -->
+
+
+
+					<!-- End Course Details Wrapper -->
+
+				</div>
+			</div>
+		</div>
+		<!-- Course Details Section End -->
+
+		<!-- Start Footer Area -->
+		<footer class="footer style2">
+			<!-- Start Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-md-6" style="text-align: start;">
+								<div class="logo">
+									<br>
+									<br> <a href="main_index.html"><img
+										src="../assets/images/logo/로고1.png" alt="Logo"></a>
+								</div>
+							</div>
+							<div class="col-md-6" style="text-align: end;">
+								<p>
+									<br> <a href="others/faq.jsp"> 자주묻는 질문</a> <br> 서울특별시
+									서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의
+									02-123-1234 | 사업자등록번호 123-12-12345 <br>© 2021. All Rights
+									Reserved.
+								</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!--/ End Footer Area -->
+
+		<!-- ========================= scroll-top ========================= -->
+		<a href="#" class="scroll-top btn-hover"> <i
+			class="lni lni-chevron-up"></i>
+		</a>
+
+		<!-- ========================= JS here ========================= -->
+		<script src="/resources/assets/js/bootstrap.min.js"></script>
+		<script src="/resources/assets/js/count-up.min.js"></script>
+		<script src="/resources/assets/js/wow.min.js"></script>
+		<script src="/resources/assets/js/tiny-slider.js"></script>
+		<script src="/resources/assets/js/glightbox.min.js"></script>
+		<script src="/resources/assets/js/main.js"></script>
 </body>
 </html>

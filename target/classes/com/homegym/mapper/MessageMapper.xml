@@ -112,7 +112,7 @@
 
 	<!-- 채팅방번호 최댓값 구하기 -->
 	<select id="maxMsgRoomNo" parameterType="message"
-		resultType="int">
+		resultType="String">
 		SELECT MAX(MSGROOMNO) FROM MESSAGE
 	</select>
 

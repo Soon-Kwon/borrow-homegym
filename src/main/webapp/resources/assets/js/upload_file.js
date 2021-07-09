@@ -32,10 +32,25 @@ function save() {
 
 	var formObj = $("#submitForm");
 	
-	/*// textarea 개행처리
-	var str = $("textarea[name='tbContent']").val();
+	// textarea 개행처리
+	var text = $("textarea[name='tbContent']").val();
+
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+	$("textarea[name='tbContent']").html(text);
+	var text = $("textarea[name='tbProgram']").val();
+	
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	
+	$("textarea[name='tbProgram']").html(text);
+	
+		
+	/*var str = $("textarea[name='tbContent']").val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 	$("textarea[name='tbContent']").val(str);
+	var str = $("textarea[name='tbProgram']").val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+	$("textarea[name='tbProgram']").val(str);
 	*/
 	formObj.append(str);
 
@@ -55,7 +70,9 @@ function save() {
 			//alert(data);
 			if (data == 'OK') {
 				alert('글 작성에 성공하였습니다.');
-				window.location.replace("/trainer/tbList.do");
+				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
+				//window.location.replace("/trainer/tbList.do");
+
 			}
 		},
 		error : function(e) {
@@ -72,11 +89,22 @@ function modify() {
 	var str = "";
 
 	var formObj = $("#submitForm2");
+	// textarea 개행처리
+
+	var text = $("textarea[name='tbContent']").val();
+
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+	$("textarea[name='tbContent']").html(text);
+	var text = $("textarea[name='tbProgram']").val();
+	
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	
+	$("textarea[name='tbProgram']").html(text);
 
 	console.log($('#tno').val());
 
-	$(".uploadResult ul li")
-			.each(
+	$(".uploadResult ul li").each(
 					function(i, obj) {
 
 						var jobj = $(obj);
@@ -100,7 +128,18 @@ function modify() {
 		alert("최소 한 장 이상의 사진을 올려주세요!");
 		return;
 	}
+	// textarea 개행처리
+	var text = $("textarea[name='tbContent']").val();
 
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+	$("textarea[name='tbContent']").html(text);
+	var text = $("textarea[name='tbProgram']").val();
+	
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	
+	$("textarea[name='tbProgram']").html(text);
+	
 	formObj.append(str);
 
 	var data = formObj.serialize();
@@ -113,14 +152,16 @@ function modify() {
 		data : data,
 		 //데이터를 전송하기 전에 헤더에 csrf값을 설정한다 
 		beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
+		xhr.setRequestHeader(header, token);
 		},
 		success : function(data) {
 			//alert(data);
 			if (data == 'OK') {
 				alert('글 작성에 성공하였습니다.');
-				window.location.replace("/trainer/tbList.do");
-			}
+				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
+/*				window.location.replace("/trainer/tbList.do");
+*/				//window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
+		}
 		},
 		error : function(e) {
 			alert(e);
@@ -141,12 +182,19 @@ function showUploadResult(uploadResultArr) {
 	}
 
 	var uploadUL = $(".uploadResult ul");
+	
+	// <br>태그를 공백으로 바꾸어주는 부분
+	var text = $("textarea[name='tbContent']").val();
+	text = text.split('<br/>').join("\r\n");
+	$("textarea[name='tbContent']").val(text);
+	
+	var text = $("textarea[name='tbProgram']").val();
+	text = text.split('<br/>').join("\r\n");
+	$("textarea[name='tbProgram']").val(text);
 
 	var str = "";
 
-	$(uploadResultArr)
-			.each(
-					function(i, obj) {
+	$(uploadResultArr).each(function(i, obj) {
 
 						// image type
 						if (obj.fileType) {

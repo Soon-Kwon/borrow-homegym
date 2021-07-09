@@ -194,7 +194,7 @@
 				<div class="modal-header">
 					<span id="m_writer_profile">
 						<div class="message-box">
-							<!-- 상대방 프로필 경로잡아주기 -->
+							<!-- 상대방 프로필 -->
 							<img src="${profile.imagePath }" alt="상대방 프로필"
 								class="avatar img_circle img-profile" alt="avatar">
 						</div>
@@ -648,6 +648,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
+				getInfiniteChat();
 				
 			});
 			
@@ -659,10 +660,10 @@
 				} 
 			});
 			
-			// 닫기 버튼 누르면 동작
+			/* // 닫기 버튼 누르면 동작
 			$("#showMsgContent").on("click", function(e){
 				$("#messageModal").modal("hide");				
-			});
+			}); */
 			
 		
 		});
@@ -689,7 +690,7 @@
 					alert('showMessageContent(${board.memberId}); 에러');
 				}
 			});
-			
+			console.log("showMessageContent() msgRoomNo : "+msgRoomNo);
 			// 해당 채팅방의 메세지 내용을 읽었음으로 읽음처리 
 			$('.unread' + msgRoomNo).empty();
 			
@@ -732,6 +733,12 @@
 				});
 			}
 		};
+		
+		function getInfiniteChat(){
+			interval = setInterval(function(){
+				showMessageContent('${board.memberId}');
+			}, 3000);
+		}
 		
 		
 		

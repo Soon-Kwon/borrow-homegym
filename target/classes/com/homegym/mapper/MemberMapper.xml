@@ -18,17 +18,26 @@
 		<result property="enabled" column="enabled"/>
 	 </resultMap> -->
 
-	<select id="loadUserByUsername">
+	<select id="loadUserByUsername" resultType="com.homegym.security.CustomUserDetails">
 	Select memberId, password, name, nickname, phone, zipCode, address, image, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
 	</select>
 	
 	<select id="selectUserById" resultType="com.homegym.security.CustomUserDetails">            
     Select memberId, password, name, nickname, phone, zipCode, address, image as imagePath, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
     </select>
+    
+    <select id="getUserKakao" resultType="com.homegym.security.CustomUserDetails">            
+    Select * from member WHERE memberId = #{memberId}
+    </select>
 	
 	<!-- 회원가입 쿼리 -->
 	<insert id="memberJoin">
 	insert into member(memberId, password, name, nickname, phone, zipCode, address, birth, gender, auth) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender}, "ROLE_MEMBER");
+    </insert>
+    
+    <!-- 카카오 회원가입 쿼리 -->
+	<insert id="memberJoinKakao">
+	insert into member(memberId, password, name, nickname, phone, zipCode, address, birth, gender, auth) values (#{memberId}, #{password}, #{name}, #{nickname}, #{phone}, #{zipCode}, #{address}, #{birth}, #{gender}, "ROLE_KAKAO");
     </insert>
     
     <!-- 회원가입 AUTH  -->
@@ -83,9 +92,6 @@
 	    	<when test="newPassword != null  and newPassword != ''">
 	     		password = #{newPassword},
 	    	</when>
-	   		 <otherwise>
-	     		password = #{password},
-	    	</otherwise>
 	  	</choose>
   			 nickname = #{nickname},
 			 zipCode = #{zipCode},
@@ -126,7 +132,7 @@
 		SELECT 
 			count(*)
 		FROM member
-		WHERE memberId=#{memberId} AND password=#{password}
+		WHERE memberId = #{memberId} AND password = #{password}
 	</select>
 	
 	<!--관리할 홈짐 갯수 -->
@@ -243,7 +249,7 @@
 				FROM homegym_board b INNER JOIN homegym_attach f
 					ON b.h_id = f.h_id
 				WHERE memberId= #{memberId}
-					GROUP BY b.h_title, b.h_addr, b.h_regdate
+					GROUP BY b.h_title, b.h_addr, b.h_regdate, b.h_id
 					ORDER BY b.h_regdate DESC
 				)as lh
 	  		LIMIT #{cri.skip}, #{cri.amount}
@@ -264,13 +270,13 @@
 						ON b.h_id = d.h_id
 					INNER JOIN homegym_attach f ON b.h_id = f.h_id
 					WHERE borrowerId= #{memberId}
-					GROUP BY d.d_id
+					GROUP BY b.h_id, b.h_price, b.h_title,b.h_addr,d.rental_date,
+		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum
 					ORDER BY d.d_id DESC
 				)as rh
 	  		LIMIT #{cri.skip}, #{cri.amount}
  		 ]]>
 	</select>
-	
 
 	<!-- 내가 쓴 게시물 목록  -->
 	<select id="getMyBoardPaging" resultType="trainer" >

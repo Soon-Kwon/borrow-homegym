@@ -33,48 +33,6 @@
 <style>
 
 
- p {
-	font-size: 17px;
-	line-height: 1.6;
-	letter-spacing: -0.6px;
-	margin: 16px 0;
-	word-break: break-all;
-}
-
-.popular-feed-loop {
-	width: 250px;
-	height: 250px;
-	border-radius: 100%;
-	overflow: hidden
-}
-
-.trainner {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.modal-content {
-	font-size: 100px;
-}
-
-.sidebar {
-	position: sticky;
-	top: 30px;
-}
-
-#re_plus {
-	background-color: #9ea9d8;
-	width: 150px;
-	height: 50px;
-	font-size: 20px;
-	color: white;
-	font-weight: bold;
-	position: relative;
-	left: 300px;
-	top: 20px;
-} 
-
 
 /* caroucsel  */
 
@@ -88,9 +46,6 @@
 
 .carousel-item {
   text-align: center;
-}
-.carousel {
-  height: 483px;
 }
 
 .carousel-inner img {
@@ -133,18 +88,19 @@
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!-- Start Blog Singel Area -->
-	<section class="section blog-single">
+	<section class="section blog-single" >
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-12">
-					<br>
-					<h2 style="font-weight: bold; margin-bottom:0px;">${trainerBoard.tbTitle}</h2>
+				<div>			
+					<div class="col-lg-8 col-12">
+					<br><br><br>
+
 					<div class="single-inner"></div>
 					<br>
 
 				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
-					<div style="width: 100%; ">
+					<div style="width: 100%;  margin-top:10px; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
 						<!-- carousel는 특이하게 id를 설정해야 한다.-->
 						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
@@ -205,20 +161,18 @@
 						</div>
 					</div>
 					<!-- test end -->
-
-	
-				<div class="post-details" style="margin-top:30px;">
+					
+					<br>
+				<div class="post-details" style="boarder-radius:4px;" >
+					<h2 style="font-weight: bold; ">${trainerBoard.tbTitle}</h2>
+					<br><br>
 							<div class="detail-inner">
-								<h2 class="post-title">
-									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
-								</h2>
-								<p style="font-size: 20px; line-height: 30px; margin-bottom:15px;">
-									${trainerBoard.tbContent}</p>
-								<hr>
-								<br>
+								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
+									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbContent}</pre>
+									<hr>
+									<br>
 								<h3>📍 프로그램 소개</h3>
-								<p>${trainerBoard.tbProgram}</p>
-
+									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
@@ -230,7 +184,7 @@
 
 						<!--/ End Single Widget -->
 						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 90px; margin-bottom:0px;
+						<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;
 						">
 							<div class="tr_image" style="position: relative; left: 10px;">
 								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
@@ -272,11 +226,9 @@
 
 						<!--/ End Single Widget -->
 						<!-- 해시태그 -->
-						<div class="widget popular-tag-widget"
-							style="position: relative;  margin-top:100px; ">
-							<div class="tags"
-								style="font-size: 17px; font-weight: bold; color: black; border-radius: 20px;">
-								<p>활동 지역</p>
+						<div class="widget popular-tag-widget" style=" height:280px; padding-top:30px; margin-top:110px; ">
+							<div class="tags" style="font-size: 17px; color: black; border-radius: 20px;">
+								<p style="font-weight: bold;">활동 지역</p>
 								<!-- 만약 입력값이 없으면 해시태그가 없게 , 있으면 생성되게  -->
 								<c:if test="${not empty trainerBoard.tbActivTag1}">
 									<a href="" style="border-radius: 20px;">${trainerBoard.tbActivTag1}</a>
@@ -289,7 +241,7 @@
 								</c:if>
 						
 
-								<p>활동 범위</p>
+								<p style="font-weight: bold;">활동 범위</p>
 								<!-- 만약 입력값이 없으면 활동범위 입력된 값이 없으면 안보이게 , 있으면 생성되게  -->
 								<c:if test="${not empty trainerBoard.tbActivChk1}">
 									<a href="" style="border-radius: 20px;">${trainerBoard.tbActivChk1}</a>
@@ -308,40 +260,10 @@
 						<!--/ End Single Widget -->
 					</div>
 				</aside>
-			</div>
-		</div>
+				</div>
+			</div> <!-- row -->
+		</div><!-- container -->
 	</section>
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog" style="top: 200px; left: 50px;">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<p class="modal-title" style="font-size: 30px;">트레이너의 정보를 받아보세요!😊</p>
-					<!-- 사용자 지정 부분② : 타이틀 -->
-				</div>
-
-				<div class="modal-body">
-					<p style="font-size: 20px">phone : 010 -1234 -5678</p>
-					<!-- 사용자 지정 부분③ : 텍스트 메시지 -->
-					<p style="font-size: 20px">instagram : @aksakfn12</p>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-	<br />
-	<br />
-
 
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
@@ -373,8 +295,8 @@
 
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i
-		class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> 
+	<i class="lni lni-chevron-up"></i>
 	</a>
 	<!--========================= 캐러셀 ================================ -->
 	<!-- Bootstrap cdn 설정 -->
