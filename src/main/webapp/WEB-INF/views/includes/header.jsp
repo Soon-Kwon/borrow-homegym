@@ -180,7 +180,7 @@
                            <sec:authorize access="isAnonymous()">
                              <!--  <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
-                                </a> -->
+                                </a>  -->
                               <li class="nav-item"><a
                                  href='<c:url value="../user/loginpage"/>'
                                  style="text-size: 50px">로그인</a></li>
@@ -188,7 +188,7 @@
                               <li class="nav-item"><a href="/user/registration.do">회원가입</a></li>
 
                            </sec:authorize>
-                           <sec:authorize access="hasRole('ROLE_MEMBER')">
+                           <sec:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_KAKAO')">
                               <li class="nav-item" style="margin-right: 100px;"><a
                                  href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
                               <li class="nav-item" style="margin-right: 120px;"><a

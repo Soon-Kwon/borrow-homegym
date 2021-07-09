@@ -249,7 +249,7 @@
 				FROM homegym_board b INNER JOIN homegym_attach f
 					ON b.h_id = f.h_id
 				WHERE memberId= #{memberId}
-					GROUP BY b.h_title, b.h_addr, b.h_regdate
+					GROUP BY b.h_title, b.h_addr, b.h_regdate, b.h_id
 					ORDER BY b.h_regdate DESC
 				)as lh
 	  		LIMIT #{cri.skip}, #{cri.amount}
@@ -270,13 +270,13 @@
 						ON b.h_id = d.h_id
 					INNER JOIN homegym_attach f ON b.h_id = f.h_id
 					WHERE borrowerId= #{memberId}
-					GROUP BY d.d_id
+					GROUP BY b.h_id, b.h_price, b.h_title,b.h_addr,d.rental_date,
+		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum
 					ORDER BY d.d_id DESC
 				)as rh
 	  		LIMIT #{cri.skip}, #{cri.amount}
  		 ]]>
 	</select>
-	
 
 	<!-- 내가 쓴 게시물 목록  -->
 	<select id="getMyBoardPaging" resultType="trainer" >

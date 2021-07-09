@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%
- 	String memberId = session.getAttribute("memberId").toString();
- %>  --%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
@@ -11,13 +9,7 @@
 <html class="no-js" lang="ko">
 
 <head>
-<<<<<<< HEAD
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
-=======
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
->>>>>>> a75098893177d44429a8a42b6df52ce69fe3c2b7
 <style>
 /* 프로필 사진 */
 #uploadBtn {
@@ -98,7 +90,7 @@
 #zip_codeBtn{
 	background-color: #7c97d8;
     color: white;
-}
+    }
     
 #member_updateBtn{
     height: 50px;
@@ -380,7 +372,7 @@ function execPostCode() {
 </head>
 
 <body>
-	<!--[if lte IE 9]>
+    <!--[if lte IE 9]>
       <p class="browserupgrade">
         You are using an <strong>outdated</strong> browser. Please
         <a href="https://browsehappy.com/">upgrade your browser</a> to improve
@@ -388,314 +380,6 @@ function execPostCode() {
       </p>
     <![endif]-->
 
-<<<<<<< HEAD
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span> <span></span>
-			</div>
-		</div>
-	</div>
-	<!-- /End Preloader -->
-
-	<!--Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-
-	<!-- Start Breadcrumbs -->
-	<div class="breadcrumbs overlay">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-8 offset-lg-2 col-md-12 col-12">
-					<div class="breadcrumbs-content">
-						<h1 class="page-title">마이페이지</h1>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Breadcrumbs -->
-
-	<!-- Course Details Section Start -->
-	<div class="course-details section">
-		<div class="container">
-			<div class="row">
-				<!-- Start Course Sidebar -->
-				<div class="col-lg-3 col-8">
-					<div class="course-sidebar">
-
-						<div class="sidebar-widget other-course-wedget">
-							<h3 class="sidebar-widget-title">
-								<a href="profile.do">마이페이지</a>
-							</h3>
-							<div class="sidebar-widget-content">
-								<ul class="sidebar-widget-course">
-									<li class="single-course">
-										<div class="info">
-											<h6 class="title">
-												<a href="profile_update.do">내 정보수정</a>
-											</h6>
-										</div>
-									</li>
-									<li class="single-course">
-										<div class="info">
-											<h6 class="title">
-												<a href="myactiv">나의 활동내역</a>
-											</h6>
-										</div>
-									</li>
-									<li class="single-course">
-										<div class="info">
-											<h6 class="title">
-												<a href="mywrite.do">글 관리</a>
-											</h6>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="sidebar-widget">
-							<h3 class="sidebar-widget-title">검색해보세요</h3>
-							<div class="sidebar-widget-content">
-								<div class="sidebar-widget-search">
-									<form action="#">
-										<input type="text" placeholder="Search...">
-										<button>
-											<i class="lni lni-search-alt"></i>
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End Course Sidebar -->
-
-
-				<!-- Course Details Wrapper Start -->
-				<div class="col-lg-6 col-12">
-
-					<!-- Start Features Area -->
-					<section class="features style2">
-						<div class="container-fluid" style="padding-bottom: 80px;">
-							<div class="single-head">
-								<div class="row" style="position: relative; right: 80px;">
-									<div class="col-lg-15 " style="margin-left: 280px;">
-										<!-- Start Single Feature -->
-
-
-										<div class="single-feature" style="padding: 20px">
-											<c:if test="${empty member.imagePath}">
-												<div id="userphoto">
-													<img
-														src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png"
-														class="avatar img-circle img-thumbnail" id="profile"
-														style="margin-left: 190px; width: 140px; height: 140px">
-												</div>
-											</c:if>
-											<c:if test="${not empty member.imagePath}">
-												<div id="userphoto">
-													<img src="${member.imagePath}" id="profile"
-														class="avatar img-circle img-thumbnail" name="image"
-														style="margin-left: 190px; width: 140px; height: 140px;">
-												</div>
-											</c:if>
-
-
-											<!-- 프로필이미지  -->
-											<form id="profileform" action="/user/mypage/userImgUpload.do"
-												enctype="multipart/form-data" method="post"
-												autocomplete="off">
-												<div id="userphoto_menu"
-													style="margin-top: 10px; margin-bottom: -20px;">
-													<input name="memberId" id="memberId2" type="hidden"
-														value="${member.memberId}" /> <input name="imagePath"
-														id="imagePath" type="hidden" value="${member.imagePath }" />
-													<label class="file" for="userImg"><img
-														src="/resources/assets/images/mypage/editImgBtn.png"
-														id="editImgBtn"></label> <input type="file" name="file"
-														id="userImg" onchange="btnAbled();"
-														class="text-center center-block file-upload"
-														style="margin-left: 150px; display: none;">
-													<button class="btn btn-outline-secondary" id="uploadBtn"
-														onclick="imgUpload()">업로드</button>
-													<button class="btn btn-outline-secondary"
-														onclick="deleteImg();" id="delImg" type="button">삭제</button>
-
-												</div>
-												<input type="hidden" name="${_csrf.parameterName}"
-													value="${_csrf.token}" />
-
-											</form>
-
-
-											<!-- 폼 전송 -->
-											
-											<!-- 일반 로그인 회원일 경우 -->
-											<form name="memberUpdate" id="memberUpdate"
-												action="/user/mypage/update.do" method="post">
-												<div class="form-group">
-													<div class="col-xs-6">
-														<label for="userId"> <br>
-															<h6>아이디</h6>
-														</label> <input name="memberId" id="memberId" readonly
-															class="form-control" value="${member.memberId}">
-
-													</div>
-												</div>
-												<br>
-
-												<!-- 일반 로그인 회원일 경우 -->
-												<sec:authorize access="hasRole('ROLE_MEMBER')">
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="password">
-																<h6>현재 비밀번호</h6>
-															</label> <input type="password" class="form-control"
-																id="password" name="password" placeholder="현재 비밀번호"
-																title="현재 비밀번호입력은 필수입니다.">
-														</div>
-														<div>${msg}</div>
-													</div>
-													<br>
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="new_password">
-																<h6>새 비밀번호</h6>
-															</label> <input type="password" class="form-control"
-																name="newPassword" id="newPassword" placeholder="새 비밀번호"
-																title="새 비밀번호를 입력해주세요.">
-														</div>
-													</div>
-													<br>
-
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="re_password">
-																<h6>새 비밀번호 재확인</h6>
-															</label> <input type="password" class="form-control"
-																name="rePassword" id="rePassword"
-																placeholder="새 비밀번호 재확인" title="새 비밀번호 재입력해주세요.">
-														</div>
-													</div>
-													<br>
-												</sec:authorize>
-
-												<!-- 카카오 로그인 회원일 경우 -->
-												<sec:authorize access="hasRole('ROLE_KAKAO')">
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="password">
-																<h6>현재 비밀번호</h6>
-															</label> <input type="password" readonly class="form-control"
-																id="password" name="password" value="${member.password}"
-																title="현재 비밀번호입력은 필수입니다.">
-														</div>
-														<div>${msg}</div>
-													</div>
-													<br>
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="new_password">
-																<h6>새 비밀번호</h6>
-															</label> <input type="password" readonly class="form-control"
-																name="newPassword" id="newPassword"
-																placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
-																title="새 비밀번호를 입력해주세요.">
-														</div>
-													</div>
-													<br>
-
-													<div class="form-group">
-														<div class="col-xs-6">
-															<label for="re_password">
-																<h6>새 비밀번호 재확인</h6>
-															</label> <input type="password" readonly class="form-control"
-																name="rePassword" id="rePassword"
-																placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
-																title="새 비밀번호 재입력해주세요.">
-														</div>
-													</div>
-													<br>
-												</sec:authorize>
-
-												<div class="form-group">
-													<div class="col-xs-6">
-														<label for="username">
-															<h6>이름</h6>
-														</label> <input name="name" readonly class="form-control"
-															value="${member.name}">
-
-													</div>
-												</div>
-												<br>
-												<div class="form-group">
-													<div class="col-xs-6">
-														<label for="birth">
-															<h6>생년월일</h6>
-														</label> <input name="birth" readonly class="form-control"
-															value="${member.birth}">
-													</div>
-												</div>
-												<br>
-												<div class="form-group">
-													<div class="col-xs-6">
-														<label for="nickname">
-															<h6>닉네임</h6>
-														</label> <input type="text" class="form-control" name="nickname"
-															value="${member.nickname}">
-													</div>
-												</div>
-												<br>
-
-
-												<div class="form-group">
-													<div class="col-xs-6">
-														<label for="phone">
-															<h6>연락처</h6>
-														</label> <input type="text" class="form-control" name="phone"
-															value="${member.phone}" title="enter your phone.">
-													</div>
-												</div>
-												<br>
-												<!--  <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="adress">
-                                                            <h6>주소</h6>
-                                                        </label>
-                                                        <p>
-                                                            <input type="text" class="zip_code" id="zipNo" readonly style="width:70%; height: 30px; border: 1px solid #ced4da; border-radius: .25rem;" >
-                                                            <button type="button" class="zip_code_btn"
-                                                                onclick="javascript:goPopup();" style="height: 28px;
-                                                                width: 20%;">우편번호</button>
-                                                            <br><br><br>
-                                                            <br>
-                                                            <input type="text" placeholder="나머지 주소를 입력해 주세요" id="addrDetail" style="width: 70%;height: 30px; border: 1px solid #ced4da; border-radius: .25rem;">
-                                                        </p>
-                                                    </div>
-                                                </div> -->
-
-												<div class="form-group">
-													<h6>주소</h6>
-													<input class="form-control"
-														style="width: 30%; display: inline; margin-bottom: 5px;"
-														name="zipCode" value="${member.zipCode}" type="text"
-														placeholder="우편번호" readonly="readonly">
-													<button type="button" id="zip_codeBtn"
-														class="btn btn-default" onclick="execPostCode();">
-														<i class="fa fa-search"></i> 우편번호 찾기
-													</button>
-												</div>
-												<div class="form-group">
-													<input class="form-control" style="top: 5px;"
-														placeholder="도로명 주소" name="address"
-														value="${member.address}" type="text" readonly="readonly" />
-												</div>
-												<!--<div class="form-group">
-													    <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" type="text"  />
-												</div> -->
-=======
     <!-- Preloader -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -759,7 +443,7 @@ function execPostCode() {
                             <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <p><a href="/user/faq.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -806,7 +490,7 @@ function execPostCode() {
                        
                      
                                      
-                                     <!-- 폼 전송 -->      
+                         <!-- 폼 전송 -->      
                    		<form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
@@ -820,6 +504,9 @@ function execPostCode() {
                                                     </div>
                                                 </div>
                                                 <br>
+
+												<!-- 일반 로그인 회원일 경우 -->
+												<sec:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')">
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
                                                         <label for="password">
@@ -854,6 +541,45 @@ function execPostCode() {
                                                     </div>
                                                 </div> 
                                                 <br>
+												</sec:authorize>
+
+												<!-- 키카오 로그인 회원일 경우 -->
+												<sec:authorize access="hasRole('ROLE_KAKAO')">
+												<div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="password">
+                                                            <h6>현재 비밀번호</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" value="${member.password}" id="password" name="password" style="border-radius: 15px;"
+                                                            placeholder="현재 비밀번호" title="현재 비밀번호입력은 필수입니다." >
+                                                    </div>
+                                                    <div>${msg}</div>
+                                                </div>
+                                                <br>
+                                                 <div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="new_password">
+                                                            <h6>새 비밀번호</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" name="newPassword" style="border-radius: 15px;"
+                                                            id="newPassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다" title="새 비밀번호를 입력해주세요.">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                
+                                                
+                                                <div class="form-group">
+                                                    <div class="col-xs-6">
+                                                        <label for="re_password">
+                                                            <h6>새 비밀번호 재확인</h6>
+                                                        </label>
+                                                        <input type="password" readonly class="form-control" name="rePassword" style="border-radius: 15px;"
+                                                            id="rePassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
+                                                            title="새 비밀번호 재입력해주세요.">
+                                                    </div>
+                                                </div> 
+                                                <br>
+												</sec:authorize>
                                                
                                                 <div class="form-group">
                                                     <div class="col-xs-6">
@@ -948,7 +674,7 @@ function execPostCode() {
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="/user/faq.do"> 자주묻는 질문</a>
+                                <a href="faq.html"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
@@ -1017,7 +743,6 @@ function execPostCode() {
     
     
     </script>
->>>>>>> a75098893177d44429a8a42b6df52ce69fe3c2b7
 
 												<br>
 

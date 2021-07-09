@@ -27,14 +27,6 @@
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     
-    
-<%--     <script>
-    	var memberId = '<%=memberId %>';
-    	
-    	document.addEventListener("DOMContentLoaded", function(){
-    		// Handler when the DOM is fully loaded
-   		});
-    </script>  --%>
 <style>
 #auth{
     margin-right: 10px;
@@ -86,13 +78,6 @@
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
 
     <!-- Preloader -->
     <div class="preloader">
@@ -203,7 +188,6 @@
                             <p id="sub" >🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-
                                 <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>

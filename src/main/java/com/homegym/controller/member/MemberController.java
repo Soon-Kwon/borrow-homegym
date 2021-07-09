@@ -490,7 +490,7 @@ public class MemberController {
 		//HomegymDetailVO homegymDetailVO = memberService.getMyRequest(memberId) ;
 		//model.addAttribute("myRequest", homegymDetailVO);
 		
-		//System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO );
+//		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
 		
 		return "user/reservation_detail";
 	}
