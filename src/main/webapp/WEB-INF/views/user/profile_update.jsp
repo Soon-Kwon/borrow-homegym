@@ -478,7 +478,7 @@ function execPostCode() {
 				                    	</c:if>
                             		
                             		
-                            		<!-- 프로필이미지  -->
+                            		<!-- 프로필이미지 업로드/ 삭제  -->
                              <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
 	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
 	                        	<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}"/>
