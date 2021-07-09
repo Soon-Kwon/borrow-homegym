@@ -540,9 +540,9 @@ public class MemberController {
 	}
 	
 	/* FAQ 이동 */
-	@GetMapping("FAQ")
+	@GetMapping("faq")
 	public String FAQ() {
-		return "others/FAQ";
+		return "others/faq";
 	}
 	
 
