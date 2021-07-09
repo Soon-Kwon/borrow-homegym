@@ -178,9 +178,9 @@
                         <ul id="nav" class="navbar-nav ms-auto">
 
                            <sec:authorize access="isAnonymous()">
-                              <a class="circle-image" href="user/mp_main.do">
+                             <!--  <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
-                                </a>
+                                </a> -->
                               <li class="nav-item"><a
                                  href='<c:url value="../user/loginpage"/>'
                                  style="text-size: 50px">로그인</a></li>
