@@ -69,7 +69,7 @@ function save() {
 		success : function(data) {
 			//alert(data);
 			if (data == 'OK') {
-				alert('글 작성에 성공하였습니다.');
+				alert('글 작성 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
 				//window.location.replace("/trainer/tbList.do");
 
@@ -157,7 +157,7 @@ function modify() {
 		success : function(data) {
 			//alert(data);
 			if (data == 'OK') {
-				alert('글 작성에 성공하였습니다.');
+				alert('글 수정 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
 /*				window.location.replace("/trainer/tbList.do");
 */				//window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");

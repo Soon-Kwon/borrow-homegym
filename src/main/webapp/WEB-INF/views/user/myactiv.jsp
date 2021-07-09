@@ -202,7 +202,7 @@
                             <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
+                                    <p><a href="/user/faq.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -567,7 +567,7 @@
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="faq.html"> 자주묻는 질문</a>
+                                <a href="/user/faq.do"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
