@@ -204,7 +204,6 @@
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
 
-                                <a href="myactiv.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                                 <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>

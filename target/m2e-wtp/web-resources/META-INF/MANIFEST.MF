@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: winia
+Built-By: YIM
 Build-Jdk: 1.8.0_271
-=======
-Built-By: hayeon
-Build-Jdk: 15.0.2
->>>>>>> 5b14ddc8a95e9c0e0d3deefaeec67369b4ad531b
 Created-By: Maven Integration for Eclipse
 
