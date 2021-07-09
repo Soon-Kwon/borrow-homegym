@@ -119,11 +119,11 @@
 	}
 	
 	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-	function getInfiniteUnread(){
+	/* function getInfiniteUnread(){
 		setInterval(function(){
 			getUnread();
 		}, 4000); // 4초마다 요청
-	}
+	} */
 	
 	// 안읽은 메세지 갯수 출력
 	function showUnread(result){
@@ -178,9 +178,9 @@
                         <ul id="nav" class="navbar-nav ms-auto">
 
                            <sec:authorize access="isAnonymous()">
-                              <!-- <a class="circle-image" href="user/mp_main.do">
+                             <!--  <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
-                                </a>  -->
+                                </a> -->
                               <li class="nav-item"><a
                                  href='<c:url value="../user/loginpage"/>'
                                  style="text-size: 50px">로그인</a></li>
@@ -251,6 +251,50 @@
                                     value="${_csrf.token}" />
                               </form>
                            </sec:authorize>
+
+                           <sec:authorize access="hasRole('ROLE_KAKAO')">
+									<li class="nav-item" style="margin-right: 100px;"><a href="/homegym/homegymListView.do?pageNum=1&amount=4&keyword=">홈짐</a></li>
+									<li class="nav-item" style="margin-right: 120px;"><a href="/trainer/tbList">트레이너</a></li>
+									<a class="circle-image" href="/user/mypage/profile.do"> <img src="https://via.placeholder.com/300x300" alt="logo"></a>
+									<li class="nav-item">
+                                        <a class="page-scroll dd-menu collapsed" href="javascript:void(0)"
+                                        data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
+                                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                                        aria-label="Toggle navigation"><sec:authentication property="principal.nickname"/>님</a>
+                                        <sec:authentication property="principal.memberId" var="member_memberId" />
+                                        <sec:authentication property="principal.nickname" var="member_nickname" />                             
+                                        <sec:authentication property="principal.password" var="member_password" />
+                                        <sec:authentication property="principal.name"  var="member_name" />
+                                        <sec:authentication property="principal.phone" var="member_phone" />
+                                        <sec:authentication property="principal.zipCode" var="member_zipCode" />
+                                        <sec:authentication property="principal.address" var="member_address" />
+                                        <sec:authentication property="principal.image" var="member_image"/>
+                                        <sec:authentication property="principal.birth" var="member_birth"/>
+                                        <sec:authentication property="principal.gender" var="member_gender" />
+                                        <sec:authentication property="principal.auth" var="member_auth" /> 
+                                        
+                                        <ul class="sub-menu collapse" id="submenu-1-4" style="width: 150px;">
+                                        	<li class="nav-item"><a href="/user/mypage/profile.do"><b>마이페이지</b></a></li>
+                                       	 	<li class="nav-item"><a href="/user/mypage/profile_update">&nbsp &nbsp &nbsp 내 정보 수정</a></li>
+                                         	<li class="nav-item"><a href="/user/mypage/myactiv">&nbsp &nbsp &nbsp 활동 내역</a></li>
+                                       	 	<li class="nav-item"><a href="/user/mypage/mywrite">&nbsp &nbsp &nbsp 글 관리</a></li>
+                                        	<li class="nav-item"><a href="#" onclick="document.getElementById('logout').submit();"><b>로그아웃</b></a></li>
+                                        	<!-- a href="https://kauth.kakao.com/oauth/logout?client_id=8073c8508d1673140cf691132162d281&logout_redirect_uri=http://localhost:8090" -->
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item"><a href="#"
+                                 onclick="openMsgPopup();"> <i
+                                    class="far fa-envelope envelope-icon"
+                                    style="font-size: 30px;"> <!-- 알림받아오기 --> <span
+                                       id="newNoticeCnt" class="badge bg-danger"
+                                       style="font-size: 13px; position: absolute; bottom: 24px; right: -16px;"></span>
+                                 </i>
+
+                              </a></li>
+										<form id="logout" action="/logout" method="POST">
+   										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+										</form>
+								</sec:authorize>
 
                            <sec:authorize access="hasRole('ROLE_ADMIN')">
                               <li class="nav-item" style="margin-right: 100px;"><a
