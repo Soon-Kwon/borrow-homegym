@@ -85,7 +85,7 @@
 <body>
 <script type="text/javascript">
 	// 안읽은 메세지 카운트 가져오기
-	/* function getUnread(){
+	function getUnread(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
@@ -129,14 +129,14 @@
 		var popupOpener;
 		let memberId = '${memberId}';
 		// 팝업창 열릴 때 이벤트
-		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1150,height=600");
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=600");
 		
 	}
 	
 	$(document).ready(function() {
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
-	}); */
+	});
 	
 	</script>
 

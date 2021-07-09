@@ -1,13 +1,19 @@
 package com.homegym.biz.message.impl;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.message.MessageService;
 import com.homegym.biz.message.MessageVO;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class MessageServiceImpl implements MessageService {
 
@@ -52,12 +58,23 @@ public class MessageServiceImpl implements MessageService {
 	
 	/*찾고자 하는 Id가 DB에 있는지 조회*/
 	@Override
-	public String getMemberId(MessageVO vo) {
-		return messageDAO.getMemberId(vo);
+	public MemberVO getMemberInfoByNickname(MessageVO vo) {
+		log.info("getMemberInfoByNickname"+vo);
+		return messageDAO.getMemberInfoByNickname(vo);
 	}
 	
-	/*찾고자 하는 Id와의 채팅방 존재 여부 확인 - 1이상이면 존재*/
-	public int checkMsgHistory(String findId) {
-		return messageDAO.checkMsgHistory(findId);
+	/*대화 리스트의 상대방 정보 가져오기*/
+	@Override
+	public MemberVO getMemberInfoById(MessageVO vo) { 
+		return messageDAO.getMemberInfoById(vo); 
 	}
+	 
+	
+	
+	
+	/*찾고자 하는 Id와의 채팅방 존재 여부 확인 - 1이상이면 존재*/
+	/*
+	 * @Override public int checkMsgHistory(String findId) { return
+	 * messageDAO.checkMsgHistory(findId); }
+	 */
 }

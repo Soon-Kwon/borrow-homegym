@@ -25,10 +25,13 @@ public interface MessageService {
 	public int getMsgRoomNo(MessageVO vo);
 	
 	// 찾고자하는 Id가 DB에 있는지 조회
-	public String getMemberId(MessageVO vo);
+	public MemberVO getMemberInfoByNickname(MessageVO vo);
+	
+	// 대화 리스트의 상대방 정보 가져오기
+	public MemberVO getMemberInfoById(MessageVO vo);
 	
 	// 찾고자하는 Id와 대화한 이력있는지 확인 - 1이상이면 존재
-	public int checkMsgHistory(MessageVO vo);
+	/* public int checkMsgHistory(MessageVO vo); */
 
 
 }
