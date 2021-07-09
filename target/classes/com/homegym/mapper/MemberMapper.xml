@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="selectUserById" resultType="com.homegym.security.CustomUserDetails">            
-    Select * from member WHERE memberId = #{memberId}
+    Select memberId, password, name, nickname, phone, zipCode, address, image as imagePath, birth, gender, enabled, auth from member WHERE memberId = #{memberId}
     </select>
 	
 	<!-- 회원가입 쿼리 -->
