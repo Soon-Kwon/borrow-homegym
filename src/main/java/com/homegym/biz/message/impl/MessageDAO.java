@@ -95,18 +95,18 @@ public class MessageDAO {
 			// 메세지 "이력"있는지 검색 : 1이상이면 존재
 			int checkMsgHistory = sqlSession.selectOne("MessageDAO.checkMsgHistory", vo);
 
-			int msgRoomNo = 0;
+			String msgRoomNo;
 			if (checkMsgHistory == 0) {
 				// 메세지 내역 없을 경우
 				// message테이블의 roomNo최댓값을 구해서 vo에 set하기
 				msgRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo", vo);
-				vo.setMsgRoomNo(msgRoomNo + 1);
+				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);
 
 			} else {
 				// 메세지 내역 있을 경우
 				// 해당 roomNo번호 가져오기
-				msgRoomNo= Integer.parseInt(sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo));
-				vo.setMsgRoomNo(msgRoomNo);
+				msgRoomNo= sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
+				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo));
 			}
 
 		}
@@ -140,12 +140,22 @@ public class MessageDAO {
 		String roomNo = sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
 		// mapper에서 찾은 값이 없을 때, null로 뜨게 되는데
 		// 그때. roomNo을 int형으로 하게 되면 null값을 담을 수 없으므로 String형태로 먼저 받은 후 변환해준다.  
+
+		// 기존 채팅방이 존재하면 기존 채팅방 번호가져오기
 		if(roomNo != null) {
 			return Integer.parseInt(roomNo);
 		}
-		else {
-			int maxRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo");
-			return ++maxRoomNo;
+		else { 
+			// 기존 채팅방이 없으면 max +1
+			String maxRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo");
+			
+			// max값이 null이면 최초 채팅방 번호 1로 개설
+			if(maxRoomNo == null) {
+				return 1;
+			} else {
+				
+				return Integer.parseInt(maxRoomNo) + 1;
+			}
 		}
 			
 	}

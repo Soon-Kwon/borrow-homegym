@@ -690,7 +690,7 @@
 					alert('showMessageContent(${board.memberId}); 에러');
 				}
 			});
-			
+			console.log("showMessageContent() msgRoomNo : "+msgRoomNo);
 			// 해당 채팅방의 메세지 내용을 읽었음으로 읽음처리 
 			$('.unread' + msgRoomNo).empty();
 			

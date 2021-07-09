@@ -292,10 +292,11 @@
 					method : "GET",
 					success : function(data) {
 						console.log("SUCCESS : FirstMessageList() data : " + data);
-						alert(typeof data);
-						if(data == null){
-							$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">아직 채팅방이 없습니다.<br> 다시 검색해주세요</h6>');
-						}
+						
+						// 수정필요
+						/* if(data == null){
+							$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">대화중인 채팅방이 없습니다.</h6>');
+						} */
 						$('.inbox_chat').html(data);
 						
 						
