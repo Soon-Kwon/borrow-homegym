@@ -8,12 +8,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homegym.biz.member.MemberVO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-
+@Builder
+@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -38,6 +43,10 @@ public class CustomUserDetails implements UserDetails {
 	private String auth;
 	private boolean enabled;
 
+	public CustomUserDetails() {
+		
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> auth1 = new ArrayList<GrantedAuthority>();

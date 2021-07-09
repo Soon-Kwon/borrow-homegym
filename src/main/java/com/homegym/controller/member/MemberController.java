@@ -2,9 +2,12 @@ package com.homegym.controller.member;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -33,10 +39,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homegym.biz.member.Criteria;
+import com.homegym.biz.member.KakaoProfile;
 import com.homegym.biz.member.MemberService;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.member.OAuthToken;
@@ -59,6 +66,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	// 로그인 접속 
 	@GetMapping("/loginpage")
@@ -148,8 +158,9 @@ public class MemberController {
 			} 
 	    }
 		
-		@GetMapping("/kakao/callback")
-		public @ResponseBody String kakaoCallback(String code) { //Data를 리턴해주는 컨트롤러 함수
+		// 카카오 로그인
+		@GetMapping(value="/kakao/callback", produces = "application/json; charset=utf-8")
+		public String kakaoCallback(String code) throws Exception{ //Data를 리턴해주는 컨트롤러 함수
 			
 			// POST방식으로 key=value 데이터를 요청(카카오쪽으로)			
 			RestTemplate rt = new RestTemplate();
@@ -161,7 +172,7 @@ public class MemberController {
 			// HttpBody 오브젝트 생성
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			params.add("grant_type", "authorization_code");
-			params.add("client_id", "d16ab68241565d7f23be9b45065f5a1b");
+			params.add("client_id", "8073c8508d1673140cf691132162d281");
 			params.add("redirect_uri", "http://localhost:8090/user/kakao/callback");
 			params.add("code", code);
 			
@@ -181,67 +192,95 @@ public class MemberController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			OAuthToken oauthToken = null;
 			try {
-				oauthToken = objectMapper.readValue(response.getBody(),OAuthToken.class);
-			} catch (JsonParseException e) {
+				oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+			}catch(JsonMappingException e) {
 				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+			}catch(JsonProcessingException e) {
 				e.printStackTrace();
 			}
 			
 			System.out.println("카카오 엑세스 토큰:"+oauthToken.getAccess_token());
 			
-			return response.getBody();
-		}
+			// POST방식으로 key=value 데이터를 요청(카카오쪽으로)			
+			RestTemplate rt2 = new RestTemplate();
+							
+			// HttpHeader 오브젝트 생성
+			HttpHeaders headers2 = new HttpHeaders();
+			headers2.add("Authorization", "Bearer "+ oauthToken.getAccess_token());
+			headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			
+			// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+			HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = 
+					new HttpEntity<>(headers2);
+			
+			System.out.println(kakaoProfileRequest2);
+			
+			// Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음
+			ResponseEntity<String> response2 = rt2.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoProfileRequest2,
+				String.class
+			);
+			System.out.println(response2.getBody());
+			
+			ObjectMapper objectMapper2 = new ObjectMapper();
+			KakaoProfile kakaoProfile = null;
+			try {
+				kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+			}catch(JsonMappingException e) {
+				e.printStackTrace();
+			}catch(JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			// User 오브젝트: username, password, email, gender
+			System.out.println("카카오 아이디(번호):" + kakaoProfile.getId());
+			System.out.println("카카오 이메일:" + kakaoProfile.getKakao_account().getEmail());
+			System.out.println("홈짐서버 멤버아이디:" + kakaoProfile.getKakao_account().getEmail());
+			
+			String garbagePassword = UUID.randomUUID().toString();
+			garbagePassword = pwencoder.encode(garbagePassword);
+			System.out.println("블로그서버 패스워드:" + garbagePassword);
+			
+			CustomUserDetails kakaoMember = CustomUserDetails.builder()
+					.memberId(kakaoProfile.getKakao_account().getEmail())
+					.password(garbagePassword.toString())
+//					.imagePath(kakaoProfile.getConnected_at().)
+					.gender(kakaoProfile.getKakao_account().getGender())
+					.birth(kakaoProfile.getKakao_account().getBirthday())
+					.build();
+			
+			// 가입자 혹은 비가입자 체크 해서 처리
+			kakaoMember.setName(kakaoProfile.getProperties().nickname);
+			kakaoMember.setNickname(kakaoProfile.getProperties().nickname);
+//			kakaoMember.setImagePath(kakaoProfile.getProperties().);
+			
+			CustomUserDetails originMember = memberService.getUserKakao(kakaoMember.getMemberId());
+			
+			if(originMember == null) {
+				System.out.println("기존 회원입니다");
+				memberService.memberJoinKakao(kakaoMember);   
+				originMember = memberService.getUserKakao(kakaoMember.getMemberId());
+			}
+			
+			// 로그인 처리
+			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(originMember.getMemberId(), originMember.getPassword(), originMember.getAuthorities()));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-//	// 로그아웃 이동
-//	@RequestMapping("/logout.do")
-//	public String logout(HttpSession session) {
-//		session.invalidate();
-//		return "login.jsp";
-//	}
-	
+			return "redirect:/";
+		}
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
 	/* 마이페이지 메인 이동 */
 	
-//	@GetMapping("mypage/profile.do")
-//	public String profile(MemberVO vo,HttpServletRequest request, HttpSession session, Model model) {
-//		String memberId = request.getParameter("memberId");
-//		session.setAttribute("memberId", memberId);
-//
-//		MemberVO memberVO = memberService.getUser(memberId);
-//		model.addAttribute("member", memberVO);
-//
-//		System.out.println("vo정보::::: " + memberVO);
-//		// 빌린 홈짐 수
-//		int rentCnt = memberService.getRentHomeGymCnt(memberId);
-//		model.addAttribute("rentCnt", rentCnt);
-//
-//		// 빌려준 홈짐 수
-//		int lendCnt = memberService.getLendHomeGymCnt(memberId);
-//		model.addAttribute("lendCnt", lendCnt);
-//
-//		// 내가 작성한 게시글 수
-//		int myBoardCnt = memberService.getMyAllBoardCnt(memberId);
-//		model.addAttribute("myBoardCnt", myBoardCnt);
-//
-//		// 내가 쓴 리뷰 수
-//		int myReviewCnt = memberService.getMyAllReviewCnt(memberId);
-//		model.addAttribute("myReviewCnt", myReviewCnt);
-//
-//		return "/user/profile";
-//
-//	}
-	
 	@GetMapping("mypage/profile.do")
 	public String profile(Model model) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		
+		
 		CustomUserDetails loginMemberVO = (CustomUserDetails)authentication.getPrincipal();
 		
 		CustomUserDetails vo = new CustomUserDetails();
@@ -268,20 +307,6 @@ public class MemberController {
 
 		return "/user/profile";
 	}
-
-	/* 1.마이페이지 회원정보 수정페이지 이동 */
-	
-//	@GetMapping("mypage/profile_update")
-//	public String profile_update(HttpServletRequest request, HttpSession session, Model model) {
-//		String memberId = request.getParameter("memberId");
-//		session.setAttribute("memberId", memberId);
-//
-//		MemberVO vo = memberService.getMyPageInfo(memberId);
-//		System.out.println(vo.getImagePath());
-//		model.addAttribute("member", vo);
-//
-//		return "user/profile_update";
-//	}
 	
 	/* 1.마이페이지 회원정보 수정페이지 이동 */
 	
@@ -300,7 +325,7 @@ public class MemberController {
 		return "user/profile_update";
 	}
 
-/* 1-2.마이페이지 회원정보 수정 요청 */
+	/* 1-2.마이페이지 회원정보 수정 요청 (일반 회원) */
 	
 	@ResponseBody
 	@PostMapping("mypage/update")
@@ -313,24 +338,37 @@ public class MemberController {
 		String newPassword = vo.getNewPassword();
 		if(newPassword != null && !newPassword.equals("") ) {
 			newPassword = pwencoder.encode(newPassword);
-			vo.setPassword(newPassword);
+			vo.setNewPassword(newPassword);
 		}
-
+		
+		// 사용자가 가진 모든 롤 정보를 얻습니다. 
+		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		
+		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+		
+		String authority = "";
+		
+		while (iter.hasNext()) { 
+			GrantedAuthority auth = iter.next(); 
+			authority = auth.getAuthority();
+			System.out.println(auth.getAuthority()); 
+		}
+		boolean result = true;
+		System.out.println(vo.getPassword());
+		
 		/* id, password 체크 */
-		boolean result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
+		if(!authority.equals("ROLE_KAKAO")) {
+			result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
+		}
+		else {
+			result = true;
+		}
 
 		/* id,password 일치 */
 		if (result) {
 			System.out.println("vo.getNewPassword" + vo.getNewPassword());
 			System.out.println("vo.getPassword" + vo.getPassword());
 			int cnt = memberService.memberUpdate(vo);
-//			if(newPassword != null && !newPassword.equals("") ) {
-//				Authentication newAuth = new UsernamePasswordAuthenticationToken(vo.getMemberId(), vo.getPassword(), vo.getAuthorities());
-//				SecurityContextHolder.getContext().setAuthentication(newAuth);
-//			} else {
-//				Authentication newAuth = new UsernamePasswordAuthenticationToken(vo.getMemberId(), pwencoder.encode(vo.getPassword()), vo.getAuthorities());
-//				SecurityContextHolder.getContext().setAuthentication(newAuth);
-//			}
 			if (cnt == 1) { // 회원 수정 성공시
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "회원 정보가 수정되었습니다.");
@@ -346,6 +384,7 @@ public class MemberController {
 		return map;
 
 	}
+	
 	/* 1-3. 프로필 이미지 등록 */
 	
 	  @PostMapping("mypage/userImgUpload") 
