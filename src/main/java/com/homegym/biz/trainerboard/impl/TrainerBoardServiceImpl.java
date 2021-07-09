@@ -1,6 +1,7 @@
 package com.homegym.biz.trainerboard.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,9 +60,9 @@ public class TrainerBoardServiceImpl implements TrainerBoardService {
 	}
 
 	@Override
-	public int getTotal(TrainerCriteria cri) {
-		System.out.println("총 합" + cri);
-		return boardDAO.getTotalCount(cri);
+	public int getTotal(Map<String, Object> paramMap) {
+		System.out.println("총 합" + paramMap);
+		return boardDAO.getTotalCount(paramMap);
 	}
 
 	

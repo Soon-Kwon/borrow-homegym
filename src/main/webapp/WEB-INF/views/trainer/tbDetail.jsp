@@ -134,14 +134,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-12">
-					<br>
-					<h2 style="font-weight: bold; margin-bottom:0px;">${trainerBoard.tbTitle}</h2>
+					<br><br><br>
+
 					<div class="single-inner"></div>
 					<br>
 
 				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
-					<div style="width: 100%; ">
+					<div style="width: 100%;  margin-top:10px; ">
 						<!-- carousel를 사용하기 위해서는 class에 carousel와 slide 설정한다. -->
 						<!-- carousel는 특이하게 id를 설정해야 한다.-->
 						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
@@ -202,18 +202,18 @@
 						</div>
 					</div>
 					<!-- test end -->
-
-	
-				<div class="post-details" style="margin-top:30px;">
+					
+					<br>
+				<div class="post-details" >
+					<h2 style="font-weight: bold; ">${trainerBoard.tbTitle}</h2>
+					<br><br>
 							<div class="detail-inner">
-								<h3>
-									🏋🏼‍♂️트레이너 소개
-								</h3>
-									<pre style="height: 300px; font-size: 20px;">${trainerBoard.tbContent}</pre>
+								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
+									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
-									<pre style="height: 300px; font-size: 20px;">${trainerBoard.tbProgram}</pre>
+									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
@@ -225,7 +225,7 @@
 
 						<!--/ End Single Widget -->
 						<!-- Single Widget -->
-						<div class="widget popular-feeds" style="position: relative; top: 90px; margin-bottom:0px;
+						<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;
 						">
 							<div class="tr_image" style="position: relative; left: 10px;">
 								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
@@ -267,11 +267,9 @@
 
 						<!--/ End Single Widget -->
 						<!-- 해시태그 -->
-						<div class="widget popular-tag-widget"
-							style="position: relative;  margin-top:100px; ">
-							<div class="tags"
-								style="font-size: 17px; font-weight: bold; color: black; border-radius: 20px;">
-								<p>활동 지역</p>
+						<div class="widget popular-tag-widget" style=" height:280px; padding-top:30px; margin-top:110px; ">
+							<div class="tags" style="font-size: 17px; color: black; border-radius: 20px;">
+								<p style="font-weight: bold;">활동 지역</p>
 								<!-- 만약 입력값이 없으면 해시태그가 없게 , 있으면 생성되게  -->
 								<c:if test="${not empty trainerBoard.tbActivTag1}">
 									<a href="" style="border-radius: 20px;">${trainerBoard.tbActivTag1}</a>
@@ -284,7 +282,7 @@
 								</c:if>
 						
 
-								<p>활동 범위</p>
+								<p style="font-weight: bold;">활동 범위</p>
 								<!-- 만약 입력값이 없으면 활동범위 입력된 값이 없으면 안보이게 , 있으면 생성되게  -->
 								<c:if test="${not empty trainerBoard.tbActivChk1}">
 									<a href="" style="border-radius: 20px;">${trainerBoard.tbActivChk1}</a>

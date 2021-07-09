@@ -8,9 +8,21 @@
 <html class="no-js" lang="zxx">
 
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
+<style>
+.box{
+margin-top:15px;
+height:auto; 
+overflow:hidden; 
+text-overflow: ellipsis;
+/* white-space: nowrap; */
+display:-webkit-box; 
+-webkit-line-clamp: 5; 
+-webkit-box-orient: vertical; 
+}
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- 페이징 관련 자바스크립트 -->
 <script>
 	$(document)
@@ -94,11 +106,12 @@
 	<!-- Start Events Area-->
 	<section class="courses section grid-page">
 		<div class="container">
-			<form class="d-flex search-form" action="/trainer/tbList.do" method="get">
-				<input class="form-control me-2" type="search" placeholder="트레이너 검색"
+			<form class="d-flex search-form" action="/trainer/tbListSearch.do" method="get">
+				<input class="form-control me-2" type="search" placeholder="동네로 검색 GOGO! "
 				name="searchKeyword" aria-label="Search" style="width: 20%; margin-left:70%;">
 					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
 					<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+					<input type='hidden' name='serchKeyword' value='${trBord.searchKeyword }'>
 				<button class="btn btn-outline-success" type="submit">
 					<i class="lni lni-search-alt"></i>
 				</button>
@@ -116,11 +129,10 @@
 								</a>
 
 							</div>
-							<div class="content" style="height: 230px; overflow:hidden;">
+							<div class="content" style="height:190px;">
 							
-								<h4>${trBoard.tbTitle}</h4>
-								<br>
-								<p>${trBoard.tbContent}</p>
+								<h5>${trBoard.tbTitle}</h5>
+								<p class="box">${trBoard.tbContent}</p>
 							</div>
 						</div>
 					</div>
