@@ -231,6 +231,7 @@ public class TrainerBoardController {
 		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
 		System.out.println(vo.getTno());
 		model.addAttribute("trainerBoardList", boardService.getTbListPaging(vo, cri));
+		
 
 		int total = boardService.getTotal(cri);
 		model.addAttribute("pageMaker", new TrainerPageDTO(cri, total));

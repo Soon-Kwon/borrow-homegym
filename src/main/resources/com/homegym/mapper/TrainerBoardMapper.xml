@@ -115,6 +115,9 @@
 	<select id="getTbListPaging" resultType="trainer">
 		<![CDATA[
 			SELECT * FROM trainer_board	R1
+			WHERE tbActivTag1 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag2 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag3 like concat('%', #{vo.searchKeyword}, '%') 
 			ORDER BY TNO DESC
 			LIMIT #{cri.amount} OFFSET #{cri.skip}
 		]]>

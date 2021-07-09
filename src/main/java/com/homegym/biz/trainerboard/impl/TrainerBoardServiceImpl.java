@@ -53,6 +53,7 @@ public class TrainerBoardServiceImpl implements TrainerBoardService {
 	public List<TrainerBoardVO> getTbListPaging(TrainerBoardVO vo, TrainerCriteria cri) {
 
 		System.out.println("글 목록 보여주기 -- 페이징 성공" + vo);
+		System.out.println("impl==========================="+vo.getSearchKeyword());
 		return boardDAO.getTbListPaging(vo, cri);
 
 	}

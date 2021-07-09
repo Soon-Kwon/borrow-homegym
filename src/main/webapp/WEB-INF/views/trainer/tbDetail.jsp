@@ -206,16 +206,14 @@
 	
 				<div class="post-details" style="margin-top:30px;">
 							<div class="detail-inner">
-								<h2 class="post-title">
-									<p style="font-size: 30px">🏋🏼‍♂️트레이너 소개</p>
-								</h2>
-								<p style="font-size: 20px; line-height: 30px;">
-									${trainerBoard.tbContent}</p>
-								<hr>
-								<br>
+								<h3>
+									🏋🏼‍♂️트레이너 소개
+								</h3>
+									<pre style="height: 300px; font-size: 20px;">${trainerBoard.tbContent}</pre>
+									<hr>
+									<br>
 								<h3>📍 프로그램 소개</h3>
-								<p>${trainerBoard.tbProgram}</p>
-
+									<pre style="height: 300px; font-size: 20px;">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>

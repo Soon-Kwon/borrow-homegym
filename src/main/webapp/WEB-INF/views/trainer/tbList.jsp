@@ -94,8 +94,11 @@
 	<!-- Start Events Area-->
 	<section class="courses section grid-page">
 		<div class="container">
-			<form class="d-flex search-form">
-				<input class="form-control me-2" type="search" placeholder="트레이너 검색" aria-label="Search" style="width: 326px;">
+			<form class="d-flex search-form" action="/trainer/tbList.do" method="get">
+				<input class="form-control me-2" type="search" placeholder="트레이너 검색"
+				name="searchKeyword" aria-label="Search" style="width: 20%; margin-left:70%;">
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 				<button class="btn btn-outline-success" type="submit">
 					<i class="lni lni-search-alt"></i>
 				</button>
@@ -113,7 +116,8 @@
 								</a>
 
 							</div>
-							<div class="content" style="height: 230px;">
+							<div class="content" style="height: 230px; overflow:hidden;">
+							
 								<h4>${trBoard.tbTitle}</h4>
 								<br>
 								<p>${trBoard.tbContent}</p>
@@ -150,6 +154,7 @@
 							<input type='hidden' name='pageNum'
 								value='${pageMaker.cri.pageNum }'> <input type='hidden'
 								name='amount' value='${pageMaker.cri.amount }'>
+						<input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
 						</form>
 					</div>
 					<!--/ End Pagination -->

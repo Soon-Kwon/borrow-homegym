@@ -199,7 +199,8 @@ ul li.tag-item {
 								<div class="col-11" >
 									<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
-										<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. " style="border-radius:3px;"></textarea>
+										<textarea name="tbContent"  id="textarea"  minlength="100" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 100자  )" style="border-radius:3px;" ></textarea>
+										<div id="test_cnt">(0 / 200)</div>
 									</div>
 								</div>
 
@@ -215,9 +216,9 @@ ul li.tag-item {
 										<label style="font-size: 18px; color:#323232"><b>트레이너 스케줄</b></label>
 										 <strong>평일 (월~토)</strong>
 										<div>
-											<input type="time" style="width: 44%;" id="time1" name="dayTimes" style="border-radius:3px;"> 
+											<input class="timepicker" style="width: 44%;" id="time1" name="dayTimes" style="border-radius:3px;"> 
 											<strong> ~ </strong> 
-											<input type="time" style="width: 44%;" id="time1" name="dayTimef" style="border-radius:3px;">
+											<input class="timepicker" style="width: 44%;" id="time1" name="dayTimef" style="border-radius:3px;">
 										</div>
 									</div>
 								</div>
@@ -225,9 +226,9 @@ ul li.tag-item {
 									<div class="form-group" style="margin-left:50px;">
 										<strong>일요일</strong>
 										<div>
-											<input type="time" style="width: 44%;" name="sunTimes" style="border-radius:3px;">
+											<input class="timepicker" style="width: 44%;" name="sunTimes" style="border-radius:3px;">
 											<strong> ~ </strong> 
-											<input type="time" style="width: 44%;" name="sunTimef" style="border-radius:3px;">
+											<input class="timepicker" style="width: 44%;" name="sunTimef" style="border-radius:3px;">
 										</div>
 									</div>
 								</div>
@@ -295,8 +296,6 @@ ul li.tag-item {
 										</ul>
 									</div>
 								</div>
-							
-
 								<div class="col-12">
 									<div class="form-group button" style="text-align: center; margin-bottom:0px; margin-top:40px;">
 										<button type="button" onclick="save();" class="btn" style="background-color: #3428A5; border-radius:10px; width: 90px;">등록</button>
@@ -348,6 +347,56 @@ ul li.tag-item {
 	</a>
 	
 	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+	<!-- 시간  -->
+	<script>
+    	/* 타임피커 이용한 시간 출력조정*/
+    	$(document).ready(function(){
+    		$('.timepicker').timepicker({
+    		    timeFormat: 'HH:mm',
+    		    interval: 30,
+    		    minTime: '6',
+    		    maxTime: '22:00',
+    		    defaultTime: '9',
+    		    startTime: '06:00',
+    		    dynamic: false,
+    		    dropdown: true,
+    		    scrollbar: true
+    		});
+    	});
+    </script>
+    
+    <script>
+ 	// 글자 입력 수 제한
+    $(document).ready(function() {
+    	$('#textarea').on('keyup', function() {
+
+    		if($(this).val().length < 100) {
+
+    	alert("글자수는 50자로 이상로 작성해주세요!");
+
+   /*  			$(this).val($(this).val().substring(0, 200)); */
+
+    		}
+
+    	});
+    	
+        /* $('#textarea').on('keyup', function() {
+            $('#test_cnt').html("("+$(this).val().length+" / 100)");
+ 
+            if($(this).val().length < 200) {
+                $(this).val($(this).val().substring(0, 200));
+                $('#test_cnt').html("(100 / 200)");
+                
+                if($(this).val().length < 100) {
+                	alert("최소 입력은 100자입니다!");
+                }
+            } */
+           
+        });
+    });
+        
+    </script>
+
 	<script>
 	$(document).ready(function() {
 	
@@ -443,6 +492,8 @@ ul li.tag-item {
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
 	<script src="/resources/assets/js/upload_file.js"></script>
+			<!-- JQuery Timepicker -->
+	<script src="/resources/assets/js/jquery.timepicker.min.js"></script>
 
 </body>
 
