@@ -194,10 +194,9 @@
 				<div class="modal-header">
 					<span id="m_writer_profile">
 						<div class="message-box">
-							<!-- 상대방 프로필-->
-							<img src="${member_imagePath}" alt="상대방 프로필"
+							<!-- 상대방 프로필 -->
+							<img src="${profile.imagePath }" alt="상대방 프로필"
 								class="avatar img_circle img-profile" alt="avatar">
-
 						</div>
 					</span>
 					<h5 class="modal-title" id="messageModalLabel">&nbsp;

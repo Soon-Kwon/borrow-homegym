@@ -70,8 +70,17 @@
 		    background-color:#5c6dbd;
 		 }
 		 
+		 #rejectResonBtn{
+		 	background-color: #5c6dbd;
+		    width: 80px;
+		    color: white;
+		    margin-left: 350px;
+		    position: absolute;
+		    height: 45px;
+		 }
+		 
     </style>
-
+<link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
 </head>
 <script>
 	/*버튼 선택시 상태값 변경*/
@@ -284,7 +293,7 @@
                                                                    		 		
                                                                    		 	</div>
 			                                                               <div class="button deny-btn">
-                                                                        		<button class="btn" id="rejectBtn" value="${waitingHomegym.d_id}" onclick="changeHomegymStatus(this);" data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
+                                                                        		<button class="btn" id="rejectBtn" value="${waitingHomegym.d_id}"  data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
                                                                     		</div>
 			                                                                  
 																		 </c:otherwise>
@@ -485,7 +494,7 @@
 				                                                                 <button class="btn" id="payOK">결제 완료</button>
 				                                                            </div>
 				                                                             <div class="button review-btn">
-				                                                                  <button class="btn" id="reviewBtn" onClick="location.href='/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}'">리뷰쓰기</button>
+				                                                                  <button class="btn" id="reviewBtn" onClick="location.href='/homegym/homegymDetailView.do?hId=${rentHomegym.h_id}#count'">리뷰쓰기</button>
 				                                                              </div> 
 																		</c:if>   
 																		<c:if test="${rentHomegym.agreeYN == 'N'}"> 
@@ -572,6 +581,48 @@
         </div>
     </footer>
     <!--/ End Footer Area -->
+    
+    
+    
+    <!-- 거절 사유 모달 창 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header"> <button type="button" class="btn" data-dismiss="modal" style="margin-left: 420px;">&times;</button> </div> <!-- Modal body -->
+                <div class="modal-body mb-0 pb-0 mt-0">
+                    <div class="container ">
+                        <!-- custom radio button -->
+                        <div class="holder">
+                            <div class="row mb-1">
+                                <div class="col">
+                                    <h4>거절 사유를 체크해주세요!😢</h4>
+                                </div>
+                            </div>
+                            <form action="#" class="customRadio customCheckbox m-0 p-0">
+                                <div class="row mb-0">
+                                    <div class="row justify-content-start">
+                                        <div class="col-12">
+                                        <br><br>
+                                            <div class="row"> <input type="radio" name="rejectReason"  value="홈짐주인의 개인 사정으로 예약이 거절되었습니다." id="r1" checked> <label for="r1">개인 사정으로 인한 취소</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="이미 예약된 시간으로 홈짐예약이 거절되었습니다." id="r2"> <label for="r2">이미 예약된 시간</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 날짜로 홈짐예약이 거절되었습니다." id="r3"> <label for="r3">예약 불가한 날짜</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="너무 오랜 시간 대여로 홈짐예약이 거절되었습니다."id="r4"> <label for="r4">너무 오랜 시간 대여</label> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 justify-content-start m-0 p-0" style="position: relative;"> <button type="button" class="btn" id= "rejectResonBtn" data-dismiss="modal">제출</button> </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- Modal footer -->
+                <div class="modal-footer pt-0 mt-0 pb-5 pr-6 m-1 ">
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- ========================= scroll-top ========================= -->
@@ -589,6 +640,13 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- 결제 api 아임포트 -->
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+	<!-- 모달 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    
     
     <script type="text/javascript">
     	var selectedBtnId = 'overview-tab';
@@ -675,6 +733,32 @@
 		$('#selectedBtnId').val(selectedBtnId);
 	}
 
+	$('[data-toggle="popover"]').popover();
+
+	 $(function () {
+	 $('.example-popover').popover({
+	 container: 'body'
+	 })
+	 })
+
+	 $(function() {
+	 function reposition() {
+	 var modal = $(this),
+	 dialog = modal.find('.modal-dialog');
+	 modal.css('display', 'block');
+	 dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+	 }
+
+	 $('.modal').on('show.bs.modal', reposition);
+
+	 $(window).on('resize', function() {
+	 $('.modal:visible').each(reposition);
+	 });
+	 });
+
     </script>
+    
+    
+    
 </body>
 </html>

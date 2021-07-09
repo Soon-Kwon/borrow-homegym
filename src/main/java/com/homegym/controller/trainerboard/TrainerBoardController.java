@@ -8,7 +8,9 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -38,7 +38,6 @@ import com.homegym.biz.trainerboard.TrainerBoardService;
 import com.homegym.biz.trainerboard.TrainerBoardVO;
 import com.homegym.biz.trainerboard.TrainerCriteria;
 import com.homegym.biz.trainerboard.TrainerPageDTO;
-import com.homegym.security.CustomUserDetails;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -231,8 +230,45 @@ public class TrainerBoardController {
 		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
 		System.out.println(vo.getTno());
 		model.addAttribute("trainerBoardList", boardService.getTbListPaging(vo, cri));
+		
+		//맵 생성 
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("pageNum", cri.getPageNum());
+		paramMap.put("skip", cri.getSkip());
+		paramMap.put("amount", cri.getAmount());
+		paramMap.put("searchKeyword", vo.getSearchKeyword());
+		int total = boardService.getTotal(paramMap);
+		// 서비스, 임플, 디에이오 파라미터 타입 Map<String, Object> paramMap
+		// 매퍼 paramterType="hashmap"
+		
+		//int total = boardService.getTotal(cri);
+		model.addAttribute("pageMaker", new TrainerPageDTO(cri, total));
 
-		int total = boardService.getTotal(cri);
+		return "/trainer/tbList";
+	}
+	
+	// 검색
+	@GetMapping("/tbListSearch")
+	public String getTbListsSearch(TrainerCriteria cri, Model model, TrainerBoardVO vo) {
+
+		System.out.println("리스트 페이지");
+		System.out.println("tbList : " + cri);
+		cri.setPageNum(1);
+		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
+		System.out.println(vo.getTno());
+		model.addAttribute("trainerBoardList", boardService.getTbListPaging(vo, cri));
+		
+		//맵 생성 
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("pageNum", cri.getPageNum());
+		paramMap.put("skip", cri.getSkip());
+		paramMap.put("amount", cri.getAmount());
+		paramMap.put("searchKeyword", vo.getSearchKeyword());
+		int total = boardService.getTotal(paramMap);
+		// 서비스, 임플, 디에이오 파라미터 타입 Map<String, Object> paramMap
+		// 매퍼 paramterType="hashmap"
+		
+		//int total = boardService.getTotal(cri);
 		model.addAttribute("pageMaker", new TrainerPageDTO(cri, total));
 
 		return "/trainer/tbList";

@@ -12,6 +12,7 @@ import com.homegym.biz.homegym.HomegymDetailVO;
 import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymService;
 import com.homegym.biz.homegym.HomegymVO;
+import com.homegym.biz.member.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -134,5 +135,10 @@ public class HomegymServiceImpl implements HomegymService{
 		return homegymDAO.authToWriteReview(hId);
 	}
 	
+	// 프로필 이미지 가져오기
+	public MemberVO getProfileImg(HomegymVO vo) {
+		
+		return homegymDAO.getProfileImg(vo);
+	}
 	
 }

@@ -1,5 +1,7 @@
 package com.homegym.biz.homegym.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,11 @@ public class HomegymDetailServiceImpl implements HomegymDetailService {
 	public HomegymVO getAddr(int hId) {
 
 		return detailDAO.select(hId);
+	}
+	
+	// 예약된 내역 받아오기
+	public List<HomegymDetailVO> getReservationList(int hId){
+		
+		return detailDAO.selectReservationList(hId);
 	}
 }

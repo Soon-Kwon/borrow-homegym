@@ -115,13 +115,25 @@
 	<select id="getTbListPaging" resultType="trainer">
 		<![CDATA[
 			SELECT * FROM trainer_board	R1
+			WHERE 1=1
+		]]>
+		<if test="vo.searchKeyword != null and vo.searchKeyword != ''">
+			AND tbActivTag1 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag2 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag3 like concat('%', #{vo.searchKeyword}, '%') 
+		</if>
 			ORDER BY TNO DESC
 			LIMIT #{cri.amount} OFFSET #{cri.skip}
-		]]>
 	</select>
 	
-	<select id="getTotalCount" resultType="int">
-		SELECT COUNT(*) FROM trainer_board	
+	<select id="getTotalCount" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM trainer_board
+		WHERE 1=1
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND tbActivTag1 like concat('%', #{searchKeyword}, '%') 
+			OR tbActivTag2 like concat('%', #{searchKeyword}, '%') 
+			OR tbActivTag3 like concat('%', #{searchKeyword}, '%') 
+		</if>
 	</select>
 
 <!-- 	<select id="getTbList2" resultType="trainer">

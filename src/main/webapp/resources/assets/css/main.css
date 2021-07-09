@@ -1187,7 +1187,7 @@ ol {
   background: #5c6dbd;
   color: #fff;
   border-color: transparent;
-  border-radius:5px;
+ 
 }
 
 .pagination .pagination-list li a i {
@@ -7942,7 +7942,7 @@ ul.custom-flex {
   bottom: 0;
   height: 4px;
   width: 0%;
-  background: #0EDC8D;
+  background: #656f98;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
