@@ -13,6 +13,8 @@ public class TrainerBoardVO {
 	
 	private int tno;
 	private String memberId;
+	private String name;
+	private String image;
 	private String tbTitle;
 	private String nickName;
 	private String tbContent;

@@ -7,4 +7,10 @@
 		VALUES (#{hId}, STR_TO_DATE(#{startTime}, '%H:%i'), STR_TO_DATE(#{endTime}, '%H:%i')
 		, STR_TO_DATE(#{rentalDate}, '%Y-%m-%d'), #{borrowerId}, #{sex}, #{phoneNum}, #{message})
 	</insert>
+	
+	<select id="selectAddr" resultType="com.homegym.biz.homegym.HomegymVO">
+		SELECT h_addr, h_locate_x, h_locate_y
+		FROM homegym_board
+		WHERE h_id = #{hId}
+	</select>
 </mapper>

@@ -69,12 +69,4 @@ public class MessageServiceImpl implements MessageService {
 		return messageDAO.getMemberInfoById(vo); 
 	}
 	 
-	
-	
-	
-	/*찾고자 하는 Id와의 채팅방 존재 여부 확인 - 1이상이면 존재*/
-	/*
-	 * @Override public int checkMsgHistory(String findId) { return
-	 * messageDAO.checkMsgHistory(findId); }
-	 */
 }

@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
-<%-- <%
- 	String memberId = session.getAttribute("memberId").toString();
- %>  --%>
 
 <html class="no-js" lang="zxx">
 
@@ -40,10 +37,10 @@
     </script>  --%>
 <style>
 #auth{
-    margin-right: 5px;
+    margin-right: 10px;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 17px;
+    margin-left: 45px;
     margin-top: 10px;
 }
 .userphoto_menu label { 
@@ -76,6 +73,12 @@
 
 .img-circle {
   border-radius: 50%;
+}
+
+#sub{
+	margin-top: 40px; 
+	font-size: 16px;
+	font-weight:bold;
 }
 
 
@@ -138,26 +141,22 @@
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="myactiv">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="mywrite.do">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
-                                    </form>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -181,13 +180,13 @@
                         <div class="single-feature">
                             
                             <c:if test="${empty member.imagePath}">
-				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile"></div>
+				                   <div id="userphoto"><img src="${pageContext.request.contextPath }/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="border-radius:100px;"></div>
 				             </c:if>
 				            <c:if test="${not empty member.imagePath}">
-				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px;"></div>
+				                    <div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image"  style="width: 140px; height: 150px; border-radius:100px;"></div>
 				            </c:if>
                             <h4 style="margin-left:30px;">${member.name}님</h4>
-                            <span id="auth">🏋️‍♂️${member.nickname}</span><br> 
+                            <span id="auth">‍${member.nickname}</span><br> 
                             <span id="memberId">${member.memberId} <span>
                             <div class="button">
                                 <a href="profile_update.do" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
@@ -199,9 +198,9 @@
                         <!-- Start Single Feature -->
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">나의 활동내역 보기</a></h3>
-                            <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌려준 홈짐</p>
+                            <p id="sub" >🏠 내가 빌려준 홈짐</p>
                             <h1 style="margin-top: 20px;">${lendCnt}</h1>
-                            <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
+                            <p id="sub" >🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
                                 <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
@@ -213,9 +212,9 @@
                         <!-- Start Single Feature -->
                         <div class="single-feature">
                             <h3><a href="javascript:void(0)">내가 쓴글 보기</a></h3>
-                            <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 게시글</p>
+                            <p id="sub">📌 내가 쓴 게시글</p>
                             <h1 style="margin-top: 20px;">${myBoardCnt}</h1>
-                            <p style="margin-top: 40px; font-size: 16px;">📌 내가 쓴 리뷰</p>
+                            <p id="sub" >📌 내가 쓴 리뷰</p>
                             <h1 style="margin-top: 20px;">${myReviewCnt}</h1>
                             <div class="button">
                                 <a href="mywrite.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
@@ -246,7 +245,7 @@
     <!-- Course Details Section End -->
 
      <!-- Start Footer Area -->
-     <footer class="footer style2">
+     <footer class="footer style2" style="position:fixed;">
         <!-- Start Footer Bottom -->
         <div class="footer-bottom">
             <div class="container">
@@ -261,7 +260,7 @@
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="faq.html"> 자주묻는 질문</a>
+                                <a href="/user/FAQ.do"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345

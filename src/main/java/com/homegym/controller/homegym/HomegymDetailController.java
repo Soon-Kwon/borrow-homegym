@@ -30,6 +30,9 @@ public class HomegymDetailController {
 			@ModelAttribute("hId") int hId) {
 		
 		log.info("예약하기: " + model);
+		
+		// 주소 가져오기
+		model.addAttribute("address", service.getAddr(hId));
 		return "/homegym/hg_reservation";
 	}
 	

@@ -21,7 +21,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
         
         CustomUserDetails user = (CustomUserDetails) service.loadUserByUsername(memberId);
-        
+        System.out.println("11111111111111111111111111111"+user.getImagePath());
         if(!matchPassword(password, user.getPassword())) {
             throw new BadCredentialsException(memberId);
         }

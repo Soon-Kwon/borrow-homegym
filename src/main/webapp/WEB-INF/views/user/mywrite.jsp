@@ -10,7 +10,22 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-
+<style>
+	#addBtn{
+		height: 50px;
+	    width: 150px;
+	    font-size: 18px;
+	    margin-left: 350px;
+	    border-color: #5c6dbd;
+	    color: #5c6dbd;
+	    font-weight: 400;
+	}
+	
+	/* .fouc{
+		display: none;
+	}
+ */
+</style>
 <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">
@@ -58,36 +73,32 @@
                     <div class="course-sidebar">
                         
                         <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title">마이페이지</h3>
+                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
                             <div class="sidebar-widget-content">
                                 <ul class="sidebar-widget-course">
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">내 정보수정</a></h6>
+                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a
-                                                    href="course-details.html">나의 활동내역</a></h6>
+                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
                                         </div>
                                     </li>
                                     <li class="single-course">
                                         <div class="info">
-                                            <h6 class="title"><a href="course-details.html">글 관리</a></h6>
+                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">검색해보세요</h3>
+                          <div class="sidebar-widget">
+                            <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button><i class="lni lni-search-alt"></i></button>
-                                    </form>
+                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -102,13 +113,13 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
                                 data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
-                                aria-selected="true">게시글</button>
+                                aria-selected="true" onclick="fnGetBtnId(this)">게시글</button>
                         </li>
                       
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
+         				  <button class="nav-link" id="instructor-tab" data-bs-toggle="tab"
                                 data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor"
-                                aria-selected="false">리뷰</button>
+                                aria-selected="false" onclick="fnGetBtnId(this)">리뷰</button>
                         </li>
                     </ul>
                     
@@ -140,7 +151,7 @@
                                     			<c:forEach var="board" items="${board}" varStatus="status">
 			                                    	<tr>
 			                                            <td>${board.tno}</td>
-			                                            <td><a href="course-details.html">${board.tbContent}</a></td>
+			                                            <td><a href="/trainer/tbDetail.do?tno=${board.tno}" style="color:black;">${board.tbTitle}</a></td>
 			                                            <td>${board.memberId}</td>
 			                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${board.tbRegDate}" /></td>
 			                                        </tr>
@@ -150,10 +161,11 @@
                                 		</tbody>
                                     </table>
                                     
-                                   <form id="actionForm" action="user/mypage/mywrite.do" method="get">
+                                   <form id="actionForm" action="/user/mypage/mywrite.do" method="get">
                                      	<input type="hidden" name="memberId" value="${member.memberId}"/>
                                     	<input type="hidden" name="pageNum" value="${tb_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${tb_pageMaker.cri.amount}">
+                                    	<input type="hidden" name="selectedBtnId" id="selectedBtnId" value="${selectedBtnId }"/>
                                     </form> 
                                                <!-- Pagination -->
                                                 <div class="pagination center">
@@ -186,7 +198,7 @@
                                                 <th>리뷰 작성일</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="listBody">
                                    				 <c:choose>
                                     				<c:when test ="${fn:length(myReviews)==0}">
                                     				<div style="font-size: 20px">
@@ -197,10 +209,11 @@
 													</div>
                                     			</c:when>
                                     			<c:otherwise>
+                                    			
                                     				<c:forEach var="myReviews" items="${myReviews}" varStatus="status">
 		                                    			<tr>
 				                                            <td>${myReviews.h_title}</td>
-				                                            <td><a href="course-details.html">${myReviews.hr_content}</a></td>
+				                                            <td><a href="/homegym/homegymDetailView.do?hId=${myReviews.h_id}" style="color:black;">${myReviews.hr_content}</a></td>
 					                                            <c:if test="${myReviewshr_score==1}">
 					                                            	<td>⭐</td><
 					                                            </c:if>
@@ -214,15 +227,41 @@
 					                                            	<td>⭐⭐⭐⭐</td>
 					                                            </c:if>
 					                                            <c:if test="${myReviews.hr_score==5}">
-					                                            	<td>⭐⭐⭐⭐⭐⭐</td>
+					                                            	<td>⭐⭐⭐⭐⭐</td>
 					                                            </c:if>
 				                                            <td><fmt:formatDate pattern= "yyyy-MM-dd" value="${myReviews.hr_regdate}" /></td>
 		                                       		    </tr>
                                     			   </c:forEach>
+                                    			  
                                     	     	</c:otherwise>
                                      		 </c:choose>
+                                     		
                                			  </tbody>
                                        </table>
+                                        <form id="actionForm" action="/user/mypage/mywrite.do" method="get">
+                                     	<input type="hidden" name="memberId" value="${member.memberId}"/>
+                                    	<input type="hidden" name="pageNum" value="${rv_pageMaker.cri.pageNum}">
+                                    	<input type="hidden" name="amount" value="${rv_pageMaker.cri.amount}">
+                                    	<input type="hidden" name="selectedBtnId" id="selectedBtnId" value="${selectedBtnId }"/>
+                                    </form> 
+                                               <!-- Pagination -->
+                                                <div class="pagination center">
+                                                    <ul class="pagination-list">
+	                                                   <c:if test ="${rv_pageMaker.prev}">
+	                                                        <li class="pageInfo_btn previous"><a href="${rv_pageMaker.startPage-1}">Prev</a></li>
+	                                                    </c:if>
+	                                                    <c:forEach var="num" begin="${rv_pageMaker.startPage}" end="${rv_pageMaker.endPage}">
+	                                                        <li class="pagenate_button ${rv_pageMaker.cri.pageNum == num ? "active": ""} "><a href="${num}">${num}</a></li>
+	                                                    </c:forEach>
+	                                                    <c:if test="${rv_pageMaker.next}">
+	                                                        <li class="paginate_button next"><a href="${rv_pageMaker.endPage+1}">Next</a></li>
+	                                                    </c:if>
+	                                                    </ul>
+		                                       </div>  
+		                                </div> 
+		                            </div>
+		                        </div>
+                                      
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -232,11 +271,10 @@
                 
             </div>
         </div>
-    </div>
-</div>
+    
     <!-- Course Details Section End -->
 
-    <!-- Start Footer Area -->
+<!-- Start Footer Area -->
     <footer class="footer style2">
         <!-- Start Footer Bottom -->
         <div class="footer-bottom">
@@ -246,7 +284,7 @@
                         <div class="col-md-6" style="text-align: start;">
                             <div class="logo">
                                 <br><br>
-                                <a href="main_index.html"><img src="assets/images/logo/로고1.png" alt="Logo"></a>
+                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col-md-6" style="text-align: end;">
@@ -265,7 +303,6 @@
             </div>
         </div>
     </footer>
-    <!--/ End Footer Area -->
 
     <!--/ End Footer Area -->
 
@@ -284,23 +321,44 @@
     
     
     
-     <script type="text/javascript">
+        <script type="text/javascript">
+    	var selectedBtnId = 'overview-tab';
+    	
     	$(document).ready(function(){
-    		var actionForm= $("#actionForm");
-
+     		$('#'+$('#selectedBtnId').val()).trigger('click');
     		
-    		$(".pagination-list a").on("click",function(e){
+    		var actionForm= $("#actionForm");
+    		
+    		
+			/* 페이징 */    		
+    	 	 $(".pagination-list a").on("click",function(e){
     			e.preventDefault();
     			//actionForm.find("input[name='memberId']").val($(this).attr("href"));
     			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
     			actionForm.attr("action","/user/mypage/mywrite.do");
+    		
     			actionForm.submit();
-    		});
+    		}); 
+	
+     	 	$("#overview-tab").on("click", function(e){
+				e.preventDefault();
 
-    	});
+				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=overview-tab";
+			});
+
+    	 	
+    		$("#instructor-tab").on("click", function(e){
+				e.preventDefault();
+
+				window.location.href="/user/mypage/mywrite.do?memberId=&pageNum=1&amount=4&selectedBtnId=instructor-tab";
+			});
+    		
+  	});
     	
-  
-
+    	function fnGetBtnId(obj) {
+    		selectedBtnId = obj.id;
+    			$('#selectedBtnId').val(selectedBtnId);
+        	}
     </script>
 </body>
 
