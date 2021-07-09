@@ -90,16 +90,17 @@ function modify() {
 
 	var formObj = $("#submitForm2");
 	// textarea 개행처리
-	var str = $("textarea[name='tbContent']").val();
 
-	str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	var text = $("textarea[name='tbContent']").val();
 
-	$("textarea[name='tbContent']").html(str);
-	var str = $("textarea[name='tbProgram']").val();
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+	$("textarea[name='tbContent']").html(text);
+	var text = $("textarea[name='tbProgram']").val();
 	
-	str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
 	
-	$("textarea[name='tbProgram']").html(str);
+	$("textarea[name='tbProgram']").html(text);
 
 	console.log($('#tno').val());
 

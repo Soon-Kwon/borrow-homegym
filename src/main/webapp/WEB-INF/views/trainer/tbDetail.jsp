@@ -265,31 +265,6 @@
 		</div><!-- container -->
 	</section>
 
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog" style="top: 200px; left: 50px;">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<p class="modal-title" style="font-size: 30px;">트레이너의 정보를 받아보세요!😊</p>
-					<!-- 사용자 지정 부분② : 타이틀 -->
-				</div>
-
-				<div class="modal-body">
-					<p style="font-size: 20px">phone : 010 -1234 -5678</p>
-					<!-- 사용자 지정 부분③ : 텍스트 메시지 -->
-					<p style="font-size: 20px">instagram : @aksakfn12</p>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
 		<!-- Start Footer Bottom -->
