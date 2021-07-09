@@ -1,6 +1,7 @@
 package com.homegym.biz.trainerboard;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface TrainerBoardService {
@@ -13,7 +14,7 @@ public interface TrainerBoardService {
 	void getTbUpdate(TrainerBoardVO vo);
 
 	// 글 삭제
-	void deleteBoard(TrainerBoardVO vo);
+	void deleteBoard(int tno);
 
 	// 글 상세조회
 	TrainerBoardVO getTbDetail(int tno);
@@ -24,7 +25,7 @@ public interface TrainerBoardService {
 	// 페이징
 	public List<TrainerBoardVO> getTbListPaging(TrainerBoardVO vo, TrainerCriteria cri);
 
-	public int getTotal(TrainerCriteria cri);
+	public int getTotal(Map<String, Object> paramMap);
 
 	// 첨부파일 리스트 보여주기 
 		public List<TrainerAttachVO> getAttachList(TrainerAttachVO attach, int tno);

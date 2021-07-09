@@ -39,7 +39,7 @@
 	</beans:bean>
 	
 
-	<!-- websocket-handler등록, 클라이언트 관리위함 -->
+	<!-- websocket-handler등록(websocket활성화시키기) -->
 	<websocket:handlers>
 		<websocket:mapping handler="noticeHandler" path="/notice-ws.do" />
 		<websocket:mapping handler="messageHandler" path="/msg-ws.do" />

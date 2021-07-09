@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.homegym.biz.homegym.Criteria;
 import com.homegym.biz.homegym.HomegymAttachVO;
+import com.homegym.biz.homegym.HomegymDetailVO;
 import com.homegym.biz.homegym.HomegymReviewVO;
 import com.homegym.biz.homegym.HomegymVO;
+import com.homegym.biz.member.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -96,8 +98,20 @@ public class HomegymDAO {
 	}
 	
 	// 리뷰 테이블에서 리뷰 평점 구하기
-	public HashMap<?,?> getScore(int hId) {
+	public HomegymReviewVO getScore(int hId) {
 		
 		return mybatis.selectOne("HomegymDAO.getScore", hId);
+	}
+	
+	// 예약 내역 테이블에서 리뷰 쓸 권한이 있는지 확인하기
+	public List<HomegymDetailVO> authToWriteReview(int hId) {
+		
+		return mybatis.selectList("HomegymDAO.authToWriteReview", hId);
+	}
+	
+	// 프로필 이미지 가져오기
+	public MemberVO getProfileImg(HomegymVO vo) {
+		
+		return mybatis.selectOne("HomegymDAO.getProfileImg", vo);
 	}
 }

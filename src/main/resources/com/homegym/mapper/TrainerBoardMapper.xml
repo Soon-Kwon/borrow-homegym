@@ -6,6 +6,9 @@
 	<![CDATA[
 		INSERT INTO TRAINER_BOARD
 		( 
+			MEMBERID,
+			NAME,
+			IMAGE,
 			TBTITLE,  
 			TBCONTENT, 
 			TBPROGRAM, 
@@ -28,6 +31,13 @@
 		)
 		VALUES
 		( 
+			#{memberId},
+			#{name},
+			(
+				SELECT IMAGE
+			 	   FROM MEMBER
+			 	WHERE memberId = #{memberId}
+			),
 			#{tbTitle}, 
 			#{tbContent}, 
 			#{tbProgram},
@@ -80,7 +90,7 @@
 	<!-- 글 삭제 -->
 	<delete id="deleteBoard">
 	<![CDATA[
-		DELETE TRAINER_BOARD 
+		DELETE FROM TRAINER_BOARD 
 		WHERE 
 				TNO = #{tno}
 		]]>
@@ -89,14 +99,15 @@
 	<!-- 글 목록 -->
 	<select id="getTbList" resultType="trainer">
 	<![CDATA[
-		SELECT * FROM TRAINER_BOARD
+		SELECT * FROM TRAINER_BOARD ORDER BY TNO DESC
 		]]>
 	</select>
 
 	<!--글 상세보기 -->
 	<select id="getTbDetail" resultType="trainer">
 	<![CDATA[
-		SELECT * FROM TRAINER_BOARD WHERE TNO = #{tno}
+		SELECT * FROM TRAINER_BOARD WHERE TNO = #{tno} 
+		
 		]]>
 	</select>
 	
@@ -104,12 +115,25 @@
 	<select id="getTbListPaging" resultType="trainer">
 		<![CDATA[
 			SELECT * FROM trainer_board	R1
-			LIMIT #{cri.amount} OFFSET #{cri.skip};
+			WHERE 1=1
 		]]>
+		<if test="vo.searchKeyword != null and vo.searchKeyword != ''">
+			AND tbActivTag1 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag2 like concat('%', #{vo.searchKeyword}, '%') 
+			OR tbActivTag3 like concat('%', #{vo.searchKeyword}, '%') 
+		</if>
+			ORDER BY TNO DESC
+			LIMIT #{cri.amount} OFFSET #{cri.skip}
 	</select>
 	
-	<select id="getTotalCount" resultType="int">
-		SELECT COUNT(*) FROM trainer_board	
+	<select id="getTotalCount" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM trainer_board
+		WHERE 1=1
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND tbActivTag1 like concat('%', #{searchKeyword}, '%') 
+			OR tbActivTag2 like concat('%', #{searchKeyword}, '%') 
+			OR tbActivTag3 like concat('%', #{searchKeyword}, '%') 
+		</if>
 	</select>
 
 <!-- 	<select id="getTbList2" resultType="trainer">

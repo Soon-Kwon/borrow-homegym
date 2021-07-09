@@ -67,5 +67,16 @@ public class HomegymReviewDAO {
 		
 		return mybatis.selectOne("HomegymReviewDAO.getCount", hId);
 	}
+	
+	/* 대여자가 쓴 리뷰가 이미 존재하는가 확인하는 쿼리*/
+	public boolean exist(HomegymReviewVO vo) {
+		
+		return mybatis.selectOne("HomegymReviewDAO.exist", vo);
+	}
 
+	/* 게시글이 삭제될 때 해당 게시글 번호와 같은 리뷰들 모두 삭제하는 쿼리*/
+	public void deleteAll(int hId) {
+		
+		mybatis.delete("HomegymReviewDAO.deleteAll", hId);
+	}
 }

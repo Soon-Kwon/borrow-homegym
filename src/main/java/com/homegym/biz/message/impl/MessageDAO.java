@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.homegym.biz.homegym.impl.HomegymDAO;
 import com.homegym.biz.member.MemberVO;
 import com.homegym.biz.message.MessageVO;
 
@@ -38,7 +37,7 @@ public class MessageDAO {
 			// 안읽은 메세지 갯수 set
 			mVo.setUnread(unread);
 
-			// 현재 사용자가 메세지를 주고받는 상대의 프로필 image가져오기
+			// 현재 사용자가 메세지를 주고받는 상대의 프로필 image경로 가져오기
 			String image = sqlSession.selectOne("MessageDAO.getOtherImage", mVo);
 			// 상대방 프로필 이미지 set
 			mVo.setImage(image);
@@ -69,7 +68,7 @@ public class MessageDAO {
 		for (MessageVO mVo : clist) {
 			// 현재 로그인한 아이디set
 			mVo.setCurId(curId);
-			// 현재 사용자가 메세지를 주고받는 상대의 프로필 image가져오기
+			// 현재 사용자가 메세지를 주고받는 상대의 프로필 image 경로 가져오기
 			String image = sqlSession.selectOne("MessageDAO.getOtherImage", mVo);
 			// 상대방 프로필 이미지 set
 			mVo.setImage(image);
@@ -91,51 +90,95 @@ public class MessageDAO {
 	/* 메세지 list에서 메세지 보내기 */
 	public int sendMsgInList(MessageVO vo) {
 		log.info("DAO의 sendMsgInList();");
-		// msgRoomNo가 0이면 프로필에서 보내는 것
+		// msgRoomNo가 0이면 친구찾기에서 보내는 것
 		if (vo.getMsgRoomNo() == 0) {
+			// 메세지 "이력"있는지 검색 : 1이상이면 존재
 			int checkMsgHistory = sqlSession.selectOne("MessageDAO.checkMsgHistory", vo);
 
+			String msgRoomNo;
 			if (checkMsgHistory == 0) {
 				// 메세지 내역 없을 경우
 				// message테이블의 roomNo최댓값을 구해서 vo에 set하기
-				int maxMsgRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo", vo);
-				vo.setMsgRoomNo(maxMsgRoomNo + 1);
+				msgRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo", vo);
+				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);
 
 			} else {
 				// 메세지 내역 있을 경우
 				// 해당 roomNo번호 가져오기
-				int roomNo = sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
-				vo.setMsgRoomNo(roomNo);
+				msgRoomNo= sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
+				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo));
 			}
 
 		}
+//		sqlSession.insert("MessageDAO.sendMsgInList", vo);
+//		return vo.getMsgRoomNo();
 
 		int flag = sqlSession.insert("MessageDAO.sendMsgInList", vo);
 		System.out.println("DAO의 sendMsgInList()의 flag값 : "+ flag);
 		return flag;
 	}
 	
-	/*
-	 * public int unReadCntAll(String curId) { log.info("DAO의 msgCntAll();"); return
-	 * sqlSession.selectOne("MessageDAO.countUnreadAll", curId);
-	 * 
-	 * }
-	 */
+	
 
-	/* navbar에서 보여줄 안읽은 메세지 총 카운트*/
+	/* header에서 보여줄 안읽은 메세지 총 카운트*/
 	public String getNewNoticeCnt(String memberId) {
 		log.info("DAO의 getNewNoticeCnt();");
 		return sqlSession.selectOne("MessageDAO.unReadCntAll", memberId);
 	}
+
+	/*1:1대화할 멤버 아이디를 글 번호로 검색*/
+	public String getBoardWriterId(int hId) {
+		log.info("DAO의 getOtherId();");
+		return sqlSession.selectOne("MessageDAO.getBoardWriterId", hId);
+	}
+
+	/*(1:1문의할) 채팅방 번호가져오기*/
+	public int getMsgRoomNo(MessageVO vo) {
+		log.info("DAO의 getMsgRoomNo();");
+		System.out.println("sendId=========================="+vo.getSendId());
+		System.out.println("recvId=========================="+vo.getRecvId());
+		String roomNo = sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
+		// mapper에서 찾은 값이 없을 때, null로 뜨게 되는데
+		// 그때. roomNo을 int형으로 하게 되면 null값을 담을 수 없으므로 String형태로 먼저 받은 후 변환해준다.  
+
+		// 기존 채팅방이 존재하면 기존 채팅방 번호가져오기
+		if(roomNo != null) {
+			return Integer.parseInt(roomNo);
+		}
+		else { 
+			// 기존 채팅방이 없으면 max +1
+			String maxRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo");
+			
+			// max값이 null이면 최초 채팅방 번호 1로 개설
+			if(maxRoomNo == null) {
+				return 1;
+			} else {
+				
+				return Integer.parseInt(maxRoomNo) + 1;
+			}
+		}
+			
+	}
 	
-	/* 
-	 * 1:1 문의하기
-	 * 1. 메세지 이력있는지 검색
-	 * 1-1. 이력있으면 (반환값이 1이상) 그때의 채팅방 번호가져와서 대화내용 불러오기
-	 * 1-2. 이력없으면 (반환값이 0이면) 현존하는 채팅방번호 중 max +1 해서 새롭게 만들기
-	 * */
-//	public String 
+	/*memberId찾기*/
+	public MemberVO getMemberInfoByNickname(MessageVO vo) {
+		log.info("DAO의 getMemberInfoByNickname();");
+		return sqlSession.selectOne("MessageDAO.getMemberInfoByNickname", vo);
+	}
 	
-	/**/
+	/* 대화 리스트의 상대방 정보 가져오기*/
+	 public MemberVO getMemberInfoById(MessageVO vo) {
+		 log.info("DAO의 getMemberInfoById();");
+		 MemberVO mVo = new MemberVO();
+		 
+		 MemberVO member = sqlSession.selectOne("MessageDAO.getMemberInfoById", vo); 
+		 mVo.setMemberId(member.getMemberId());
+		 mVo.setName(member.getName());
+		 mVo.setNickname(member.getNickname());
+		 mVo.setImagePath(member.getImagePath());
+		 log.info("DAO의 getMemberInfoById() mVo : "+mVo);
+		 return  mVo;
+	 }
+	 
 
 }
