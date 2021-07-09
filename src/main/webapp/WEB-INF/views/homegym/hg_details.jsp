@@ -194,8 +194,8 @@
 				<div class="modal-header">
 					<span id="m_writer_profile">
 						<div class="message-box">
-							<!-- 상대방 프로필 경로잡아주기 -->
-							<img src="/resources/assets/images/gym/re3.png" alt="상대방 프로필"
+							<!-- 상대방 프로필-->
+							<img src="${member_imagePath}" alt="상대방 프로필"
 								class="avatar img_circle img-profile" alt="avatar">
 
 						</div>
@@ -649,6 +649,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
+				getInfiniteChat();
 				
 			});
 			
@@ -660,10 +661,10 @@
 				} 
 			});
 			
-			// 닫기 버튼 누르면 동작
+			/* // 닫기 버튼 누르면 동작
 			$("#showMsgContent").on("click", function(e){
 				$("#messageModal").modal("hide");				
-			});
+			}); */
 			
 		
 		});
@@ -733,6 +734,12 @@
 				});
 			}
 		};
+		
+		function getInfiniteChat(){
+			interval = setInterval(function(){
+				showMessageContent('${board.memberId}');
+			}, 3000);
+		}
 		
 		
 		

@@ -105,7 +105,7 @@ public class MessageDAO {
 			} else {
 				// 메세지 내역 있을 경우
 				// 해당 roomNo번호 가져오기
-				msgRoomNo= sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
+				msgRoomNo= Integer.parseInt(sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo));
 				vo.setMsgRoomNo(msgRoomNo);
 			}
 
