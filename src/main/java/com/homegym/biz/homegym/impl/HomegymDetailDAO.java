@@ -1,5 +1,7 @@
 package com.homegym.biz.homegym.impl;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,5 +28,11 @@ public class HomegymDetailDAO {
 	public HomegymVO select(int hId) {
 		
 		return mybatis.selectOne("HomegymDetailDAO.selectAddr", hId);
+	}
+	
+	// 예약된 내역 리스트
+	public List<HomegymDetailVO> selectReservationList(int hId) {
+		
+		return mybatis.selectList("HomegymDetailDAO.selectReservationList", hId);
 	}
 }

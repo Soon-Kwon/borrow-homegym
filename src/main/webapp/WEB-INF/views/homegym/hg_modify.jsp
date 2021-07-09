@@ -74,7 +74,7 @@
 													name="hPrice" value="${board.HPrice }" required="required" />
 											</div>
 										</div>
-										<div class="col-lg-1 col-1 font-general" style="margin-top: 27px;">원</div>
+										<div class="col-lg-1 col-1 font-general" style="margin-top: 37px;">원</div>
 									</div>
 									
 									<div class="row home_options" style="margin-bottom: 18px;">
@@ -689,9 +689,9 @@
 					xhr.setRequestHeader(header, token);
 	            },
 				success: function(data) {
-					alert(data);
+					//alert(data);
 					if(data == 'OK') {
-						alert('글 수정에 성공하였습니다.');
+						//alert('글 수정에 성공하였습니다.');
 						window.location.replace("/homegym/homegymDetailView.do?hId=" + <c:out value='${board.HId}'/>);
 					}
 				},

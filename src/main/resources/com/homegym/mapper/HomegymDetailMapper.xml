@@ -13,4 +13,11 @@
 		FROM homegym_board
 		WHERE h_id = #{hId}
 	</select>
+	
+	<select id="selectReservationList" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+		SELECT start_time, end_time, rental_date 
+		FROM homegym_detail
+		WHERE h_id = #{hId} AND agreeYN = 'Y'
+		ORDER BY rental_date ASC
+	</select>
 </mapper>

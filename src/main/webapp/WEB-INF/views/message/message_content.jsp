@@ -16,19 +16,15 @@
 			
 			<div class="incoming_msg">
 				<div class="incoming_msg_img">
-					<%--<img src="https://ptetutorials.com/images/user-profile.png"
-									alt="sunil">--%>
 					<a href="profile.do?memberId=${tmp.curId}"> 
 						<%-- 이미지 있으면 해당 이미지로 --%>
 						<c:if test="${tmp.image ne null}">
-							<img src="/resources/assets/images/gym/re3.png" alt="보낸사람 프로필"
-								class='img_circle'>
-
+							<img src="${tmp.image}" alt="상대방 프로필 사진경로"/>
 						</c:if> 
 						<%-- 이미지가 없으면 기본 이미지로 --%> 
 						<c:if test="${tmp.image eq null}">
-							<img src="https://ptetutorials.com/images/user-profile.png"
-								alt="sunil">
+							<img src="/resources/assets/images/mypage/basicImg.png" alt="보낸사람 프로필"
+								class='img_circle'>
 						</c:if>
 					</a>
 				</div>

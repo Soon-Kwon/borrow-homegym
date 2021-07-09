@@ -5,34 +5,31 @@
 
 <%--  ajax이용한 메세지 list처리(왼쪽 영역) --%>
 <c:forEach var="tmp" items="${list}">
+	
+
 	<div class="chat_list_box${tmp.msgRoomNo} chat_list_box">
 		<div type="button" class="chat_list" msgRoomNo="${tmp.msgRoomNo }"
 			otherId="${tmp.otherId }">
 			<%-- active-chat --%>
 			<div class="chat_people">
 				<div class="chat_img">
-					<a href="#"> 
-					<%-- 이미지가 없으면 기본 이미지로 --%>
-						
-						<%-- 이미지 있으면 해당 이미지로 --%>
+					<a href="#"> <%-- 이미지가 없으면 기본 이미지로 --%> <%-- 이미지 있으면 해당 이미지로 --%>
 						<c:if test="${tmp.image ne null}">
-							<!-- <i class="far fa-user"></i> -->
-							<img src="/resources/assets/images/gym/re3.png" alt="보낸사람 프로필" class='img_circle'>
-						</c:if> 
-						<!-- 프로필 누르면 해당 유저의 상세정보(프로필보기 가능하게끔) --> 
-						<%-- <a href="other_profile.do?other_nick=${tmp.otherId }"> --%>
+							<img src="${tmp.image}" alt="보낸사람 프로필"
+								class='img_circle'>
+						</c:if> <!-- 프로필 누르면 해당 유저의 상세정보(프로필보기 가능하게끔) --> <%-- <a href="other_profile.do?other_nick=${tmp.otherId }"> --%>
 						<c:if test="${tmp.image eq null}">
-							<img src="https://ptetutorials.com/images/user-profile.png"
-								alt="sunil">
-							<%-- <img src="./upload/profile/${tmp.profile }" alt="보낸사람 프로필" class='img_circle'> --%>
-						</c:if> 
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="보낸사람 프로필"
+								class='img_circle'>
+							
+						</c:if>
 					</a>
 				</div>
 				<div class="chat_ib">
-					<h5>${tmp.otherId }
+					<h5>${tmp.nickname }
 
 						<span class="chat_date"> <fmt:formatDate
-								pattern="yyyy-MM-dd HH:mm" value="${tmp.msgSendTime }" />
+								pattern="MM-dd HH:mm" value="${tmp.msgSendTime }" />
 						</span>
 					</h5>
 					<div class="row">

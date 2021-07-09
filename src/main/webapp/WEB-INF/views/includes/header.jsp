@@ -88,63 +88,62 @@
     </script>
 </head>
 <body>
-	<script type="text/javascript">
-		/*
-		// 안읽은 메세지 카운트 가져오기
-		/* function getUnread(){
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajax({
-					type:"POST",
-					async:"true",
-					dataType:"text",
-					data:{
-						memberId : '${memberId}' // data로 넘겨주기
-					},
-					url: "${contextPath}/message/getNewNoticeCnt.do",
-					/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-		/*beforeSend : function(xhr){
 
-			xhr.setRequestHeader(header, token);
-		},
-		success:function(result){
-			// 안읽은게 1개 이상이면
-			if(result >= 1){
-				// 화면에 출력
-				showUnread(result); 
-			} else {
-				showUnread('');
-			}
-		}
-		})
-		} */
-
-		// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-		/* function getInfiniteUnread(){
-			setInterval(function(){
-				getUnread();
-			}, 4000); // 4초마다 요청
-		}
+<script type="text/javascript">
+	// 안읽은 메세지 카운트 가져오기
+	function getUnread(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajax({
+				type:"POST",
+				async:"true",
+				dataType:"text",
+				data:{
+					memberId : '${memberId}' // data로 넘겨주기
+				},
+				url: "${contextPath}/message/getNewNoticeCnt.do",
+				// 데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
+				success:function(result){
+					// 안읽은게 1개 이상이면
+					if(result >= 1){
+						// 화면에 출력
+						showUnread(result); 
+					} else {
+						showUnread('');
+					}
+				}
+			})
+	}
+	
+	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
+	function getInfiniteUnread(){
+		setInterval(function(){
+			getUnread();
+		}, 4000); // 4초마다 요청
+	}
+	
+	// 안읽은 메세지 갯수 출력
+	function showUnread(result){
+		$('#newNoticeCnt').text(result);
+	}
+	
+	// 메세지아이콘 클릭 - 대화창popup(list, content함께)
+	function openMsgPopup(){
+		var popupOpener;
+		let memberId = '${memberId}';
+		// 팝업창 열릴 때 이벤트
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=600");
 		
-		// 안읽은 메세지 갯수 출력
-		function showUnread(result){
-			$('#newNoticeCnt').text(result);
-		}
-		
-		// 메세지아이콘 클릭 - 대화창popup(list, content함께)
-		function openMsgPopup(){
-			var popupOpener;
-			let memberId = '${memberId}';
-			// 팝업창 열릴 때 이벤트
-			popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1150,height=600");
-			
-		}
-		
-		$(document).ready(function() {
-			// navbar의 안읽은 메세지 가져오기
-			getInfiniteUnread();
-
-		}); */
+	}
+	
+	$(document).ready(function() {
+		// navbar의 안읽은 메세지 가져오기
+		getInfiniteUnread();
+	});
+	
 	</script>
 
 	<!-- Start Header Area -->
