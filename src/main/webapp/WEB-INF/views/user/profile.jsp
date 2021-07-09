@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
-<%-- <%
- 	String memberId = session.getAttribute("memberId").toString();
- %>  --%>
 
 <html class="no-js" lang="zxx">
 
@@ -30,14 +27,6 @@
     <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/main.css" />
     
-    
-<%--     <script>
-    	var memberId = '<%=memberId %>';
-    	
-    	document.addEventListener("DOMContentLoaded", function(){
-    		// Handler when the DOM is fully loaded
-   		});
-    </script>  --%>
 <style>
 #auth{
     margin-right: 5px;
@@ -83,13 +72,6 @@
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
 
     <!-- Preloader -->
     <div class="preloader">
@@ -204,8 +186,6 @@
                             <p style="margin-top: 40px; font-size: 16px;">🏠 내가 빌린 홈짐</p>
                             <h1 style="margin-top: 20px;">${rentCnt}</h1>
                             <div class="button">
-
-                                <a href="myactiv.do?memberId=${member.memberId}" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                                 <a href="myactiv.do" class="btn">더보기<i class="lni lni-arrow-right"></i></a>
                             </div>
                         </div>

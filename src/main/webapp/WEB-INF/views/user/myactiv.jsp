@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--   <%
- 	String memberId = session.getAttribute("memberId").toString();
- %> --%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -390,11 +388,9 @@
                                     </c:choose>
                                                                 
                                       <form id="actionForm" action="user/mypage/myactiv.do" method="get">
-<<<<<<< HEAD
                                       	<input type="hidden" name="memberId" />
-=======
+
                                       	<input type="hidden" name="memberId" value="${member}"/> <!-- 세션 받으면 바꾸기 -->
->>>>>>> ee85d6369c4b7280cf2592eaf5f704a8b921f52d
                                       	<input type="hidden" name="tabindex" value="2">
                                     	<input type="hidden" name="pageNum" value="${ld_pageMaker.cri.pageNum}">
                                     	<input type="hidden" name="amount" value="${ld_pageMaker.cri.amount}">
