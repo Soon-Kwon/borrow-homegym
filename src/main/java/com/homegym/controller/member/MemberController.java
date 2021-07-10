@@ -179,8 +179,7 @@ public class MemberController {
 			params.add("code", code);
 			
 			// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
-			HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = 
-					new HttpEntity<>(params, headers);
+			HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 			
 			// Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음
 			ResponseEntity<String> response = rt.exchange(
@@ -212,8 +211,7 @@ public class MemberController {
 			headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			
 			// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
-			HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = 
-					new HttpEntity<>(headers2);
+			HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = new HttpEntity<>(headers2);
 			
 			System.out.println(kakaoProfileRequest2);
 			
@@ -246,12 +244,12 @@ public class MemberController {
 			System.out.println("블로그서버 패스워드:" + garbagePassword);
 			
 			CustomUserDetails kakaoMember = CustomUserDetails.builder()
-					.memberId(kakaoProfile.getKakao_account().getEmail())
-					.password(garbagePassword.toString())
-//					.imagePath(kakaoProfile.getConnected_at().)
-					.gender(kakaoProfile.getKakao_account().getGender())
-					.birth(kakaoProfile.getKakao_account().getBirthday())
-					.build();
+				.memberId(kakaoProfile.getKakao_account().getEmail())
+				.password(garbagePassword.toString())
+				//.imagePath(kakaoProfile.getConnected_at().)
+				.gender(kakaoProfile.getKakao_account().getGender())
+				.birth(kakaoProfile.getKakao_account().getBirthday())
+				.build();
 			
 			// 가입자 혹은 비가입자 체크 해서 처리
 			kakaoMember.setName(kakaoProfile.getProperties().nickname);

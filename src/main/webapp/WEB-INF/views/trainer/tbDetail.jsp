@@ -55,6 +55,12 @@
 .carousel-control.left, .carousel-control.right {
     background-image: none
 }
+pre{
+border:none;
+white-space: pre-wrap; 
+scroll:no;"
+
+}
 
 
 </style>
@@ -168,11 +174,11 @@
 					<br><br>
 							<div class="detail-inner">
 								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbContent}</pre>
+									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbProgram}</pre>
+									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
