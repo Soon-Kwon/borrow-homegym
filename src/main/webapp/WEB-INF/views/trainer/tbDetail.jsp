@@ -56,6 +56,9 @@
     background-image: none
 }
 
+.modal{
+z-index:1050;
+}
 
 </style>
 
@@ -72,6 +75,14 @@
 <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 
 </head>
 
@@ -208,7 +219,7 @@
 									<c:choose>
 										<c:when test="${trainerBoard.memberId ne memberId }">
 											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
-												<button id="showMsgContent" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; text-align:center; border-radius:5px;">
+												<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
 													트레이너에게 문의하기</button>
 											</div>
 										 </c:when>
@@ -278,13 +289,19 @@
 					<span id="m_writer_profile">
 						<div class="message-box">
 							<!-- 상대방 프로필 -->
-							<img src="${trainerBoard.image }" alt="상대방 프로필"
-								class="avatar img_circle img-profile" alt="avatar">
+							<c:if test="${trainerBoard.image ne null}">							
+								<img src="${trainerBoard.image }" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+							<c:if test="${trainerBoard.image eq null}">
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
 						</div>
 					</span>
 					<h5 class="modal-title" id="messageModalLabel">&nbsp;
 						${trainerBoard.name}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
+					<button type="button" class="btn btn-close" data-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body ">
@@ -316,6 +333,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
@@ -386,7 +405,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				//getInfiniteChat();
+				// getInfiniteChat();
 				
 			});
 			
@@ -396,6 +415,11 @@
 					e.preventDefault();
 					$('.msg_send_btn').trigger('click');
 				} 
+			});
+			
+			// x버튼 누르면 동작
+			$(".btn-close").on("click", function(e){
+				$("#messageModal").modal("hide");				
 			});
 		})
 		
