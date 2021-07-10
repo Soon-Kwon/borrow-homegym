@@ -17,6 +17,7 @@ public class MemberVO {
 	   private String phone;
 	   private String zipCode;
 	   private String address;
+	   private String rejectReason;
 	   private MultipartFile image;
 	   private String imagePath;
 	   private String userThumbImg;

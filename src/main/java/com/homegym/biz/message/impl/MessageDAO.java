@@ -100,7 +100,14 @@ public class MessageDAO {
 				// 메세지 내역 없을 경우
 				// message테이블의 roomNo최댓값을 구해서 vo에 set하기
 				msgRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo", vo);
-				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);
+				
+				// 만약 채팅방 최댓값이 없으면
+				if(msgRoomNo == null) {
+					vo.setMsgRoomNo(1);
+				} else {
+					
+					vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);
+				}
 
 			} else {
 				// 메세지 내역 있을 경우
@@ -110,8 +117,6 @@ public class MessageDAO {
 			}
 
 		}
-//		sqlSession.insert("MessageDAO.sendMsgInList", vo);
-//		return vo.getMsgRoomNo();
 
 		int flag = sqlSession.insert("MessageDAO.sendMsgInList", vo);
 		System.out.println("DAO의 sendMsgInList()의 flag값 : "+ flag);

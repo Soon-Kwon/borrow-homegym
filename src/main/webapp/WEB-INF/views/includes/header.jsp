@@ -119,11 +119,11 @@
 	}
 	
 	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-	/* function getInfiniteUnread(){
+	function getInfiniteUnread(){
 		setInterval(function(){
 			getUnread();
 		}, 4000); // 4초마다 요청
-	} */
+	} 
 	
 	// 안읽은 메세지 갯수 출력
 	function showUnread(result){
