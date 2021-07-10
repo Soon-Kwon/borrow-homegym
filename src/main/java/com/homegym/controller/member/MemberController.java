@@ -567,25 +567,42 @@ public class MemberController {
 	
 	/* 수락 거절 상태값 변화 */
 	
+	//수락
 	@ResponseBody
-	@PostMapping("/acceptCheck")
-	public Map<String, Object> acceptCheck(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
+	@PostMapping("/requestAccept")
+	public Map<String, Object> requestAccept(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		int result = memberService.HomegymAcceptUpdate(paramMap);
 
 		if (result == 1) {
-			if (paramMap.get("status").equals("Y")) {
-				map.put("resultCode", "Acceept");
+				map.put("resultCode", "Access");
 				map.put("resultMessage", "홈짐예약이 수락 되었습니다.");
-			} else {
-				map.put("resultCode", "Deny");
-				map.put("resultMessage", "홈짐예약이 거절 되었습니다.");
-			}
 		} else {
-			map.put("resultCode", "Fail");
-			map.put("resultMessage", "오류가 발생했습니다. 다시 시도해주세요!");
+				map.put("resultCode", "Fail");
+				map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
+		}
+
+		return map;
+	}
+	
+	//거절
+	@ResponseBody
+	@PostMapping("/requestReject")
+	public Map<String, Object> requestReject(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		int result = memberService.HomegymRejectUpdate(paramMap);
+		
+		System.out.println("paramMap ::::" + paramMap );
+		if (result == 1) {
+				map.put("resultCode", "Access");
+				map.put("resultMessage", "홈짐예약이 거절 되었습니다.");
+		} else {
+				map.put("resultCode", "Fail");
+				map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
 		}
 
 		return map;

@@ -88,9 +88,11 @@ public interface MemberService {
 	// 결제 상태 변경 
 	public void payUpdate(HomegymDetailVO vo);
 	
-	//홈짐 수락 거절 변경
+	//홈짐 수락 상태 변경
 	public int HomegymAcceptUpdate(Map<String, String> paramMap);
 	
+	//홈짐 거절 상태 변경
+	public int HomegymRejectUpdate(Map<String,String> paramMap);
 	//홈짐 예약 요청 조회
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId);
 
