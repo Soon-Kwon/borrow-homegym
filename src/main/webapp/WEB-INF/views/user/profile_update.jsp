@@ -209,10 +209,10 @@ function deleteInfo() {
 
 /*ajax를 통한 회원정보 수정*/
 function updateInfo() {
-	console.log($('#memberId').val());
+	console.log($('input[name=memberId]').val());
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	var data = {memberId : $('#memberId').val(),
+	var data = {memberId : $('input[name=memberId]').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
@@ -743,82 +743,5 @@ function execPostCode() {
     
     
     </script>
-
-												<br>
-
-												<div class="form-group">
-													<div class="submit_btn"
-														style="margin-left: 160px; margin-top: 30px;">
-														<input type="button" id="updateBtn" value="수정하기"
-															onclick="updateInfo();" class="btn btn-block btn-primary">
-														<input type="button" id="deleteBtn" value="탈퇴하기"
-															onclick="deleteInfo();" class="btn btn-block btn-primary">
-													</div>
-												</div>
-											</form>
-										</div>
-										<!-- End Single Feature -->
-									</div>
-								</div>
-							</div>
-						</div>
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-						</form>
-
-					</section>
-					<!-- /End Features Area -->
-
-
-
-					<!-- End Course Details Wrapper -->
-
-				</div>
-			</div>
-		</div>
-		<!-- Course Details Section End -->
-
-		<!-- Start Footer Area -->
-		<footer class="footer style2">
-			<!-- Start Footer Bottom -->
-			<div class="footer-bottom">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-md-6" style="text-align: start;">
-								<div class="logo">
-									<br>
-									<br> <a href="main_index.html"><img
-										src="../assets/images/logo/로고1.png" alt="Logo"></a>
-								</div>
-							</div>
-							<div class="col-md-6" style="text-align: end;">
-								<p>
-									<br> <a href="others/faq.jsp"> 자주묻는 질문</a> <br> 서울특별시
-									서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의
-									02-123-1234 | 사업자등록번호 123-12-12345 <br>© 2021. All Rights
-									Reserved.
-								</p>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<!--/ End Footer Area -->
-
-		<!-- ========================= scroll-top ========================= -->
-		<a href="#" class="scroll-top btn-hover"> <i
-			class="lni lni-chevron-up"></i>
-		</a>
-
-		<!-- ========================= JS here ========================= -->
-		<script src="/resources/assets/js/bootstrap.min.js"></script>
-		<script src="/resources/assets/js/count-up.min.js"></script>
-		<script src="/resources/assets/js/wow.min.js"></script>
-		<script src="/resources/assets/js/tiny-slider.js"></script>
-		<script src="/resources/assets/js/glightbox.min.js"></script>
-		<script src="/resources/assets/js/main.js"></script>
 </body>
 </html>

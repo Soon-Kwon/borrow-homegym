@@ -182,11 +182,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	/* 홈짐 수락 여부 변경*/
+	//수락
 	@Override
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return memberDAO.HomegymAcceptUpdate(paramMap);
 	}
 	
+	//거절
+	@Override
+	public int HomegymRejectUpdate(Map<String, String> paramMap) {
+		return memberDAO.HomegymRejectUpdate(paramMap);
+	}
 	/*  내 게시글 , 리뷰 내역  */
 	
 	// 내가 쓴 게시글 조회 
@@ -206,6 +212,8 @@ public class MemberServiceImpl implements MemberService {
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId) {
 		return memberDAO.getMyRequest(vo,dId);
 	}
+
+
 
 
 
