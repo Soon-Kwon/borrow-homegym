@@ -209,10 +209,10 @@ function deleteInfo() {
 
 /*ajax를 통한 회원정보 수정*/
 function updateInfo() {
-	console.log($('#memberId').val());
+	console.log($('input[name=memberId]').val());
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	var data = {memberId : $('#memberId').val(),
+	var data = {memberId : $('input[name=memberId]').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
