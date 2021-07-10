@@ -92,7 +92,7 @@ public interface MemberService {
 	public int HomegymAcceptUpdate(Map<String, String> paramMap);
 	
 	//홈짐 예약 요청 조회
-	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId);
 
 	
 

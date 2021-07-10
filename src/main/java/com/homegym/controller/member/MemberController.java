@@ -484,13 +484,12 @@ public class MemberController {
 	/*예약 상세내용 이동*/
 	@GetMapping("mypage/reservationForm")
 	public String getMyRequest(@RequestParam("d_id") int dId, HomegymDetailVO vo,HttpServletRequest request, HttpSession session, Model model) {
-		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
+	
 		
-		//HomegymDetailVO homegymDetailVO = memberService.getMyRequest(memberId) ;
-		//model.addAttribute("myRequest", homegymDetailVO);
+		HomegymDetailVO homegymDetailVO = memberService.getMyRequest(vo,dId);
+		model.addAttribute("myRequest", homegymDetailVO);
 		
-//		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
+		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
 		
 		return "user/reservation_detail";
 	}
@@ -635,9 +634,9 @@ public class MemberController {
 	}
 	
 	/* FAQ 이동 */
-	@GetMapping("FAQ")
-	public String FAQ() {
-		return "others/FAQ";
+	@GetMapping("faq")
+	public String faq() {
+		return "others/faq";
 	}
 	
 
