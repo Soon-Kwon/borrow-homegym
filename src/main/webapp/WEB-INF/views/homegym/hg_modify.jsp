@@ -652,6 +652,11 @@
 					+ jobj.data("type") +"'>";
 			});
 		
+			if(str == null || str == ""){
+				alert("최소 한 장 이상의 사진을 올려주세요!");
+				return;
+			}
+		
 		$(".uploadResult ul li").each(function(i, obj){
 			
 			var jobj = $(obj);
@@ -696,7 +701,7 @@
 					}
 				},
 				error: function(e, data) {
-					alert(data);
+					//alert(data);
 					console.log(e);
 				}
 			});
@@ -721,11 +726,11 @@
 		            },
 					data: {hId: hId},
 					success: function(data){
-						alert('글 삭제에 성공하였습니다.');
+						//alert('글 삭제에 성공하였습니다.');
 						window.location.replace("/homegym/homegymListView.do${cri.getListLink() }");
 					},
 					error: function(e, data){
-						alert(data);
+						//alert(data);
 						console.log(e);
 					}
 				});

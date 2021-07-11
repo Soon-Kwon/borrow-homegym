@@ -66,14 +66,15 @@
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<!-- 리뷰를 쓸 수 있는 권한을 가지고 있으면 리뷰쓰기 버튼을 노출시킨다. -->
+										<!-- 같은 방을 2번 빌렸을 때 리뷰버튼이 한 번만 나와야 되므로 break를 시켜주어야 한다. -->
+										<c:set var="loop_flag" value="false" />
 										<c:forEach var="list" items="${authToWriteReview }">
-											<c:choose>
-												<c:when test="${list.borrowerId eq member_memberId }">
+											<c:if test="${not loop_flag }">	
+												<c:if test="${list.borrowerId eq member_memberId }">
 													<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>										
-												</c:when>
-												<c:otherwise>
-												</c:otherwise>
-											</c:choose>
+													<c:set var="loop_flag" value="true"/>
+												</c:if>
+											</c:if>
 										</c:forEach>
 										</div>
 									</div>
@@ -519,7 +520,7 @@
 				// 리뷰 등록하기
 				reviewService.add(review, function(result){
 					
-					alert("리뷰가 등록되었습니다");
+					//alert("리뷰가 등록되었습니다");
 					
 					// input의 값들을 모두 지운다.
 					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
@@ -602,7 +603,7 @@
 				
 				reviewService.update(review, function(result){
 					
-					alert("수정되었습니다");
+					//alert("수정되었습니다");
 					
 					modal.modal("hide");
 
@@ -629,7 +630,7 @@
 				
 				reviewService.remove(reviewId, function(result){
 					
-					alert("삭제되었습니다");
+					//alert("삭제되었습니다");
 					
 					//리뷰 평점 비동기 업데이트
 					var hId = ${board.HId};

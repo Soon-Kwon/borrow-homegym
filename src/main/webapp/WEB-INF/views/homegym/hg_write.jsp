@@ -388,7 +388,7 @@
 							xhr.setRequestHeader(header, token);
 						},
 						success: function(result){
-							alert(result);
+							//alert(result);
 							targetLi.remove();
 							index--;
 						}
@@ -418,7 +418,7 @@
 							xhr.setRequestHeader(header, token);
 						},
 						success: function(result){
-							alert(result);
+							//alert(result);
 							targetLi.remove();
 						}
 					});
@@ -598,7 +598,7 @@
 					}
 				},
 				error: function(e) {
-					alert('글 작성에 실패하였습니다.');
+					//alert('글 작성에 실패하였습니다.');
 					console.log(e);
 				}
 			});
