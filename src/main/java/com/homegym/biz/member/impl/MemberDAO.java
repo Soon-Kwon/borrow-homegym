@@ -126,6 +126,7 @@ public class MemberDAO {
 			}
 			return result;
 		}
+		
 	// 내가 쓴 게시글 조회 
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
 		Map<String,Object> map = new HashMap<String,Object>();

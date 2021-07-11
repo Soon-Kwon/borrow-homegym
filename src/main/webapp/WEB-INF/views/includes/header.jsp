@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+    <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
     
     <!-- ========================JQuery Timepicker =================== -->
     <link rel="stylesheet" href="/resources/assets/css/jquery.timepicker.css" />
@@ -49,6 +50,7 @@
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     
+ 	    
     <script type="text/javascript">
        var socket = null;
        
@@ -144,6 +146,7 @@
 		getInfiniteUnread();
 	});
 	
+	
 	</script>
 
    <!-- Start Header Area -->
@@ -153,7 +156,7 @@
             <div class="col-lg-12">
                <div class="nav-inner">
                   <nav class="navbar navbar-expand-lg">
-                     <a class="navbar-brand" href="/index.jsp"> <img
+                     <a class="navbar-brand" href="/"> <img
                         src="/resources/assets/images/logo/로고2.png" alt="logo">
                      </a>
                      <button class="navbar-toggler mobile-menu-btn" type="button"
@@ -165,9 +168,9 @@
                         <span class="toggler-icon"></span>
                      </button>
                      <form class="d-flex search-form"
-                        action="/homegym/homegymListView.do" method="get">
-                        <input class="form-control me-2" type="search" name="keyword"
-                           placeholder="동네 이름을 검색해보세요!" aria-label="Search">
+                        action="/homegym/homegymListView.do" method="get" style="position:relative;">
+                     <input class="form-control me-2" type="search" name="keyword"
+                           placeholder="동네 이름을 검색해보세요!" style="position:relative; font-size:15px;" aria-label="Search">
                         <button id="search-hg" class="btn btn-outline-success"
                            type="submit">
                            <i class="lni lni-search-alt"></i>

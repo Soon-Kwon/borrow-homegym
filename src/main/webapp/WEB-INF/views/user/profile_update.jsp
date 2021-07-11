@@ -209,10 +209,10 @@ function deleteInfo() {
 
 /*ajax를 통한 회원정보 수정*/
 function updateInfo() {
-	console.log($('#memberId').val());
+	console.log($('input[name=memberId]').val());
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	var data = {memberId : $('#memberId').val(),
+	var data = {memberId : $('input[name=memberId]').val(),
 				password : $('input[name=password]').val(),
 				newPassword : $('input[name=newPassword]').val(),
 				rePassword : $('input[name=rePassword]').val(),
@@ -221,6 +221,7 @@ function updateInfo() {
 				zipCode : $('input[name=zipCode]').val(),
 				address : $('input[name=address]').val()
 		}
+	
 	
 	 var pw = $("#newPassword").val();
 	 var num = pw.search(/[0-9]/g);
@@ -473,7 +474,19 @@ function execPostCode() {
 				                    	</c:if>
                             		
                             		
-                            		<!-- 프로필이미지 업로드/ 삭제  -->
+                           <%--  <!-- 프로필이미지 업로드/ 삭제  -->
+                             <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
+	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
+	                        	<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}"/>
+	                        	<input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }"/>
+	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
+	                            <input type="file" name="file"  id="userImg"onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display:none;" > 
+                            	<button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()" >업로드</button>
+	                            <button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
+	                            
+	                        </div> --%>
+	                        
+	                         <!-- 프로필이미지 업로드/ 삭제  -->
                              <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
 	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
 	                        	<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}"/>
@@ -484,7 +497,8 @@ function execPostCode() {
 	                            <button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
 	                            
 	                        </div>
-	                       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                        
+	                        
 	                        
                         </form>
                        
@@ -743,7 +757,6 @@ function execPostCode() {
     
     
     </script>
-
 												<br>
 
 												<div class="form-group">

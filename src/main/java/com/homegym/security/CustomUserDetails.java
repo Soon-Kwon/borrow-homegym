@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.homegym.biz.member.KakaoProfile.KakaoAccount.Profile;
 import com.homegym.biz.member.MemberVO;
 
 import lombok.AllArgsConstructor;
