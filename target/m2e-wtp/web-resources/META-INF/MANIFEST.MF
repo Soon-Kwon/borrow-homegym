@@ -1,16 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-Built-By: YIM
-=======
-<<<<<<< HEAD
 Built-By: ￪ﾹﾀ￬ﾝﾀ￫ﾹﾄ
->>>>>>> f3bd324 (예약 게시판 예약 내역 없을 시 안보이도록 수정)
 Build-Jdk: 1.8.0_271
-=======
-=======
->>>>>>> 08e4942 ([홈짐게시판] 리뷰쓰기 버튼 버그 수정 / 글수정 시 사진정보 중첩되는 오류 수정)
-Built-By: soon
-Build-Jdk: 11.0.11
 Created-By: Maven Integration for Eclipse
 
