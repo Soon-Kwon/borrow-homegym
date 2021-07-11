@@ -26,9 +26,7 @@
 <!-- Place favicon.ico in the root directory -->
 
 <!-- Web Font -->
-<link
-   href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-   rel="stylesheet">
+	
     <!-- ========================= CSS here ========================= -->
     <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
@@ -39,6 +37,11 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+<!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	
     
     <!-- ========================JQuery Timepicker =================== -->
     <link rel="stylesheet" href="/resources/assets/css/jquery.timepicker.css" />
@@ -48,7 +51,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-    
+   
     <script type="text/javascript">
        var socket = null;
        
@@ -119,11 +122,11 @@
 	}
 	
 	// 서버에서 일정주기마다 읽지 않은 메세지 갯수 가져옴 
-	/* function getInfiniteUnread(){
+	function getInfiniteUnread(){
 		setInterval(function(){
 			getUnread();
 		}, 4000); // 4초마다 요청
-	} */
+	} 
 	
 	// 안읽은 메세지 갯수 출력
 	function showUnread(result){
@@ -178,7 +181,7 @@
                         <ul id="nav" class="navbar-nav ms-auto">
 
                            <sec:authorize access="isAnonymous()">
-                              <!-- <a class="circle-image" href="user/mp_main.do">
+                             <!--  <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>  -->
                               <li class="nav-item"><a
@@ -251,6 +254,7 @@
                                     value="${_csrf.token}" />
                               </form>
                            </sec:authorize>
+ 
 
                            <sec:authorize access="hasRole('ROLE_ADMIN')">
                               <li class="nav-item" style="margin-right: 100px;"><a

@@ -66,14 +66,15 @@
 										</div>
 										<div class="col-4" style="text-align: right;">
 										<!-- 리뷰를 쓸 수 있는 권한을 가지고 있으면 리뷰쓰기 버튼을 노출시킨다. -->
+										<!-- 같은 방을 2번 빌렸을 때 리뷰버튼이 한 번만 나와야 되므로 break를 시켜주어야 한다. -->
+										<c:set var="loop_flag" value="false" />
 										<c:forEach var="list" items="${authToWriteReview }">
-											<c:choose>
-												<c:when test="${list.borrowerId eq member_memberId }">
+											<c:if test="${not loop_flag }">	
+												<c:if test="${list.borrowerId eq member_memberId }">
 													<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>										
-												</c:when>
-												<c:otherwise>
-												</c:otherwise>
-											</c:choose>
+													<c:set var="loop_flag" value="true"/>
+												</c:if>
+											</c:if>
 										</c:forEach>
 										</div>
 									</div>
@@ -195,8 +196,14 @@
 					<span id="m_writer_profile">
 						<div class="message-box">
 							<!-- 상대방 프로필 -->
-							<img src="${profile.imagePath }" alt="상대방 프로필"
-								class="avatar img_circle img-profile" alt="avatar">
+							<c:if test="${profile.imagePath ne null}">							
+								<img src="${profile.imagePath }" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+							<c:if test="${profile.imagePath eq null}">
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
 						</div>
 					</span>
 					<h5 class="modal-title" id="messageModalLabel">&nbsp;
@@ -250,7 +257,7 @@
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
+								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시 서초구
 								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
 								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
 							</p>
@@ -513,7 +520,7 @@
 				// 리뷰 등록하기
 				reviewService.add(review, function(result){
 					
-					alert("리뷰가 등록되었습니다");
+					//alert("리뷰가 등록되었습니다");
 					
 					// input의 값들을 모두 지운다.
 					//modal.find("input").val(""); // 리뷰평점도 사라지게 돼서 주석처리 
@@ -596,7 +603,7 @@
 				
 				reviewService.update(review, function(result){
 					
-					alert("수정되었습니다");
+					//alert("수정되었습니다");
 					
 					modal.modal("hide");
 
@@ -623,7 +630,7 @@
 				
 				reviewService.remove(reviewId, function(result){
 					
-					alert("삭제되었습니다");
+					//alert("삭제되었습니다");
 					
 					//리뷰 평점 비동기 업데이트
 					var hId = ${board.HId};
@@ -648,7 +655,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				getInfiniteChat();
+				// getInfiniteChat();
 				
 			});
 			
@@ -657,13 +664,15 @@
 				if(e.keyCode == 13){
 					e.preventDefault();
 					$('.msg_send_btn').trigger('click');
+					
 				} 
 			});
 			
-			/* // 닫기 버튼 누르면 동작
+			// 닫기 버튼 누르면 동작
 			$("#showMsgContent").on("click", function(e){
-				$("#messageModal").modal("hide");				
-			}); */
+				$("#messageModal").modal("hide");
+				 //clearInterval(interval);
+			}); 
 			
 		
 		});

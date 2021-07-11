@@ -19,30 +19,25 @@
 <link rel="stylesheet" href="/resources/ad_assets/css/message.css">
 <!--부트스트랩 설정-->
 
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- 지울목록 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-	type="text/css" rel="stylesheet">
+	type="text/css" rel="stylesheet"> -->
+	
 <!-- Custom fonts for this template-->
-<link
+<!-- <link
 	href="/resources/ad_assets/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
+	rel="stylesheet" type="text/css"> -->
+<!-- <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+	rel="stylesheet"> -->
+<!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script> -->
 
 <!-- Custom styles for this template-->
-<link href="/resources/ad_assets/css/sb-admin-2.min.css"
-	rel="stylesheet">
-<script src="https://kit.fontawesome.com/a0fcc69da7.js"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<!-- 아이콘 -->
+<script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
 <!-- ========================= CSS here ========================= -->
 <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
@@ -101,7 +96,7 @@
 					} 
 				} else {
 					// 친구찾기에 실패했을 때, 
-					$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">사용자를 찾을 수 없습니다.<br> 다시 검색해주세요</h6>');
+					$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">사용자를 찾을 수 없습니다😅<br> 다시 검색해주세요</h6>');
 				}
 			},
 			error:function(e){

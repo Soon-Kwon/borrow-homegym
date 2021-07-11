@@ -4,26 +4,24 @@ function save() {
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var str = "";
 
-	$(".uploadResult ul li")
-			.each(
-					function(i, obj) {
+	$(".uploadResult ul li") .each(function(i, obj) {
 
-						var jobj = $(obj);
+			var jobj = $(obj);
 
-						console.dir(jobj);
+			console.dir(jobj);
 
-						str += "<input type='hidden' name='attachList[" + i
-								+ "].fileName' value ='"
-								+ jobj.data("filename") + "'>";
-						str += "<input type='hidden' name='attachList[" + i
-								+ "].uuid' value ='" + jobj.data("uuid") + "'>";
-						str += "<input type='hidden' name='attachList[" + i
-								+ "].uploadPath' value ='" + jobj.data("path")
-								+ "'>";
-						str += "<input type='hidden' name='attachList[" + i
-								+ "].fileType' value ='" + jobj.data("type")
-								+ "'>";
-					});
+			str += "<input type='hidden' name='attachList[" + i
+					+ "].fileName' value ='"
+					+ jobj.data("filename") + "'>";
+			str += "<input type='hidden' name='attachList[" + i
+					+ "].uuid' value ='" + jobj.data("uuid") + "'>";
+			str += "<input type='hidden' name='attachList[" + i
+					+ "].uploadPath' value ='" + jobj.data("path")
+					+ "'>";
+			str += "<input type='hidden' name='attachList[" + i
+					+ "].fileType' value ='" + jobj.data("type")
+					+ "'>";
+		});
 
 	if (str == null || str == "") {
 		alert("최소 한 장 이상의 사진을 올려주세요!");
@@ -44,14 +42,7 @@ function save() {
 	
 	$("textarea[name='tbProgram']").html(text);
 	
-		
-	/*var str = $("textarea[name='tbContent']").val();
-	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-	$("textarea[name='tbContent']").val(str);
-	var str = $("textarea[name='tbProgram']").val();
-	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-	$("textarea[name='tbProgram']").val(str);
-	*/
+	
 	formObj.append(str);
 
 	var data = formObj.serialize();
@@ -69,7 +60,7 @@ function save() {
 		success : function(data) {
 			//alert(data);
 			if (data == 'OK') {
-				alert('글 작성에 성공하였습니다.');
+				alert('글 작성 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
 				//window.location.replace("/trainer/tbList.do");
 
@@ -157,7 +148,7 @@ function modify() {
 		success : function(data) {
 			//alert(data);
 			if (data == 'OK') {
-				alert('글 작성에 성공하였습니다.');
+				alert('글 수정 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
 /*				window.location.replace("/trainer/tbList.do");
 */				//window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
