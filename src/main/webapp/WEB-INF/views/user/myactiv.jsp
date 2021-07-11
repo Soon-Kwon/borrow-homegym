@@ -475,7 +475,14 @@
 	                                                                    <ul style="font-weight:bold; font-size:15px;">
 	                                                                        <li>📌${rentHomegym.h_title}</li><br>
 	                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li><br>
-	                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
+	                                                                      <c:choose>
+	                                                                		<c:when test="${rentHomegym.agreeYN == 'N'}">
+	                                                                			<li style="color:#e20707;">📢 ${rentHomegym.reject_reason}</li>
+	                                                                		</c:when>
+	                                                                		<c:otherwise>
+	                                                                		  <li>📆 대여일 : ${rentHomegym.rental_date}</li>
+	                                                                		</c:otherwise>
+	                                                                	</c:choose>
 	                                                                    </ul>
 	                                                                </div>
 	                                                            </div>    
@@ -602,10 +609,13 @@
                                     <div class="row justify-content-start">
                                         <div class="col-12">
                                         <br><br>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="홈짐주인의 개인 사정으로 예약이 거절되었습니다." id="r1" > <label for="r1">개인 사정으로 인한 취소</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="이미 예약된 시간으로 홈짐예약이 거절되었습니다." id="r2"> <label for="r2">이미 예약된 시간</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 날짜로 홈짐예약이 거절되었습니다." id="r3" checked> <label for="r3">예약 불가한 날짜</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="너무 오랜 시간 대여로 홈짐예약이 거절되었습니다." id="r4"> <label for="r4">너무 오랜 시간 대여</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="호스트의 개인사정으로 예약이 거절되었습니다." id="r1" > <label for="r1">개인 사정으로 인한 취소</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="이미 마감된 시간으로 예약이 거절되었습니다." id="r2"> <label for="r2">이미 마감된 시간</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 날짜로 예약이 거절되었습니다." id="r3" checked> <label for="r3">예약 불가한 날짜</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 시간으로 예약이 거절되었습니다." id="r4"> <label for="r4">예약 불가한 시간</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="장시간 대여로 예약이 거절되었습니다." id="r5"> <label for="r5">장시간 대여</label></div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="잘못된 예약정보로 예약이 거절되었습니다." id="r6"> <label for="r6">잘못된 예약자 정보</label> </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

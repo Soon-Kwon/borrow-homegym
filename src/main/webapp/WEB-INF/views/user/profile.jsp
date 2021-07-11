@@ -32,7 +32,7 @@
     margin-right: 10px;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 45px;
+    margin-left: 40px;
     margin-top: 10px;
 }
 .userphoto_menu label { 

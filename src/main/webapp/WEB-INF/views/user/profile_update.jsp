@@ -127,7 +127,7 @@
     
     position: absolute;
     left: 225px;
-    bottom: 363px;
+    bottom: 366px;
 }
 
 .form-control {

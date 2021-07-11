@@ -150,7 +150,7 @@
 		SELECT
 			count(*)
 		FROM homegym_detail
-		WHERE borrowerId= #{memberId}
+		WHERE borrowerId= #{memberId} AND agreeYN ='Y'
 	</select>
 	
 	<!-- 내가 빌려준 홈짐 갯수 -->
