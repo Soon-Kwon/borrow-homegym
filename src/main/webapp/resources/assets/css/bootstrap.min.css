@@ -253,10 +253,7 @@ a:not([href]):not([class]):hover {
     text-decoration: none
 }
 
-code,
-kbd,
-pre,
-samp {
+code, kbd,/* pre, */samp {
     font-family: var(--bs-font-monospace);
     font-size: 1em;
     direction: ltr;
@@ -268,17 +265,17 @@ pre {
     margin-top: 0;
     margin-bottom: 1rem;
     overflow: auto;
-    font-size: .875em
+ /*    font-size: .875em */
 }
 
-pre code {
+ pre code {
     font-size: inherit;
     color: inherit;
     word-break: normal
 }
 
 code {
-    font-size: .875em;
+    /* font-size: .875em; */
     color: #d63384;
     word-wrap: break-word
 }

@@ -153,6 +153,12 @@
 		WHERE borrowerId= #{memberId}
 	</select>
 	
+	<select id="getRealRentCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM homegym_detail
+		WHERE borrowerId= #{memberId} AND agreeYN ='Y'
+	</select>
 	<!-- 내가 빌려준 홈짐 갯수 -->
 	<select id="getLendHomeGymCnt" resultType="int">
 		SELECT
@@ -188,12 +194,23 @@
 			d_id = #{dId}
 	</update>
 	
-	<!-- 홈짐 수락여부 상태값 변경 -->
+	<!-- 홈짐 수락-->
 	<update id="HomegymAcceptUpdate" parameterType="HashMap" >
 		UPDATE 
 			homegym_detail
 		SET
 	    	agreeYN = #{status}
+		WHERE
+			d_id = #{dId}
+	</update>
+	
+	<!-- 홈짐 거절 -->
+	<update id="HomegymRejectUpdate" parameterType="HashMap" >
+		UPDATE 
+			homegym_detail
+		SET
+	    	agreeYN = #{status},
+	    	reject_reason = #{rejectReason}
 		WHERE
 			d_id = #{dId}
 	</update>
@@ -262,7 +279,7 @@
 	  		SELECT *
 	  		FROM (
 	  			 SELECT b.h_id, b.h_price, b.h_title,b.h_addr,d.rental_date,
-		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum, 
+		  				d.agreeYN, d.payYN, d.d_id, d.phoneNum,d.reject_reason,
 	                    min(f.uuid) as uuid,
 						min(f.fileName) as fileName,
 						max(f.uploadPath) as uploadPath

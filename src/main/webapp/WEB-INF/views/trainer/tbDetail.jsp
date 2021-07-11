@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.homegym.biz.trainerboard.TrainerBoardVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -11,24 +10,18 @@
 
 <head>
 
-
-
 <!-- ========================= CSS here ========================= -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- 캐러셀  -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
 
@@ -55,7 +48,16 @@
 .carousel-control.left, .carousel-control.right {
     background-image: none
 }
+pre{
+border:none;
+white-space: pre-wrap; 
+scroll:no;
 
+}
+
+.modal{
+z-index:1050;
+}
 
 </style>
 
@@ -72,6 +74,14 @@
 <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 
 </head>
 
@@ -171,11 +181,11 @@
 					<br><br>
 							<div class="detail-inner">
 								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbContent}</pre>
+									<pre style="border:none;font-size:17px;font-family: 'Roboto', sans-serif; background-color:#F8F8FF; ">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbProgram}</pre>
+									<pre style="border:none; font-size:17px; font-family: 'Roboto', sans-serif; background-color:#F8F8FF; ">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
@@ -322,6 +332,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
@@ -338,7 +350,7 @@
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
+								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시 서초구
 								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
 								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
 							</p>
@@ -392,7 +404,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				getInfiniteChat(); //- 이거 풀면 대화창 이상해짐,, 다들 주석처리가 되어 있으려나,,
+				getInfiniteChat(); 
 				
 			});
 			

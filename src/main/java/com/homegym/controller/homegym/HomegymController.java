@@ -41,8 +41,8 @@ public class HomegymController {
 
 	
 	//private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
-	private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
-	//private static final String UPLOAD_FOLDER = "D:/upload/";
+	//private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";  
+	private static final String UPLOAD_FOLDER = "D:/upload/";
 	// private static final String UPLOAD_FOLDER = "C:/Users/silve/Desktop/Upload/";
 	// private static final String UPLOAD_FOLDER = "/Users/soon/Desktop/Upload/";
 

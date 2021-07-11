@@ -32,6 +32,18 @@
   color: #fff;
 }
 
+.btn-primary1 {
+  background-color: #2f3e83;
+  border-color: #2f3e83;
+  color: #fff;
+}
+
+.btn-primary1:hover,
+.btn-primary1:focus {
+  border-color: #5c6dbd;
+  background-color: #5c6dbd;
+  color: #fff;
+}
 
 .page_aticle {
   width: auto;

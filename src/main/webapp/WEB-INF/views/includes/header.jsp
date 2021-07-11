@@ -26,9 +26,7 @@
 <!-- Place favicon.ico in the root directory -->
 
 <!-- Web Font -->
-<link
-   href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-   rel="stylesheet">
+	
     <!-- ========================= CSS here ========================= -->
     <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css" />
@@ -39,6 +37,11 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+    <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
+<!-- font -->
+
+	
     
     <!-- ========================JQuery Timepicker =================== -->
     <link rel="stylesheet" href="/resources/assets/css/jquery.timepicker.css" />
@@ -48,7 +51,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-    
+   
     <script type="text/javascript">
        var socket = null;
        
@@ -144,6 +147,7 @@
 		getInfiniteUnread();
 	});
 	
+	
 	</script>
 
    <!-- Start Header Area -->
@@ -153,7 +157,7 @@
             <div class="col-lg-12">
                <div class="nav-inner">
                   <nav class="navbar navbar-expand-lg">
-                     <a class="navbar-brand" href="/index.jsp"> <img
+                     <a class="navbar-brand" href="/"> <img
                         src="/resources/assets/images/logo/로고2.png" alt="logo">
                      </a>
                      <button class="navbar-toggler mobile-menu-btn" type="button"
@@ -165,9 +169,9 @@
                         <span class="toggler-icon"></span>
                      </button>
                      <form class="d-flex search-form"
-                        action="/homegym/homegymListView.do" method="get">
-                        <input class="form-control me-2" type="search" name="keyword"
-                           placeholder="동네 이름을 검색해보세요!" aria-label="Search">
+                        action="/homegym/homegymListView.do" method="get" style="position:relative;">
+                     <input class="form-control me-2" type="search" name="keyword"
+                           placeholder="동네 이름을 검색해보세요!" style="position:relative; font-size:15px;" aria-label="Search">
                         <button id="search-hg" class="btn btn-outline-success"
                            type="submit">
                            <i class="lni lni-search-alt"></i>
@@ -178,7 +182,7 @@
                         <ul id="nav" class="navbar-nav ms-auto">
 
                            <sec:authorize access="isAnonymous()">
-                              <!-- <a class="circle-image" href="user/mp_main.do">
+                             <!--  <a class="circle-image" href="user/mp_main.do">
                                     <img src="https://via.placeholder.com/500x500" alt="logo">
                                 </a>  -->
                               <li class="nav-item"><a
@@ -251,6 +255,7 @@
                                     value="${_csrf.token}" />
                               </form>
                            </sec:authorize>
+ 
 
                            <sec:authorize access="hasRole('ROLE_ADMIN')">
                               <li class="nav-item" style="margin-right: 100px;"><a

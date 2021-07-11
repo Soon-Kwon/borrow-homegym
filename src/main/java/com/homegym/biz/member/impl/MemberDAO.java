@@ -126,6 +126,7 @@ public class MemberDAO {
 			}
 			return result;
 		}
+		
 	// 내가 쓴 게시글 조회 
 	public List<TrainerBoardVO> getMyBoardPaging(String memberId,Criteria cri) {
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -139,11 +140,15 @@ public class MemberDAO {
 		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt", memberId);
 	}
 	
-	//내가 빌린 홈짐 수
+	//내가 빌린 홈짐 수 (거절+수락)
 	public int getRentHomeGymCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getRentHomeGymCnt",memberId);
 	}
 	
+	//수락된 빌린 홈짐 수
+	public int getRealRentCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getRealRentCnt",memberId);
+	}
 	//내가 쓴 게시글 갯수 
 	public int getMyAllBoardCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt", memberId);
@@ -214,11 +219,15 @@ public class MemberDAO {
 		 sqlsession.update("MemberDAO.payUpdate",vo);
 	}
 	
-	//홈짐 수락 거절 상태 변화
+	//홈짐 수락 거절 상태 변화 (수락)
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
 	}
 	
+	//홈짐 수락 거절 상태 변화 (거절)
+	public int HomegymRejectUpdate(Map<String,String> paramMap) {
+		return sqlsession.update("MemberDAO.HomegymRejectUpdate",paramMap);
+	}
 
 	
 	//요청 홈짐 예약 폼 조회

@@ -55,11 +55,14 @@ public interface MemberService {
 	// 수락 대기중인 홈짐 수 조회
 	public int getMyWaitngHomegymCnt(String memberId);
 	
-	//내가 빌려준 홈짐 수 조회
+	//내가 올린 홈짐 수 조회
 	public int getLendHomeGymCnt(String memberId);
 	
-	//내가 빌린 홈짐 수 조회
+	//내가 빌리려고 예약한 홈짐 수 조회
 	public int getRentHomeGymCnt(String memberId);
+	
+	//거절된 홈짐수를 뺀 빌린 홈짐 수 조회
+	public int getRealRentCnt(String memberId);
 	
 	//내가 쓴 글 수 조회
 	public int getMyAllBoardCnt(String memberId);
@@ -88,11 +91,13 @@ public interface MemberService {
 	// 결제 상태 변경 
 	public void payUpdate(HomegymDetailVO vo);
 	
-	//홈짐 수락 거절 변경
+	//홈짐 수락 상태 변경
 	public int HomegymAcceptUpdate(Map<String, String> paramMap);
 	
+	//홈짐 거절 상태 변경
+	public int HomegymRejectUpdate(Map<String,String> paramMap);
 	//홈짐 예약 요청 조회
-	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int hId);
+	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId);
 
 	
 
