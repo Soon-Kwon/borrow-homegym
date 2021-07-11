@@ -208,7 +208,7 @@
 									<c:choose>
 										<c:when test="${trainerBoard.memberId ne memberId }">
 											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
-												<button id="showMsgContent" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; text-align:center; border-radius:5px;">
+												<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
 													트레이너에게 문의하기</button>
 											</div>
 										 </c:when>
@@ -221,8 +221,8 @@
 				                          
 				                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
 											</div>
-									</c:when>
-							</c:choose>
+										</c:when>
+								</c:choose>
 							</div>	
 						</div>
 						<!--/ End Single Widget -->
@@ -278,13 +278,19 @@
 					<span id="m_writer_profile">
 						<div class="message-box">
 							<!-- 상대방 프로필 -->
-							<img src="${trainerBoard.image }" alt="상대방 프로필"
-								class="avatar img_circle img-profile" alt="avatar">
+							<c:if test="${trainerBoard.image ne null}">							
+								<img src="${trainerBoard.image }" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+							<c:if test="${trainerBoard.image eq null}">
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
 						</div>
 					</span>
 					<h5 class="modal-title" id="messageModalLabel">&nbsp;
 						${trainerBoard.name}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
+					<button type="button" class="btn btn-close" data-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body ">
@@ -386,7 +392,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				//getInfiniteChat();
+				getInfiniteChat(); //- 이거 풀면 대화창 이상해짐,, 다들 주석처리가 되어 있으려나,,
 				
 			});
 			
@@ -396,6 +402,11 @@
 					e.preventDefault();
 					$('.msg_send_btn').trigger('click');
 				} 
+			});
+			
+			// x버튼 누르면 동작
+			$(".btn-close").on("click", function(e){
+				$("#messageModal").modal("hide");				
 			});
 		})
 		

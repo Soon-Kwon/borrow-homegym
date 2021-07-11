@@ -23,7 +23,6 @@ public class MessageDAO {
 		log.info("DAO의 getMessageAll();");
 
 		String curId = vo.getCurId();
-		System.out.println("curId : " + curId); // fromId
 
 		// 메세지 리스트에 나타낼 정보들 가져오기 - 가장 최근 메세지, 보낸사람 프로필image, 보낸사람 id
 		ArrayList<MessageVO> list = (ArrayList) sqlSession.selectList("MessageDAO.getMessageAll", vo);
@@ -48,8 +47,6 @@ public class MessageDAO {
 			} else {
 				mVo.setOtherId(mVo.getSendId());
 			}
-			System.out.println("MessageDAO의 getMessageAll() - mVo" + mVo);
-
 		}
 
 		return list;
@@ -59,9 +56,6 @@ public class MessageDAO {
 	public ArrayList<MessageVO> getMsgContentByRoom(MessageVO vo) {
 		log.info("DAO의 getMsgContentByRoom();");
 		String curId = vo.getCurId(); // fromId
-		System.out.println("msgRoomNo : " + vo.getMsgRoomNo());
-		System.out.println("recvId : " + vo.getRecvId()); // null
-		System.out.println("curId : " + curId);
 
 		// 채팅방 번호를 통해 메세지 내역 가져오기
 		ArrayList<MessageVO> clist = (ArrayList) sqlSession.selectList("MessageDAO.getMsgContentByRoom", vo);
@@ -79,7 +73,6 @@ public class MessageDAO {
 			} else {
 				mVo.setOtherId(mVo.getSendId());
 			}
-			System.out.println("MessageDAO의 getMsgContentByRoom의 messageVO : " + mVo);
 		}
 
 		// 해당 방의 메세지들 중 받는 사람이 현재 사용자의 curId인 메세지를 모두 읽음 처리
@@ -98,9 +91,16 @@ public class MessageDAO {
 			String msgRoomNo;
 			if (checkMsgHistory == 0) {
 				// 메세지 내역 없을 경우
-				// message테이블의 roomNo최댓값을 구해서 vo에 set하기
+				// message테이블의 roomNo최댓값 +_1로 vo에 set하기
 				msgRoomNo = sqlSession.selectOne("MessageDAO.maxMsgRoomNo", vo);
-				vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);
+				
+				// 만약, msgRoomNo가 null이면 1로세팅해주기(기존 데이터가 없는경우)
+				if(msgRoomNo == null) {
+					vo.setMsgRoomNo(1);
+				} else {
+					// 기존에 채팅방이 존재하면
+					vo.setMsgRoomNo(Integer.parseInt(msgRoomNo) + 1);					
+				}
 
 			} else {
 				// 메세지 내역 있을 경우
@@ -110,8 +110,6 @@ public class MessageDAO {
 			}
 
 		}
-//		sqlSession.insert("MessageDAO.sendMsgInList", vo);
-//		return vo.getMsgRoomNo();
 
 		int flag = sqlSession.insert("MessageDAO.sendMsgInList", vo);
 		System.out.println("DAO의 sendMsgInList()의 flag값 : "+ flag);
@@ -135,8 +133,6 @@ public class MessageDAO {
 	/*(1:1문의할) 채팅방 번호가져오기*/
 	public int getMsgRoomNo(MessageVO vo) {
 		log.info("DAO의 getMsgRoomNo();");
-		System.out.println("sendId=========================="+vo.getSendId());
-		System.out.println("recvId=========================="+vo.getRecvId());
 		String roomNo = sqlSession.selectOne("MessageDAO.getMsgRoomNo", vo);
 		// mapper에서 찾은 값이 없을 때, null로 뜨게 되는데
 		// 그때. roomNo을 int형으로 하게 되면 null값을 담을 수 없으므로 String형태로 먼저 받은 후 변환해준다.  
@@ -153,7 +149,6 @@ public class MessageDAO {
 			if(maxRoomNo == null) {
 				return 1;
 			} else {
-				
 				return Integer.parseInt(maxRoomNo) + 1;
 			}
 		}

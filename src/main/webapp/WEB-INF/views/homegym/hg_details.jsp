@@ -195,8 +195,14 @@
 					<span id="m_writer_profile">
 						<div class="message-box">
 							<!-- 상대방 프로필 -->
-							<img src="${profile.imagePath }" alt="상대방 프로필"
-								class="avatar img_circle img-profile" alt="avatar">
+							<c:if test="${profile.imagePath ne null}">							
+								<img src="${profile.imagePath }" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+							<c:if test="${profile.imagePath eq null}">
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
 						</div>
 					</span>
 					<h5 class="modal-title" id="messageModalLabel">&nbsp;

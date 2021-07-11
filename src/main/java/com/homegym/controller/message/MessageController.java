@@ -43,27 +43,13 @@ public class MessageController {
 	/* message main화면 */
 	@RequestMapping("/msgMain.do")
 	public String msgMain(HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
-		/*
-		 * session.setAttribute("member", member); - memberController에서 세팅해야하는 값
-		 * (HttpSession tomcat 생성 30분 유지) - 그래야 다른 페이지에서 아래처럼 getSession을 통해 member를 받아서
-		 * 쓸 수 있음
-		 */
-
-		/*
-		 * 다른 곳에서 세팅한 session값 받기 위한 로직 HttpSession session = request.getSession();
-		 * MemberVO member = (MemberVO)session.getAttribute("member"); String memberId =
-		 * member.getMemberId();
-		 */
+		// 처음에 채팅방이 있는지 없는지를 확인하기 위한 로직
 		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId);
-		vo.setCurId(memberId);
-
-		// 현재 id와 대화한 이력있는 채팅방 정보 가져오기
+		session.setAttribute("memberId", memberId); vo.setCurId(memberId);
+		// 현재 id와 대화한 이력있는 채팅방 정보 가져오기 
 		ArrayList<MessageVO> list = messageService.getMessageAll(vo);
-
-		for (MessageVO vos : list) {
-			log.info("msgMain.do : " + vos);
-		}
+	  
+		for (MessageVO vos : list) { log.info("msgMain.do : " + vos); }
 		model.addAttribute("list", list);
 
 		return "message/message_main";
@@ -100,9 +86,7 @@ public class MessageController {
 		vo.setMsgRoomNo(msgRoomNo);
 
 		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
-		// 기존에 채팅방이 없는 경우
-
-		// 기존에 채팅방 있는 경우, 메세지 내용 가져오기(없으면 그냥 insert실행)
+		
 		model.addAttribute("clist", clist);
 		for (MessageVO vos : clist) {
 			log.info("msgContent.do : " + vos);
@@ -125,7 +109,6 @@ public class MessageController {
 		log.info("msgSend.do의 vo : " + vo);
 
 		int flag = messageService.sendMsgInList(vo);
-		System.out.println("flag : " + flag);
 		// 보내지면 1리턴
 		return flag;
 	}
@@ -133,17 +116,13 @@ public class MessageController {
 	/* 1:1문의) 채팅방번호에 따른 메세지 내용 가져오기 */
 	@RequestMapping("/msgContentByAsking.do")
 	public String msgContentByAsking(@RequestParam String otherId, @RequestParam String curId,
-			HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
-
-		System.out.println("1:1문의하기를 통한 메세지 내용 가져오기");
-
+			MessageVO vo, Model model) {
+		
 		// 글 쓴 사람을 메세지 받을 사람으로 세팅
 		vo.setRecvId(otherId);
-		System.out.println("otherId : " + otherId);
 
 		// 현재 로그인한 id를 보내는 사람으로 세팅
 		vo.setSendId(curId);
-		System.out.println("curId : " + curId);
 
 		// 메세지 보낸 사람, 받는 사람의 채팅방 번호찾고 넘겨주기
 		int msgRoomNo = messageService.getMsgRoomNo(vo);
@@ -164,9 +143,6 @@ public class MessageController {
 	@RequestMapping("/msgSendByAsking.do")
 	public int msgSendByAsking(@RequestParam String otherId, @RequestParam String msgContent,
 			@RequestParam String curId, MessageVO vo) {
-		System.out.println("1:1문의하기를 통한 메세지 보내기");
-		System.out.println("otherId : " + otherId);
-		System.out.println("msgContent : " + msgContent);
 
 		// 현재 로그인한 id를 sendId로 세팅
 		vo.setSendId(curId);
@@ -211,23 +187,13 @@ public class MessageController {
 		// 현재 id와 찾은 id가 대화한 방이 있는지 체크
 		vo.setRecvId(otherId);
 		vo.setSendId(curId);
-			int msgRoomNo = messageService.getMsgRoomNo(vo);
+		int msgRoomNo = messageService.getMsgRoomNo(vo);
 		
 		// int형을 문자열로 변환해서 return(ajax는 int형을 받지 못함)
 		return String.valueOf(msgRoomNo);
 	}
 	
-	
-	/* 사용X */
-	/* 웹소켓 */
-
-	/* 1:1대화 - 지우기 */
-	@RequestMapping("/msg-ws.do")
-	public String msg() {
-		return "message/chat";
-	}
-
-	/* 알림 */
+	/* 웹소켓 - 알림*/
 	@RequestMapping("/notice-ws.do")
 	public String notice() {
 		return "message/message_notice";
