@@ -8,22 +8,6 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-<style>
-	#addBtn{
-		height: 50px;
-	    width: 150px;
-	    font-size: 18px;
-	    margin-left: 350px;
-	    border-color: #5c6dbd;
-	    color: #5c6dbd;
-	    font-weight: 400;
-	}
-	
-	/* .fouc{
-		display: none;
-	}
- */
-</style>
 <body>
 
     <!-- Preloader -->

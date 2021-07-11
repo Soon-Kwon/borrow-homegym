@@ -9,131 +9,10 @@
 <html class="no-js" lang="ko">
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<style>
-/* 프로필 사진 */
-#uploadBtn {
-	position: absolute;
-	left: 200px;
-	width: 80px;
-}
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 
-#delImg {
-	margin-left: 270px;
-}
-
-#editImgBtn {
-	position: absolute;
-	width: 45px;
-	left: 300px;
-	top: 115px;
-}
-
-}
-.userphoto_menu label {
-	display: inline-block;
-	padding: .5em .75em;
-	color: #999;
-	font-size: inherit;
-	line-height: normal;
-	vertical-align: middle;
-	background-color: #fdfdfd;
-	cursor: pointer;
-	border: 1px solid #ebebeb;
-	border-bottom-color: #e2e2e2;
-	border-radius: .25em;
-}
-
-.userphoto_menu input[type="file"] {
-	/* 파일 필드 숨기기 */
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-.img {
-	vertical-align: middle;
-}
-
-.img-img-thumbnail {
-	display: inline-block;
-	max-width: 100%;
-	height: auto;
-	padding: 4px;
-	line-height: 1.42857143;
-	background-color: #fff;
-	transition: all .2s ease-in-out;
-}
-
-.img-circle {
-	border-radius: 50%;
-}
-
-.btn-primary {
-	background-color: #2f3e83;
-	border-color: #2f3e83;
-	color: #fff;
-	margin-bottom: 50px;
-}
-
-.btn-primary:hover, .btn-primary:focus {
-	border-color: #5c6dbd;
-	background-color: #5c6dbd;
-	color: #fff;
-}
-
-#zip_codeBtn{
-	background-color: #7c97d8;
-    color: white;
-    }
-    
-#member_updateBtn{
-    height: 50px;
-    width: 100px;
-    margin-right: 10px;
-    background-color: #3f4f9a;
-    border: none;
-    font-weight: bold;
-}
-
-#member_deleteBtn{
-	height: 50px;
-    width: 100px;
-    background-color: #3f4f9a;
-    border: none;
-    font-weight: bold;
-}
-
-.form-group form-control {
-	border-radius: 15px;
-}
-
-.features.style2 .single-feature::before {
-	background-color : #ffffff; !important
-	}
-
-.checkBtn{
-	background-color: #7c97d8;
-    width: 100px;
-    height: 40px;
-    border: none;
-    color: white;
-    border-radius: 30px;
-    
-    position: absolute;
-    left: 225px;
-    bottom: 366px;
-}
-
-.form-control {
-	width:84%;
-}
-</style>
 
 <!-- 프로필 사진 미리보기 -->
 <script>
@@ -374,338 +253,367 @@ function execPostCode() {
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- /End Preloader -->
-
-    	<!--Header -->
-   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
-
-    <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs overlay">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8 offset-lg-2 col-md-12 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">마이페이지</h1>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Breadcrumbs -->
-
-       <!-- Course Details Section Start -->
-    <div class="course-details section">
-        <div class="container">
-            <div class="row">
-               <!-- Start Course Sidebar -->
-                <div class="col-lg-3 col-8">
-                    <div class="course-sidebar">
-                        
-                        <div class="sidebar-widget other-course-wedget">
-                            <h3 class="sidebar-widget-title"><a href="profile.do">마이페이지</a></h3>
-                            <div class="sidebar-widget-content">
-                                <ul class="sidebar-widget-course">
-                                    <li class="single-course">
-                                        <div class="info">
-                                            <h6 class="title"><a href="profile_update.do">내 정보수정</a></h6>
-                                        </div>
-                                    </li>
-                                    <li class="single-course">
-                                        <div class="info">
-                                            <h6 class="title"><a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a></h6>
-                                        </div>
-                                    </li>
-                                    <li class="single-course">
-                                        <div class="info">
-                                            <h6 class="title"><a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a></h6>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                          <div class="sidebar-widget">
-                            <h3 class="sidebar-widget-title">고객센터</h3>
-                            <div class="sidebar-widget-content">
-                                <div class="sidebar-widget-search">
-                                    <p><a href="/user/faq.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Course Sidebar -->
 
 
-                <!-- Course Details Wrapper Start -->
-                <div class="col-lg-6 col-12">
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="preloader-inner">
+			<div class="preloader-icon">
+				<span></span> <span></span>
+			</div>
+		</div>
+	</div>
+	<!-- /End Preloader -->
 
-                    <!-- Start Features Area -->
-                    <section class="features style2">
-                        <div class="container-fluid" style="padding-bottom: 80px;">
-                            <div class="single-head">
-                                <div class="row" style="position: relative; right: 80px;">
-                                    <div class="col-lg-15 " style="margin-left: 280px;">
-                                        <!-- Start Single Feature -->
-                                      
-                                      
-                            		<div class="single-feature" style="padding: 20px">
-                            			<c:if test="${empty member.imagePath}">
-				                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" class="avatar img-circle img-thumbnail" id="profile" style="margin-left: 190px; width: 140px; height: 140px; border-radius:100px;"></div>
-				                    	</c:if>
-				                    	<c:if test="${not empty member.imagePath}">
-				                    		<div id="userphoto"><img src="${member.imagePath}" id="profile"  class="avatar img-circle img-thumbnail" name="image" style="margin-left: 190px; width: 140px; height: 140px; border-radius:100px;"></div>
-				                    	</c:if>
-                            		
-                            		
-                            		<!-- 프로필이미지 업로드/ 삭제  -->
-                             <form id="profileform" action="/user/mypage/userImgUpload.do" enctype="multipart/form-data" method="post" autocomplete="off">
-	                        <div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
-	                        	<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}"/>
-	                        	<input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }"/>
-	                             <label class="file"  for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
-	                            <input type="file" name="file"  id="userImg"onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display:none;" > 
-                            	<button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()" >업로드</button>
-	                            <button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
-	                            
-	                        </div>
-	                       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	                        
-                        </form>
-                       
-                     
-                                     
-                         <!-- 폼 전송 -->      
-                   		<form name="memberUpdate" id="memberUpdate" action="/user/mypage/update.do" method="post">
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="userId">
-                                                            <br>
-                                                            <h6>아이디</h6>
-                                                        </label>
-                                                        <input name="memberId" readonly class="form-control" style="border-radius: 15px;"
-                                                            value="${member.memberId}">
-                                                            
-                                                    </div>
-                                                </div>
-                                                <br>
+	<!--Header -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+
+	<!-- Start Breadcrumbs -->
+	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-8 offset-lg-2 col-md-12 col-12">
+					<div class="breadcrumbs-content">
+						<h1 class="page-title">마이페이지</h1>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
+
+	<!-- Course Details Section Start -->
+	<div class="course-details section">
+		<div class="container">
+			<div class="row">
+				<!-- Start Course Sidebar -->
+				<div class="col-lg-3 col-8">
+					<div class="course-sidebar">
+
+						<div class="sidebar-widget other-course-wedget">
+							<h3 class="sidebar-widget-title">
+								<a href="profile.do">마이페이지</a>
+							</h3>
+							<div class="sidebar-widget-content">
+								<ul class="sidebar-widget-course">
+									<li class="single-course">
+										<div class="info">
+											<h6 class="title">
+												<a href="profile_update.do">내 정보수정</a>
+											</h6>
+										</div>
+									</li>
+									<li class="single-course">
+										<div class="info">
+											<h6 class="title">
+												<a href="myactiv.do?selectedBtnId=overview-tab">나의 활동내역</a>
+											</h6>
+										</div>
+									</li>
+									<li class="single-course">
+										<div class="info">
+											<h6 class="title">
+												<a href="mywrite.do?selectedBtnId=overview-tab">글 관리</a>
+											</h6>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<h3 class="sidebar-widget-title">고객센터</h3>
+							<div class="sidebar-widget-content">
+								<div class="sidebar-widget-search">
+									<p>
+										<a href="/user/faq.do" style="color: #171e29;">💡자주묻는 질문
+											보러가기</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Course Sidebar -->
+
+
+				<!-- Course Details Wrapper Start -->
+				<div class="col-lg-6 col-12">
+
+					<!-- Start Features Area -->
+					<section class="features style2">
+						<div class="container-fluid" style="padding-bottom: 80px;">
+							<div class="single-head">
+								<div class="row" style="position: relative; right: 80px;">
+									<div class="col-lg-15 " style="margin-left: 280px;">
+										<!-- Start Single Feature -->
+
+
+										<div class="single-feature" style="padding: 20px">
+											<c:if test="${empty member.imagePath}">
+												<div id="userphoto">
+													<img
+														src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png"
+														class="avatar img-circle img-thumbnail" id="profile"
+														style="margin-left: 190px; width: 140px; height: 140px; border-radius: 100px;">
+												</div>
+											</c:if>
+											<c:if test="${not empty member.imagePath}">
+												<div id="userphoto">
+													<img src="${member.imagePath}" id="profile"
+														class="avatar img-circle img-thumbnail" name="image"
+														style="margin-left: 190px; width: 140px; height: 140px; border-radius: 100px;">
+												</div>
+											</c:if>
+
+
+											<!-- 프로필이미지 업로드/ 삭제  -->
+											<form id="profileform" action="/user/mypage/userImgUpload.do"
+												enctype="multipart/form-data" method="post"
+												autocomplete="off">
+												<div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
+													<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}" />
+													 <input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }" />
+													<label class="file" for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
+													<input type="file" name="file" id="userImg" onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display: none;">
+													<button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()">업로드</button>
+													<button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
+
+												</div>
+												<input type="hidden" name="${_csrf.parameterName}"
+													value="${_csrf.token}" />
+
+											</form>
+
+
+
+											<!-- 폼 전송 -->
+											<form name="memberUpdate" id="memberUpdate"
+												action="/user/mypage/update.do" method="post">
+												<div class="form-group">
+													<div class="col-xs-6">
+														<label for="userId"> <br>
+															<h6>아이디</h6>
+														</label> <input name="memberId" readonly class="form-control"
+															style="border-radius: 15px;" value="${member.memberId}">
+
+													</div>
+												</div>
+												<br>
 
 												<!-- 일반 로그인 회원일 경우 -->
-												<sec:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')">
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="password">
-                                                            <h6>현재 비밀번호</h6>
-                                                        </label>
-                                                        <input type="password" class="form-control" id="password" name="password" style="border-radius: 15px;"
-                                                            placeholder="현재 비밀번호" title="현재 비밀번호입력은 필수입니다." >
-                                                    </div>
-                                                    <div>${msg}</div>
-                                                </div>
-                                                <br>
-                                                 <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="new_password">
-                                                            <h6>새 비밀번호</h6>
-                                                        </label>
-                                                        <input type="password" class="form-control" name="newPassword" style="border-radius: 15px;"
-                                                            id="newPassword" placeholder="새 비밀번호" title="새 비밀번호를 입력해주세요.">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                
-                                                
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="re_password">
-                                                            <h6>새 비밀번호 재확인</h6>
-                                                        </label>
-                                                        <input type="password" class="form-control" name="rePassword" style="border-radius: 15px;"
-                                                            id="rePassword" placeholder="새 비밀번호 재확인"
-                                                            title="새 비밀번호 재입력해주세요.">
-                                                    </div>
-                                                </div> 
-                                                <br>
+												<sec:authorize
+													access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')">
+													<div class="form-group">
+														<div class="col-xs-6">
+															<label for="password">
+																<h6>현재 비밀번호</h6>
+															</label> <input type="password" class="form-control" id="password" name="password" style="border-radius: 15px;" placeholder="현재 비밀번호"
+																title="현재 비밀번호입력은 필수입니다.">
+														</div>
+														<div>${msg}</div>
+													</div>
+													<br>
+													<div class="form-group">
+														<div class="col-xs-6">
+															<label for="new_password">
+																<h6>새 비밀번호</h6>
+															</label> <input type="password" class="form-control"
+																name="newPassword" style="border-radius: 15px;"
+																id="newPassword" placeholder="새 비밀번호"
+																title="새 비밀번호를 입력해주세요.">
+														</div>
+													</div>
+													<br>
+
+
+													<div class="form-group">
+														<div class="col-xs-6">
+															<label for="re_password">
+																<h6>새 비밀번호 재확인</h6>
+															</label> <input type="password" class="form-control" name="rePassword" style="border-radius: 15px;" id="rePassword" placeholder="새 비밀번호 재확인"
+																title="새 비밀번호 재입력해주세요.">
+														</div>
+													</div>
+													<br>
 												</sec:authorize>
 
 												<!-- 키카오 로그인 회원일 경우 -->
 												<sec:authorize access="hasRole('ROLE_KAKAO')">
-												<div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="password">
-                                                            <h6>현재 비밀번호</h6>
-                                                        </label>
-                                                        <input type="password" readonly class="form-control" value="${member.password}" id="password" name="password" style="border-radius: 15px;"
-                                                            placeholder="현재 비밀번호" title="현재 비밀번호입력은 필수입니다." >
-                                                    </div>
-                                                    <div>${msg}</div>
-                                                </div>
-                                                <br>
-                                                 <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="new_password">
-                                                            <h6>새 비밀번호</h6>
-                                                        </label>
-                                                        <input type="password" readonly class="form-control" name="newPassword" style="border-radius: 15px;"
-                                                            id="newPassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다" title="새 비밀번호를 입력해주세요.">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                
-                                                
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="re_password">
-                                                            <h6>새 비밀번호 재확인</h6>
-                                                        </label>
-                                                        <input type="password" readonly class="form-control" name="rePassword" style="border-radius: 15px;"
-                                                            id="rePassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
-                                                            title="새 비밀번호 재입력해주세요.">
-                                                    </div>
-                                                </div> 
-                                                <br>
-												</sec:authorize>
-                                               
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="username">
-                                                            <h6>이름</h6>
-                                                        </label>
-                                                        <input name="name" readonly class="form-control" style="border-radius: 15px;"
-                                                             value="${member.name}">
-                                                           
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="birth">
-                                                            <h6>생년월일</h6>
-                                                        </label>
-                                                        <input name="birth" readonly class="form-control" style="border-radius: 15px;"
-                                                            value="${member.birth}">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="form-group">
-                                                        <label for="nickname">
-                                                            <h6>닉네임</h6>
-                                                        </label>
-                                                        <input type="text" class="form-control" id="nickname" name="nickname" style="border-radius: 15px; width:200px;"
-                                                         value="${member.nickname}">
-                                                         <button type="button" id="nickChk" class="checkBtn" onclick="nickCheck();">중복 확인</button>
-                                                    </div>
-                                                <br>
-                                                
-                                               
-                                                <div class="form-group">
-                                                    <div class="col-xs-6">
-                                                        <label for="phone">
-                                                            <h6>연락처</h6>
-                                                        </label>
-                                                        <input type="text" class="form-control" name="phone" style="border-radius: 15px;"
-                                                            value="${member.phone} " title="enter your phone.">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                    
-                                                <div class="form-group">  
-                                                <h6>주소</h6>                 
-													<input class="form-control" style="width: 30%; display: inline; border-radius: 15px; margin-bottom: 5px;" name="zipCode" value="${member.zipCode}" type="text" readonly="readonly"  >
-													    <button type="button" id="zip_codeBtn" class="btn btn-default" style="border-radius: 20px;" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
-													</div>
 													<div class="form-group">
-													    <input class="form-control" style="top: 5px; border-radius: 15px;" placeholder="도로명 주소" name="address" value="${member.address}" type="text" readonly="readonly"/>
+														<div class="col-xs-6">
+															<label for="password">
+																<h6>현재 비밀번호</h6>
+															</label> <input type="password" readonly class="form-control"
+																value="${member.password}" id="password" name="password"
+																style="border-radius: 15px;" placeholder="현재 비밀번호"
+																title="현재 비밀번호입력은 필수입니다.">
+														</div>
+														<div>${msg}</div>
 													</div>
-                                                <br>
-                                    
-                                        <div class="form-group">
-                                            <div class="submit_btn" style="margin-left: 160px; margin-top: 30px;">
-                                                <input type="button" id="member_updateBtn" value="수정하기" onclick="updateInfo();" class="btn btn-block btn-primary" >
-                                                <input type="button" id="member_deleteBtn" value="탈퇴하기" onclick="deleteInfo();" class="btn btn-block btn-primary" > 
-                                            </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    <!-- End Single Feature -->
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                </section>
-                <!-- /End Features Area -->
+													<br>
+													<div class="form-group">
+														<div class="col-xs-6">
+															<label for="new_password">
+																<h6>새 비밀번호</h6>
+															</label> <input type="password" readonly class="form-control"
+																name="newPassword" style="border-radius: 15px;"
+																id="newPassword"
+																placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
+																title="새 비밀번호를 입력해주세요.">
+														</div>
+													</div>
+													<br>
 
-        </div>
-    </div>
-    </div>
-    </div>
-    
-    <!-- Course Details Section End -->
 
-    <!-- Start Footer Area -->
-  <footer class="footer style2">
-        <!-- Start Footer Bottom -->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="inner">
-                    <div class="row">
-                        <div class="col-md-6" style="text-align: start;">
-                            <div class="logo">
-                                <br><br>
-                                <a href="main_index.html"><img src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="text-align: end;">
-                            <p>
-                                <br>
-                                <a href="/user/faq.do"> 자주묻는 질문</a>
-                                <br>
-                                서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
-                                (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
-                                <br>© 2021. All Rights Reserved.
-                            </p>
+													<div class="form-group">
+														<div class="col-xs-6">
+															<label for="re_password">
+																<h6>새 비밀번호 재확인</h6>
+															</label> <input type="password" readonly class="form-control"
+																name="rePassword" style="border-radius: 15px;"
+																id="rePassword" placeholder="카카오 로그인 회원은 비밀번호 변경이 불가합니다"
+																title="새 비밀번호 재입력해주세요.">
+														</div>
+													</div>
+													<br>
+												</sec:authorize>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+												<div class="form-group">
+													<div class="col-xs-6">
+														<label for="username">
+															<h6>이름</h6>
+														</label> <input name="name" readonly class="form-control"
+															style="border-radius: 15px;" value="${member.name}">
 
-    <!--/ End Footer Area -->
+													</div>
+												</div>
+												<br>
+												<div class="form-group">
+													<div class="col-xs-6">
+														<label for="birth">
+															<h6>생년월일</h6>
+														</label> <input name="birth" readonly class="form-control"
+															style="border-radius: 15px;" value="${member.birth}">
+													</div>
+												</div>
+												<br>
+												<div class="form-group">
+													<label for="nickname">
+														<h6>닉네임</h6>
+													</label> <input type="text" class="form-control" id="nickname"
+														name="nickname" style="border-radius: 15px; width: 200px;"
+														value="${member.nickname}">
+													<button type="button" id="nickChk" class="checkBtn"
+														onclick="nickCheck();">중복 확인</button>
+												</div>
+												<br>
 
-    <!-- ========================= scroll-top ========================= -->
-    <a href="#" class="scroll-top btn-hover">
-        <i class="lni lni-chevron-up"></i>
-    </a>
 
-    <!-- ========================= JS here ========================= -->
-    <script src="/resources/assets/js/bootstrap.min.js"></script>
-    <script src="/resources/assets/js/count-up.min.js"></script>
-    <script src="/resources/assets/js/wow.min.js"></script>
-    <script src="/resources/assets/js/tiny-slider.js"></script>
-    <script src="/resources/assets/js/glightbox.min.js"></script>
-    <script src="/resources/assets/js/main.js"></script>
-    
-    <script>
+												<div class="form-group">
+													<div class="col-xs-6">
+														<label for="phone">
+															<h6>연락처</h6>
+														</label> <input type="text" class="form-control" name="phone"
+															style="border-radius: 15px;" value="${member.phone} "
+															title="enter your phone.">
+													</div>
+												</div>
+												<br>
+
+												<div class="form-group">
+													<h6>주소</h6>
+													<input class="form-control"
+														style="width: 30%; display: inline; border-radius: 15px; margin-bottom: 5px;"
+														name="zipCode" value="${member.zipCode}" type="text"
+														readonly="readonly">
+													<button type="button" id="zip_codeBtn"
+														class="btn btn-default" style="border-radius: 20px;"
+														onclick="execPostCode();">
+														<i class="fa fa-search"></i> 우편번호 찾기
+													</button>
+												</div>
+												<div class="form-group">
+													<input class="form-control"
+														style="top: 5px; border-radius: 15px;"
+														placeholder="도로명 주소" name="address"
+														value="${member.address}" type="text" readonly="readonly" />
+												</div>
+												<br>
+
+												<div class="form-group">
+													<div class="submit_btn" style="margin-left: 100px; margin-top: 30px;">
+														<input type="button" id="member_updateBtn" value="수정하기"
+															onclick="updateInfo();" class="btn btn-block btn-primary">
+														<input type="button" id="member_deleteBtn" value="탈퇴하기"
+															onclick="deleteInfo();" class="btn btn-block btn-primary">
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- End Single Feature -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</section>
+					<!-- /End Features Area -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Course Details Section End -->
+
+	<!-- Start Footer Area -->
+	<footer class="footer style2">
+		<!-- Start Footer Bottom -->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-md-6" style="text-align: start;">
+							<div class="logo">
+								<br>
+								<br> <a href="main_index.html"><img
+									src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
+							</div>
+						</div>
+						<div class="col-md-6" style="text-align: end;">
+							<p>
+								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시
+								서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의
+								02-123-1234 | 사업자등록번호 123-12-12345 <br>© 2021. All Rights
+								Reserved.
+							</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!--/ End Footer Area -->
+
+	<!-- ========================= scroll-top ========================= -->
+	<a href="#" class="scroll-top btn-hover"> <i
+		class="lni lni-chevron-up"></i>
+	</a>
+
+	<!-- ========================= JS here ========================= -->
+	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	<script src="/resources/assets/js/count-up.min.js"></script>
+	<script src="/resources/assets/js/wow.min.js"></script>
+	<script src="/resources/assets/js/tiny-slider.js"></script>
+	<script src="/resources/assets/js/glightbox.min.js"></script>
+	<script src="/resources/assets/js/main.js"></script>
+
+	<script>
+	//닉네임 중복 체크
 	function nickCheck() {
 		console.log("진입");
 		var token = $("meta[name='_csrf']").attr("content");
