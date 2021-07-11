@@ -12,7 +12,7 @@
 
 <!-- ========================= CSS here ========================= -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- 캐러셀  -->
+	<!-- 캐러셀  -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
@@ -35,6 +35,10 @@
   height:100%;
   width: 750px;
  
+}
+/* carousel 양쪽 사이드 회색 없애는 css  */
+a.carousel-control{
+opacity:0;
 }
 
 .carousel-item {
@@ -71,15 +75,15 @@ z-index:1050;
 <script src="/resources/assets/js/main.js"></script>
 
 <!-- ====================== message modal관련 =============================== -->
-<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+	<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -110,7 +114,6 @@ z-index:1050;
 
 					<div class="single-inner"></div>
 					<br>
-
 				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
 					<div style="width: 100%;  margin-top:10px; ">
@@ -119,14 +122,17 @@ z-index:1050;
 						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
 							<!-- carousel의 지시자 -->
 							<!-- 지시자라고는 하는데 ol태그의 class에 carousel-indicators를 넣는다. -->
-							<ol class="carousel-indicators">
+							<ol class="carousel-indicators" style="margin-left:20%;">
 								<!-- li는 이미지 개수만큼 추가하고 data-target은 carousel id를 가르킨다. -->
 								<!-- data-slide-to는 순서대로 0부터 올라가고 0은 active를 설정한다. -->
 								<!-- 딱히 이 부분은 옵션별로 설정하게 없다. -->
+								<!-- 첫번째 사진 -->
 								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+								<!-- 두번째 사진 -->
 								<c:if test="${not empty trainerBoard.tbPhoto2}">
 									<li data-target="#carousel-example-generic" data-slide-to="1"></li>
 								</c:if>
+								<!-- 세번째 사진 -->
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<li data-target="#carousel-example-generic" data-slide-to="2"></li>
 								</c:if>
@@ -151,7 +157,7 @@ z-index:1050;
 								</c:if>
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;  text-align:center;">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;s text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
