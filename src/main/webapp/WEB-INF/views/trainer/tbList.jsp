@@ -207,7 +207,7 @@ display:-webkit-box;
 			      </div>
 			      <div class="modal-footer justify-content-center">
 			        <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
-			        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd;" class="btn btn-primary" data-dismiss="modal">창닫기</button>
+			        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd; color:white;" class="btn btn-primary1" data-dismiss="modal">창닫기</button>
 			      </div>
 			    </div>
 			  </div>

@@ -36,11 +36,19 @@
 								</button>
 							</form>
 							<br>
+							<sec:authorize access="isAuthenticated()">
 							<div class="write" style="text-align: center;">
 								<button class="btn btn-primary" type="button" id="writeBtn"
 									onclick="location.href='/homegym/registerView.do${pageMaker.cri.getListLink() }'">
 									홈짐 등록하기</button>
 							</div>
+							</sec:authorize>
+							<sec:authorize access="isAnonymous()">
+							<div class="write" style="text-align: center;">
+								<button href="#myModal" data-toggle="modal" data-target="#myModal" class="btn btn-primary" type="button" id="writeBtn">
+									홈짐 등록하기</button>
+							</div>
+							</sec:authorize>
 						</div>
 					</div>
 				</div>
@@ -174,7 +182,7 @@
 	      </div>
 	      <div class="modal-footer justify-content-center">
 	        <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
-	        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd;" class="btn btn-primary" data-dismiss="modal">창닫기</button>
+	        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd; color:white;" class="btn btn-primary1" data-dismiss="modal">창닫기</button>
 	      </div>
 	    </div>
 	  </div>

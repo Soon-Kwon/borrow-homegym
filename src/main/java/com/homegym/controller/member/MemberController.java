@@ -110,8 +110,8 @@ public class MemberController {
 		
 		logger.info("join Service 성공");
 		model.addAttribute("msg", "회원가입이 완료되었습니다. 로그인 해주시기 바랍니다!");
+		
 		return "user/loginpage";
-//		 "redirect:/loginpage.jsp"
 		}
 	
 	// 아이디 중복 체크
@@ -292,9 +292,8 @@ public class MemberController {
 		
 		model.addAttribute("member", vo);
 
-		System.out.println("vo정보::::: " + vo.getUsername());
 		// 빌린 홈짐 수
-		int rentCnt = memberService.getRentHomeGymCnt(vo.getUsername());
+		int rentCnt = memberService.getRealRentCnt(vo.getUsername());
 		model.addAttribute("rentCnt", rentCnt);
 
 		// 빌려준 홈짐 수
@@ -337,7 +336,6 @@ public class MemberController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println("memberId============>" + vo.getMemberId());
 		
 		String newPassword = vo.getNewPassword();
 		if(newPassword != null && !newPassword.equals("") ) {
@@ -355,10 +353,8 @@ public class MemberController {
 		while (iter.hasNext()) { 
 			GrantedAuthority auth = iter.next(); 
 			authority = auth.getAuthority();
-			System.out.println(auth.getAuthority()); 
 		}
 		boolean result = true;
-		System.out.println(vo.getPassword());
 		
 		/* id, password 체크 */
 		if(!authority.equals("ROLE_KAKAO")) {
@@ -370,8 +366,6 @@ public class MemberController {
 
 		/* id,password 일치 */
 		if (result) {
-			System.out.println("vo.getNewPassword" + vo.getNewPassword());
-			System.out.println("vo.getPassword" + vo.getPassword());
 			int cnt = memberService.memberUpdate(vo);
 			if (cnt == 1) { // 회원 수정 성공시
 				map.put("resultCode", "Success");
@@ -413,7 +407,6 @@ public class MemberController {
 	
 	  paramMap.put("memberId", vo.getMemberId());
 	  paramMap.put("imagePath", vo.getImagePath());
-	 // paramMap.put("userThumbImg", vo.getUserThumbImg());
 	  
 	  memberService.userImgUpload(paramMap);
 	  
@@ -431,7 +424,6 @@ public class MemberController {
 		 String memberId = paramMap.get("memberId");
 		 String imagePath = paramMap.get("imagePath");
 		 String realPath = request.getSession().getServletContext().getRealPath("/");
-		 System.out.println(realPath);
 	
 		 //서버에서 삭제
 		 File file = new File(realPath + imagePath);
@@ -460,17 +452,17 @@ public class MemberController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		// id, password 체크 
+		// id, password 체크
 		boolean result = memberService.checkPw(vo.getMemberId(), vo.getPassword());
 
 		// id,password 일치
 		if (result) {
 			int cnt = memberService.memberDelete(vo);
 
-			if (cnt == 1) { // 회원 탈퇴 성공시 
+			if (cnt == 1) { // 회원 탈퇴 성공시
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "탈퇴가 완료되었습니다.");
-			} else { // 회원탈퇴 실패시 
+			} else { // 회원탈퇴 실패시
 				map.put("resultCode", "fail");
 				map.put("resultMessage", "회원탈퇴 실패! 재시도해주세요.");
 			}
@@ -491,8 +483,6 @@ public class MemberController {
 		HomegymDetailVO homegymDetailVO = memberService.getMyRequest(vo,dId);
 		model.addAttribute("myRequest", homegymDetailVO);
 		
-		System.out.println("myRequest >>>>>>>>>>> " + homegymDetailVO);
-		
 		return "user/reservation_detail";
 	}
 	
@@ -509,6 +499,7 @@ public class MemberController {
 
 		String memberId = loginMemberVO.getMemberId();
 		
+		//수락 대기중 홈짐
 		List<Map<String, String>> waitingHG = memberService.getWaitingHGPaging(memberId, cri);
 		model.addAttribute("waitingHomegym", waitingHG);
 		
@@ -516,9 +507,8 @@ public class MemberController {
 		PageMakerDTO wait_pageMaker = new PageMakerDTO(cri,wait_total);
 		model.addAttribute("wait_pageMaker", wait_pageMaker);
 		model.addAttribute("wait_total", wait_total);
-		System.out.println("wait_pageMaker::::::" + wait_pageMaker);
 		
-		
+		//빌려준 홈짐
 		List<Map<String, String>> lendHG = memberService.getLendHGPaging(memberId, cri);
 		model.addAttribute("lendHomegym", lendHG);
 
@@ -526,9 +516,8 @@ public class MemberController {
 		PageMakerDTO ld_pageMaker = new PageMakerDTO(cri, ld_total);
 		model.addAttribute("ld_total", ld_total);
 		model.addAttribute("ld_pageMaker", ld_pageMaker);
-
-		System.out.println("ld_pageMaker::::::" + ld_pageMaker);
 		
+		//빌린 홈짐
 		List<Map<String, String>> rentHG = memberService.getRentdHGPaging(memberId, cri);
 		model.addAttribute("rentHomegym", rentHG);
 		
@@ -546,44 +535,35 @@ public class MemberController {
 	
 	@GetMapping("/payUpdate")
 	public String payUpdate(@RequestParam(value="d_id",required=false) int dId,@RequestParam(value="payYN",required=false) String payYN,HttpServletRequest request, HttpSession session) {
-		
-		System.out.println("결제 vo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dId);
-		System.out.println("결제 payYN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + payYN);
-		
+
 		HomegymDetailVO vo = new HomegymDetailVO();
 		
 		vo.setDId(dId);
 		vo.setPayYN(payYN);
 		memberService.payUpdate(vo);
 		
-		
 		return "redirect:/user/mypage/myactiv";
 	}
 	
-	/*결제 완료시 (jsp 페이지 보여줌) */
-	@GetMapping("/payOk")
-	public String payOK() {
-	
-		return "user/payOk";
-	}
 	
 	/* 수락 거절 상태값 변화 */
 	
 	//수락
 	@ResponseBody
 	@PostMapping("/requestAccept")
-	public Map<String, Object> requestAccept(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
+	public Map<String, Object> requestAccept(@RequestBody Map<String, String> paramMap, HttpServletRequest request,
+			HttpSession session, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		int result = memberService.HomegymAcceptUpdate(paramMap);
 
 		if (result == 1) {
-				map.put("resultCode", "Access");
-				map.put("resultMessage", "홈짐예약이 수락 되었습니다.");
+			map.put("resultCode", "Access");
+			map.put("resultMessage", "홈짐예약이 수락 되었습니다.");
 		} else {
-				map.put("resultCode", "Fail");
-				map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
+			map.put("resultCode", "Fail");
+			map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
 		}
 
 		return map;
@@ -592,19 +572,18 @@ public class MemberController {
 	//거절
 	@ResponseBody
 	@PostMapping("/requestReject")
-	public Map<String, Object> requestReject(@RequestBody Map<String, String> paramMap, HttpServletRequest request,HttpSession session, Model model) {
+	public Map<String, Object> requestReject(@RequestBody Map<String, String> paramMap, HttpServletRequest request,
+			HttpSession session, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		int result = memberService.HomegymRejectUpdate(paramMap);
-		
-		System.out.println("paramMap ::::" + paramMap );
 		if (result == 1) {
-				map.put("resultCode", "Access");
-				map.put("resultMessage", "홈짐예약이 거절 되었습니다.");
+			map.put("resultCode", "Access");
+			map.put("resultMessage", "홈짐예약이 거절 되었습니다.");
 		} else {
-				map.put("resultCode", "Fail");
-				map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
+			map.put("resultCode", "Fail");
+			map.put("resultMessage", "오류가 발생했습니다. 다시 시도해 주세요");
 		}
 
 		return map;
@@ -622,9 +601,6 @@ public class MemberController {
 
 		//내가 쓴글 리스트
 		List<TrainerBoardVO> trainerBoardVO = memberService.getMyBoardPaging(memberId, cri);
-		for(int i=0; i < trainerBoardVO.size(); i++) {
-			System.out.println(trainerBoardVO.get(i));
-		}
 		model.addAttribute("board", trainerBoardVO);
 
 		int writeTotal = memberService.getMyAllBoardCnt(memberId);
@@ -632,20 +608,14 @@ public class MemberController {
 		model.addAttribute("tb_pageMaker", tb_pageMaker);
 		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 
-		System.out.println("tb_pageMaker::::::" + tb_pageMaker);
-
 		
 		//내가 쓴 리뷰 리스트
 		List<Map<String, String>> myReviews = memberService.getMyReviewsPaging(memberId,cri);
 		model.addAttribute("myReviews", myReviews);
-		for(int i=0; i < myReviews.size(); i++) {
-			System.out.println(myReviews.get(i));
-		}
+
 		int reviewTotal = memberService.getMyAllReviewCnt(memberId);
 		PageMakerDTO rv_pageMaker = new PageMakerDTO(cri,reviewTotal);
 		model.addAttribute("rv_pageMaker",rv_pageMaker);
-		
-		System.out.println("myReviews :::::" + rv_pageMaker);
 
 		model.addAttribute("selectedBtnId", cri.getSelectedBtnId());
 		

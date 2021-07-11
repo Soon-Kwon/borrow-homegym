@@ -1,0 +1,227 @@
+@charset "UTF-8";
+
+
+/*=============== myactiv.jsp css ==================*/
+
+.latest-news-area {
+	background-color: #fff;
+}
+
+.flex-box {
+	display: flex;
+	justify-content: space-around;
+	flex-grow: 2;
+}
+
+.button .btn::before {
+	background-color: lightsteelblue;
+	border-radius: 30px;
+	position: sticky;
+}
+
+.button .btn {
+	background-color: #616c9c;
+}
+
+#reject {
+	background-color: #414141;
+	bottom: 10px;
+	border-radius: 40px;
+}
+
+#wait {
+	background-color: #707172;
+	bottom: 10px;
+	border-radius: 40px;
+}
+
+#accept {
+	background-color: #5c6dbd;
+	bottom: 10px;
+	border-radius: 40px;
+}
+
+#rejectBtn, #reviewBtn {
+	bottom: 10px;
+	right: 30px;
+	border-radius: 40px;
+}
+
+#reviewBtn {
+	bottom: 10px;
+	right: 30px;
+	background-color: #7c85b1;
+	border-radius: 40px;
+}
+
+#detailBtn, #acceptBtn {
+	bottom: 10px;
+	left: 30px;
+	border-radius: 40px;
+}
+
+#payOK {
+	bottom: 10px;
+	left: 30px;
+	border-radius: 40px;
+	background-color: #4c5277;
+}
+
+#detailBtn2 {
+	bottom: 10px;
+	border-radius: 40px;
+	background-color: #5c6dbd;
+}
+
+#rejectReasonBtn {
+	background-color: #5c6dbd;
+	width: 80px;
+	color: white;
+	margin-left: 350px;
+	position: absolute;
+	height: 45px;
+}
+
+.button .btn::before {
+	position: inherit !important;
+}
+
+
+/*======================== mywrite.jsp css =================== */
+
+	#addBtn{
+		height: 50px;
+	    width: 150px;
+	    font-size: 18px;
+	    margin-left: 350px;
+	    border-color: #5c6dbd;
+	    color: #5c6dbd;
+	    font-weight: 400;
+	}
+	
+/* ==================profile_update.jsp css=====================*/
+#uploadBtn {
+	position: absolute;
+	left: 200px;
+	width: 80px;
+}
+
+
+#memberUpdate{
+	margin-left:60px;
+}
+#delImg {
+	margin-left: 270px;
+}
+
+#editImgBtn {
+	position: absolute;
+	width: 45px;
+	left: 300px;
+	top: 115px;
+}
+
+}
+.userphoto_menu label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+
+.userphoto_menu input[type="file"] {
+	/* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.img {
+	vertical-align: middle;
+}
+
+.img-img-thumbnail {
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+	padding: 4px;
+	line-height: 1.42857143;
+	background-color: #fff;
+	transition: all .2s ease-in-out;
+}
+
+.img-circle {
+	border-radius: 50%;
+}
+
+.btn-primary {
+	background-color: #2f3e83;
+	border-color: #2f3e83;
+	color: #fff;
+	margin-bottom: 50px;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+	border-color: #5c6dbd;
+	background-color: #5c6dbd;
+	color: #fff;
+}
+
+#zip_codeBtn{
+	background-color: #7c97d8;
+    color: white;
+    }
+    
+#member_updateBtn{
+    height: 50px;
+    width: 100px;
+    margin-right: 10px;
+    background-color: #3f4f9a;
+    border: none;
+    font-weight: bold;
+}
+
+#member_deleteBtn{
+	height: 50px;
+    width: 100px;
+    background-color: #3f4f9a;
+    border: none;
+    font-weight: bold;
+}
+
+.form-group form-control {
+	border-radius: 15px;
+}
+
+.features.style2 .single-feature::before {
+	background-color : #ffffff; !important
+	}
+
+.checkBtn{
+	background-color: #7c97d8;
+    width: 100px;
+    height: 40px;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    
+    position: absolute;
+    left: 284px;
+    bottom: 366px;
+}
+
+.form-control {
+	width:84%;
+}

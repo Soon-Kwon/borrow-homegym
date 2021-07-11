@@ -140,11 +140,15 @@ public class MemberDAO {
 		return sqlsession.selectOne("MemberDAO.getLendHomeGymCnt", memberId);
 	}
 	
-	//내가 빌린 홈짐 수
+	//내가 빌린 홈짐 수 (거절+수락)
 	public int getRentHomeGymCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getRentHomeGymCnt",memberId);
 	}
 	
+	//수락된 빌린 홈짐 수
+	public int getRealRentCnt(String memberId) {
+		return sqlsession.selectOne("MemberDAO.getRealRentCnt",memberId);
+	}
 	//내가 쓴 게시글 갯수 
 	public int getMyAllBoardCnt(String memberId) {
 		return sqlsession.selectOne("MemberDAO.getMyAllBoardCnt", memberId);

@@ -150,9 +150,15 @@
 		SELECT
 			count(*)
 		FROM homegym_detail
-		WHERE borrowerId= #{memberId} AND agreeYN ='Y'
+		WHERE borrowerId= #{memberId}
 	</select>
 	
+	<select id="getRealRentCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM homegym_detail
+		WHERE borrowerId= #{memberId} AND agreeYN ='Y'
+	</select>
 	<!-- 내가 빌려준 홈짐 갯수 -->
 	<select id="getLendHomeGymCnt" resultType="int">
 		SELECT

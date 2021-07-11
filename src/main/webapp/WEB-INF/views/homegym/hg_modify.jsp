@@ -138,9 +138,9 @@
 											style="margin-bottom: 30px;">
 										</div>
 										<div class="uploadResult">
-											<ul>
+											<div class="row">
 											
-											</ul>
+											</div>
 										</div>
 									</div>
 									<div class="col-12">
@@ -394,7 +394,7 @@
 						}else{
 							var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" 
 									+ attach.uuid + "_" + attach.fileName);
-							str += "<li data-path='" + attach.uploadPath + "'";
+							str += "<div class='col-3' id='uploadImgs' data-path='" + attach.uploadPath + "'";
 							str += " data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName
 									+ "'data-type='" + attach.fileType + "'";
 							str += "><div>";
@@ -404,9 +404,9 @@
 							+ "<i class='lni lni-cross-circle'></i></button><br>";
 							str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
 							str += "</div>";
-							str += "</li>";
+							str += "</div>";
 						
-							$(".uploadResult ul").html(str);
+							$(".uploadResult > div").html(str);
 						}
 					});				
 				});
@@ -543,7 +543,7 @@
 					var type = $(this).data("type"); */
 					
 					if(confirm("사진을 삭제하시겠습니까?")){
-					var targetLi = $(this).closest("li");
+					var targetLi = $(this).closest("#uploadImgs");
 					targetLi.remove();
 					}
 			/* 		서버에서는 나중에 삭제
@@ -657,7 +657,7 @@
 				return;
 			}
 		
-		$(".uploadResult ul li").each(function(i, obj){
+		$(".uploadResult > div > div").each(function(i, obj){
 			
 			var jobj = $(obj);
 			
@@ -778,7 +778,7 @@
 			
 			if(!uploadResultArr || uploadResultArr.length == 0){ return;}
 			
-			var uploadUL = $(".uploadResult ul");
+			var uploadDiv = $(".uploadResult > div");
 			
 			var str = "";
 			
@@ -789,7 +789,7 @@
 					
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
 							+ obj.uuid + "_" + obj.fileName);
-					str += "<li data-path='" + obj.uploadPath + "'";
+					str += "<div class='col-3' id='uploadImgs' data-path='" + obj.uploadPath + "'";
 					str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName
 							+ "'data-type='" + obj.fileType + "'";
 					str += "><div>";
@@ -799,7 +799,7 @@
 					+ "<i class='lni lni-cross-circle'></i></button><br>";
 					str += "<img src='/display.do?fileName=" + fileCallPath + "'>" ;
 					str += "</div>";
-					str += "</li>";
+					str += "</div>";
 				}else{
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid
 							+ "_" + obj.fileName);
@@ -819,7 +819,7 @@
 				}
 			});
 			
-			uploadUL.append(str);
+			uploadDiv.append(str);
 		}
 	
 		</script>

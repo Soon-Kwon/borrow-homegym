@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
     <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
 <!-- font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

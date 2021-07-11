@@ -1247,8 +1247,6 @@ ol {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
   z-index: -1;
-
-
 }
 
 .button .btn:hover::before {
@@ -1267,9 +1265,8 @@ ol {
 .button .btn-alt:hover {
   background-color: #5c6dbd;
   color: #fff;
-
-
 }
+
 
 .align-left {
   text-align: left;
