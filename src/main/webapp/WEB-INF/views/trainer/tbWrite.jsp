@@ -137,7 +137,6 @@ ul li.tag-item {
 	border: 0px;
 }
 
-<!--//해시태그 끝-->
 
 </style>
 
@@ -196,8 +195,9 @@ ul li.tag-item {
 								<div class="col-11" >
 									<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
-										<textarea name="tbContent"  id="textarea"  minlength="100" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 100자  )" style="border-radius:3px;" ></textarea>
-										<div id="test_cnt">(0 / 200)</div>
+										<textarea name="tbContent"  placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 80자  )" 
+										 style="border-radius:3px;" ></textarea>
+									<!-- 	<div id="test_cnt">(0 / 200)</div> -->
 									</div>
 								</div>
 
@@ -295,7 +295,7 @@ ul li.tag-item {
 								</div>
 								<div class="col-12">
 									<div class="form-group button" style="text-align: center; margin-bottom:0px; margin-top:40px;">
-										<button type="button" onclick="save();" class="btn" style="background-color: #3428A5; border-radius:10px; width: 90px;">등록</button>
+										<button type="button" onclick="	validate(80);" class="btn" style="background-color: #3428A5; border-radius:10px; width: 90px;">등록</button>
 									</div>
 								</div>
 							<!-- </div> --> <!-- ROW -->
@@ -363,21 +363,54 @@ ul li.tag-item {
     </script>
     
     <script>
- 	// 글자 입력 수 제한
     
-    	
-        /* $('#textarea').on('keyup', function() {
-            $('#test_cnt').html("("+$(this).val().length+" / 100)");
- 
-            if($(this).val().length < 200) {
-                $(this).val($(this).val().substring(0, 200));
-                $('#test_cnt').html("(100 / 200)");
-                
-                if($(this).val().length < 100) {
-                	alert("최소 입력은 100자입니다!");
-                }
-            } */
-           
+    /* NULL 체크 */
+ function  validate(minlength) {
+
+	 var len = $("textarea[name='tbContent']").val().length; 
+	 if (len < minlength) {
+         alert(minlength + '자 이상 으로 입력해야 합니다' ) ;
+      	// 입력 필드로 포커스를 이동
+         $("textarea[name='tbContent']").focus();
+         return false;
+     }
+		save();
+
+   }
+		
+/*     function fn_TextAreaInputLimit() {
+
+  
+ 	// 글자 입력 수 제한
+	var tempText = $("textarea[name='tbContent']");
+	var tempChar = "";  // TextArea의 문자를 한글자씩 담는다
+    var tempChar2 = ""; // 절삭된 문자들을 담기 위한 변수
+    var countChar = 0;  // 한글자씩 담긴 문자를 카운트 한다
+    var tempHangul = 0; // 한글을 카운트 한다
+    var minSize = 100;  // 최소 입력 값   
+    
+    // 글자수 바이트 체크를 위한 반복
+    for(var i = 0 ; i < tempText.val().length; i++) {
+        tempChar = tempText.val().charAt(i);
+
+        // 한글일 경우 2 추가, 영문일 경우 1 추가
+        if(escape(tempChar).length > 4) {
+            countChar += 2;
+            tempHangul++;
+        } else {
+            countChar++;
+        }
+    }
+    // 카운트된 문자수가 MAX 값을 초과하게 되면 절삭 수치까지만 출력을 한다.(한글 입력 체크)
+    // 내용에 한글이 입력되어 있는 경우 한글에 해당하는 카운트 만큼을 전체 카운트에서 뺀 숫자가 minSize보다 작으면 수행
+    if((countChar-tempHangul) > minSize) {
+        alert("최소 입력 글자는 100자가 넘어야 해요!");
+        
+        tempChar2 = tempText.val().substr(0, minSize-1);
+        tempText.val(tempChar2);
+    }
+}
+    */   
    
     </script>
 

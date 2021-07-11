@@ -119,7 +119,7 @@
                                     <div id="collapseTwo2" class="accordion-collapse collapse"
                                         aria-labelledby="headingTwo2" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            <p>*원하시는 홈짐위치를 정하신 후에 예약하기를 완료하시면 홈짐의 자세한 위치를 문자 서비스로 전송해 드리고 있습니다.</p>
+                                            <p>* 원하시는 홈짐 위치를 정하신 후에 예약하기를 완료하시면 홈짐의 자세한 위치를 문자 서비스로 전송해 드리고 있습니다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -153,8 +153,9 @@
                                     <div id="collapseFour4" class="accordion-collapse collapse"
                                         aria-labelledby="headingFour4" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            <p>홈짐 게시판에 들어가시면 홈짐 등록하기가 있습니다. 자신의 취향에 맞게 꾸미신 홈짐을<br>
-                                            많은 사람들이 구경할 수 있게 많은 사진들 부탁드립니다~</p>
+                                            <p>
+                                           		홈짐 게시판에 들어가시면 홈짐 등록하기가 있습니다.<br>
+                                           		 자신의 취향에 맞게 꾸미신 홈짐을 많은 사람들이 구경할 수 있게 많은 이용 부탁드립니다!🙋‍♀️                                   	</p>
                                         </div>
                                     </div>
                                 </div>
@@ -175,8 +176,10 @@
                                     <div id="collapseOne11" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne11" data-bs-parent="#accordionExample2">
                                         <div class="accordion-body">
-                                            <p>저희 빌려줘 ! 홈짐💪🏼 은 모든 트레이너 선생님들이 많은 경험과 경력들을 고루 갖추신<br> 트레이너 선생님들만을
-                                            구인하였습니다. 회원님께서 원하시는 운동방향성에 맞춰<br> 리뷰등을 참고하여 좋은 트레이너 선생님을 고르세요.</p>
+                                            <p>
+                                            	저희 빌려줘! 홈짐💪🏼 은 모든 트레이너 선생님들은 많은 경험과 경력들을 고루 갖추신  트레이너 선생님들이 참여하고 계세요! <br>
+                                            	회원님께서 원하시는 운동 방향성에 맞춰 
+                                            	좋은 트레이너 선생님을 고르세요.</p>
 
                                         </div>
                                     </div>
@@ -194,10 +197,9 @@
                                         aria-labelledby="headingTwo22" data-bs-parent="#accordionExample2">
                                         <div class="accordion-body">
                                             <p>등록된 트레이너 정보는 모두 트레이너 본인이 직접 올린 정보입니다.<br>
-                                            구해줘!홈짐에서는 사전에 올바른 정보인지 검토를 하고 있지만, 간혹 트레이너님의 착오나 실수로 인해 잘못된 정보가 올라갔을 수 있어요.<br>
-                                        하단페이지 "잘못된 정보 신고하기"를 통해 접수해주시면 바로 확인하여 고치도록 하겠습니다.</p>
-
-                                           
+                   	                   		 빌려줘!홈짐에서는 사전에 올바른 정보인지 검토를 하고 있지만, <br>
+                   	                   		 간혹 트레이너님의 착오나 실수로 인해 잘못된 정보가 올라갔을 수 있어요😥<br>
+                                        	하단페이지 "잘못된 정보 신고하기"를 통해 접수해주시면 빠르게 조치하도록 할께요!</p>
                                         </div>
                                     </div>
                                 </div>
@@ -206,22 +208,21 @@
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseThree33"
                                             aria-expanded="false" aria-controls="collapseThree33">
-                                            <span>트레이너님 연락이 되지 않아요.</span><i
+                                            <span>트레이너님과 연락이 되지 않아요.</span><i
                                                 class="lni lni-chevron-down"></i>
                                         </button>
                                     </h2>
                                     <div id="collapseThree33" class="accordion-collapse collapse"
                                         aria-labelledby="headingThree33" data-bs-parent="#accordionExample2">
                                         <div class="accordion-body">
-                                            <p>코치님은 레슨 시간엔 전화통화가 어렵기 때문에 문자를 남겨주시면 좋아요.<br>
-                                            그럼에도 계속 연락이 되지 않는다면, "잘못된 정보 신고하기" 또는 "고객센터"접수를 통해 구해줘홈짐에 알려주세요.<br>
-                                        코치님과 직접 연락이 되시도록 안내 해드리겠습니다.</p>
-
-               
+                                            <p>코치님은 레슨 시간엔 전화 통화가 어렵기 때문에 문자를 남겨주시면 좋아요.<br>
+                                            	그럼에도 계속 연락이 되지 않는다면, "잘못된 정보 신고하기" 또는 "고객센터"접수를 통해<br>
+                                            	빌려줘!홈짐에 알려주세요.<br>
+                                        		코치님과 직접 연락이 되시도록 안내 도와드릴께요!👏</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
+                             <!--    <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingFour44">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseFour44"
@@ -240,7 +241,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-courses" role="tabpanel" aria-labelledby="nav-courses-tab">
@@ -257,9 +258,10 @@
                                     <div id="collapseOne111" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne111" data-bs-parent="#accordionExample3">
                                         <div class="accordion-body">
-                                            <p>트레이너 선생님께 보여지는 회원님의 정보는 이름,나이,성별,전화번호만 공개가 됩니다.</p>
-
-                                            
+                                            <p> 트레이너 선생님과 실시간으로   1:1 채팅을 하실 수 있어요!<br>
+                                            	내가 원하는 동네의 트레이너 선생님을 검색하신 후,<br>
+                                            	받고자 하시는 트레이너 선생님께 바로 문의해보세요!
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -351,10 +353,9 @@
                                     <div id="collapseOne1111" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne1111" data-bs-parent="#accordionExample4">
                                         <div class="accordion-body">
-                                            <p>pc오른쪽 위의 [로그인]아래[아이디찾기][비밀번호찾기]<br>
-                                                를 통해 확인이 가능하며, 임시 비밀번호의 경우 회원가입시 등록하신 메일로 발송이됩니다<br>
-                                                가입시 기재한 메일 주소가 기억나지 않으시거나 오류가 발생하는 경우, 고객센터로 문의 주시면 도움 드리겠습니다.</p>
-
+                                            <p>pc오른쪽 위의 [로그인]아래 [아이디찾기][비밀번호찾기]를 통해 확인이 가능하며, 
+                                            <br>임시 비밀번호의 경우 회원가입시 등록하신 메일로 발송이됩니다!<br>
+                                            	가입시 기재한 메일 주소가 기억나지 않으시거나 오류가 발생하는 경우, 고객센터로 문의 주시면 도움 드리겠습니다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -370,11 +371,10 @@
                                     <div id="collapseTwo2222" class="accordion-collapse collapse"
                                         aria-labelledby="headingTwo2222" data-bs-parent="#accordionExample4">
                                         <div class="accordion-body">
-                                            <p>혹여 구해줘홈짐이 불편하셨던 점이 있으시다면 문의 접수를 부탁드립니다. 아래는 회원탈퇴 방법입니다<br>
-                                            로그인 후, 상단 회원님 성함>개인정보 수정>비밀번호 최하단[탈퇴하기]버튼을 통해 탈퇴할 수 있습니다<br>
-                                            *회원님의 개인정보를 위해 직접탈퇴만 가능합니다</p>
-
-                                        
+                                            <p>혹여 빌려줘!홈짐이 불편하셨던 점이 있으시다면 문의 접수를 부탁드립니다!
+                                            	 아래는 회원탈퇴 방법입니다😭<br>
+                                            	로그인 후,&nbsp;상단 회원님 성함 > 개인정보 수정 > 비밀번호 최하단 [탈퇴하기] 버튼을 통해 탈퇴하실 수 있습니다!<br>
+                                            *회원님의 개인정보를 위해 직접 탈퇴만 가능합니다!</p>
                                         </div>
                                     </div>
                                 </div>
@@ -390,7 +390,7 @@
                                     <div id="collapseThree3333" class="accordion-collapse collapse"
                                         aria-labelledby="headingThree3333" data-bs-parent="#accordionExample4">
                                         <div class="accordion-body">
-                                            <p>홈페이지 오른쪽 위의 회원님 성함>개인정보수정에서 변경이 가능합니다<br>
+                                            <p>홈페이지 오른쪽 위의 회원님 성함 > 개인정보수정에서 변경이 가능합니다!<br>
                                                 *아이디는 변경이 불가합니다.</p>
                                         </div>
                                     </div>
@@ -407,8 +407,8 @@
                                     <div id="collapseFour4444" class="accordion-collapse collapse"
                                         aria-labelledby="headingFour4444" data-bs-parent="#accordionExample4">
                                         <div class="accordion-body">
-                                            <p>구해줘 홈짐은 외국인, 해외거주자 고객님들도 대한민국에서 활동하시는 기간이 있으신경우 가입이 가능합니다.<br>
-                                            다만 해외 홈짐관련 정보는 불가한 점 참고 부탁드립니다.</p>
+                                            <p>빌려줘! 홈짐은 외국인, 해외거주자 고객님들도 대한민국에서 활동하시는 기간이 있으신 경우에만 가입이 가능합니다.<br>
+                                            아쉽게도 해외 홈짐관련 정보는 불가한 점 참고 부탁드릴께요!</p>
 
                                             
                                         </div>
@@ -430,10 +430,9 @@
                                     <div id="collapseOne11111" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne11111" data-bs-parent="#accordionExample5">
                                         <div class="accordion-body">
-                                            <p>로그인 후 홈페이지 상단 게시판>대여한홈짐 목록에서 해당 홈짐번호를 눌러 확인 가능합니다<br>
-                                                비해원이신 경우 고객센터에서 가능합니다..</p>
+                                            <p>로그인 후 홈페이지 상단 게시판 > 대여한 홈짐 목록에서 해당 홈짐을 상세보기를 통해 확인 가능합니다<br>
+                                              	비회원이신 경우에는 고객센터에서 가능합니다.😊<p>
 
-                                          
                                         </div>
                                     </div>
                                 </div>
@@ -449,8 +448,8 @@
                                     <div id="collapseTwo22222" class="accordion-collapse collapse"
                                         aria-labelledby="headingTwo22222" data-bs-parent="#accordionExample5">
                                         <div class="accordion-body">
-                                            <p>홈페이지 상담 회원님 성함>개인정보 수정에서 sms 수신여부를 수신안함으로 선택후[수정하기]<br>
-                                            버튼을 누르시면 반영됩니다. 직접 변경이 어려우신 경우 고객센터에 문의 접수해주세요.</p>
+                                            <p>홈페이지 상담 회원님 성함 > 개인정보 수정에서 SMS 수신여부를 수신안함으로 선택 후 [수정하기]<br>
+                                            버튼을 누르시면 반영됩니다. 직접 변경이 어려우신 경우 고객센터에 문의 접수해주세요!</p>
 
                                         </div>
                                     </div>
@@ -460,16 +459,16 @@
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseThree33333"
                                             aria-expanded="false" aria-controls="collapseThree33333">
-                                            <span>구해줘 홈짐은 어떤 회사인가요? 믿고 이용할 수 있는 곳인가요?</span><i
+                                            <span>빌려줘! 홈짐은 어떤 회사인가요? 믿고 이용할 수 있는 곳인가요?</span><i
                                                 class="lni lni-chevron-down"></i>
                                         </button>
                                     </h2>
                                     <div id="collapseThree33333" class="accordion-collapse collapse"
                                         aria-labelledby="headingThree33333" data-bs-parent="#accordionExample5">
                                         <div class="accordion-body">
-                                            <p>구해줘 홈짐은 사람을 소중히 하는 마음으로 국내 운동을 좋아하시는 분들을 위해 꼼꼼한 트레이너 및 홈짐장소를 구색하여 제공합니다.<br>
+                                            <p>빌려줘!홈짐은 사람을 소중히 하는 마음으로💕  국내에서 운동을 좋아하시는 분들을 위해 꼼꼼한 트레이너 및 홈짐 장소를 구색하여 제공합니다.<br>
                                             홈짐을 걱정없이 이용하시기 위해 직원들이 확인에 또 확인을 하고 홈짐에 문제가 발생하는 경우를 대비해 고객만족센터를 운영하고 있습니다<br>
-                                        "우리가 곧 회원이다"라는 신념으로 좋은 홈짐 장소와 트레이너분들을 선택하고 검수하며, 문제 발생 시 회원님의 편에서 조치를 드리고 있으니 안심하고 이용해 주시기 바랍니다.</p>
+                                        "우리가 곧 회원이다"라는 신념으로 좋은 홈짐 장소와 트레이너분들을 선택하고 검수하며,<br> 문제 발생 시 회원님의 편에서 조치를 드리고 있으니 안심하고 이용해 주시기 바랍니다.😊</p>
 
                                         </div>
                                     </div>
@@ -486,7 +485,8 @@
                                     <div id="collapseFour44444" class="accordion-collapse collapse"
                                         aria-labelledby="headingFour44444" data-bs-parent="#accordionExample5">
                                         <div class="accordion-body">
-                                            <p>구해줘 홈짐은 지역 상관없이 회원가입은 무료입니다 회원가입 후 다양한 혜택과 장소를 만나보세요.</p>
+                                            <p>빌려줘! 홈짐은 지역 상관없이 회원가입은 무료입니다!
+                                            	<br>회원가입 후 다양한 혜택과 장소를 만나보세요.🐱‍🏍</p>
 
                                         </div>
                                     </div>
@@ -520,7 +520,7 @@
                                 <a href="faq.html"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
-                                (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
+                                (주) 빌려줘!홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
                                 <br>© 2021. All Rights Reserved.
                             </p>
 

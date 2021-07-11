@@ -215,11 +215,15 @@ public class MemberDAO {
 		 sqlsession.update("MemberDAO.payUpdate",vo);
 	}
 	
-	//홈짐 수락 거절 상태 변화
+	//홈짐 수락 거절 상태 변화 (수락)
 	public int HomegymAcceptUpdate(Map<String, String> paramMap) {
 		return sqlsession.update("MemberDAO.HomegymAcceptUpdate", paramMap);
 	}
 	
+	//홈짐 수락 거절 상태 변화 (거절)
+	public int HomegymRejectUpdate(Map<String,String> paramMap) {
+		return sqlsession.update("MemberDAO.HomegymRejectUpdate",paramMap);
+	}
 
 	
 	//요청 홈짐 예약 폼 조회

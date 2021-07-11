@@ -28,7 +28,7 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<!-- ======================모달=============================== -->
+
 
 <style>
 
@@ -55,7 +55,16 @@
 .carousel-control.left, .carousel-control.right {
     background-image: none
 }
+pre{
+border:none;
+white-space: pre-wrap; 
+scroll:no;"
 
+}
+
+.modal{
+z-index:1050;
+}
 
 </style>
 
@@ -67,6 +76,17 @@
 <script src="/resources/assets/js/tiny-slider.js"></script>
 <script src="/resources/assets/js/glightbox.min.js"></script>
 <script src="/resources/assets/js/main.js"></script>
+
+<!-- ====================== message modal관련 =============================== -->
+<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -168,11 +188,11 @@
 					<br><br>
 							<div class="detail-inner">
 								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbContent}</pre>
+									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
-									<pre style="border:none; font-size: 20px; scroll:no;">${trainerBoard.tbProgram}</pre>
+									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
@@ -205,8 +225,8 @@
 									<c:choose>
 										<c:when test="${trainerBoard.memberId ne memberId }">
 											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
-												<button type="button" class="btn" data-toggle="modal" data-target="#myModal" style="background-color: #5c6dbd; text-align:center; border-radius:5px;">
-													1:1 채팅</button>
+												<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
+													트레이너에게 문의하기</button>
 											</div>
 										 </c:when>
 							
@@ -264,6 +284,63 @@
 			</div> <!-- row -->
 		</div><!-- container -->
 	</section>
+	
+	<!-- 메세지 보내기 모달창 -->
+	<!-- Modal -->
+	<div class="modal fade" id="messageModal" tabindex="-1"
+		aria-labelledby="messageModalLabel" aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span id="m_writer_profile">
+						<div class="message-box">
+							<!-- 상대방 프로필 -->
+							<c:if test="${trainerBoard.image ne null}">							
+								<img src="${trainerBoard.image }" alt="상대방 프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+							<c:if test="${trainerBoard.image eq null}">
+								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
+									class="avatar img_circle img-profile" alt="avatar">
+							</c:if>
+						</div>
+					</span>
+					<h5 class="modal-title" id="messageModalLabel">&nbsp;
+						${trainerBoard.name}</h5>
+					<button type="button" class="btn btn-close" data-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body ">
+					<!-- 메세지 내용 영역 -->
+					<div class="mesgs col-12">
+						<!-- 메세지 내용 목록 -->
+						<div class="msg_history" name="contentList">
+							<!-- 메세지 내용이 올 자리 -->
+						</div>
+						<div class="send_message"></div>
+						<!-- 메세지 입력란이 올자리 -->
+						<div class='type_msg'>
+							<div class='input_msg_write row'>
+								<div class='col-11'>
+									<input type='text' name="" class='write_msg form-control'
+										placeholder='메세지를 입력해주세요' />
+								</div>
+								<div class='col-1'>
+									<button class='msg_send_btn' type='button'
+										onclick="sendMessage('${trainerBoard.memberId}', '${memberId}');">
+										<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 
 	<!-- Start Footer Area -->
 	<footer class="footer style2">
@@ -280,7 +357,7 @@
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 서울특별시 서초구
+								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시 서초구
 								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
 								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
 							</p>
@@ -292,6 +369,8 @@
 		</div>
 	</footer>
 	<!--/ End Footer Area -->
+	
+	
 
 
 	<!-- ========================= scroll-top ========================= -->
@@ -303,6 +382,8 @@
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	
 	<script>
 		//첨부파일  캐러셓
 		(function() {
@@ -321,6 +402,104 @@
 			});
 	
 		})();
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// 트레이너에게 문의하기 버튼 클릭시 모달창 보이기
+			$("#showMsgContent").on("click", function(e){
+				
+				$("#messageModal").modal("show");
+				console.log("showMessageContent보여주기");
+				// getInfiniteChat();
+				
+			});
+			
+			// 1:1 문의할 때, 엔터로 메세지 보내기
+			$('.write_msg').keydown(function(e){
+				if(e.keyCode == 13){
+					e.preventDefault();
+					$('.msg_send_btn').trigger('click');
+				} 
+			});
+			
+			// x버튼 누르면 동작
+			$(".btn-close").on("click", function(e){
+				$("#messageModal").modal("hide");				
+			});
+		})
+		
+		// 1:1문의할 떄, 메세지 내역 가져오는 함수
+		const showMessageContent = function(otherId){
+			$.ajax({
+				url:"/message/msgContentByAsking.do",
+				method:"GET",
+				data:{
+					otherId : otherId,
+					curId : '${memberId}'
+				},
+				success : function(data){
+					console.log("1:1문의하기에서 메세지 내용 가져오기 성공 data : "+data);
+					
+					// 메세지 내용을 html에 넣기
+					$('.msg_history').html(data);
+					
+					// 이 함수로 메세지 내용 가져온 후, 스크롤을 맨아래로
+					$('.msg_history').scrollTop($('.msg_history')[0].scrollHeight); 
+				},
+				error: function(){
+					alert('showMessageContent(${board.memberId}); 에러');
+				}
+			});
+			console.log("showMessageContent() msgRoomNo : "+msgRoomNo);
+			// 해당 채팅방의 메세지 내용을 읽었음으로 읽음처리 
+			$('.unread' + msgRoomNo).empty();
+			
+			
+		};
+		
+		// 1:1문의할 떄, 메세지 전송하기
+		const sendMessage = function(otherId, curId){
+			console.log("sendMessage otehrId : "+otherId);
+			let msgContent = $('.write_msg').val();
+			console.log(msgContent);
+			
+			msgContent = msgContent.trim();
+			
+			if(msgContent ==""){
+				alert('메세지를 입력해주세요');
+			} else {
+				$.ajax({
+					url : "/message/msgSendByAsking.do",
+					method:"GET",
+					data:{
+						otherId : otherId,
+						curId, curId,
+						msgContent : msgContent
+					},
+					success:function(data){
+						console.log('메세지 전송 성공');
+						
+						
+						// 메세지 입력칸 비우기
+						$('.write_msg').val("");
+						
+						
+						// 메세지 내용 리로드
+						showMessageContent(otherId);
+					},
+					error: function(){
+						alert('sendMessage() 에러');
+					}
+				});
+			}
+		};
+		
+		function getInfiniteChat(){
+			interval = setInterval(function(){
+				showMessageContent('${trainerBoard.memberId}');
+			}, 3000);
+		}
 	</script>
 
 

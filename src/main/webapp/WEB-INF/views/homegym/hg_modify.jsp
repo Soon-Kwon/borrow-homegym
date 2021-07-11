@@ -180,7 +180,7 @@
 							<div class="col-md-6" style="text-align: end;">
 								<p>
 									<br>
-									<a href="faq.html"> 자주묻는 질문</a>
+									<a href="/user/faq.do"> 자주묻는 질문</a>
 									<br>
 									서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
 									(주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
@@ -652,6 +652,11 @@
 					+ jobj.data("type") +"'>";
 			});
 		
+			if(str == null || str == ""){
+				alert("최소 한 장 이상의 사진을 올려주세요!");
+				return;
+			}
+		
 		$(".uploadResult ul li").each(function(i, obj){
 			
 			var jobj = $(obj);
@@ -696,7 +701,7 @@
 					}
 				},
 				error: function(e, data) {
-					alert(data);
+					//alert(data);
 					console.log(e);
 				}
 			});
@@ -721,11 +726,11 @@
 		            },
 					data: {hId: hId},
 					success: function(data){
-						alert('글 삭제에 성공하였습니다.');
+						//alert('글 삭제에 성공하였습니다.');
 						window.location.replace("/homegym/homegymListView.do${cri.getListLink() }");
 					},
 					error: function(e, data){
-						alert(data);
+						//alert(data);
 						console.log(e);
 					}
 				});

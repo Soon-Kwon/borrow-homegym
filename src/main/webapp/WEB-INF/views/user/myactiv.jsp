@@ -68,7 +68,7 @@
 		    background-color:#5c6dbd;
 		 }
 		 
-		 #rejectResonBtn{
+		 #rejectReasonBtn{
 		 	background-color: #5c6dbd;
 		    width: 80px;
 		    color: white;
@@ -92,42 +92,42 @@
 				'dId'	 : object.value,
 				'status' : 'Y'	
 			};
-		} else { //id가 acceptBtn이 아닌경우
-			//상태 (status) 가  'N' 값을 가지게 된다.
-			var data = { 
-				'dId'	 : object.value,
-				'status' : 'N'	
-			};
-		}
-		$.ajax({
-			type: 'POST',
-			url: '/user/acceptCheck.do',
-			dataType: 'json',
-			data: JSON.stringify(data),
-			contentType: "application/json",
-			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-			beforeSend : function(xhr){
-				xhr.setRequestHeader(header, token);
-            },
-			success: function(data) {
-				//성공시에 페이지 리로드 후 
-				//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
-				if(data.resultCode=="Acceept"){
-					console.log("성공");
-            		alert(data.resultMessage);
-            		location.reload();
-            	}else{
-            		console.log("실패");
-            		alert(data.resultMessage);
-            		location.reload();
+			$.ajax({
+				type: 'POST',
+				url: '/user/requestAccept.do',
+				dataType: 'json',
+				data: JSON.stringify(data),
+				contentType: "application/json",
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token);
+	            },
+				success: function(data) {
+					//성공시에 페이지 리로드 후 
+					//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
+					if(data.resultCode=="Access"){
+						console.log("성공");
+	            		alert(data.resultMessage);
+	            		location.reload();
+	            	}else{
+	            		console.log("실패");
+	            		alert(data.resultMessage);
+	            		location.reload();
 
-            	}
-			},
-			error: function(e) {
-				console.log(e);
-			}
-		})
+	            	}
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			})
+		} 
 	}
+
+	 //id가 acceptBtn이 아닌경우 (거절)
+		//상태 (status) 가  'N' 값을 가지게 된다.
+			/*  e.preventDefault();  */
+		
+
 </script>
 <body>
     <!--[if lte IE 9]>
@@ -200,7 +200,7 @@
                             <h3 class="sidebar-widget-title">고객센터</h3>
                             <div class="sidebar-widget-content">
                                 <div class="sidebar-widget-search">
-                                    <p><a href="/user/FAQ.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
+                                    <p><a href="/user/faq.do" style="color:#171e29;">💡자주묻는 질문 보러가기</a></p>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                                                                    		 		
                                                                    		 	</div>
 			                                                               <div class="button deny-btn">
-                                                                        		<button class="btn" id="rejectBtn" value="${waitingHomegym.d_id}"  data-toggle="modal" data-target="#myModal" id="Modal_button">거절하기</button>
+                                                                        		<button class="btn" id="rejectBtn" value="${waitingHomegym.d_id}" data-toggle="modal" data-target="#myModal" >거절하기</button>
                                                                     		</div>
 			                                                                  
 																		 </c:otherwise>
@@ -475,7 +475,14 @@
 	                                                                    <ul style="font-weight:bold; font-size:15px;">
 	                                                                        <li>📌${rentHomegym.h_title}</li><br>
 	                                                                        <li>🏡위치: ${rentHomegym.h_addr}</li><br>
-	                                                                        <li>📆 대여일 : ${rentHomegym.rental_date}</li>
+	                                                                      <c:choose>
+	                                                                		<c:when test="${rentHomegym.agreeYN == 'N'}">
+	                                                                			<li style="color:#e20707;">📢 ${rentHomegym.reject_reason}</li>
+	                                                                		</c:when>
+	                                                                		<c:otherwise>
+	                                                                		  <li>📆 대여일 : ${rentHomegym.rental_date}</li>
+	                                                                		</c:otherwise>
+	                                                                	</c:choose>
 	                                                                    </ul>
 	                                                                </div>
 	                                                            </div>    
@@ -565,7 +572,7 @@
                         <div class="col-md-6" style="text-align: end;">
                             <p>
                                 <br>
-                                <a href="faq.html"> 자주묻는 질문</a>
+                                <a href="/user/faq.do"> 자주묻는 질문</a>
                                 <br>
                                 서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br>
                                 (주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345
@@ -597,19 +604,22 @@
                                     <h4>거절 사유를 체크해주세요!😢</h4>
                                 </div>
                             </div>
-                            <form action="#" class="customRadio customCheckbox m-0 p-0">
+                            <form action="/user/requestReject.do" id="rejectModal" name="reject" class="customRadio customCheckbox m-0 p-0">
                                 <div class="row mb-0">
                                     <div class="row justify-content-start">
                                         <div class="col-12">
                                         <br><br>
-                                            <div class="row"> <input type="radio" name="rejectReason"  value="홈짐주인의 개인 사정으로 예약이 거절되었습니다." id="r1" checked> <label for="r1">개인 사정으로 인한 취소</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="이미 예약된 시간으로 홈짐예약이 거절되었습니다." id="r2"> <label for="r2">이미 예약된 시간</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 날짜로 홈짐예약이 거절되었습니다." id="r3"> <label for="r3">예약 불가한 날짜</label> </div>
-                                            <div class="row"> <input type="radio" name="rejectReason" value="너무 오랜 시간 대여로 홈짐예약이 거절되었습니다."id="r4"> <label for="r4">너무 오랜 시간 대여</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="호스트의 개인사정으로 예약이 거절되었습니다." id="r1" > <label for="r1">개인 사정으로 인한 취소</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="이미 마감된 시간으로 예약이 거절되었습니다." id="r2"> <label for="r2">이미 마감된 시간</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 날짜로 예약이 거절되었습니다." id="r3" checked> <label for="r3">예약 불가한 날짜</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="예약이 불가한 시간으로 예약이 거절되었습니다." id="r4"> <label for="r4">예약 불가한 시간</label> </div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="장시간 대여로 예약이 거절되었습니다." id="r5"> <label for="r5">장시간 대여</label></div>
+                                            <div class="row"> <input type="radio" name="rejectReason" value="잘못된 예약정보로 예약이 거절되었습니다." id="r6"> <label for="r6">잘못된 예약자 정보</label> </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-2 justify-content-start m-0 p-0" style="position: relative;"> <button type="button" class="btn" id= "rejectResonBtn" data-dismiss="modal">제출</button> </div>
+                                <div class="col-2 justify-content-start m-0 p-0" style="position: relative;"> <button type="button" class="btn" id= "rejectReasonBtn" data-dismiss="modal">제출</button> </div>
                             </form>
                         </div>
                     </div>
@@ -741,22 +751,70 @@
 
 	 $(function() {
 	 function reposition() {
-	 var modal = $(this),
-	 dialog = modal.find('.modal-dialog');
-	 modal.css('display', 'block');
-	 dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
-	 }
-
-	 $('.modal').on('show.bs.modal', reposition);
-
-	 $(window).on('resize', function() {
-	 $('.modal:visible').each(reposition);
-	 });
+		 var modal = $(this),
+		 dialog = modal.find('.modal-dialog');
+		 modal.css('display', 'block');
+		 dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+		 }
+	
+		 $('.modal').on('show.bs.modal', reposition);
+	
+		 $(window).on('resize', function() {
+		 $('.modal:visible').each(reposition);
+		 });
 	 });
 
     </script>
     
-    
+    <script>
+$(document).ready(function(){
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	//inputValue : 홈짐 예약 번호
+	var inputValue = $("#rejectBtn").val();
+	
+	//제출 버튼 클릭시
+	$("#rejectReasonBtn").on("click", function(e) {
+
+	var data = {
+				'dId' : inputValue,
+				'status' : 'N',
+				'rejectReason' : $('input:radio[name="rejectReason"]:checked').val()
+			};
+
+			$.ajax({
+				type : 'POST',
+				url : '/user/requestReject.do',
+				dataType : 'json',
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success : function(data) {
+					//성공시에 페이지 리로드 후 
+					//acceptYN이 Y가 될경우 텍스트 변경이 되도록 구현
+					if (data.resultCode == "Access") {
+						console.log("성공");
+						alert(data.resultMessage);
+						location.reload();
+					} else {
+						console.log("실패");
+						alert(data.resultMessage);
+						location.reload();
+
+					}
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			})
+		});
+	});
+    </script>
     
 </body>
 </html>

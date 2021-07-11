@@ -171,9 +171,17 @@ display:-webkit-box;
 					</div>
 					<!--/ End Pagination -->
 				</div>
+				<sec:authorize access="isAuthenticated()">
 				<div class="button" style="margin-top: 30px; text-align: center">
 					<a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
 				</div>
+				</sec:authorize>
+				<sec:authorize access="isAnonymous()">
+				<div class="button" style="margin-top: 30px; text-align: center">
+					<a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn" style="border-radius:5px;" >글쓰기 </a>
+				</div>
+				</sec:authorize>
+				 
 				<!-- 로그인  정보가 있을 때 글쓰기 작성할 수 있게 막는 것  -->
 <%-- 				<c:if test="${member.memberId eq null}">
 				<div class="button" style="margin-top: 30px; text-align: center">
@@ -181,6 +189,28 @@ display:-webkit-box;
 				</div>
 				</c:if> --%>
 			
+			</div>
+			
+			<!-- 비로그인시 이동 Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">서비스 안내</h5>
+			        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button> -->
+			      </div>
+			      <div class="modal-body" style="font-size: 15px; text-align: center";>
+			        해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br>
+			        비회원인 경우 <b>회원가입</b>을 먼저 진행해주세요!
+			      </div>
+			      <div class="modal-footer justify-content-center">
+			        <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
+			        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd;" class="btn btn-primary" data-dismiss="modal">창닫기</button>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 	</section>
 	<!-- End Events Area-->
@@ -201,7 +231,7 @@ display:-webkit-box;
 						</div>
 						<div class="col-md-6" style="text-align: end;">
 							<p>
-								<br> <a href="faq.html"> 자주묻는 질문</a> <br> 
+								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 
 								서울특별시 서초구 강남대로 459 (서초동, 백암빌딩) 403호<br> 
 								(주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345 
 								<br> © 2021. All Rights Reserved.
@@ -228,6 +258,12 @@ display:-webkit-box;
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
+	
+	 <!-- 모달 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- 	<script type="text/javascript">
 	$(document).on("click", function(){
 		alert("로그인이 필요합니다.");
@@ -235,6 +271,16 @@ display:-webkit-box;
 	});
 	
 	</script> -->
+	<script>
+	/* 로그인 페이지 이동 */
+    function goLoginpage() {
+    	self.location = "/user/loginpage";
+    }
+    /* 모달 숨기기 */
+    function missModal(){
+		$("#loginModal").hide();
+	}
+	</script>
 </body>
 
 </html>

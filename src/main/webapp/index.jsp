@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-   
+<c:set var="memberId"
+   value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberId}" />
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 <body>
@@ -130,9 +131,17 @@
                                                                                  채팅 기능!</b></h2><br/>
                                 <h6 class="wow fadeInLeft" data-wow-delay=".5s">실시간으로 운동에 관해 소통할 수 있는 <br/>
                                                                                 채팅 기능을 이용해보세요! 📢<br/></h6>
+                                 <sec:authorize access="isAuthenticated()">
                                 <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
-                                    <a href="/Template Main/coming-soon.html" class="btn">채팅하러 가기</a>
+                                    <a href="${contextPath}/message/msgMain.do?memberId=+memberId" class="btn">채팅하러 가기</a>
                                 </div>
+                                </sec:authorize>
+                                 <sec:authorize access="isAnonymous()">
+                                <div class="button style2 wow fadeInLeft" data-wow-delay=".7s">
+                                    <a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn">채팅하러 가기</a>
+                                </div>
+                                </sec:authorize>
+                                
                             </div>
                         </div>
                     </div>
@@ -274,21 +283,6 @@
     </script>
     
     <script>
-    
- 	// Search box change by Readiz 
- 	$("#desktopNav input").focus(function(){ 
- 		$("#desktopNav form").animate({ 
- 			"width": "200px" 
- 			}, 300, function() {}); }); 
- 	
- 	$("#desktopNav input").blur(function(){ 
- 		$("#desktopNav form").animate({ 
- 			"width": "60px" }, 300, function() {}); }); 
- 	
- 	$("#desktopNav form").click(function(){ 
- 		$("#desktopNav input").focus(); });
-
-    출처: https://blog.readiz.com/213 [Readiz - Read easy]
     
     /* 로그인 페이지 이동 */
     function goLoginpage() {

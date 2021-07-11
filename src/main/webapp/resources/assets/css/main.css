@@ -1247,7 +1247,8 @@ ol {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
   z-index: -1;
-  border-radius:5px;
+
+
 }
 
 .button .btn:hover::before {
@@ -1266,7 +1267,8 @@ ol {
 .button .btn-alt:hover {
   background-color: #5c6dbd;
   color: #fff;
-  border-radius:5px;
+
+
 }
 
 .align-left {
@@ -1406,7 +1408,8 @@ ol {
 
 .header.style3.navbar-area .header-social ul li a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
+
 }
 
 /*===== NAVBAR =====*/
@@ -1697,7 +1700,8 @@ ol {
 
 .navbar-nav .nav-item:hover a {
   color: #5c6dbd;
-   border-radius:5px;
+  
+
 }
 
 .navbar-nav .nav-item a {
@@ -1886,7 +1890,8 @@ ol {
   .navbar-nav .nav-item .sub-menu .nav-item a:hover {
     background: #fff !important;
     color: #5c6dbd !important;
-     border-radius:5px;
+ 
+
   }
   .navbar-nav .nav-item .sub-menu::after {
     display: none;
@@ -1906,7 +1911,7 @@ ol {
 .navbar-nav .nav-item .sub-menu > li:hover > a {
   color: #fff !important;
   background-color: #5c6dbd !important;
-   border-radius:5px;
+  
 }
 
 .navbar-nav .nav-item .sub-menu > li > a {
@@ -1926,7 +1931,7 @@ ol {
 .navbar-nav .nav-item .sub-menu > li > a:hover {
   background: rgba(0, 0, 0, 0.05);
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 /* @media only screen and (min-width: 992px) and (max-width: 1199px) { */
@@ -1962,7 +1967,7 @@ ol {
   .navbar-nav .nav-item .sub-menu > li.active {
     background: #fff !important;
     color: #5c6dbd !important;
-     border-radius:5px;
+
   }
   .header.style3.navbar-area .header-social {
     display: none;
@@ -1971,7 +1976,6 @@ ol {
   .navbar-nav .nav-item .sub-menu > li:hover > a {
     color:  #5c6dbd !important;
     background-color: #fff !important;
-     border-radius:5px;
   }
 }
 
@@ -2039,7 +2043,7 @@ ol {
   background: #5c6dbd;
   border-color: transparent;
   color: #fff;
-   border-radius:5px;
+
 }
 /* 메인 수정 */
 
@@ -2093,7 +2097,7 @@ ol {
   background: #5c6dbd;
   color: #fff;
   border-radius: 8px;
-   border-radius:5px;
+
 }
 
 .hero-area.style2 .hero-text .button .btn::before {
@@ -2442,7 +2446,7 @@ ol {
 
 .features.style2 .single-feature h3 a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .features.style2 .single-feature::before {
@@ -2507,7 +2511,7 @@ ol {
 .features .single-feature:hover span {
   color: #5c6dbd;
   opacity: 1;
-   border-radius:5px;
+
 }
 
 .features .single-feature .button {
@@ -2607,7 +2611,7 @@ ol {
   border-color: transparent;
   color: #fff;
   background-color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .services .single-service h3 {
@@ -2622,7 +2626,7 @@ ol {
 
 .services .single-service h3 a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .services .single-service p {
@@ -2773,7 +2777,7 @@ ol {
 
 .courses .single-course .content h3 a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .courses .single-course .bottom-content {
@@ -2821,7 +2825,7 @@ ol {
 
 .courses .single-course .bottom-content .tag a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 /*======================================
@@ -2916,7 +2920,7 @@ ol {
   visibility: hidden;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-   border-radius:5px;
+ 
 }
 
 /* 내가쓴 글 수정 */
@@ -2936,7 +2940,7 @@ course-details .nav-tabs li button.active {
 .course-details .nav-tabs li button:hover {
   color: #fff;
   background: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .course-details .course-overview .title {
@@ -2990,13 +2994,13 @@ course-details .nav-tabs li button.active {
 /* 내가쓴 글 수정 */
 .course-details .course-curriculum .single-curriculum-section ul.section-content .course-item .section-item-link:hover .item-name {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 /* 내가쓴 글 수정 */
 .course-details .course-curriculum .single-curriculum-section ul.section-content .course-item .section-item-link:hover .course-item-meta i {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 /* 내가쓴 글 수정 */
@@ -3090,7 +3094,7 @@ course-details .nav-tabs li button.active {
 
 .course-details .course-instructor .profile-info h5 a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+ 
 }
 
 .course-details .course-instructor .profile-info .author-career {
@@ -3131,7 +3135,7 @@ course-details .nav-tabs li button.active {
   color: #fff;
   background: #5c6dbd;
   border-color: transparent;
-   border-radius:5px;
+
 }
 
 .course-details .course-reviews .title {
@@ -3174,7 +3178,7 @@ course-details .nav-tabs li button.active {
 
 .course-details .course-reviews .comments-list li .name a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .course-details .course-reviews .comments-list li .time {
@@ -3266,7 +3270,7 @@ course-details .nav-tabs li button.active {
 
 .course-details .course-sidebar .sidebar-widget .sidebar-widget-course .single-course .info .title a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .course-details .course-sidebar .sidebar-widget .sidebar-widget-title {
@@ -3314,7 +3318,7 @@ course-details .nav-tabs li button.active {
   border-radius: 4px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-  border-radius: 5px;
+
 }
 
 .course-details .course-sidebar .sidebar-widget .sidebar-widget-search form button:hover {
@@ -3373,7 +3377,7 @@ course-details .nav-tabs li button.active {
   border: 22px solid #5c6dbd;
   border-bottom-color: transparent;
   z-index: -1;
-   border-radius:5px;
+
 }
 
 .events .single-event.short .content .date span {
@@ -3465,7 +3469,7 @@ course-details .nav-tabs li button.active {
 
 .events .single-event .content h3 a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .events .single-event .bottom-content {
@@ -3517,7 +3521,7 @@ course-details .nav-tabs li button.active {
 
 .events .single-event .bottom-content .time a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+ 
 }
 
 /* Event Details */
@@ -3711,7 +3715,7 @@ course-details .nav-tabs li button.active {
 
 .event-details .event-sidebar .single-widget .single-event .info .title a:hover {
   color: #5c6dbd;
-	 border-radius:5px;
+	
 }
 
 .event-details .event-sidebar .sidebar-entry-event {
@@ -3829,7 +3833,7 @@ course-details .nav-tabs li button.active {
   border-color: transparent;
   color: #fff;
   background: #5c6dbd;
-   border-radius:5px;
+
 }
 
 /*======================================
@@ -4308,13 +4312,13 @@ course-details .nav-tabs li button.active {
 .work-process .list li:hover .serial {
   background-color: #5c6dbd;
   color: #fff;
-   border-radius:5px;
+
 }
 
 .work-process .list li:hover .content {
   background: #5c6dbd;
   color: #fff;
-   border-radius:5px;
+
 }
 
 .work-process .list li:hover .content::before {
@@ -4329,12 +4333,12 @@ course-details .nav-tabs li button.active {
   margin-left: -10px;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
-	 border-radius:5px;
+
 }
 
 .work-process .list li:hover .content span {
   color: #fff;
-   border-radius:5px;
+ 
 }
 
 /*======================================
@@ -4505,7 +4509,7 @@ course-details .nav-tabs li button.active {
 
 .teachers .single-team .info-head .info-box .name a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .teachers .single-team .info-head .info-box p {
@@ -4545,7 +4549,7 @@ course-details .nav-tabs li button.active {
   border-color: transparent;
   -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
-           border-radius:5px;
+  
 }
 
 /* Teacher Details */
@@ -4604,14 +4608,14 @@ course-details .nav-tabs li button.active {
 
 .teacher-personal-info .personal-social .social li a:hover {
   color: #5c6dbd;
-   border-radius:5px;
+
 }
 
 .teacher-details-area .teacher-details-left .social li a:hover {
   color: #fff;
   background: #5c6dbd;
   border-color: transparent;
-   border-radius:5px;
+
 }
 
 .teacher-details-item .teacher-details-contact h3.first {
@@ -4846,7 +4850,8 @@ course-details .nav-tabs li button.active {
 
 .testimonials.style2 .single-testimonial:hover .text {
   border-color: #5c6dbd !important;
-   border-radius:5px;
+
+
 }
 
 .testimonials.style2 .single-testimonial:hover .text::before {
@@ -5030,7 +5035,8 @@ course-details .nav-tabs li button.active {
 .faq .nav-tabs .nav-link:hover {
   color: #fff;
   background: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .accordion-item .accordion-button {
@@ -5172,7 +5178,8 @@ course-details .nav-tabs li button.active {
 
 .latest-news-area .single-news .meta-data ul li a:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .latest-news-area .single-news .image {
@@ -5203,7 +5210,8 @@ course-details .nav-tabs li button.active {
 
 .latest-news-area .single-news .content-body .cat:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .latest-news-area .single-news .content-body .title {
@@ -5219,7 +5227,8 @@ course-details .nav-tabs li button.active {
 
 .latest-news-area .single-news .content-body .title a:hover {
   color: http://guide.whoistech.co.kr/?page=htm/page/home_member_info;
-  border-radius:5px;
+
+
 }
 
 .latest-news-area .single-news .content-body p {
@@ -5238,13 +5247,15 @@ course-details .nav-tabs li button.active {
 .latest-news-area .single-news:hover {
   -webkit-box-shadow: 0px 0px 20px #00000012;
           box-shadow: 0px 0px 20px #00000012;
-          border-radius:5px;
+       
+
 }
 
 .latest-news-area .single-news:hover .image .thumb {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
-          border-radius:5px;
+         
+
 }
 
 .blog-list .single-news {
@@ -5284,7 +5295,8 @@ course-details .nav-tabs li button.active {
 
 .blog-single .post-details .post-title a:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .blog-single .post-details .post-meta li {
@@ -5300,7 +5312,8 @@ course-details .nav-tabs li button.active {
 
 .blog-single .post-details .post-meta li a:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .blog-single .post-details p {
@@ -5457,7 +5470,8 @@ ul.custom-flex {
 .post-details .post-tags-media .post-social-media ul li a:hover {
   color: #fff;
   background-color: #081828;
-  border-radius:5px;
+
+
 }
 
 .post-details .post-tags-media {
@@ -5519,7 +5533,8 @@ ul.custom-flex {
 .post-details .post-tags-media .post-tags .tags a:hover {
   color: #fff;
   background-color:#5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .post-details .post-tags-media .post-social-media {
@@ -5630,7 +5645,8 @@ ul.custom-flex {
 
 .post-comments .comments-list li .comment-desc .desc-top .reply-link:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .post-comments .comments-list li .comment-desc .desc-top .reply-link i {
@@ -5802,7 +5818,8 @@ ul.custom-flex {
 .sidebar .widget.search-widget form button:hover {
   background-color: #081828;
   color: #fff;
-  border-radius:5px;
+
+
 }
 
 .sidebar .widget.popular-feeds .single-popular-feed {
@@ -5867,7 +5884,8 @@ ul.custom-flex {
 
 .sidebar .widget.popular-feeds .single-popular-feed .feed-desc .post-title a:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .sidebar .widget.popular-feeds .single-popular-feed .feed-desc .time {
@@ -5902,7 +5920,8 @@ ul.custom-flex {
 
 .sidebar .widget.categories-widget ul li a:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .sidebar .widget.categories-widget ul li a span {
@@ -5927,7 +5946,8 @@ ul.custom-flex {
   background: #5c6dbd;
   color: #fff;
   border-color: transparent;
-  border-radius:5px;
+ 
+
 }
 
 .sidebar .widget.popular-tag-widget {
@@ -5957,7 +5977,8 @@ ul.custom-flex {
   background-color: #5c6dbd;
   color: #fff;
   border-color: transparent;
-  border-radius:5px;
+
+
 }
 
 /*======================================
@@ -6020,7 +6041,8 @@ ul.custom-flex {
 
 .login .form-head form .check-and-pass .lost-pass:hover {
   color: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .login .form-head form .button {
@@ -6046,7 +6068,8 @@ ul.custom-flex {
 
 .login .form-head form .outer-link a:hover {
   text-decoration: underline;
-  border-radius:5px;
+
+
 }
 
 /*======================================
@@ -7938,7 +7961,8 @@ ul.custom-flex {
   height: 50px;
   border: none;
   background: #5c6dbd;
-  border-radius:5px;
+
+
 }
 
 .contact-us .contact-info .single-info {
