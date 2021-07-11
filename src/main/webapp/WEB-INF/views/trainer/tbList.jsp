@@ -25,43 +25,30 @@ display:-webkit-box;
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- 페이징 관련 자바스크립트 -->
 <script>
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 
-						// 페이지 버튼 클릭했을 때 이동
-						var actionForm = $("#actionForm");
+		// 페이지 버튼 클릭했을 때 이동
+		var actionForm = $("#actionForm");
 
-						$(".paginate_button a").on(
-								"click",
-								function(e) {
+		$(".paginate_button a").on("click", function(e) {
 
-									e.preventDefault();
+			e.preventDefault();
 
-									actionForm.find("input[name='pageNum']")
-											.val($(this).attr("href"));
-									actionForm.submit();
-								});
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.submit();
+		});
 
-						// 제목 클릭시 해당 글로 이동하는 form
-						$(".move")
-								.on(
-										"click",
-										function(e) {
+		// 제목 클릭시 해당 글로 이동하는 form
+		$(".move").on("click",function(e) {
 
-											e.preventDefault();
+			e.preventDefault();
 
-											actionForm
-													.append("<input type='hidden' name='hId' value='"
-															+ $(this).attr(
-																	"href")
-															+ "'>");
-											actionForm.attr("action",
-													"/trainer/tbDetail.do");
-											actionForm.submit();
-										});
+			actionForm.append("<input type='hidden' name='hId' value='" + $(this).attr("href") +"'>");
+			actionForm.attr("action", "/trainer/tbDetail.do");
+			actionForm.submit();
+		});
 
-					});
+	});
 </script>
 </head>
 
@@ -91,14 +78,11 @@ display:-webkit-box;
 	<div class="breadcrumbs overlay">
 		<div class="container">
 			<div class="row align-items-center"></div>
-
-
 			<div class="col-lg-8 offset-lg-2 col-md-12 col-12"></div>
 			<div class="breadcrumbs-content">
 				<h1 class="page-title">트레이너 둘러보기</h1>
 				<p>여러분의 건강과 식단을 책임져 줄 트레이너! 여러분이 선택하세요!</p>
 			</div>
-
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
@@ -106,39 +90,44 @@ display:-webkit-box;
 	<!-- Start Events Area-->
 	<section class="courses section grid-page">
 		<div class="container">
+		<!--글 검색 창  -->
 			<form class="d-flex search-form" action="/trainer/tbListSearch.do" method="get">
-				<input class="form-control me-2" type="search" placeholder="동네로 검색 GOGO! "
-				name="searchKeyword" aria-label="Search" style="width: 20%; margin-left:70%;">
-					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
-					<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-					<input type='hidden' name='serchKeyword' value='${trBord.searchKeyword }'>
+				<input class="form-control me-2" type="search" placeholder="동네로 검색 GOGO! " name="searchKeyword" aria-label="Search" style="width: 40%; margin-left:80%;">
+				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+				<input type='hidden' name='serchKeyword' value='${trBord.searchKeyword }'>
+				
 				<button class="btn btn-outline-success" type="submit">
 					<i class="lni lni-search-alt"></i>
 				</button>
 			</form>
 			<!-- 글 리스트 나오는 구역 -->
 			<div class="row">
-				<c:forEach items="${trainerBoardList}" var="trBoard">
-					<div class="col-lg-4 col-md-6 col-12">
-						<!-- Start Single Course -->
-						<div class="single-course wow fadeInUp" data-wow-delay=".2s">
-							<div class="course-image" style="width: 100%; ">
-								<a href="tbDetail.do?tno=${trBoard.tno}" style="width: 100%; "> 
-									<img src="/resources/imgUpload/${trBoard.tbImg}" style="height:400px;">
-									<%-- <img src="/trainer/display/main.do?fileName=${trBoard.tbImg}" > --%>
-								</a>
-
+				<c:choose>
+					<c:when test="${not empty trainerBoardList }">
+						<c:forEach items="${trainerBoardList}" var="trBoard">
+							<div class="col-lg-4 col-md-6 col-12">
+								<!-- Start Single Course -->
+								<div class="single-course wow fadeInUp" data-wow-delay=".2s">
+									<div class="course-image" style="width: 100%; ">
+										<a href="tbDetail.do?tno=${trBoard.tno}" style="width: 100%; "> 
+											<img src="/resources/imgUpload/${trBoard.tbImg}" style="height:400px;">
+											<%-- <img src="/trainer/display/main.do?fileName=${trBoard.tbImg}" > --%>
+										</a>
+									</div>
+									<div class="content" style="height:190px;">
+										<h5>${trBoard.tbTitle}</h5>
+										<pre><p class="box" style="font-family: 'Roboto', sans-serif; font-size:15px;">${trBoard.tbContent}</p></pre>
+									</div>
+								</div>
 							</div>
-							<div class="content" style="height:190px;">
-							
-								<h5>${trBoard.tbTitle}</h5>
-								<p class="box">${trBoard.tbContent}</p>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
-
 			<!-- 페이징 시작  -->
 			<div class="row">
 				<div class="col-12">
@@ -148,45 +137,36 @@ display:-webkit-box;
 								<li class="paginate_button previous"><a
 									href="${pageMaker.startPage -1 }">이전</a></li>
 							</c:if>
-
 							<c:forEach var="num" begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }">
 								<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
 									<a href="${num }">${num }</a>
 								</li>
 							</c:forEach>
-
 							<c:if test="${pageMaker.next }">
 								<li class="paginate_button next"><a
 									href="${pageMaker.endPage + 1 }">다음</a>
 							</c:if>
 						</ul>
+						
 						<!-- 페이지 번호 클릭했을 때 전송되는 form -->
 						<form id="actionForm" action="/trainer/tbList.do" method="get">
-							<input type='hidden' name='pageNum'
-								value='${pageMaker.cri.pageNum }'> <input type='hidden'
-								name='amount' value='${pageMaker.cri.amount }'>
-						<input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
+							<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
+							<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+							<input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
 						</form>
 					</div>
 					<!--/ End Pagination -->
 				</div>
+				<!-- 글 작성하러 가기 버튼 (최하단) -->
 				<div class="button" style="margin-top: 30px; text-align: center">
 					<a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
 				</div>
-				<!-- 로그인  정보가 있을 때 글쓰기 작성할 수 있게 막는 것  -->
-<%-- 				<c:if test="${member.memberId eq null}">
-				<div class="button" style="margin-top: 30px; text-align: center">
-					<a href="tbWrite.do" class="btn" style="border-radius:5px;" onclick="logCheck();">글쓰기 </a>
-				</div>
-				</c:if> --%>
-			
 			</div>
-	</section>
-	<!-- End Events Area-->
-
-
-	<!-- Start Footer Area -->
+		</div>
+</section>
+	<!-- 본문 Area 끝-->
+	<!-- Footer Area  -->
 	<footer class="footer style2">
 		<!-- Start Footer Bottom -->
 		<div class="footer-bottom">
@@ -206,7 +186,6 @@ display:-webkit-box;
 								(주) 빌려줘홈짐 | 문의 02-123-1234 | 사업자등록번호 123-12-12345 
 								<br> © 2021. All Rights Reserved.
 							</p>
-
 						</div>
 					</div>
 				</div>
@@ -228,13 +207,7 @@ display:-webkit-box;
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
 	<script src="/resources/assets/js/main.js"></script>
-<!-- 	<script type="text/javascript">
-	$(document).on("click", function(){
-		alert("로그인이 필요합니다.");
-		location.href="/user/loginpage.do"
-	});
-	
-	</script> -->
+
 </body>
 
 </html>
