@@ -72,13 +72,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getWaingHomegymCnt(memberId);
 	}
 	
-	// 내가 빌린 홈짐 갯수 
+	// 내가 빌리려고 예약했던 홈짐 갯수 
 	@Override
 	public int getRentHomeGymCnt(String memberId) {
 		return memberDAO.getRentHomeGymCnt(memberId);
 	}
 
-	
+	// 거절된 홈짐을 뺀 빌린 홈짐 수
+	@Override
+	public int getRealRentCnt(String memberId) {	
+		return memberDAO.getRealRentCnt(memberId);
+	}
+
 	
 	// 내가 빌려준 홈짐 갯수
 	@Override
@@ -167,13 +172,6 @@ public class MemberServiceImpl implements MemberService {
 	public List<HomegymVO> getMyProgressHomegym(String memberId,Criteria cri) {
 		return memberDAO.getMyProgressHomegym(memberId,cri);
 	}
-	
-	//완료된 홈짐 조회
-//	@Override
-//	public List<HomegymVO> getMyFinishedHomegym(String memberId) {
-//		return memberDAO.getMyFinishedHomegym(memberId);
-//	}
-
 
 	/*결제 여부 변경*/
 	@Override
@@ -193,6 +191,8 @@ public class MemberServiceImpl implements MemberService {
 	public int HomegymRejectUpdate(Map<String, String> paramMap) {
 		return memberDAO.HomegymRejectUpdate(paramMap);
 	}
+	
+	
 	/*  내 게시글 , 리뷰 내역  */
 	
 	// 내가 쓴 게시글 조회 
@@ -212,10 +212,6 @@ public class MemberServiceImpl implements MemberService {
 	public HomegymDetailVO getMyRequest(HomegymDetailVO vo,int dId) {
 		return memberDAO.getMyRequest(vo,dId);
 	}
-
-
-
-
 
 
 

@@ -55,11 +55,14 @@ public interface MemberService {
 	// 수락 대기중인 홈짐 수 조회
 	public int getMyWaitngHomegymCnt(String memberId);
 	
-	//내가 빌려준 홈짐 수 조회
+	//내가 올린 홈짐 수 조회
 	public int getLendHomeGymCnt(String memberId);
 	
-	//내가 빌린 홈짐 수 조회
+	//내가 빌리려고 예약한 홈짐 수 조회
 	public int getRentHomeGymCnt(String memberId);
+	
+	//거절된 홈짐수를 뺀 빌린 홈짐 수 조회
+	public int getRealRentCnt(String memberId);
 	
 	//내가 쓴 글 수 조회
 	public int getMyAllBoardCnt(String memberId);

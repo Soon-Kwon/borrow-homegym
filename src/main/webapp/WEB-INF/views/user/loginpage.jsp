@@ -67,10 +67,12 @@
 							</div> -->
 							
 							<div class="button">
-								<button type="submit" class="btn">LogIn</button>
-							</div><br>
+								<button type="submit" class="btn" style="width:100%">LogIn</button>
+							</div>
+							<div class="button">
 								<a href="https://kauth.kakao.com/oauth/authorize?client_id=d16ab68241565d7f23be9b45065f5a1b&redirect_uri=http://localhost:8090/user/kakao/callback&response_type=code
-"><img src="/resources/assets/images/logo/kakao_login_button_1.png"></a>
+" class="btnKakao" style="width:100%; color:black; background-color:#ffe812; text-align:center; "><img src="/resources/assets/images/logo/kakao.png" style="height:20px;  text-align:center;">&nbsp; 카카오 로그인</a>
+							</div>
 							<p class="outer-link">
 								계정이 없으신가요? &nbsp;&nbsp; 
 								<a href="/user/registration.do">회원가입 하기</a>

@@ -415,9 +415,9 @@
 							alert("성별을 체크해주세요");
 						
 						} else {
+							alert("회원가입이 완료되었습니다. 로그인을 진행해주세요!");
 							$("#join_form").attr("action", "/user/join");
 							$("#join_form").submit();
-							alert("회원가입이 완료되었습니다")
 						}
 				     }
 				});

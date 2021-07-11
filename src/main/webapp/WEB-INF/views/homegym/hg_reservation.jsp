@@ -83,6 +83,9 @@
                 		<div class="single-info">
 							<div id="rez-timetable">📍이미 마감된 시간&nbsp;&nbsp;&nbsp;</div>
 							<br> 
+							<c:if test="${empty reservation }">
+								<h4 style="text-align: center;">아직 예약된 내역이 없습니다</h4>
+							</c:if>
 							<c:forEach items="${reservation}" var="rez">
 								<div id="rez-timetable-date">${rez.rentalDate }</div>
 								<div id="rez-timetable-time">
