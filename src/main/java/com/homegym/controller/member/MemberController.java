@@ -462,6 +462,7 @@ public class MemberController {
 			if (cnt == 1) { // 회원 탈퇴 성공시
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "탈퇴가 완료되었습니다.");
+				SecurityContextHolder.clearContext();
 			} else { // 회원탈퇴 실패시
 				map.put("resultCode", "fail");
 				map.put("resultMessage", "회원탈퇴 실패! 재시도해주세요.");

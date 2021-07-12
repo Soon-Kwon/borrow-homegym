@@ -124,7 +124,7 @@
 		DELETE 
 		FROM member 
 		WHERE
-			memberId = #{memberId} AND password = #{password}
+			memberId = #{memberId}
 	</delete>
 	
 	<!-- 마이페이지 비밀번호 체크 -->

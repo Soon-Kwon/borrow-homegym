@@ -14,9 +14,7 @@
 	crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
-<!-- 다음 우편번호 API -->
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="/resources/js/addressapi.js"></script>
+
 <!-- 프로필 사진 미리보기 -->
 <script>
 $(document).ready(function () {
@@ -200,6 +198,11 @@ function deleteImg(){
 	        }        
 	    })
 	} 
+</script>
+<!-- 다음 우편번호 API -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="/resources/js/addressapi.js"></script>
+<script>
 
 function execPostCode() {
          new daum.Postcode({
@@ -349,8 +352,7 @@ function execPostCode() {
 										<div class="single-feature" style="padding: 20px">
 											<c:if test="${empty member.imagePath}">
 												<div id="userphoto">
-													<img
-														src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png"
+													<img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png"
 														class="avatar img-circle img-thumbnail" id="profile"
 														style="margin-left: 190px; width: 140px; height: 140px; border-radius: 100px;">
 												</div>
