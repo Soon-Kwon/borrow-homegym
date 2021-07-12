@@ -129,23 +129,37 @@ scroll:no;
                      </div>
                   </c:forEach>
                   <!-- 글 작성하러 가기 버튼 (최하단) -->
+                  <!-- 로그인 정보가 있으면 글쓰기 허용 -->
                      <sec:authorize access="isAuthenticated()">
                      <div class="button" style="margin-top: 40px; text-align: center">
                         <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
                      </div>
                      </sec:authorize>
+                     
+                     <!-- 로그인 정보가 없으면 모달창 -->
                      <sec:authorize access="isAnonymous()">
-                     <div class="button" style="margin-top: 40px; text-align: center">
+                     	<div class="button" style="margin-top: 40px; text-align: center">
                         <a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn" style="border-radius:5px;" >글쓰기 </a>
-                     </div>
+                    	 </div>
                      </sec:authorize>     
                </c:when>
-               
                <c:otherwise>
                   <p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>
+                  <sec:authorize access="isAuthenticated()">
+                     <div class="button" style="margin-top: 40px; text-align: center">
+                        <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                     </div>
+                     </sec:authorize>
+                     
+                     <!-- 검색 결과가 없을때 글쓰기 버튼 클릭 시 로그인 정보가 없으면 모달창 -->
+                     <sec:authorize access="isAnonymous()">
+                     	<div class="button" style="margin-top: 40px; text-align: center">
+                        <a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                    	 </div>
+                     </sec:authorize>     
                    <div class="button" style="margin-top: 40px; text-align: center">
                    <br><br><br><br>
-                        <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
+
                      </div>
                </c:otherwise>
             </c:choose>
@@ -191,8 +205,8 @@ scroll:no;
                           <h5 class="modal-title" id="exampleModalLabel">서비스 안내</h5>
                        </div>
                            <div class="modal-body" style="font-size: 15px; text-align: center";>
-                                      해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br>
-                                      비회원인 경우 <b>회원가입</b>을 먼저 진행해주세요!
+                                      	해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br>
+                                     	 비회원인 경우 <b>회원가입</b>을 먼저 진행해주세요!
                            </div>
                            <div class="modal-footer justify-content-center">
                              <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
