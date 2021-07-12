@@ -82,7 +82,7 @@ scroll:no;
    <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
    <!-- Start Breadcrumbs -->
-   <div class="breadcrumbs overlay">
+   <div class="breadcrumbs overlay" style="background-image: url(/resources/assets/images/gym/trainer.jpg);">
       <div class="container">
          <div class="row align-items-center"></div>
          <div class="col-lg-8 offset-lg-2 col-md-12 col-12"></div>
