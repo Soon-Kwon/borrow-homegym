@@ -38,14 +38,27 @@ Index Of css
 /*======================================
     Normalize CSS
 ========================================*/
-@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');;
+
+
+
+
+
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   
-	font-family: 'paybooc-Bold'; 
+	font-family: 'GmarketSansMedium'; 
   	font-weight: normal;
   	font-style: normal;
   	color: #888;

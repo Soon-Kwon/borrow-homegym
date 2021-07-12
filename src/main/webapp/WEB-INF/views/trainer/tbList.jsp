@@ -123,7 +123,7 @@ scroll:no;
                            </div>
                            <div class="content" style="height:190px;">
                               <h5>${trBoard.tbTitle}</h5>
-                              <pre><p class="box" style="font-family: 'Roboto', sans-serif; font-size:15px;">${trBoard.tbContent}</p></pre>
+                              <pre><p class="box" style=" font-family: 'Roboto', sans-serif; font-size:15px;">${trBoard.tbContent}</p></pre>
                            </div>
                         </div>
                      </div>

@@ -480,7 +480,7 @@ ul li.tag-item {
 			<!-- JQuery Timepicker -->
 	<script src="/resources/assets/js/jquery.timepicker.min.js"></script>
 	
-	<!-- file upload start-->
+	<!--file upload start-->
 	<!-- <script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.form.js' type="text/javascript" language="javascript"></script>
 	<script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.MetaData.js' type="text/javascript" language="javascript"></script>
 	<script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.MultiFile.js' type="text/javascript" language="javascript"></script>

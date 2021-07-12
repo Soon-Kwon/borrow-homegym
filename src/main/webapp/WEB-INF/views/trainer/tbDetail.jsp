@@ -193,7 +193,7 @@ $('body').css("overflow", "hidden");
 					<br><br>
 							<div class="detail-inner">
 								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
-									<pre style="border:none;font-size:17px;font-family: 'Roboto', sans-serif; background-color:#F8F8FF; ">${trainerBoard.tbContent}</pre>
+									<pre style="border:none;font-size:17px; font-family: 'Roboto', sans-serif; background-color:#F8F8FF;">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
