@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/logo.png" />
     <!-- Place favicon.ico in the root directory -->
-
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
     <!-- Web Font -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -32,7 +32,7 @@
     margin-right: 10px;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 40px;
+    margin-left: 37px;
     margin-top: 10px;
 }
 .userphoto_menu label { 
@@ -172,7 +172,7 @@
 				            </c:if>
                             <h4 style="margin-left:30px;">${member.name}님</h4>
                             <span id="auth">‍${member.nickname}</span><br> 
-                            <span id="memberId">${member.memberId} <span>
+                            <span id="memberId" style="margin-left: 22px;">${member.memberId} </span>
                             <div class="button">
                                 <a href="profile_update.do" class="btn" style="margin-top:28px;">정보 수정<i class="lni lni-arrow-right"></i></a>
                             </div>

@@ -37,8 +37,7 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
-    <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
-    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
+    
 <!-- font -->
 
 	

@@ -25,17 +25,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-8 col-12" style="float: none; margin: 0 auto; text-align:center">
+							<br><br>
+							<br><br>
+							<br><br>
+							<br><br>
 							<h3>검색 결과가 없습니다.<br> 우리동네 홈짐을 등록해보세요!🏠</h3>
 							<br><br>
-							<form class="d-flex search-form" action="homegymListView.do"
-								method="get">
-								<input class="form-control me-2" type="search" name="keyword"
-									placeholder="동네 이름을 검색해보세요!" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit">
-									<i class="lni lni-search-alt"></i>
-								</button>
-							</form>
-							<br>
+
 							<sec:authorize access="isAuthenticated()">
 							<div class="write" style="text-align: center;">
 								<button class="btn btn-primary" type="button" id="writeBtn"

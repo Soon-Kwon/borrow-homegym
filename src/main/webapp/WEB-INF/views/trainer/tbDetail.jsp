@@ -9,6 +9,7 @@
 <html class="no-js" lang="zxx">
 
 <head>
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
 
 <!-- ========================= CSS here ========================= -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -62,6 +63,8 @@ scroll:no;
 .modal{
 z-index:1050;
 }
+body.s_no-scroll{overflow-y:hidden;}
+body > button{position:fixed;top:50%;left:50px;}
 
 </style>
 
@@ -74,6 +77,9 @@ z-index:1050;
 <script src="/resources/assets/js/glightbox.min.js"></script>
 <script src="/resources/assets/js/main.js"></script>
 
+<script>
+$('body').css("overflow", "hidden");
+</script>
 <!-- ====================== message modal관련 =============================== -->
 	<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -89,7 +95,7 @@ z-index:1050;
 
 </head>
 
-<body>
+<body style="padding-right:0;">
 
 	<!-- Preloader -->
 	<div class="preloader">
@@ -195,52 +201,66 @@ z-index:1050;
 							</div>
 						</div>
 				</div>
-				
-				
 
-				<aside class="col-lg-4 col-md-12 col-12">
-					<div class="sidebar">
+	<aside class="col-lg-4 col-md-12 col-12">
+		<div class="sidebar">
 
-						<!--/ End Single Widget -->
-						<!-- Single Widget -->
-						<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;
-						">
-							<div class="tr_image" style="position: relative; left: 10px;">
-								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+			<!--/ End Single Widget -->
+			<!-- Single Widget -->
+			<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;">
+				<div class="tr_image" style="position: relative; left: 10px;">
+				<c:if test="${not empty trainerBoard.image}">
+					<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+				</c:if>
+				<c:if test="${empty trainerBoard.image}">
+					<img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+				</c:if>
+				</div>
+				<div>
+					<br>
+					<p style="font-size: 23px; font-weight: bold; text-align: center; color:#323232">
+						<span>${trainerBoard.name}</span> 트레이너
+					</p>
+					<ul style="text-align: center; font-size: 16px; margin: 10px;">
+						<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}
+							<strong>~</strong> ${trainerBoard.dayTimef}</li>
+						<!-- <li>월요일~토요일 10:00 ~20:50</li> -->
+						<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
+							<span>~</span> ${trainerBoard.sunTimef}</li>
+					</ul>
+					<sec:authorize access="isAuthenticated()">   
+						<c:choose>
+							<c:when test="${trainerBoard.memberId ne memberId }">
+								<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
+									<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
+										트레이너에게 문의하기</button>
+								</div>
+							 </c:when>
+							 </c:choose>
+						<c:choose>
+							<c:when test="${trainerBoard.memberId eq memberId }">
+								<div class="button" style="text-align:center;">
+	                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;"> 수정 </a>
+	                                &nbsp;&nbsp;&nbsp;
+	                          
+	                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
+								</div>
+							</c:when>
+						</c:choose>
+					</sec:authorize>
+					
+					<sec:authorize access="isAnonymous()">
+						<c:choose>
+						<c:when test="${trainerBoard.memberId ne memberId }">
+							<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
+								<input type="button" data-toggle="modal" data-target="#myModal1" href="#myModal1" class="btn" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;" value="트레이너에게 문의하기"/>
 							</div>
-							<div>
-								<br>
-								<p style="font-size: 23px; font-weight: bold; text-align: center; color:#323232">
-									<span>${trainerBoard.name}</span> 트레이너
-								</p>
-								<ul style="text-align: center; font-size: 16px; margin: 10px;">
-									<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}
-										<strong>~</strong> ${trainerBoard.dayTimef}</li>
-									<!-- <li>월요일~토요일 10:00 ~20:50</li> -->
-									<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
-										<span>~</span> ${trainerBoard.sunTimef}</li>
-								</ul>
-								
-									<c:choose>
-										<c:when test="${trainerBoard.memberId ne memberId }">
-											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
-												<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
-													트레이너에게 문의하기</button>
-											</div>
-										 </c:when>
-							
-										<c:when test="${trainerBoard.memberId eq memberId }">
-							
-											<div class="button" style="text-align:center;">
-				                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;"> 수정 </a>
-				                                &nbsp;&nbsp;&nbsp;
-				                          
-				                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
-											</div>
-										</c:when>
-								</c:choose>
-							</div>	
-						</div>
+							 </c:when>		
+						</c:choose>
+					</sec:authorize>
+				</div>	
+				
+			</div>
 						<!--/ End Single Widget -->
 
 						<!--/ End Single Widget -->
@@ -338,6 +358,29 @@ z-index:1050;
 			</div>
 		</div>
 	</div>
+	
+	<!-- 비로그인시 이동 Modal -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">서비스 안내</h5>
+	        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button> -->
+	      </div>
+	      <div class="modal-body" style="font-size: 15px; text-align: center";>
+	        해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br>
+	        비회원인 경우 <b>회원가입</b>을 먼저 진행해주세요!
+	      </div>
+	      <div class="modal-footer justify-content-center">
+	        <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
+	        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd; color:white;" class="btn btn-primary1" data-dismiss="modal">창닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 	
 	
 
@@ -499,6 +542,17 @@ z-index:1050;
 				showMessageContent('${trainerBoard.memberId}');
 			}, 3000);
 		}
+		
+		/* 로그인 페이지 이동 */
+	    function goLoginpage() {
+	    	self.location = "/user/loginpage";
+	    }
+	    /* 모달 숨기기 */
+	    function missModal(){
+			$("#loginModal").hide();
+		}
+		
+		
 	</script>
 
 

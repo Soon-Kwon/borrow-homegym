@@ -11,6 +11,7 @@
 <head>
 
 <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
 </head>
 <script>
 	/*버튼 선택시 상태값 변경*/
@@ -742,7 +743,6 @@
 							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
 						} else {
 							var msg = '홈짐 결제에 실패하였습니다. 다시 시도해주세요 !';
-							location.href="/user/mypage/myactiv.do?payYN=N";
 						}
 							alert(msg);
 						});
