@@ -50,7 +50,6 @@ function save() {
 	$.ajax({
 		type : 'POST',
 		url : '/trainer/tbWrite.do',
-		// url : 'tbWrite.do',
 		dataType : 'text',
 		data : data,
 		/* 데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
@@ -58,11 +57,9 @@ function save() {
 			xhr.setRequestHeader(header, token);
 		},
 		success : function(data) {
-			//alert(data);
 			if (data == 'OK') {
 				alert('글 작성 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
-				//window.location.replace("/trainer/tbList.do");
 
 			}
 		},
@@ -73,13 +70,14 @@ function save() {
 	});
 }
 
-//수정 저장
+//수정 내용을 저장하는 modify()
 function modify() {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var str = "";
 
 	var formObj = $("#submitForm2");
+	
 	// textarea 개행처리
 
 	var text = $("textarea[name='tbContent']").val();
@@ -95,8 +93,7 @@ function modify() {
 
 	console.log($('#tno').val());
 
-	$(".uploadResult ul li").each(
-					function(i, obj) {
+	$(".uploadResult ul li").each(function(i, obj) {
 
 						var jobj = $(obj);
 
@@ -138,7 +135,6 @@ function modify() {
 	$.ajax({
 		type : 'POST',
 		url : '/trainer/tbUpdate.do',
-		// url : 'tbWrite.do',
 		dataType : 'text',
 		data : data,
 		 //데이터를 전송하기 전에 헤더에 csrf값을 설정한다 
@@ -150,8 +146,7 @@ function modify() {
 			if (data == 'OK') {
 				alert('글 수정 완료!');
 				window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
-/*				window.location.replace("/trainer/tbList.do");
-*/				//window.location.replace("/trainer/tbList.do?pageNum=1&amount=6&searchKeyword=");
+
 		}
 		},
 		error : function(e) {
@@ -300,12 +295,12 @@ $(document).ready(function() {
 	function checkExtension(fileName, fileSize) {
 
 		if (fileSize >= maxSize) {
-			alert("파일 사이즈 초과");
+			alert("업로드 가능한 파일 사이즈가 초과되었어요!");
 			return false;
 		}
 
 		if (regex.test(fileName)) {
-			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			alert("해당 종류의 파일은 업로드할 수 없어요!");
 			return false;
 		}
 
@@ -313,7 +308,13 @@ $(document).ready(function() {
 	}
 
 	$("input[name='uploadFile']").change(function(e) {
-		// $("input[type='file']").change(function(e) {
+		
+		// 사진이 3장 이상 업로드 못하게 제한
+		if ($("input[name='uploadFile']")[0].files.length > 3) {
+			alert('최대 업로드 할 수 있는 사진은 3장입니다!');
+		    $("input[name='uploadFile']").val("");
+		    return null;
+		}
 		
 		$('.uploadShow').empty();
 		
@@ -344,12 +345,12 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : '/trainer/uploadAjaxAction.do',
-			// url : '/uploadAjaxAction.do',
 			processData : false,
 			contentType : false,
 			data : formData,
 			type : 'POST',
 			dataType : 'json',
+			
 			/* 데이터를 전송하기 전에 헤더에 csrf값을 설정한다 */
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -378,7 +379,6 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : '/trainer/deleteFile.do',
-			// url : '/deleteFile.do',
 			data : {
 				fileName : targetFile,
 				type : type
@@ -389,7 +389,7 @@ $(document).ready(function() {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				alert(result);
+				alert("선택한 사진이 삭제되었어요!");
 				targetLi.remove();
 			}
 		});
@@ -397,7 +397,9 @@ $(document).ready(function() {
 
 	// 대표 이미지
 	$("input[name='tbImg']").change(function(e) {
-		// $("input[type='file']").change(function(e) {
+		
+		$('.uploadShowMain').empty();
+		
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var formData = new FormData();
@@ -418,7 +420,6 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : '/trainer/uploadAjaxActionMain.do',
-			// url : '/uploadAjaxAction.do',
 			processData : false,
 			contentType : false,
 			data : formData,
@@ -429,7 +430,7 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				console.log(result);
-				// showUploadResultMain(result); // 업로드 결과 처리 함수 (섬네일 등) -->
+				showUploadResultMain(result); // 업로드 결과 처리 함수 (섬네일 등) -->
 				// display.do
 			},
 			error : function(error) {
@@ -437,5 +438,55 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
+	// Main ajax
+	function showUploadResultMain(uploadResultArr) {
+
+		if (!uploadResultArr || uploadResultArr.length == 0) {
+			return;
+		}
+
+		var uploadUL = $(".uploadShowMain");
+
+		var str = "";
+
+		$(uploadResultArr)
+				.each(
+						function(i, obj) {
+
+							// image type
+							if (obj.fileType) {
+
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/s_" + obj.uuid + "_" + obj.fileName);
+								str += "<img src='/trainer/display.do?fileName="
+								+ fileCallPath + "'>";
+								
+								
+							} else {
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/" + obj.uuid + "_" + obj.fileName);
+								var fileLink = fileCallPath.replace(new RegExp(
+										/\\/g), "/");
+
+								str += "<li data-path='" + obj.uploadPath + "'";
+								str += " data-uuid='" + obj.uuid
+										+ "' data-filename='" + obj.fileName
+										+ "'data-type='" + obj.fileType + "'";
+								str += "><div>";
+								str += "<span> " + obj.fileName + "<span>";
+								str += "<button type='button' data-file=\'"
+										+ fileCallPath
+										+ "\'data-type='file' class='btn btn-warning btn-circle'>"
+										+ "<i class='lni lni-cross-circle'></i></button><br>";
+								str += "<img src='/assets/images/common/attach.png'></a>";
+								str += "</div>";
+								str += "</li>";
+							}
+						});
+
+		uploadUL.append(str);
+	}
 
 });

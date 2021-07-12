@@ -22,20 +22,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- 지울목록 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-	type="text/css" rel="stylesheet"> -->
-	
-<!-- Custom fonts for this template-->
-<!-- <link
-	href="/resources/ad_assets/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css"> -->
-<!-- <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet"> -->
-<!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script> -->
 
-<!-- Custom styles for this template-->
 <!-- 아이콘 -->
 <script src="https://kit.fontawesome.com/a0fcc69da7.js" crossorigin="anonymous"></script>
 <!-- ========================= CSS here ========================= -->
@@ -46,8 +33,66 @@
 <link rel="stylesheet" href="/resources/assets/css/glightbox.min.css" />
 <link rel="stylesheet" href="/resources/assets/css/main.css" />
 
+<style type="text/css">
+	/*버튼 클릭 후, 남은 효과 없애기*/
+	#chatListBtn:focus,
+	#send_msg_btn:focus{
+		box-shadow: none; 
+	}
+</style>
 
-<script type="text/javascript">
+</head>
+<body>
+	<div class="msg-container">
+		<div class="messaging">
+			<div class="inbox_msg">
+
+				<!-- 메세지 목록(list) 영역 : message_list.jsp -->
+				<div class="inbox_people">
+					<!-- 메세지 리스트 상단바 recent, 검색아이콘-->
+					<div class="headind_srch">
+						<div class="recent_heading">
+							<button type="button" id="chatListBtn" class="btn" style="padding:0px; width:70px;" onclick="FirstMessageList()"> <!-- 리스트로 돌아가게 만들기 -->
+							<h4 style="width:70px">Chat List</h4>
+							
+							</button>
+							
+						</div>
+
+						<!-- 메세지 검색 영역 : message_search.jsp-->
+						<div class="srch_bar">
+							<div class="stylish-input-group">
+								<input id="findNickname" type="text" class="search-bar" placeholder="닉네임 검색하기">
+								<span class="input-group-addon">
+									<button class="searchBtn" type="button" onclick="findFunction();">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- 실제 대화한 메세지 목록 -->
+					<div class="inbox_chat">
+						
+					</div>
+					
+				</div>
+
+				<!-- 메세지 내용(content) 영역 : message_content.jsp -->
+				<div class="mesgs">
+					
+					<!-- 실제 대화한 메세지 내용 목록(대화내용) -->
+					<div class="msg_history" name="contentList"></div>
+
+					<!-- 메세지 입력란이 올자리 -->
+					<div class="send_message"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
 	var friendId = '';
 	/*body위쪽 : nickname에 해당하는 멤버찾는 ajax*/
 	$(document).ready(function(){
@@ -57,9 +102,14 @@
 				e.preventDefault();
 				$('.searchBtn').trigger('click');
 			} 
-		});
-				
-							
+		});	
+		
+		// Chat List버튼 클릭시 대화내용 없애기
+		$('#chatListBtn').on('click', function(){
+			$('.msg_history').html('');
+			$('.send_message').html('');
+			clearInterval(interval);
+		})
 	});
 		
 	// 친구찾기 함수
@@ -85,18 +135,19 @@
 				console.log(member);
 				if(member != null && member != ''){
 					console.log(member);
-					// 찾은 id의 nickname존재하면, 그 nickname을 가진 member정보 가져오기
+					// 찾은 id의 nickname존재하면, 그 nickname을 가진 member의 필요정보 가져오기
 					getFriendList(member.memberId, member.nickname, member.imagePath);
 
 					console.log("getFriendList()의 memberId, nickname, image : "+member.memberId, member.nickname, member.imagePath);
 					if(member.memberId == '${memberId}'){
 						alert("현재 로그인한 사용자입니다.");
-						$('.chat_list').html('');
-						getInfiniteChat();
+						FirstMessageList();
+						
 					} 
 				} else {
 					// 친구찾기에 실패했을 때, 
-					$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">사용자를 찾을 수 없습니다😅<br> 다시 검색해주세요</h6>');
+					$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">해당 닉네임을 찾을 수 없습니다😅<br> 다시 검색해주세요</h6>');
+					
 				}
 			},
 			error:function(e){
@@ -152,19 +203,6 @@
 			success: function(roomNo){
 				console.log("searchRoomNo()의 roomNo : "+roomNo);
 				showMsgBySearch(searchId, roomNo);
-				
-				/* $(".undoFocusBtn").click(function() {
-					  $(this).toggleClass('inactive');
-					  $(this).toggleClass('active');
-				}); */
-				/* if(!roomNo){
-					console.log("!roomNo");
-					showMsgBySearch(searchId, roomNo);
-				} else{
-					console.log("!roomNo외일 떄");
-					showMsgBySearch(searchId, 0);
-				} */
-				console.log("searchRoomNo() typeof : "+typeof roomNo);
 			},
 			error: function(e) {
 				console.log(e);
@@ -214,64 +252,9 @@
 		
 		// 클릭한 채팅방 번호 넘겨주면 그 채팅방에 해당하는 메세지 보여주는 함수 호출()
 		ShowMessageContent(roomNo);
-		
 	}
+	</script>
 	
-	 
-	
-	
-</script>
-</head>
-<body>
-	
-	<div class="msg-container">
-		<div class="messaging">
-			<div class="inbox_msg">
-
-				<!-- 메세지 목록(list) 영역 : message_list.jsp -->
-				<div class="inbox_people">
-					<!-- 메세지 리스트 상단바 recent, 검색아이콘-->
-					<div class="headind_srch">
-						<div class="recent_heading">
-							<button type="button" class="btn" style="padding:0px; width:70px;" onclick="FirstMessageList()"> <!-- 리스트로 돌아가게 만들기 -->
-							<h4 style="width:70px">Chat List</h4>
-							
-							</button>
-							
-						</div>
-
-						<!-- 메세지 검색 영역 : message_search.jsp-->
-						<div class="srch_bar">
-							<div class="stylish-input-group">
-								<input id="findNickname" type="text" class="search-bar" placeholder="아이디 검색하기">
-								<span class="input-group-addon">
-									<button class="searchBtn" type="button" onclick="findFunction();">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</button>
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<!-- 실제 대화한 메세지 목록 -->
-					<div class="inbox_chat">
-						
-					</div>
-					
-				</div>
-
-				<!-- 메세지 내용(content) 영역 : message_content.jsp -->
-				<div class="mesgs">
-					
-					<!-- 실제 대화한 메세지 내용 목록(대화내용) -->
-					<div class="msg_history" name="contentList"></div>
-
-					<!-- 메세지 입력란이 올자리 -->
-					<div class="send_message"></div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 
@@ -279,19 +262,18 @@
 	<script>
 		var selectedMsgRoomNo = '';
 		var interval;
+		
 		// 메세지 리스트 가져오기(처음)  
 		const FirstMessageList = function() {
 			console.log("FirstMessageList()호출");
+			$('.chat_list_box').removeClass('active_chat');
+			
 			$.ajax({
 					url : "msgList.do",
 					method : "GET",
 					success : function(data) {
 						console.log("SUCCESS : FirstMessageList() data : " + data);
 						
-						// 수정필요
-						/* if(data == null){
-							$('.inbox_chat').html('<h6 style="text-align:center; margin-top: 40px;">대화중인 채팅방이 없습니다.</h6>');
-						} */
 						$('.inbox_chat').html(data);
 						
 						
@@ -302,14 +284,14 @@
 							// 그때의 메세지방, 상대방 id담음
 							let msgRoomNo = $(this).attr('msgRoomNo');
 							let otherId = $(this).attr('otherId');
-							console.log("FirstMessageList msgRoomNo : " + msgRoomNo)
+							console.log("FirstMessageList msgRoomNo : " + msgRoomNo);
 
 							// 클릭한 채팅방 빼고, 나머지 active효과 해제
 							// .chat_list_box를 갖지 않는 .chat_list_box요소의 내용에 msgRoomNo더함
 							/* $('.chat_list_box').not('.chat_list_box.chat_list_box'+ msgRoomNo)
 									.removeClass('active_chat');
 							// 선택한 채팅방만 active효과(active_chat)
-							$('.chat_list_box'+msgRoomNo).addClass('active_chat'); */
+							 */
 							
 							// 메세지 입력/전송칸 
 							let send_msg = "";
@@ -339,6 +321,7 @@
 									// 메세지 전송함수 호출(클릭한 채팅방 번호, 상대방 id)
 									SendMessage(msgRoomNo,otherId);
 							});
+							
 
 							// 클릭한 채팅방 번호 넘겨주면 그 채팅방에 해당하는 메세지 보여주는 함수 호출()
 							ShowMessageContent(msgRoomNo);
@@ -448,11 +431,6 @@
 								$('.msg_history')[0].scrollHeight);
 					} else {
 						console.log("해당하는 채팅방 없음. roomNo이 아니고 max+1로 세팅해줘야지,,")
-						/* // 채팅방 존재하지 않으면 (msgRoomNo == 0일 경우)
-						// 기존에 보이는 대화내용 비우기
-						// 친구찾기한 후, 기존채팅방이 없던 상대면 띄워놓던 채팅 비우기
-						$('.msg_history').html('');  */
-					
 					}
 
 					
@@ -524,7 +502,7 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		// 메세지 리스트 리로드
+		
 		FirstMessageList();
 		getInfiniteChat();
 	});

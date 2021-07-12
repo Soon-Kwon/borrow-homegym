@@ -328,7 +328,7 @@ input[id='img_upload'] {
 
 /*수정&삭제, 목록, 문의버튼, 예약버튼*/
 
-#updateBtn, #showMsgContent{
+#updateBtn, #showMsgContent, #noShowMsgContent{
 	width: 350px;
     height: 50px;
     bottom: 20px;

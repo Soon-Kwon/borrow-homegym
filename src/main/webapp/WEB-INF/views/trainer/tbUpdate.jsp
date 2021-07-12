@@ -8,9 +8,7 @@
 	prefix="sec"%>
 
 <head>
-<script src="https://code.jquery.com/jquery-1.12.4.js"
-	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 
 <style>
 p {
@@ -200,7 +198,7 @@ ul li.tag-item {
 		//  tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
 		function marginTag() {
 			return Object.values(tag).filter(function(word) {
-				return word !== "";
+			return word !== "";
 			});
 		}
 
@@ -231,8 +229,8 @@ ul li.tag-item {
 				if (tagValue !== "") {
 
 					var result = Object.values(tag).filter( function(word) {
-										return word === tagValue;
-									});
+						return word === tagValue;
+					});
 
 					// 태그 중복 검사
 					if (result.length == 0) {
@@ -257,7 +255,8 @@ ul li.tag-item {
 			tag[index] = "";
 			$(this).parent().remove();
 		});
-
+		
+		/*해시 태그 저장된 값 가져오기  */
 		var tbactivtag1 = "${trainerBoard.tbActivTag1}"
 		if (tbactivtag1 != "") {
 			$("#tag-list").append( "<li class='tag-item'>" + tbactivtag1 + "<span class='del-btn' idx='0'>x</span></li>");
@@ -282,21 +281,26 @@ ul li.tag-item {
 			$("#tag-list").append( "<input name=tagList type=hidden value=" + tbactivtag3 + ">");
 		}
 
+		/* 저장된 활동범위 체크 박스 값 가져오기  */
 		var tbactivchk1 = "${trainerBoard.tbActivChk1}"
 		if (tbactivchk1 != "") {
 			$("input[name=tbActivChk1]").parent().addClass( "checkColor");
+			$("input[name=tbActivChk1]").prop('checked', true);
 		}
 
 		var tbactivchk2 = "${trainerBoard.tbActivChk2}"
 		if (tbactivchk2 != "") {
 			$("input[name=tbActivChk2]").parent().addClass( "checkColor");
+			$("input[name=tbActivChk2]").prop('checked', true);
 		}
 
 		var tbactivchk3 = "${trainerBoard.tbActivChk3}"
 		if (tbactivchk3 != "") {
 			$("input[name=tbActivChk3]").parent().addClass( "checkColor");
+			$("input[name=tbActivChk3]").prop('checked', true);
 		}
 
+		/* 체크 박스 값 입력 */
 		$("input[id=check]:checkbox").click(function() {
 			if ($(this).is(":checked")) {
 				$(this).parent().addClass("checkColor");
@@ -324,18 +328,14 @@ ul li.tag-item {
 				$.ajax({
 
 						type : "POST",
-	
-						//url:"./image_delete.php",
 						url : '/trainer/deleteMain.do',
-	
 						dataType : 'text',
 						//dataType:'json',
 	
 						data : {
-							img_name : img_name
-						}, //json형태로 데이터를 날려줍니다.
+							img_name : img_name }, //json형태로 데이터를 날려줍니다.
 						beforeSend : function(xhr) { 
-							xhr.setRequestHeader(header, token);
+						xhr.setRequestHeader(header, token);
 						},
 						//이미지를 지웠으면 blank이미지로 교체 해준다.
 						success : function(data) {
@@ -483,10 +483,10 @@ ul li.tag-item {
 						</div>
 						<div class="col-11">
 							<div class="form-group message" style="margin-left: 50px;">
-								<label style="font-size: 18px; color: #323232"><b>트레이너
-										소개</b></label>
-								<textarea name="tbContent"
-									placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요."
+								<label style="font-size: 18px; color: #323232">
+									<b>트레이너 소개</b>
+								</label>
+								<textarea name="tbContent" placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 80자)"
 									style="border-radius: 3px;">${trainerBoard.tbContent}</textarea>
 							</div>
 						</div>
@@ -576,9 +576,14 @@ ul li.tag-item {
 								<p style="font-size: 15px;">이미지를 삭제를 원하실 경우 사진을 클릭해주세요!</p>
 							</div>
 							<div>
-								<img src="/resources/imgUpload/${trainerBoard.tbImg}" id="imgg"
-									style="margin-left: 10px; margin-bottom: 10px; width: 100px; height: 100px;" />
-								<br> <input type="file" name="tbImg" id="mainUplod"
+								<div class="uploadShowMain">
+									<img src="/resources/imgUpload/${trainerBoard.tbImg}" id="imgg"
+										style="margin-left: 10px; margin-bottom: 10px; width: 100px; height: 100px;" />
+								</div>
+								<%-- <img src="/resources/imgUpload/${trainerBoard.tbImg}" id="imgg"
+									style="margin-left: 10px; margin-bottom: 10px; width: 100px; height: 100px;" /> --%>
+								<br> 
+								<input type="file" name="tbImg" id="mainUplod"
 									accept="image/*">
 							</div>
 							<div class="form-group">
@@ -617,7 +622,7 @@ ul li.tag-item {
 						<div class="col-12">
 							<div class="form-group button"
 								style="text-align: center; margin-bottom: 0px; margin-top: 40px;">
-								<button type="button" onclick="modify();" class="btn"
+								<button type="button" onclick="validate(80);" class="btn"
 									style="background-color: #3428A5; border-radius: 10px; width: 90px;">수정</button>
 							</div>
 						</div>
@@ -689,11 +694,31 @@ ul li.tag-item {
 	<script src="/resources/assets/js/wow.min.js"></script>
 	<script src="/resources/assets/js/tiny-slider.js"></script>
 	<script src="/resources/assets/js/glightbox.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 	<script src="/resources/assets/js/upload_file.js"></script>
 	<!-- JQuery Timepicker -->
 	<script src="/resources/assets/js/jquery.timepicker.min.js"></script>
+	
+	  <script>
+    
+   /* 글자 수 최소 입력 체크 */
+ function  validate(minlength) {
+
+	 var len = $("textarea[name='tbContent']").val().length; 
+	 
+	 //만약, 해당하는 tbContent의 입력 글자가 80자 미만이면,
+	 if (len < minlength) { 
+		 // 최소입력 글자가 부족함을 알림 
+         alert(minlength + '자 이상 으로 입력해야 합니다' ) ;
+      	// 알림 후  해당하는 입력 필드로 포커스를 이동
+         $("textarea[name='tbContent']").focus();
+         return false;
+     }
+		modify();
+
+   }
+   
+    </script>
 
 </body>
 

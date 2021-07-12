@@ -195,7 +195,7 @@ ul li.tag-item {
 								<div class="col-11" >
 									<div class="form-group message" style="margin-left:50px;">
 									<label style="font-size: 18px; color:#323232"><b>트레이너 소개</b></label>
-										<textarea name="tbContent"  placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 80자  )" 
+										<textarea name="tbContent"  placeholder="자격증/ 수상경력 등 자기 소개를 입력해주세요. (최소 입력 80자)" 
 										 style="border-radius:3px;" ></textarea>
 									<!-- 	<div id="test_cnt">(0 / 200)</div> -->
 									</div>
@@ -272,16 +272,16 @@ ul li.tag-item {
 								<!-- 사진 업로드 -->
 								<div class="col-lg-11" style="margin-left:50px;">
 									<div class="form-group">
-									<br><br>
+									<br>
 										<label style="font-size: 18px; color:#323232"><b>대표 사진🏋️‍♂‍</b></label>
 									</div>
-									<div>
-										<input type="file" name="tbImg"
-											accept="image/*" style="margin-bottom: 30px;">
-									</div>
-
+										<div class="uploadShowMain">
+										</div>
+											
+										<input type="file" name="tbImg" accept="image/*" style="margin-bottom: 30px;">
 									<div class="form-group">
 										<label style="font-size: 18px; color:#323232"><b>자기소개 사진🏋️‍♂‍</b></label>
+										<p style="font-size: 13px; margin-left: 5px;">(최대 3장 업로드가능)</p>
 									</div>
 									<div class="uploadDiv">
 										<input type='file' name='uploadFile' multiple>
@@ -335,8 +335,6 @@ ul li.tag-item {
 		</div>
 	</footer>
 	<!--/ End Footer Area -->
-<!--해시태그-->
-
 
 	<!-- ========================= scroll-top ========================= -->
 	<a href="#" class="scroll-top btn-hover"> <i
@@ -344,17 +342,17 @@ ul li.tag-item {
 	</a>
 	
 	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-	<!-- 시간  -->
+	<!-- 시간 (30분 단위) -->
 	<script>
     	/* 타임피커 이용한 시간 출력조정*/
     	$(document).ready(function(){
     		$('.timepicker').timepicker({
     		    timeFormat: 'HH:mm',
-    		    interval: 30,
-    		    minTime: '6',
-    		    maxTime: '22:00',
-    		    defaultTime: '9',
-    		    startTime: '06:00',
+    		    interval: 30,			//30분 단위
+    		    minTime: '6',    		// 최소 시작 시간
+    		    maxTime: '22:00',		// 마지막 시
+    		    defaultTime: '9',		// 아무런 값이 없을 때 나오는 시
+    		    startTime: '06:00',		// 시작 시
     		    dynamic: false,
     		    dropdown: true,
     		    scrollbar: true
@@ -364,56 +362,27 @@ ul li.tag-item {
     
     <script>
     
-    /* NULL 체크 */
+   /* 글자 수 최소 입력 체크 */
  function  validate(minlength) {
 
 	 var len = $("textarea[name='tbContent']").val().length; 
-	 if (len < minlength) {
+	 
+	 //만약, 해당하는 tbContent의 입력 글자가 80자 미만이면,
+	 if (len < minlength) { 
+		 // 최소입력 글자가 부족함을 알림 
          alert(minlength + '자 이상 으로 입력해야 합니다' ) ;
-      	// 입력 필드로 포커스를 이동
+      	// 알림 후  해당하는 입력 필드로 포커스를 이동
          $("textarea[name='tbContent']").focus();
          return false;
-     }
-		save();
-
-   }
-		
-/*     function fn_TextAreaInputLimit() {
-
-  
- 	// 글자 입력 수 제한
-	var tempText = $("textarea[name='tbContent']");
-	var tempChar = "";  // TextArea의 문자를 한글자씩 담는다
-    var tempChar2 = ""; // 절삭된 문자들을 담기 위한 변수
-    var countChar = 0;  // 한글자씩 담긴 문자를 카운트 한다
-    var tempHangul = 0; // 한글을 카운트 한다
-    var minSize = 100;  // 최소 입력 값   
-    
-    // 글자수 바이트 체크를 위한 반복
-    for(var i = 0 ; i < tempText.val().length; i++) {
-        tempChar = tempText.val().charAt(i);
-
-        // 한글일 경우 2 추가, 영문일 경우 1 추가
-        if(escape(tempChar).length > 4) {
-            countChar += 2;
-            tempHangul++;
-        } else {
-            countChar++;
-        }
-    }
-    // 카운트된 문자수가 MAX 값을 초과하게 되면 절삭 수치까지만 출력을 한다.(한글 입력 체크)
-    // 내용에 한글이 입력되어 있는 경우 한글에 해당하는 카운트 만큼을 전체 카운트에서 뺀 숫자가 minSize보다 작으면 수행
-    if((countChar-tempHangul) > minSize) {
-        alert("최소 입력 글자는 100자가 넘어야 해요!");
         
-        tempChar2 = tempText.val().substr(0, minSize-1);
-        tempText.val(tempChar2);
-    }
-}
-    */   
-   
+     }	 
+	 
+	 // 최소 입력 글자를 넘기면 save() 실행
+	 save();
+   }
     </script>
-
+	
+	<!--해시태그-->
 	<script>
 	$(document).ready(function() {
 	
@@ -438,7 +407,6 @@ ul li.tag-item {
 		$("#tag-form").on("submit", function(e) {
 			var value = marginTag(); // return array
 			$("#rdTag").val(value);
-	
 			$(this).submit();
 		});
 
@@ -463,7 +431,6 @@ ul li.tag-item {
 						return word === tagValue;
 					});
 					
-
 					// 태그 중복 검사
 					if (result.length == 0) {
 						$("#tag-list").append(
@@ -481,13 +448,14 @@ ul li.tag-item {
 		}
 	});
 
-	// 삭제 버튼 
+	// 해시 태그 삭제 버튼 
 	$(document).on("click", ".del-btn", function(e) {
 		var index = $(this).attr("idx");
 		tag[index] = "";
 		$(this).parent().remove();
 	});
 
+	// 활동 범위 체크 박스
 	$("input[id=check]:checkbox").click(function() {
 		//$("input[name=tr_options]:checkbox").click(function () {
 		//this.checked = true; //checked 처리
@@ -511,6 +479,13 @@ ul li.tag-item {
 	<script src="/resources/assets/js/upload_file.js"></script>
 			<!-- JQuery Timepicker -->
 	<script src="/resources/assets/js/jquery.timepicker.min.js"></script>
+	
+	<!-- file upload start-->
+	<!-- <script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.form.js' type="text/javascript" language="javascript"></script>
+	<script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.MetaData.js' type="text/javascript" language="javascript"></script>
+	<script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.MultiFile.js' type="text/javascript" language="javascript"></script>
+	<script src='http://jquery-multifile-plugin.googlecode.com/svn/trunk/jquery.blockUI.js' type="text/javascript" language="javascript"></script>  -->
+	<!-- file upload end-->
 
 </body>
 

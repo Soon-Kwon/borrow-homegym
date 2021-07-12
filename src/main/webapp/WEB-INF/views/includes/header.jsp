@@ -37,11 +37,9 @@
     <link rel="stylesheet" href="/resources/assets/css/homegym.css" />
     <link rel="stylesheet" href="/resources/assets/css/seok.css" />
     <link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
-    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
+    
 <!-- font -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 	
     
     <!-- ========================JQuery Timepicker =================== -->
@@ -139,7 +137,7 @@
 		var popupOpener;
 		let memberId = '${memberId}';
 		// 팝업창 열릴 때 이벤트
-		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=600");
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=550");
 		
 	}
 	
@@ -147,6 +145,7 @@
 		// navbar의 안읽은 메세지 가져오기
 		getInfiniteUnread();
 	});
+	
 	
 	</script>
 
@@ -157,7 +156,7 @@
             <div class="col-lg-12">
                <div class="nav-inner">
                   <nav class="navbar navbar-expand-lg">
-                     <a class="navbar-brand" href="/index.jsp"> <img
+                     <a class="navbar-brand" href="/"> <img
                         src="/resources/assets/images/logo/로고2.png" alt="logo">
                      </a>
                      <button class="navbar-toggler mobile-menu-btn" type="button"
@@ -169,9 +168,9 @@
                         <span class="toggler-icon"></span>
                      </button>
                      <form class="d-flex search-form"
-                        action="/homegym/homegymListView.do" method="get">
-                        <input class="form-control me-2" type="search" name="keyword"
-                           placeholder="동네 이름을 검색해보세요!" aria-label="Search">
+                        action="/homegym/homegymListView.do" method="get" style="position:relative;">
+                     <input class="form-control me-2" type="search" name="keyword"
+                           placeholder="동네 이름을 검색해보세요!" style="position:relative; font-size:15px;" aria-label="Search">
                         <button id="search-hg" class="btn btn-outline-success"
                            type="submit">
                            <i class="lni lni-search-alt"></i>

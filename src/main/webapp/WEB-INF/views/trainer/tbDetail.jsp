@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.homegym.biz.trainerboard.TrainerBoardVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -10,25 +9,20 @@
 <html class="no-js" lang="zxx">
 
 <head>
-
-
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
 
 <!-- ========================= CSS here ========================= -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- 캐러셀  -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<!-- 캐러셀  -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
 
@@ -42,6 +36,10 @@
   height:100%;
   width: 750px;
  
+}
+/* carousel 양쪽 사이드 회색 없애는 css  */
+a.carousel-control{
+opacity:0;
 }
 
 .carousel-item {
@@ -58,13 +56,15 @@
 pre{
 border:none;
 white-space: pre-wrap; 
-scroll:no;"
+scroll:no;
 
 }
 
 .modal{
 z-index:1050;
 }
+body.s_no-scroll{overflow-y:hidden;}
+body > button{position:fixed;top:50%;left:50px;}
 
 </style>
 
@@ -77,22 +77,25 @@ z-index:1050;
 <script src="/resources/assets/js/glightbox.min.js"></script>
 <script src="/resources/assets/js/main.js"></script>
 
+<script>
+$('body').css("overflow", "hidden");
+</script>
 <!-- ====================== message modal관련 =============================== -->
-<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+	<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="/resources/assets/css/chat.css" /> 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
 </head>
 
-<body>
+<body style="padding-right:0;">
 
 	<!-- Preloader -->
 	<div class="preloader">
@@ -117,7 +120,6 @@ z-index:1050;
 
 					<div class="single-inner"></div>
 					<br>
-
 				<!-- test start -->
 					<!-- carousel를 구성할 영역 설정 -->
 					<div style="width: 100%;  margin-top:10px; ">
@@ -126,14 +128,17 @@ z-index:1050;
 						<div id="carousel-example-generic" class="carousel slide" style="height:483px;">
 							<!-- carousel의 지시자 -->
 							<!-- 지시자라고는 하는데 ol태그의 class에 carousel-indicators를 넣는다. -->
-							<ol class="carousel-indicators">
+							<ol class="carousel-indicators" style="margin-left:20%;">
 								<!-- li는 이미지 개수만큼 추가하고 data-target은 carousel id를 가르킨다. -->
 								<!-- data-slide-to는 순서대로 0부터 올라가고 0은 active를 설정한다. -->
 								<!-- 딱히 이 부분은 옵션별로 설정하게 없다. -->
+								<!-- 첫번째 사진 -->
 								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+								<!-- 두번째 사진 -->
 								<c:if test="${not empty trainerBoard.tbPhoto2}">
 									<li data-target="#carousel-example-generic" data-slide-to="1"></li>
 								</c:if>
+								<!-- 세번째 사진 -->
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<li data-target="#carousel-example-generic" data-slide-to="2"></li>
 								</c:if>
@@ -158,7 +163,7 @@ z-index:1050;
 								</c:if>
 								<c:if test="${not empty trainerBoard.tbPhoto3}">
 									<div class="item">
-										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;  text-align:center;">
+										<img src="/resources/imgUpload/${trainerBoard.tbPhoto3}" style="max-width: 100%; height:483px;s text-align:center;">
 										<div class="carousel-caption" style="color: black;">
 										</div>
 									</div>
@@ -188,60 +193,74 @@ z-index:1050;
 					<br><br>
 							<div class="detail-inner">
 								<h3> 🏋🏼‍♂️트레이너 소개 </h3>
-									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbContent}</pre>
+									<pre style="border:none;font-size:17px;font-family: 'Roboto', sans-serif; background-color:#F8F8FF; ">${trainerBoard.tbContent}</pre>
 									<hr>
 									<br>
 								<h3>📍 프로그램 소개</h3>
-									<pre style="font-size:17px; background-color:#ffffff; ">${trainerBoard.tbProgram}</pre>
+									<pre style="border:none; font-size:17px; font-family: 'Roboto', sans-serif; background-color:#F8F8FF; ">${trainerBoard.tbProgram}</pre>
 							</div>
 						</div>
 				</div>
-				
-				
 
-				<aside class="col-lg-4 col-md-12 col-12">
-					<div class="sidebar">
+	<aside class="col-lg-4 col-md-12 col-12">
+		<div class="sidebar">
 
-						<!--/ End Single Widget -->
-						<!-- Single Widget -->
-						<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;
-						">
-							<div class="tr_image" style="position: relative; left: 10px;">
-								<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+			<!--/ End Single Widget -->
+			<!-- Single Widget -->
+			<div class="widget popular-feeds" style=" height:483px; position:relative; top: 90px; margin-bottom:0px;">
+				<div class="tr_image" style="position: relative; left: 10px;">
+				<c:if test="${not empty trainerBoard.image}">
+					<img src="${trainerBoard.image}" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+				</c:if>
+				<c:if test="${empty trainerBoard.image}">
+					<img src="${pageContext.request.contextPath}/resources/assets/images/mypage/basicImg.png" alt="#" style="object-fit: cover; object-position: center center; border-radius: 50%; width: 150px; height: 150px; position: relative; left: 85px">
+				</c:if>
+				</div>
+				<div>
+					<br>
+					<p style="font-size: 23px; font-weight: bold; text-align: center; color:#323232">
+						<span>${trainerBoard.name}</span> 트레이너
+					</p>
+					<ul style="text-align: center; font-size: 16px; margin: 10px;">
+						<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}
+							<strong>~</strong> ${trainerBoard.dayTimef}</li>
+						<!-- <li>월요일~토요일 10:00 ~20:50</li> -->
+						<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
+							<span>~</span> ${trainerBoard.sunTimef}</li>
+					</ul>
+					<sec:authorize access="isAuthenticated()">   
+						<c:choose>
+							<c:when test="${trainerBoard.memberId ne memberId }">
+								<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
+									<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
+										트레이너에게 문의하기</button>
+								</div>
+							 </c:when>
+							 </c:choose>
+						<c:choose>
+							<c:when test="${trainerBoard.memberId eq memberId }">
+								<div class="button" style="text-align:center;">
+	                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;"> 수정 </a>
+	                                &nbsp;&nbsp;&nbsp;
+	                          
+	                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
+								</div>
+							</c:when>
+						</c:choose>
+					</sec:authorize>
+					
+					<sec:authorize access="isAnonymous()">
+						<c:choose>
+						<c:when test="${trainerBoard.memberId ne memberId }">
+							<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
+								<input type="button" data-toggle="modal" data-target="#myModal1" href="#myModal1" class="btn" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;" value="트레이너에게 문의하기"/>
 							</div>
-							<div>
-								<br>
-								<p style="font-size: 23px; font-weight: bold; text-align: center; color:#323232">
-									<span>${trainerBoard.name}</span> 트레이너
-								</p>
-								<ul style="text-align: center; font-size: 16px; margin: 10px;">
-									<li><strong style="color: #3c3c3c;">월요일 ~ 토요일 </strong><br>${trainerBoard.dayTimes}
-										<strong>~</strong> ${trainerBoard.dayTimef}</li>
-									<!-- <li>월요일~토요일 10:00 ~20:50</li> -->
-									<li><strong style="color: #3c3c3c;">일요일</strong> <br>${trainerBoard.sunTimes}
-										<span>~</span> ${trainerBoard.sunTimef}</li>
-								</ul>
-								
-									<c:choose>
-										<c:when test="${trainerBoard.memberId ne memberId }">
-											<div class="button" data-wow-delay="1s" style="position: relative; text-align:center; ">
-												<button id="showMsgContent" data-toggle="modal"  data-target="#messageModal" type="button" class="btn msg_send_btn_profile" onclick="showMessageContent('${trainerBoard.memberId}');" style="background-color: #5c6dbd; width: 310px; text-align:center; border-radius:5px;">
-													트레이너에게 문의하기</button>
-											</div>
-										 </c:when>
-							
-										<c:when test="${trainerBoard.memberId eq memberId }">
-							
-											<div class="button" style="text-align:center;">
-				                                <a href="/trainer/tbUpdate.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;"> 수정 </a>
-				                                &nbsp;&nbsp;&nbsp;
-				                          
-				                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
-											</div>
-									</c:when>
-							</c:choose>
-							</div>	
-						</div>
+							 </c:when>		
+						</c:choose>
+					</sec:authorize>
+				</div>	
+				
+			</div>
 						<!--/ End Single Widget -->
 
 						<!--/ End Single Widget -->
@@ -340,6 +359,29 @@ z-index:1050;
 		</div>
 	</div>
 	
+	<!-- 비로그인시 이동 Modal -->
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">서비스 안내</h5>
+	        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button> -->
+	      </div>
+	      <div class="modal-body" style="font-size: 15px; text-align: center";>
+	        해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br>
+	        비회원인 경우 <b>회원가입</b>을 먼저 진행해주세요!
+	      </div>
+	      <div class="modal-footer justify-content-center">
+	        <button type="button" style="width: 80px;" class="btn btn-secondary" onclick="goLoginpage()" data-dismiss="modal">로그인</button>
+	        <button type="button" style="border: none; width: 80px; background-color:#5c6dbd; color:white;" class="btn btn-primary1" data-dismiss="modal">창닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
 	
 
 	<!-- Start Footer Area -->
@@ -411,7 +453,7 @@ z-index:1050;
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				// getInfiniteChat();
+				getInfiniteChat(); 
 				
 			});
 			
@@ -500,6 +542,17 @@ z-index:1050;
 				showMessageContent('${trainerBoard.memberId}');
 			}, 3000);
 		}
+		
+		/* 로그인 페이지 이동 */
+	    function goLoginpage() {
+	    	self.location = "/user/loginpage";
+	    }
+	    /* 모달 숨기기 */
+	    function missModal(){
+			$("#loginModal").hide();
+		}
+		
+		
 	</script>
 
 

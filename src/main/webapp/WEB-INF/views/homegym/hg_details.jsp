@@ -1,135 +1,173 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
-   <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span> <span></span>
-			</div>
+<!-- Preloader -->
+<div class="preloader">
+	<div class="preloader-inner">
+		<div class="preloader-icon">
+			<span></span> <span></span>
 		</div>
 	</div>
-	<!-- /End Preloader -->
-	
-	<!-- Start Blog Singel Area -->
-	<section class="section blog-single">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-12">
-					<div class="single-inner">
-						<div class="image-container">
-						
+</div>
+<!-- /End Preloader -->
+
+<!-- Start Blog Singel Area -->
+<section class="section blog-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-12">
+				<div class="single-inner">
+					<div class="image-container"></div>
+					<div class="detail-inner">
+						<!-- post meta -->
+						<h4>
+							<i class="lni lni-apartment"></i> 홈짐 소개
+						</h4>
+						<p style="font-size: 20px;">${board.HTitle }</p>
+						<p>${board.HContent }</p>
+						<br>
+						<h4>
+							<i class="lni lni-checkmark-circle"></i> 이용 가능한 시설들
+						</h4>
+						<br> <br>
+
+						<div class="icon-tag row">
+							<!-- 이용 가능한 시설 아이콘 출력 공간 -->
 						</div>
-							<div class="detail-inner">
-								<!-- post meta -->
-								<h4> <i class="lni lni-apartment"></i> 홈짐 소개  </h4>
-								<p style="font-size: 20px;">${board.HTitle }</p>
-								<p>${board.HContent }</p>
-								<br>
-								<h4> <i class="lni lni-checkmark-circle"></i> 이용 가능한 시설들</h4>
-								<br><br>
-								
-								<div class="icon-tag row">
-								<!-- 이용 가능한 시설 아이콘 출력 공간 -->	
-								</div>
-								<br><br>
-								<h4> <i class="lni lni-map"></i> ${board.nickName}님의 홈짐 위치</h4>
-								<br>
-								<!-- 홈짐 위치 나오는 div -->
-								<div id="map" style="width: 100%; height: 450px;"></div>
-								<br>
-								<!-- 집주인일 경우 나오는 수정/삭제버튼 
+						<br> <br>
+						<h4>
+							<i class="lni lni-map"></i> ${board.nickName}님의 홈짐 위치
+						</h4>
+						<br>
+						<!-- 홈짐 위치 나오는 div -->
+						<div id="map" style="width: 100%; height: 450px;"></div>
+						<br>
+						<!-- 집주인일 경우 나오는 수정/삭제버튼 
 								목록으로 돌아갈 때나 글을 수정할 때 유저가 게시물을 클릭할 당시의 페이지 번호를 기억해서 그 곳으로 다시 돌아간다. -->
-								<%-- <div id="manipulateBtn">
+						<%-- <div id="manipulateBtn">
 									<input type="button" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
 									class="btn btn-time">
 									<input type="button" value="목록으로 돌아가기" onclick="location.href='/homegym/homegymListView.do${cri.getListLink() }'"
 									class="btn btn-time">
 								</div>	 --%>
-								
-								<!-- 리뷰 -->
-								<div class="post-comments">
-									
-									<div class="row">
-										<div class="col-8">
-										<span id="count" style="font-size: 45px; color: black;"> </span>	
-										<span style="font-size: 30px; color: black;">
-											개의 리뷰 
-										</span>
-										<span id="score" style="font-size: 30px; color: black; padding-left: 15px;"></span> 
-										
-										</div>
-										<div class="col-4" style="text-align: right;">
-										<!-- 리뷰를 쓸 수 있는 권한을 가지고 있으면 리뷰쓰기 버튼을 노출시킨다. -->
-										<!-- 같은 방을 2번 빌렸을 때 리뷰버튼이 한 번만 나와야 되므로 break를 시켜주어야 한다. -->
-										<c:set var="loop_flag" value="false" />
-										<c:forEach var="list" items="${authToWriteReview }">
-											<c:if test="${not loop_flag }">	
-												<c:if test="${list.borrowerId eq member_memberId }">
-													<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>										
-													<c:set var="loop_flag" value="true"/>
-												</c:if>
-											</c:if>
-										</c:forEach>
-										</div>
-									</div>
-									<hr>
-									<br>
-									<!-- 댓글 추가 공간 -->
-									<ul class="comments-list">
-									</ul>
-								</div>								
-							</div>
-							<div style="text-align: center;">
-							<button type="button" class="btn btn-outline-info" id="re_plus">더보기</button>
-							</div>
-						</div>
-				</div>
-				<aside class="col-lg-4 col-md-12 col-12">
-					<div class="sidebar" id="sidebar">
-						<!-- Single Widget -->
-						<div class="widget popular-feeds" >
-							<div class="info">
-								<div id="text-nickName">
-									<strong><i class="lni lni-map-marker"></i>${board.nickName }</strong>님의 홈짐
+
+						<!-- 리뷰 -->
+						<div class="post-comments">
+
+							<div class="row">
+								<div class="col-8">
+									<span id="count" style="font-size: 45px; color: black;">
+									</span> <span style="font-size: 30px; color: black;"> 개의 리뷰 </span> <span
+										id="score"
+										style="font-size: 30px; color: black; padding-left: 15px;"></span>
+
 								</div>
-								<br>
-									<div id="text-addr"><strong>"${board.HAddr}"</strong><br>에 위치한 홈짐입니다</div>
-								<br>
+								<div class="col-4" style="text-align: right;">
+									<!-- 리뷰를 쓸 수 있는 권한을 가지고 있으면 리뷰쓰기 버튼을 노출시킨다. -->
+									<!-- 같은 방을 2번 빌렸을 때 리뷰버튼이 한 번만 나와야 되므로 break를 시켜주어야 한다. -->
+									<c:set var="loop_flag" value="false" />
+									<c:forEach var="list" items="${authToWriteReview }">
+										<c:if test="${not loop_flag }">
+											<c:if test="${list.borrowerId eq member_memberId }">
+												<button class="btn btn-time" id="addReviewBtn">리뷰쓰기</button>
+												<c:set var="loop_flag" value="true" />
+											</c:if>
+										</c:if>
+									</c:forEach>
+								</div>
 							</div>
-								<h6> </h6>
-								<br>
-								<div id="text-price">1회 이용가격</div>
-								<div id="detail-price">${board.HPrice } 원</div>
-								<br>
-								<div class="row">
+							<hr>
+							<br>
+							<!-- 댓글 추가 공간 -->
+							<ul class="comments-list">
+							</ul>
+						</div>
+					</div>
+					<div style="text-align: center;">
+						<button type="button" class="btn btn-outline-info" id="re_plus">더보기</button>
+					</div>
+				</div>
+			</div>
+			<aside class="col-lg-4 col-md-12 col-12">
+				<div class="sidebar" id="sidebar">
+					<!-- Single Widget -->
+					<div class="widget popular-feeds">
+						<div class="info">
+							<div id="text-nickName">
+								<strong><i class="lni lni-map-marker"></i>${board.nickName }</strong>님의
+								홈짐
+							</div>
+							<br>
+							<div id="text-addr">
+								<strong>"${board.HAddr}"</strong><br>에 위치한 홈짐입니다
+							</div>
+							<br>
+						</div>
+						<h6></h6>
+						<br>
+						<div id="text-price">1회 이용가격</div>
+						<div id="detail-price">${board.HPrice }원</div>
+						<br>
+						<sec:authorize access="isAuthenticated()">
+							<div class="row">
 								<c:choose>
 									<c:when test="${board.memberId ne memberId }">
 										<input type="button" id="reserveBtn" value="지금 예약하러 가기"
-										 onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'" class="btn">
-										<br /> <br />
-										
-										<button id="showMsgContent" class="btn msg_send_btn_profile" style="margin-top:10px;" onclick="showMessageContent('${board.memberId}');">집주인에게 문의하기</button>
+											onclick="location.href='/details/reservationView.do${cri.getListLink()}&hId=${board.HId}'"
+											class="btn">
+										<br />
+										<br />
+
+										<button id="showMsgContent" class="btn msg_send_btn_profile"
+											style="margin-top: 10px;"
+											onclick="showMessageContent('${board.memberId}');">집주인에게
+											문의하기</button>
 									</c:when>
 									<c:when test="${board.memberId eq memberId}">
-										<input type="button" id="updateBtn" value="수정 및 삭제하기" onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
-										class="btn">
+										<input type="button" id="updateBtn" value="수정 및 삭제하기"
+											onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
+											class="btn">
 									</c:when>
 								</c:choose>
-								</div>
-						</div>
-						<!--/ End Single Widget -->
+							</div>
+						</sec:authorize>
+						<sec:authorize access="isAnonymous()">
+							<div class="row">
+								<c:choose>
+									<c:when test="${board.memberId ne memberId }">
+										<input type="button" id="reserveBtn" value="지금 예약하러 가기"
+											href="#myModal1" data-toggle="modal" data-target="#myModal1"
+											class="btn">
+										<br />
+										<br />
+
+										<button id="noShowMsgContent" class="btn msg_send_btn_profile"
+											style="margin-top: 10px;" href="#myModal1"
+											data-toggle="modal" data-target="#myModal1">집주인에게
+											문의하기</button>
+									</c:when>
+									<c:when test="${board.memberId eq memberId}">
+										<input type="button" id="updateBtn" value="수정 및 삭제하기"
+											onclick="location.href='/homegym/homegymModifyView.do?hId=${board.HId }'"
+											class="btn">
+									</c:when>
+								</c:choose>
+							</div>
+						</sec:authorize>
 					</div>
-				</aside>
-			</div>
+					<!--/ End Single Widget -->
+				</div>
+			</aside>
 		</div>
-	</section>
-	<!-- End Blog Singel Area -->
+	</div>
+</section>
+<!-- End Blog Singel Area -->
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -156,7 +194,9 @@
 				</div>
 				<br>
 				<div class="review-rating">
-					<div class="intro-message"><i class="lni lni-star"></i> 별점을 선택해주세요</div>
+					<div class="intro-message">
+						<i class="lni lni-star"></i> 별점을 선택해주세요
+					</div>
 					<div class="rating">
 						<input type="checkbox" name="hrScore" id="rating1"
 							class="rate_radio" value="1"> <label for="rating1"></label>
@@ -170,7 +210,7 @@
 							class="rate_radio" value="5"> <label for="rating5"></label>
 					</div>
 					<div></div>
-					<div class="modal-footer">
+					<div class="modal-footer" style="position: inline;">
 						<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
 						<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
 						<button id='modalRegisterBtn' type="button"
@@ -186,114 +226,150 @@
 	</div>
 </div>
 <!-- /.modal -->
-	<!-- 메세지 보내기 모달창 -->
-	<!-- Modal -->
-	<div class="modal fade" id="messageModal" tabindex="-1"
-		aria-labelledby="messageModalLabel" aria-hidden="true">
-		<div class="modal-dialog ">
-			<div class="modal-content">
-				<div class="modal-header">
-					<span id="m_writer_profile">
-						<div class="message-box">
-							<!-- 상대방 프로필 -->
-							<c:if test="${profile.imagePath ne null}">							
-								<img src="${profile.imagePath }" alt="상대방 프로필"
-									class="avatar img_circle img-profile" alt="avatar">
-							</c:if>
-							<c:if test="${profile.imagePath eq null}">
-								<img src="/resources/assets/images/mypage/basicImg.png" alt="기본프로필"
-									class="avatar img_circle img-profile" alt="avatar">
-							</c:if>
-						</div>
-					</span>
-					<h5 class="modal-title" id="messageModalLabel">&nbsp;
-						${board.nickName}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body ">
-					<!-- 메세지 내용 영역 -->
-					<div class="mesgs col-12">
-						<!-- 메세지 내용 목록 -->
-						<div class="msg_history" name="contentList">
-							<!-- 메세지 내용이 올 자리 -->
-						</div>
-						<div class="send_message"></div>
-						<!-- 메세지 입력란이 올자리 -->
-						<div class='type_msg'>
-							<div class='input_msg_write row'>
-								<div class='col-11'>
-									<input type='text' name="" class='write_msg form-control'
-										placeholder='메세지를 입력해주세요' />
-								</div>
-								<div class='col-1'>
-									<button class='msg_send_btn' type='button'
-										onclick="sendMessage('${board.memberId}', '${memberId}');">
-										<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
-									</button>
-								</div>
+<!-- 메세지 보내기 모달창 -->
+<!-- Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1"
+	aria-labelledby="messageModalLabel" aria-hidden="true">
+	<div class="modal-dialog ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span id="m_writer_profile">
+					<div class="message-box">
+						<!-- 상대방 프로필 -->
+						<c:if test="${profile.imagePath ne null}">
+							<img src="${profile.imagePath }" alt="상대방 프로필"
+								class="avatar img_circle img-profile" alt="avatar">
+						</c:if>
+						<c:if test="${profile.imagePath eq null}">
+							<img src="/resources/assets/images/mypage/basicImg.png"
+								alt="기본프로필" class="avatar img_circle img-profile" alt="avatar">
+						</c:if>
+					</div>
+				</span>
+				<h5 class="modal-title" id="messageModalLabel">&nbsp;
+					${board.nickName}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body ">
+				<!-- 메세지 내용 영역 -->
+				<div class="mesgs col-12">
+					<!-- 메세지 내용 목록 -->
+					<div class="msg_history" name="contentList">
+						<!-- 메세지 내용이 올 자리 -->
+					</div>
+					<div class="send_message"></div>
+					<!-- 메세지 입력란이 올자리 -->
+					<div class='type_msg'>
+						<div class='input_msg_write row'>
+							<div class='col-11'>
+								<input type='text' name="" class='write_msg form-control'
+									placeholder='메세지를 입력해주세요' />
+							</div>
+							<div class='col-1'>
+								<button class='msg_send_btn' type='button'
+									onclick="sendMessage('${board.memberId}', '${memberId}');">
+									<i class='fa fa-paper-plane-o' aria-hidden='true'></i>
+								</button>
 							</div>
 						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 비로그인시 이동 Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">서비스 안내</h5>
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button> -->
+			</div>
+			<div class="modal-body" style="font-size: 15px; text-align: center";>
+				해당 서비스는 <b>로그인 후</b> 사용 가능합니다. <br> 비회원인 경우 <b>회원가입</b>을 먼저
+				진행해주세요!
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" style="width: 80px;" class="btn btn-secondary"
+					onclick="goLoginpage()" data-dismiss="modal">로그인</button>
+				<button type="button"
+					style="border: none; width: 80px; background-color: #5c6dbd; color: white;"
+					class="btn btn-primary1" data-dismiss="modal">창닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Start Footer Area -->
+<footer class="footer style2">
+	<!-- Start Footer Bottom -->
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="inner">
+				<div class="row">
+					<div class="col-md-6" style="text-align: start;">
+						<div class="logo">
+							<br> <br> <a href="main_index.html"><img
+								src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
+						</div>
+					</div>
+					<div class="col-md-6" style="text-align: end;">
+						<p>
+							<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시 서초구
+							강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
+							사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
+						</p>
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</footer>
+<!--/ End Footer Area -->
 
 
-	<!-- Start Footer Area -->
-	<footer class="footer style2">
-		<!-- Start Footer Bottom -->
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="inner">
-					<div class="row">
-						<div class="col-md-6" style="text-align: start;">
-							<div class="logo">
-								<br> <br> <a href="main_index.html"><img
-									src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
-							</div>
-						</div>
-						<div class="col-md-6" style="text-align: end;">
-							<p>
-								<br> <a href="/user/faq.do"> 자주묻는 질문</a> <br> 서울특별시 서초구
-								강남대로 459 (서초동, 백암빌딩) 403호<br> (주) 빌려줘홈짐 | 문의 02-123-1234 |
-								사업자등록번호 123-12-12345 <br>© 2021. All Rights Reserved.
-							</p>
+<!-- ========================= scroll-top ========================= -->
+<a href="#" class="scroll-top btn-hover"> <i
+	class="lni lni-chevron-up"></i>
+</a>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--/ End Footer Area -->
+<!-- ========================= JS here ========================= -->
+<script src="/resources/assets/js/bootstrap.min.js"></script>
+<script src="/resources/assets/js/count-up.min.js"></script>
+<script src="/resources/assets/js/wow.min.js"></script>
+<script src="/resources/assets/js/tiny-slider.js"></script>
+<script src="/resources/assets/js/glightbox.min.js"></script>
+<script src="/resources/assets/js/main.js"></script>
+<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
+<script src="https://kit.fontawesome.com/a0fcc69da7.js"
+	crossorigin="anonymous"></script>
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<!-- =========================리뷰 처리 js============================ -->
+<script src="/resources/assets/js/review.js"></script>
+<!-- 모달 -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+<script type="text/javascript"
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+<script type="text/javascript"
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i
-		class="lni lni-chevron-up"></i>
-	</a>
-
-	<!-- ========================= JS here ========================= -->
-	<script src="/resources/assets/js/bootstrap.min.js"></script>
-	<script src="/resources/assets/js/count-up.min.js"></script>
-	<script src="/resources/assets/js/wow.min.js"></script>
-	<script src="/resources/assets/js/tiny-slider.js"></script>
-	<script src="/resources/assets/js/glightbox.min.js"></script>
-	<script src="/resources/assets/js/main.js"></script>
-	<!-- '사용 가능한 시설' div에 아이콘 출력을 위한 js -->
-	<script src="https://kit.fontawesome.com/a0fcc69da7.js"
-		crossorigin="anonymous"></script>
-	<!-- 제이쿼리 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js"
-		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-		crossorigin="anonymous"></script>
-	<!-- =========================리뷰 처리 js============================ -->
-	<script src="/resources/assets/js/review.js"></script>
-
-	<script type="text/javascript">
+<script type="text/javascript">
 		
 		$(document).ready(function () {
 
@@ -655,7 +731,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				// getInfiniteChat();
+				getInfiniteChat();
 				
 			});
 			
@@ -752,11 +828,11 @@
 		
 		
 	</script>
-	<!-- ========================= 카카오 지도 ========================= -->
+<!-- ========================= 카카오 지도 ========================= -->
 
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
-	<script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9acd85a01adaa0b260e4eb08bf997e9"></script>
+<script>
 		var container = document.getElementById('map');
 		
 		var options = {
@@ -783,7 +859,7 @@
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);  
 	</script>
-	<script>
+<script>
 	/* 별점 평점 선택 기능 구현 JS*/
 	function Rating(){};
 	Rating.prototype.rate = 0;
@@ -812,7 +888,17 @@
 				rating.setRate(parseInt(elem.value));
 			}
 		})
-	})
+	});
+	
+	 /* 로그인 페이지 이동 */
+    function goLoginpage() {
+    	self.location = "/user/loginpage";
+    }
+    /* 모달 숨기기 */
+    function missModal(){
+		$("#loginModal").hide();
+	}
+    
 	</script>
-	</body>
+</body>
 </html>

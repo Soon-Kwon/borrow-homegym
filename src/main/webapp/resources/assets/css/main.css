@@ -38,18 +38,19 @@ Index Of css
 /*======================================
     Normalize CSS
 ========================================*/
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');;
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family:'Black Han Sans', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  color: #888;
-  overflow-x: hidden;
-  font-size: 14px;
+  
+	font-family: 'paybooc-Bold'; 
+  	font-weight: normal;
+  	font-style: normal;
+  	color: #888;
+  	overflow-x: hidden;
+  	font-size: 14px;
 }
 
 p {
@@ -1209,8 +1210,25 @@ ol {
   font-size: 14px;
   font-weight: 600;
   padding: 15px 30px;
-  background-color: #081828;
+  background-color: #3c3d3d;
   color: #fff;
+  border: none;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  border-radius: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* 카카오 로그인 버튼 */
+.button .btnKakao {
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 15px 30px;
+  background-color: #ffe812;
+  color: black;
   border: none;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
@@ -1230,8 +1248,6 @@ ol {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
   z-index: -1;
-
-
 }
 
 .button .btn:hover::before {
@@ -1250,9 +1266,8 @@ ol {
 .button .btn-alt:hover {
   background-color: #5c6dbd;
   color: #fff;
-
-
 }
+
 
 .align-left {
   text-align: left;
@@ -1917,18 +1932,18 @@ ol {
 
 }
 
+/* @media only screen and (min-width: 992px) and (max-width: 1199px) { */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .navbar-nav .nav-item a {
     padding: 32px 0 !important;
   }
   .header .search-form .form-control {
-    width: 130px !important;
+    width: 300px !important;
   }
   .header .search-form {
-    margin-left: 30px !important;
+    margin-left: 0px !important;
   }
 }
-
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
   .navbar-nav .nav-item a {
     color: #051441;

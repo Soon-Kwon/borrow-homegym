@@ -11,6 +11,7 @@
 <head>
 
 <link rel="stylesheet" href="/resources/assets/css/rejectModal.css" />
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
 </head>
 <script>
 	/*버튼 선택시 상태값 변경*/

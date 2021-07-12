@@ -8,6 +8,9 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
+<head>
+    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
+</head>
 <body>
 
     <!-- Preloader -->

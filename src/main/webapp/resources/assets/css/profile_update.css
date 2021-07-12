@@ -1,5 +1,5 @@
-
-/* 프로필 사진 */
+/* 
+프로필 사진
 .img {
   vertical-align: middle;
 }
@@ -32,6 +32,18 @@
   color: #fff;
 }
 
+.btn-primary1 {
+  background-color: #2f3e83;
+  border-color: #2f3e83;
+  color: #fff;
+}
+
+.btn-primary1:hover,
+.btn-primary1:focus {
+  border-color: #5c6dbd;
+  background-color: #5c6dbd;
+  color: #fff;
+}
 
 .page_aticle {
   width: auto;
@@ -139,9 +151,9 @@ ul {
   font-size: 14px;
 }
 
-/*마이페이지 본문 css */
+마이페이지 본문 css
 .page_aticle .page_section {
-  /* float: right; */
+  float: right;
   width: 820px;
 }
 
@@ -167,7 +179,7 @@ ul {
   vertical-align: 3px;
 }
 
-/* 기간 메뉴 */
+기간 메뉴
 .search_data {
   position: relative;
   z-index: 1;
@@ -188,7 +200,7 @@ ul {
 .search_data .btn_layer {
   overflow: hidden;
   position: absolute;
-  /* right: 0; */
+  right: 0;
   top: -74px;
   width: 157px;
   height: 44px;
@@ -214,7 +226,7 @@ ul {
 .search_data .layer_search {
   display: none;
   position: absolute;
-  /* right: 0; */
+  right: 0;
   top: -30px;
   width: 157px;
   border: 1px solid #dddfe1;
@@ -249,7 +261,7 @@ ul {
   background-color: #f7f7f7;
 }
 
-/* 주문 리스트 */
+주문 리스트
 .section_orderlist .list_order {
   padding-top: 10px;
   border-top: 2px solid #333;
@@ -267,7 +279,7 @@ ul {
 }
 
 
-/* 개인정보 수정 창 */
+개인정보 수정 창
 .member_join {
   width: 640px;
   margin: 0 auto;
@@ -332,7 +344,7 @@ tbody {
   text-indent: -9999px;
 }
 
-/* 개인정보 수정 입력란 폼 */
+개인정보 수정 입력란 폼
 .member_join td {
   padding: 10px 0;
   border-top: 0;
@@ -382,7 +394,7 @@ tbody {
 }
 
 
-/*버튼 css*/
+버튼 css
 .member_join .form_footer {
   padding-top: 18px;
   text-align: center;
@@ -421,10 +433,10 @@ tbody {
 }
 
 
-/*마이페이지 top */
+마이페이지 top
 .mypage_top {
   width: 60%;
-  /* padding: 99px 0; */
+  padding: 99px 0;
   margin-bottom: 20px;
   margin-top: 230px;
   background-color: #f7f7f7;
@@ -512,7 +524,7 @@ tbody {
   align-items: center;
   color: #333;
   position: relative;
-  /* margin_right: 4px; */
+  margin_right: 4px;
 }
 
 .mypage_top .list_mypage .link_wrap .spacer {
@@ -532,7 +544,7 @@ tbody {
   width: 100%;
 }
 
-/*배송지 관련 */
+배송지 관련
 .section_destination .tb1_type1 {
   border-bottom: 1px solid #f4f4f4;
 }
@@ -627,4 +639,4 @@ tr {
   font-size: 0;
   line-height: 0;
 
-}
+} */

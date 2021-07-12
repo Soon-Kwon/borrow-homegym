@@ -19,6 +19,13 @@ display:-webkit-box;
 -webkit-line-clamp: 5; 
 -webkit-box-orient: vertical; 
 }
+pre{
+border:none;
+white-space: pre-wrap; 
+scroll:no;
+
+}
+
 
 </style>
 
@@ -122,16 +129,17 @@ display:-webkit-box;
                      </div>
                   </c:forEach>
                   <!-- 글 작성하러 가기 버튼 (최하단) -->
-			            <sec:authorize access="isAuthenticated()">
-			            <div class="button" style="margin-top: 30px; text-align: center">
-			               <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
-			            </div>
-			            </sec:authorize>
-			            <sec:authorize access="isAnonymous()">
-			            <div class="button" style="margin-top: 30px; text-align: center">
-			               <a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn" style="border-radius:5px;" >글쓰기 </a>
-			            </div>
-			            </sec:authorize>     
+
+                     <sec:authorize access="isAuthenticated()">
+                     <div class="button" style="margin-top: 40px; text-align: center">
+                        <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                     </div>
+                     </sec:authorize>
+                     <sec:authorize access="isAnonymous()">
+                     <div class="button" style="margin-top: 40px; text-align: center">
+                        <a href="#myModal" data-toggle="modal" data-target="#myModal" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                     </div>
+                     </sec:authorize>     
                </c:when>
                
                <c:otherwise>
@@ -142,7 +150,11 @@ display:-webkit-box;
          <!-- 페이징 시작  -->
          <div class="row">
             <div class="col-12">
+<<<<<<< HEAD
                <div class="pagination center">
+=======
+               <div class="pagination center" style="margin-top:30px;">
+>>>>>>> 165f62f64cbda43cf251b2a31e5a733c0f2ad943
                   <ul class="pagination-list">
                      <c:if test="${pageMaker.prev }">
                         <li class="paginate_button previous"><a

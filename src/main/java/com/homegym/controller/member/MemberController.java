@@ -85,7 +85,7 @@ public class MemberController {
 		if(logout != null) {
 			model.addAttribute("logout", "로그아웃 되었습니다!");
 		}
-		
+
 		return "user/loginpage";
 	}
 	
@@ -97,7 +97,7 @@ public class MemberController {
 
 	// 회원가입 진행
 	@RequestMapping(value="/join", method=RequestMethod.POST, produces="text/plain; charset=UTF-8")
-	public String joinPOST(MemberVO member) throws Exception{
+	public String joinPOST(MemberVO member, Model model) throws Exception{
 			
 		logger.info("join 진입");
 		// 회원가입 서비스 실행
@@ -109,7 +109,9 @@ public class MemberController {
 		memberService.memberJoin(member);
 		
 		logger.info("join Service 성공");
-		return "redirect:/index.jsp";
+		model.addAttribute("msg", "회원가입이 완료되었습니다. 로그인 해주시기 바랍니다!");
+		
+		return "user/loginpage";
 		}
 	
 	// 아이디 중복 체크
@@ -237,6 +239,7 @@ public class MemberController {
 			// User 오브젝트: username, password, email, gender
 			System.out.println("카카오 아이디(번호):" + kakaoProfile.getId());
 			System.out.println("카카오 이메일:" + kakaoProfile.getKakao_account().getEmail());
+			System.out.println("카카오 프사이미지:" + kakaoProfile.getKakao_account().getProfile().profile_image_url);
 			System.out.println("홈짐서버 멤버아이디:" + kakaoProfile.getKakao_account().getEmail());
 			
 			String garbagePassword = UUID.randomUUID().toString();
@@ -251,11 +254,12 @@ public class MemberController {
 				.birth(kakaoProfile.getKakao_account().getBirthday())
 				.build();
 			
-			// 가입자 혹은 비가입자 체크 해서 처리
 			kakaoMember.setName(kakaoProfile.getProperties().nickname);
 			kakaoMember.setNickname(kakaoProfile.getProperties().nickname);
+			kakaoMember.setImagePath(kakaoProfile.getKakao_account().getProfile().profile_image_url);
 //			kakaoMember.setImagePath(kakaoProfile.getProperties().);
 			
+			// 가입자 혹은 비가입자 체크 해서 처리
 			CustomUserDetails originMember = memberService.getUserKakao(kakaoMember.getMemberId());
 			
 			if(originMember == null) {
