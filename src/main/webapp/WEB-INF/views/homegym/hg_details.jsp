@@ -655,7 +655,7 @@
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				// getInfiniteChat();
+				getInfiniteChat();
 				
 			});
 			
