@@ -138,7 +138,7 @@
 		var popupOpener;
 		let memberId = '${memberId}';
 		// 팝업창 열릴 때 이벤트
-		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=600");
+		popupOpener = window.open("${contextPath}/message/msgMain.do?memberId="+memberId, "popupOpener", "fullscreen=yes, scrollbars=no, left=160, top=100, width=1250,height=550");
 		
 	}
 	

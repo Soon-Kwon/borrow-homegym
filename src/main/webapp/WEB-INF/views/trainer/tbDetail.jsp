@@ -237,8 +237,8 @@ z-index:1050;
 				                          
 				                                <a href="/trainer/deleteBoard.do?tno=${trainerBoard.tno}" class="btn" style="margin-top:5px; border-radius:5px;">삭제</a>
 											</div>
-									</c:when>
-							</c:choose>
+										</c:when>
+								</c:choose>
 							</div>	
 						</div>
 						<!--/ End Single Widget -->
@@ -410,7 +410,7 @@ z-index:1050;
 				
 				$("#messageModal").modal("show");
 				console.log("showMessageContent보여주기");
-				// getInfiniteChat();
+				getInfiniteChat(); 
 				
 			});
 			
