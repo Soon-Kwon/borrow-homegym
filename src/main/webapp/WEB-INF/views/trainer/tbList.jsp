@@ -129,7 +129,6 @@ scroll:no;
                      </div>
                   </c:forEach>
                   <!-- 글 작성하러 가기 버튼 (최하단) -->
-
                      <sec:authorize access="isAuthenticated()">
                      <div class="button" style="margin-top: 40px; text-align: center">
                         <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
@@ -143,18 +142,18 @@ scroll:no;
                </c:when>
                
                <c:otherwise>
-                  <p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>      
+                  <p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>
+                   <div class="button" style="margin-top: 40px; text-align: center">
+                   <br><br><br><br>
+                        <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                     </div>
                </c:otherwise>
             </c:choose>
          </div>
          <!-- 페이징 시작  -->
          <div class="row">
             <div class="col-12">
-<<<<<<< HEAD
-               <div class="pagination center">
-=======
                <div class="pagination center" style="margin-top:30px;">
->>>>>>> 165f62f64cbda43cf251b2a31e5a733c0f2ad943
                   <ul class="pagination-list">
                      <c:if test="${pageMaker.prev }">
                         <li class="paginate_button previous"><a
