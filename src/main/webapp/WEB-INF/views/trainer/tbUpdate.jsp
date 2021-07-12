@@ -451,8 +451,8 @@ ul li.tag-item {
 			<div class="row align-items-center">
 				<div class="col-lg-8 offset-lg-2 col-md-12 col-12">
 					<div class="intro-content">
-						<h1 class="page-title">트레이너 등록하기</h1>
-						<p>트레이너로 등록해볼까요?</p>
+						<h1 class="page-title">트레이너 수정하기</h1>
+						<p>게시글 수정하기</p>
 					</div>
 				</div>
 			</div>
@@ -471,7 +471,7 @@ ul li.tag-item {
 							value="${trainerBoard.tno }" />
 						<!-- <div class="row"> -->
 						<h2 class="title" style="margin-left: 50px;">
-							<span>지금 바로 등록하세요!</span>🏋🏼‍♂️트레이너 게시판
+							<span>어떤 부분을 수정하시겠어요?</span>🏋🏼‍♂️트레이너 게시판
 						</h2>
 						<div class="col-10" style="margin-left: 50px; margin-top: 20px;">
 							<div class="form-group">
