@@ -383,13 +383,13 @@ public class MemberController {
 
 	}
 	
-	/* 1-3. 프로필 이미지 등록 */
+	/* 1-3. 프로필 이미지 등록  */
 	
 	  @PostMapping("mypage/userImgUpload") 
 	  public String userImgUpload(MultipartFile file, MemberVO vo, HttpServletRequest request) throws IOException, Exception {
 	  HashMap<String,Object> paramMap = new HashMap<String,Object>();
 	  String attachPath = "/resources/imgUpload/";
-	  //getRealPath("/") : webapp 폴더까지
+	  //getRealPath("/") : webapp 폴더까지 
 	  String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
 	  String fileName = null;
 
@@ -462,6 +462,7 @@ public class MemberController {
 			if (cnt == 1) { // 회원 탈퇴 성공시
 				map.put("resultCode", "Success");
 				map.put("resultMessage", "탈퇴가 완료되었습니다.");
+				SecurityContextHolder.clearContext();
 			} else { // 회원탈퇴 실패시
 				map.put("resultCode", "fail");
 				map.put("resultMessage", "회원탈퇴 실패! 재시도해주세요.");

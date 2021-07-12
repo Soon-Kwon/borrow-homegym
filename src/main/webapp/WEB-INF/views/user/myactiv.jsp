@@ -56,10 +56,6 @@
 		} 
 	}
 
-	 //id가 acceptBtn이 아닌경우 (거절)
-		//상태 (status) 가  'N' 값을 가지게 된다.
-			/*  e.preventDefault();  */
-		
 
 </script>
 <body>
@@ -246,15 +242,11 @@
 																				</c:when>
 																				<c:otherwise>
 																					<div class="button accept-btn">
-																						<button class="btn" id="acceptBtn"
-																							value="${waitingHomegym.d_id}"
-																							onclick="changeHomegymStatus(this);">수락하기</button>
+																						<button class="btn" style="background-color:#6a739a;" id="acceptBtn" value="${waitingHomegym.d_id}" onclick="changeHomegymStatus(this);">수락하기</button>
 
 																					</div>
 																					<div class="button deny-btn">
-																						<button class="btn" id="rejectBtn"
-																							value="${waitingHomegym.d_id}"
-																							data-toggle="modal" data-target="#myModal">거절하기</button>
+																						<button class="btn" style="background-color:#6a739a;" id="rejectBtn" value="${waitingHomegym.d_id}" data-toggle="modal" data-target="#myModal">거절하기</button>
 																					</div>
 
 																				</c:otherwise>
@@ -625,22 +617,22 @@
 											<br>
 											<br>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="호스트의 개인사정으로 예약이 거절되었습니다." id="r1"> <label for="r1">개인 사정으로 인한 취소</label>
+												<input type="radio" name="rejectReason" value="호스트의 개인사정으로 거절되었습니다." id="r1"> <label for="r1">개인 사정으로 인한 취소</label>
 											</div>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="이미 마감된 시간으로 예약이 거절되었습니다." id="r2"> <label for="r2">이미 마감된 시간</label>
+												<input type="radio" name="rejectReason" value="이미 마감된 시간으로 거절되었습니다." id="r2"> <label for="r2">이미 마감된 시간</label>
 											</div>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="예약이 불가한 날짜로 예약이 거절되었습니다." id="r3" checked> <label for="r3">예약 불가한 날짜</label>
+												<input type="radio" name="rejectReason" value="예약이 불가한 날짜로 거절되었습니다." id="r3" checked> <label for="r3">예약 불가한 날짜</label>
 											</div>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="예약이 불가한 시간으로 예약이 거절되었습니다." id="r4"> <label for="r4">예약 불가한 시간</label>
+												<input type="radio" name="rejectReason" value="예약이 불가한 시간으로 거절되었습니다." id="r4"> <label for="r4">예약 불가한 시간</label>
 											</div>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="장시간 대여로 예약이 거절되었습니다." id="r5"> <label for="r5">장시간 대여</label>
+												<input type="radio" name="rejectReason" value="장시간 대여로 거절되었습니다." id="r5"> <label for="r5">장시간 대여</label>
 											</div>
 											<div class="row">
-												<input type="radio" name="rejectReason" value="잘못된 예약정보로 예약이 거절되었습니다." id="r6"> <label for="r6">잘못된 예약자 정보</label>
+												<input type="radio" name="rejectReason" value="잘못된 예약정보로 거절되었습니다." id="r6"> <label for="r6">잘못된 예약자 정보</label>
 											</div>
 
 										</div>
