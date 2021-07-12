@@ -110,6 +110,7 @@ scroll:no;
          </form>
          <!-- 글 리스트 나오는 구역 -->
          <div class="row">
+         
             <c:choose>
                <c:when test="${not empty trainerBoardList }">
                   <c:forEach items="${trainerBoardList}" var="trBoard">
@@ -128,6 +129,33 @@ scroll:no;
                         </div>
                      </div>
                   </c:forEach>
+                       <!-- 페이징 시작  -->
+                    <div class="pagination center" style="margin-top:30px;">
+                  <ul class="pagination-list">
+                     <c:if test="${pageMaker.prev }">
+                        <li class="paginate_button previous"><a
+                           href="${pageMaker.startPage -1 }">이전</a></li>
+                     </c:if>
+                     <c:forEach var="num" begin="${pageMaker.startPage }"
+                        end="${pageMaker.endPage }">
+                        <li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
+                           <a href="${num }">${num }</a>
+                        </li>
+                     </c:forEach>
+                     <c:if test="${pageMaker.next }">
+                        <li class="paginate_button next"><a
+                           href="${pageMaker.endPage + 1 }">다음</a>
+                     </c:if>
+                  </ul>
+                  
+                  <!-- 페이지 번호 클릭했을 때 전송되는 form -->
+                  <form id="actionForm" action="/trainer/tbList.do" method="get">
+                     <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
+                     <input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+                     <input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
+                  </form>
+               </div>
+               <!--/ End Pagination -->
                   <!-- 글 작성하러 가기 버튼 (최하단) -->
                   <!-- 로그인 정보가 있으면 글쓰기 허용 -->
                      <sec:authorize access="isAuthenticated()">
@@ -164,39 +192,8 @@ scroll:no;
                </c:otherwise>
             </c:choose>
          </div>
-         <!-- 페이징 시작  -->
+    
          <div class="row">
-            <div class="col-12">
-               <div class="pagination center" style="margin-top:30px;">
-                  <ul class="pagination-list">
-                     <c:if test="${pageMaker.prev }">
-                        <li class="paginate_button previous"><a
-                           href="${pageMaker.startPage -1 }">이전</a></li>
-                     </c:if>
-                     <c:forEach var="num" begin="${pageMaker.startPage }"
-                        end="${pageMaker.endPage }">
-                        <li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
-                           <a href="${num }">${num }</a>
-                        </li>
-                     </c:forEach>
-                     <c:if test="${pageMaker.next }">
-                        <li class="paginate_button next"><a
-                           href="${pageMaker.endPage + 1 }">다음</a>
-                     </c:if>
-                  </ul>
-                  
-                  <!-- 페이지 번호 클릭했을 때 전송되는 form -->
-                  <form id="actionForm" action="/trainer/tbList.do" method="get">
-                     <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'> 
-                     <input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-                     <input type='hidden' name='searchKeyword' value='${trBoard.searchKeyword }'/> 
-                  </form>
-               </div>
-               <!--/ End Pagination -->
-            </div>
-            
-             
-         
          <!-- 비로그인시 이동 Modal -->
          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
            <div class="modal-dialog" role="document">
