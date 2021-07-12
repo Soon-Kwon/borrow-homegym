@@ -13,7 +13,9 @@
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
-
+<!-- 다음 우편번호 API -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="/resources/js/addressapi.js"></script>
 <!-- 프로필 사진 미리보기 -->
 <script>
 $(document).ready(function () {
@@ -197,13 +199,7 @@ function deleteImg(){
 	        }        
 	    })
 	} 
-</script>
 
-<!-- 다음 우편번호 API -->
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="/resources/js/addressapi.js"></script>
-
-<script>
 function execPostCode() {
          new daum.Postcode({
              oncomplete: function(data) {

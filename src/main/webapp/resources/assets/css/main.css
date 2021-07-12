@@ -38,18 +38,19 @@ Index Of css
 /*======================================
     Normalize CSS
 ========================================*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');;
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  color: #888;
-  overflow-x: hidden;
-  font-size: 14px;
+  
+	font-family: 'paybooc-Bold'; 
+  	font-weight: normal;
+  	font-style: normal;
+  	color: #888;
+  	overflow-x: hidden;
+  	font-size: 14px;
 }
 
 p {
