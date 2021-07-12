@@ -9,13 +9,11 @@
 <html class="no-js" lang="ko">
 
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/resources/assets/css/mypage.css"/>
+
+<link rel="stylesheet" href="/resources/assets/css/mypage.css" />
 <!-- 다음 우편번호 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="/resources/js/addressapi.js"></script>
+
 <!-- 프로필 사진 미리보기 -->
 <script>
 $(document).ready(function () {
@@ -367,13 +365,21 @@ function execPostCode() {
 											<form id="profileform" action="/user/mypage/userImgUpload.do"
 												enctype="multipart/form-data" method="post"
 												autocomplete="off">
-												<div id="userphoto_menu" style="margin-top: 10px; margin-bottom: -20px;">
-													<input name="memberId" id="memberId2" type="hidden" value="${member.memberId}" />
-													 <input name="imagePath" id="imagePath" type="hidden" value="${member.imagePath }" />
-													<label class="file" for="userImg"><img src="/resources/assets/images/mypage/editImgBtn.png" id="editImgBtn"></label> 
-													<input type="file" name="file" id="userImg" onchange="btnAbled();" class="text-center center-block file-upload" style="margin-left: 150px; display: none;">
-													<button class="btn btn-outline-secondary" id="uploadBtn" onclick="imgUpload()">업로드</button>
-													<button class="btn btn-outline-secondary" onclick="deleteImg();" id="delImg" type="button">삭제</button>
+												<div id="userphoto_menu"
+													style="margin-top: 10px; margin-bottom: -20px;">
+													<input name="memberId" id="memberId2" type="hidden"
+														value="${member.memberId}" /> <input name="imagePath"
+														id="imagePath" type="hidden" value="${member.imagePath }" />
+													<label class="file" for="userImg"><img
+														src="/resources/assets/images/mypage/editImgBtn.png"
+														id="editImgBtn"></label> <input type="file" name="file"
+														id="userImg" onchange="btnAbled();"
+														class="text-center center-block file-upload"
+														style="margin-left: 150px; display: none;">
+													<button class="btn btn-outline-secondary" id="uploadBtn"
+														onclick="imgUpload()">업로드</button>
+													<button class="btn btn-outline-secondary"
+														onclick="deleteImg();" id="delImg" type="button">삭제</button>
 
 												</div>
 												<input type="hidden" name="${_csrf.parameterName}"
@@ -404,7 +410,9 @@ function execPostCode() {
 														<div class="col-xs-6">
 															<label for="password">
 																<h6>현재 비밀번호</h6>
-															</label> <input type="password" class="form-control" id="password" name="password" style="border-radius: 15px;" placeholder="현재 비밀번호"
+															</label> <input type="password" class="form-control"
+																id="password" name="password"
+																style="border-radius: 15px;" placeholder="현재 비밀번호"
 																title="현재 비밀번호입력은 필수입니다.">
 														</div>
 														<div>${msg}</div>
@@ -427,7 +435,9 @@ function execPostCode() {
 														<div class="col-xs-6">
 															<label for="re_password">
 																<h6>새 비밀번호 재확인</h6>
-															</label> <input type="password" class="form-control" name="rePassword" style="border-radius: 15px;" id="rePassword" placeholder="새 비밀번호 재확인"
+															</label> <input type="password" class="form-control"
+																name="rePassword" style="border-radius: 15px;"
+																id="rePassword" placeholder="새 비밀번호 재확인"
 																title="새 비밀번호 재입력해주세요.">
 														</div>
 													</div>
@@ -538,7 +548,8 @@ function execPostCode() {
 												<br>
 
 												<div class="form-group">
-													<div class="submit_btn" style="margin-left: 100px; margin-top: 30px;">
+													<div class="submit_btn"
+														style="margin-left: 100px; margin-top: 30px;">
 														<input type="button" id="member_updateBtn" value="수정하기"
 															onclick="updateInfo();" class="btn btn-block btn-primary">
 														<input type="button" id="member_deleteBtn" value="탈퇴하기"
@@ -573,8 +584,7 @@ function execPostCode() {
 					<div class="row">
 						<div class="col-md-6" style="text-align: start;">
 							<div class="logo">
-								<br>
-								<br> <a href="main_index.html"><img
+								<br> <br> <a href="main_index.html"><img
 									src="/resources/assets/images/logo/로고1.png" alt="Logo"></a>
 							</div>
 						</div>
@@ -600,7 +610,9 @@ function execPostCode() {
 		class="lni lni-chevron-up"></i>
 	</a>
 
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	<!-- ========================= JS here ========================= -->
+	<script src="/resources/js/addressapi.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
 	<script src="/resources/assets/js/count-up.min.js"></script>
 	<script src="/resources/assets/js/wow.min.js"></script>

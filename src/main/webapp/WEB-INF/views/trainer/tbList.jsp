@@ -82,7 +82,7 @@ scroll:no;
    <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
    <!-- Start Breadcrumbs -->
-   <div class="breadcrumbs overlay">
+   <div class="breadcrumbs overlay" style="background-image: url(/resources/assets/images/gym/trainer.jpg);">
       <div class="container">
          <div class="row align-items-center"></div>
          <div class="col-lg-8 offset-lg-2 col-md-12 col-12"></div>
@@ -142,7 +142,11 @@ scroll:no;
                </c:when>
                
                <c:otherwise>
-                  <p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>      
+                  <p style="text-align:center; margin-top:120px;">아직 해당 지역에는 등록된 트레이너가 없습니다!</p>
+                   <div class="button" style="margin-top: 40px; text-align: center">
+                   <br><br><br><br>
+                        <a href="tbWrite.do" class="btn" style="border-radius:5px;" >글쓰기 </a>
+                     </div>
                </c:otherwise>
             </c:choose>
          </div>

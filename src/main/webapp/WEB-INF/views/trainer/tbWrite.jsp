@@ -255,7 +255,7 @@ ul li.tag-item {
 										
 										<label class="btn btn-outline-secondary" style="margin-top:10px;">
 											<input type="checkbox" id="check" name="tbActivChk1" value="홈짐방문" >
-											<p style="width:69px;">홈짐 방문</p>
+											<p>홈짐 방문</p>
 										</label> 
 										<label class="btn btn-outline-secondary" style="margin-top:10px;">
 											<input type="checkbox" id="check" name="tbActivChk2" value="헬스장" >
