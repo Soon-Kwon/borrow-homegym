@@ -3,6 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="today" value="<%=new java.util.Date()%>" />
+
+<!-- =========================리뷰 처리 js============================ -->
+	<script src="/resources/assets/js/review.js"></script>
 
 <c:if test="${fn:length(list)==0}">						
 	<h6 style="text-align:center; margin-top: 40px;">
@@ -34,10 +38,16 @@
 						</c:if>
 					</a>
 				</div>
-				<div class="chat_ib">
+				
+				<div class="chat_ib" >
 					<h5>${tmp.nickname }
+					<span id="chattitle${tmp.msgRoomNo }"></span>
 						<span class="chat_date">
-							<fmt:formatDate pattern="MM-dd HH:mm" value="${tmp.msgSendTime }" />
+							<script>
+								$(document).ready(function(){
+									$('#chattitle${tmp.msgRoomNo }').text(displayTime(${tmp.msgSendTime.getTime() }));
+								})
+							</script>
 						</span>
 					</h5>
 					<div class="row">
@@ -55,6 +65,32 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	
+		function displayTime(timeValue){
+		
+		var today = new Date();
+		var gap = today.getTime() - timeValue; // 24시간 안에 쓴 글인지 확인
+		
+		var dateObj = new Date(timeValue);
+		var str = "";
+		
+		if(gap < (1000 * 60 * 60 * 24)){
+			
+			var hh = dateObj.getHours();
+			var mi = dateObj.getMinutes();
+			//var ss = dateObj.getSeconds(); // 초 단위는 안보여주기
+			
+			return [(hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi].join('');
+				//':', (ss > 9 ? '' : '0')+ ss].join('');
+		}else {
+			var yy = dateObj.getFullYear();
+			var mm = dateObj.getMonth() + 1; // getMonth()는 0이 1월을 의미
+			var dd = dateObj.getDate();
+			
+			return [(mm > 9 ? '' : '0') + mm, '/', (dd > 9 ? '' : '0') + dd].join('');
+		}
+	};
+	</script>
 </c:forEach>
-
 
