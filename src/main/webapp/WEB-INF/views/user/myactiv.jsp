@@ -55,10 +55,6 @@
 		} 
 	}
 
-	 //id가 acceptBtn이 아닌경우 (거절)
-		//상태 (status) 가  'N' 값을 가지게 된다.
-			/*  e.preventDefault();  */
-		
 
 </script>
 <body>
@@ -742,7 +738,6 @@
 							location.href="/user/payUpdate.do?payYN=Y&d_id="+dId;
 						} else {
 							var msg = '홈짐 결제에 실패하였습니다. 다시 시도해주세요 !';
-							location.href="/user/mypage/myactiv.do?payYN=N";
 						}
 							alert(msg);
 						});

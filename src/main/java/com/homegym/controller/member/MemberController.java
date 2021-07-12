@@ -379,13 +379,13 @@ public class MemberController {
 
 	}
 	
-	/* 1-3. 프로필 이미지 등록 */
+	/* 1-3. 프로필 이미지 등록  */
 	
 	  @PostMapping("mypage/userImgUpload") 
 	  public String userImgUpload(MultipartFile file, MemberVO vo, HttpServletRequest request) throws IOException, Exception {
 	  HashMap<String,Object> paramMap = new HashMap<String,Object>();
 	  String attachPath = "/resources/imgUpload/";
-	  //getRealPath("/") : webapp 폴더까지
+	  //getRealPath("/") : webapp 폴더까지 
 	  String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
 	  String fileName = null;
 
