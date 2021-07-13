@@ -34,7 +34,7 @@ public class MessageHandler extends TextWebSocketHandler {
 	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 
 	// 로그인 중인 개별 유저
-//	private Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
+	//private Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 	private HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
 	
 
@@ -56,38 +56,7 @@ public class MessageHandler extends TextWebSocketHandler {
 	// 클라이언트가 소켓에 메시지(data) 전송시
 	@Override 
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-		//String memberId = getMemberId(session);
-		
-		// 모든 유저에게 보내기(브로드 캐스팅)
-//		log(memberId + " : " + message.getPayload());
-//		for(WebSocketSession sess : sessions) {
-//			sess.sendMessage(new TextMessage(message.getPayload()));
-//		}
-		
-		// 특정유저에게 보내기
-//		String msg = message.getPayload();
-//		if(msg != null) {
-//			String[] strs = msg.split(",");
-//			log(strs.toString());
-//			
-//			if(strs != null && strs.length == 4) {
-//				String type = strs[0]; // 홈짐, 트레이너, 메세지  ..
-//				String target = strs[1]; // 알림 보내고자 하는 특정유저
-//				String content = strs[2]; // 
-//				String url = strs[3]; // ajax요청시 필요한 url
-//				
-//				WebSocketSession targetSession = users.get(target); // targetSession조회(특정유저)
-//				System.out.println("=========targetSession :"+targetSession);
-//				
-//				// 실시간 접속시
-//				if(targetSession != null) {
-//					// 예) [홈짐]신청이 들어왔습니다.
-//					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
-//					targetSession.sendMessage(tmpMsg);
-//				}
-//				
-//			}
-//		}
+	
 		String msg = message.getPayload();
 		for(String key : sessionMap.keySet()) {
 			WebSocketSession wss = sessionMap.get(key); // key를 통한 세션 가져오기

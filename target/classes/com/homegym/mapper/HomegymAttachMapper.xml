@@ -3,18 +3,21 @@
 <mapper namespace="HomegymAttachDAO">
 
 	<insert id="insert">
-		insert into homegym_attach (uuid, uploadpath, filename, filetype, h_id)
-		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{hId})
+		insert into homegym_attach (uuid, uploadpath,
+		filename, filetype, h_id)
+		values (#{uuid}, #{uploadPath}, #{fileName},
+		#{fileType}, #{hId})
 	</insert>
-	
+
 	<delete id="delete">
 		delete from homegym_attach where uuid = #{uuid}
 	</delete>
-	
+
 	<select id="findByHId" resultType="attachVO">
-		select * from homegym_attach where h_id = #{hId}
+		select * from homegym_attach
+		where h_id = #{hId}
 	</select>
-	
+
 	<delete id="deleteAll">
 		delete from homegym_attach where h_id = #{hId}
 	</delete>

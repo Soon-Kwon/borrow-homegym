@@ -3,7 +3,8 @@
 
 <mapper namespace="HomegymDAO">
 
-	<resultMap type="com.homegym.biz.homegym.HomegymVO" id="HomegymVO">
+	<resultMap type="com.homegym.biz.homegym.HomegymVO"
+		id="HomegymVO">
 		<result column="h_id" property="hId"></result>
 		<result column="memberId" property="memberId"></result>
 		<result column="h_title" property="hTitle"></result>
@@ -12,118 +13,132 @@
 		<result column="h_locate_X" property="hLocateX"></result>
 		<result column="h_locate_Y" property="hLocateY"></result>
 		<result column="h_cnt" property="hCnt"></result>
-	</resultMap> 
-	
-	<resultMap type="com.homegym.biz.homegym.HomegymAttachVO" id="HomegymAttachVO">
+	</resultMap>
+
+	<resultMap type="com.homegym.biz.homegym.HomegymAttachVO"
+		id="HomegymAttachVO">
 		<result column="h_id" property="hId"></result>
 		<result column="uuid" property="uuid"></result>
 		<result column="uploadPath" property="uploadPath"></result>
 		<result column="fileName" property="fileName"></result>
 	</resultMap>
-	
+
 	<select id="getBoardList" resultType="homegymVO">
-		select * from homegym_board where h_id > 0
+		select * from homegym_board
+		where h_id > 0
 	</select>
-	
+
 	<select id="getBoardListWithPaging" resultType="HashMap">
-		  select hb.h_id
-		  , min(ha.uuid) as uuid
-		  , min(ha.fileName) as fileName
-		  , max(ha.uploadPath) as uploadPath
-		  , ROUND(avg(hr_score), 2) as avg_score
-			, max(hb.memberId) as memberId
-			, max(hb.nickName) as nickName
-			, max(hb.h_title) as h_title
-			, max(hb.h_price) as h_price
-			, max(hb.h_updatedate) as h_updatedate
-			, max(hb.h_addr) as h_addr
-			, max(hb.h_locate_X) as h_locate_X
-			, max(hb.h_locate_Y) as h_locate_Y
-			, max(hb.h_cnt) as h_cnt  
-					from homegym_board as hb 
-                		 join homegym_attach as ha 
-                         on hb.h_id = ha.h_id
-						 left outer join homegym_review as hr
-                		 on hr.h_id = hb.h_id
-                	where
-                		h_addr like concat('%', #{cri.keyword}, '%') 
-                          group by hb.h_id
-					order by hb.h_updatedate desc
+		select hb.h_id
+		, min(ha.uuid) as uuid
+		, min(ha.fileName) as fileName
+		, max(ha.uploadPath) as uploadPath
+		, ROUND(avg(hr_score), 2) as avg_score
+		, max(hb.memberId) as memberId
+		, max(hb.nickName) as nickName
+		, max(hb.h_title) as h_title
+		, max(hb.h_price) as h_price
+		, max(hb.h_updatedate) as h_updatedate
+		, max(hb.h_addr) as h_addr
+		, max(hb.h_locate_X) as h_locate_X
+		, max(hb.h_locate_Y) as h_locate_Y
+		, max(hb.h_cnt) as h_cnt
+		from homegym_board as hb
+		join homegym_attach as ha
+		on hb.h_id = ha.h_id
+		left outer join homegym_review as hr
+		on hr.h_id = hb.h_id
+		where
+		h_addr like concat('%', #{cri.keyword}, '%')
+		group by hb.h_id
+		order by hb.h_updatedate desc
 		LIMIT #{cri.amount} OFFSET #{cri.skip};
 	</select>
-	
+
 	<select id="getAllInfo" resultType="HashMap">
-		  select hb.h_id
-		  , min(ha.uuid) as uuid
-		  , min(ha.fileName) as fileName
-		  , max(ha.uploadPath) as uploadPath
-			, max(hb.memberId) as memberId
-			, max(hb.nickName) as nickName
-			, max(hb.h_title) as h_title
-			, max(hb.h_price) as h_price
-			, max(hb.h_updatedate) as h_updatedate
-			, max(hb.h_addr) as h_addr
-			, max(hb.h_locate_X) as h_locate_X
-			, max(hb.h_locate_Y) as h_locate_Y
-					from homegym_board as hb 
-                		 join homegym_attach as ha
-                		 on hb.h_id = ha.h_id
-                	where
-                		h_addr like concat('%', #{cri.keyword}, '%') 
-                          group by hb.h_id
-					order by hb.h_updatedate desc
-			LIMIT 100 
-		
+		select hb.h_id
+		, min(ha.uuid) as uuid
+		, min(ha.fileName) as fileName
+		, max(ha.uploadPath) as uploadPath
+		, max(hb.memberId) as memberId
+		, max(hb.nickName) as nickName
+		, max(hb.h_title) as h_title
+		, max(hb.h_price) as h_price
+		, max(hb.h_updatedate) as h_updatedate
+		, max(hb.h_addr) as h_addr
+		, max(hb.h_locate_X) as h_locate_X
+		, max(hb.h_locate_Y) as h_locate_Y
+		from homegym_board as hb
+		join homegym_attach as ha
+		on hb.h_id = ha.h_id
+		where
+		h_addr like concat('%', #{cri.keyword}, '%')
+		group by hb.h_id
+		order by hb.h_updatedate desc
+		LIMIT 100
+
 	</select>
-	
+
 	<select id="read" resultType="homegymVO">
 		select * from homegym_board
-		where h_id = #{hId}
+		where
+		h_id = #{hId}
 	</select>
-	
+
 	<insert id="insert">
-		insert into homegym_board (memberId, h_title, h_content, h_price, 
+		insert into homegym_board (memberId, h_title,
+		h_content, h_price,
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag, nickName)
-		values(#{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
-		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag}, #{nickName})	
+		values(#{memberId}, #{hTitle}, #{hContent}, #{hPrice},
+		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag}, #{nickName})
 	</insert>
-	
+
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="hId" order="BEFORE" resultType="int">
 			select IFNULL(max(h_id),0) + 1 from homegym_board
 		</selectKey>
-		insert into homegym_board (h_id, memberId, h_title, h_content, h_price, 
+		insert into homegym_board (h_id, memberId, h_title, h_content,
+		h_price,
 		h_addr, h_locate_X, h_locate_Y, h_cnt, h_hashtag, nickName)
-		values(#{hId}, #{memberId}, #{hTitle}, #{hContent}, #{hPrice}, 
-		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag}, #{nickName})	
+		values(#{hId},
+		#{memberId}, #{hTitle}, #{hContent}, #{hPrice},
+		#{hAddr}, #{hLocateX}, #{hLocateY}, 0, #{hHashtag}, #{nickName})
 	</insert>
-	
+
 	<update id="update">
 		update homegym_board
-		set h_title = #{hTitle}, h_content = #{hContent}, h_price = #{hPrice}, h_addr = #{hAddr}
-		, h_locate_X = #{hLocateX}, h_locate_Y = #{hLocateY}, h_hashtag = #{hHashtag}
+		set h_title = #{hTitle},
+		h_content = #{hContent}, h_price = #{hPrice}, h_addr = #{hAddr}
+		,
+		h_locate_X = #{hLocateX}, h_locate_Y = #{hLocateY}, h_hashtag =
+		#{hHashtag}
 		, h_updatedate = DEFAULT, nickName = #{nickName}
-		where h_id = #{hId}
+		where h_id
+		= #{hId}
 	</update>
-	
+
 	<delete id="delete">
 		delete from homegym_board where h_id = #{hId}
 	</delete>
-	
+
 	<select id="getTotalCount" resultType="int">
-		select count(*) from homegym_board where h_id > 0 and
-                		h_addr like concat('%', #{keyword}, '%') 
+		select count(*) from
+		homegym_board where h_id > 0 and
+		h_addr like concat('%', #{keyword}, '%')
 	</select>
-	
-	<select id="getScore" resultType="com.homegym.biz.homegym.HomegymReviewVO">
+
+	<select id="getScore"
+		resultType="com.homegym.biz.homegym.HomegymReviewVO">
 		select h_id, ROUND(avg(hr_score), 2) as avgScore
-		from homegym_review
+		from
+		homegym_review
 		where h_id = #{hId}
 		group by h_id
 	</select>
-	
+
 	<!-- 리뷰 쓸 권한이 있는지 확인 -->
-	<select id="authToWriteReview" resultType="com.homegym.biz.homegym.HomegymDetailVO">
+	<select id="authToWriteReview"
+		resultType="com.homegym.biz.homegym.HomegymDetailVO">
 		<![CDATA[
 			select hd.borrowerId
 			from homegym_detail as hd
@@ -132,9 +147,10 @@
 			where hb.h_id = #{hId} and payYN = 'Y'
 		]]>
 	</select>
-	
+
 	<!-- 메시지 프로필 불러오기 -->
-	<select id="getProfileImg" resultType="com.homegym.biz.member.MemberVO">
+	<select id="getProfileImg"
+		resultType="com.homegym.biz.member.MemberVO">
 		<![CDATA[
 		select m.memberId, m.image as imagePath
 		from homegym_board as hb

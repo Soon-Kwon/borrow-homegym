@@ -45,9 +45,9 @@ public class CustomUserDetails implements UserDetails {
 	private boolean enabled;
 
 	public CustomUserDetails() {
-		
+
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> auth1 = new ArrayList<GrantedAuthority>();

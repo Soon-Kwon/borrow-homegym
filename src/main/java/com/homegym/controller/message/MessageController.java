@@ -45,11 +45,14 @@ public class MessageController {
 	public String msgMain(HttpServletRequest request, HttpSession session, MessageVO vo, Model model) {
 		// 처음에 채팅방이 있는지 없는지를 확인하기 위한 로직
 		String memberId = request.getParameter("memberId");
-		session.setAttribute("memberId", memberId); vo.setCurId(memberId);
-		// 현재 id와 대화한 이력있는 채팅방 정보 가져오기 
+		session.setAttribute("memberId", memberId);
+		vo.setCurId(memberId);
+		// 현재 id와 대화한 이력있는 채팅방 정보 가져오기
 		ArrayList<MessageVO> list = messageService.getMessageAll(vo);
-	  
-		for (MessageVO vos : list) { log.info("msgMain.do : " + vos); }
+
+		for (MessageVO vos : list) {
+			log.info("msgMain.do : " + vos);
+		}
 		model.addAttribute("list", list);
 
 		return "message/message_main";
@@ -86,7 +89,7 @@ public class MessageController {
 		vo.setMsgRoomNo(msgRoomNo);
 
 		ArrayList<MessageVO> clist = messageService.getMsgContentByRoom(vo);
-		
+
 		model.addAttribute("clist", clist);
 		for (MessageVO vos : clist) {
 			log.info("msgContent.do : " + vos);
@@ -115,9 +118,9 @@ public class MessageController {
 
 	/* 1:1문의) 채팅방번호에 따른 메세지 내용 가져오기 */
 	@RequestMapping("/msgContentByAsking.do")
-	public String msgContentByAsking(@RequestParam String otherId, @RequestParam String curId,
-			MessageVO vo, Model model) {
-		
+	public String msgContentByAsking(@RequestParam String otherId, @RequestParam String curId, MessageVO vo,
+			Model model) {
+
 		// 글 쓴 사람을 메세지 받을 사람으로 세팅
 		vo.setRecvId(otherId);
 
@@ -174,26 +177,25 @@ public class MessageController {
 		// 찾는 Id가 없으면 null이 반환됨
 		// 이미지에 접근하기 위해선 imagePath로 접근하기
 		MemberVO member = messageService.getMemberInfoByNickname(vo);
-		System.out.println("searchUser()의 member : "+member);
+		System.out.println("searchUser()의 member : " + member);
 		return member;
 	}
-	
-	
-	/*msgRoomNo가져오기*/
+
+	/* msgRoomNo가져오기 */
 	@ResponseBody
 	@RequestMapping("/getRoomNo.do")
 	public String getMsgRoomNo(@RequestParam String otherId, @RequestParam String curId, MessageVO vo) {
-		
+
 		// 현재 id와 찾은 id가 대화한 방이 있는지 체크
 		vo.setRecvId(otherId);
 		vo.setSendId(curId);
 		int msgRoomNo = messageService.getMsgRoomNo(vo);
-		
+
 		// int형을 문자열로 변환해서 return(ajax는 int형을 받지 못함)
 		return String.valueOf(msgRoomNo);
 	}
-	
-	/* 웹소켓 - 알림*/
+
+	/* 웹소켓 - 알림 */
 	@RequestMapping("/notice-ws.do")
 	public String notice() {
 		return "message/message_notice";

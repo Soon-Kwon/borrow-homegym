@@ -28,6 +28,6 @@ public interface TrainerBoardService {
 	public int getTotal(Map<String, Object> paramMap);
 
 	// 첨부파일 리스트 보여주기 
-		public List<TrainerAttachVO> getAttachList(TrainerAttachVO attach, int tno);
+	public List<TrainerAttachVO> getAttachList(TrainerAttachVO attach, int tno);
 
 }

@@ -49,7 +49,6 @@ public class TrainerBoardController {
 	@Autowired
 	private TrainerBoardService boardService;
 
-
 	// 글 등록
 	// http://localhost:8090/trainer/tbUpdate.do
 	@GetMapping("/tbWrite")
@@ -65,8 +64,6 @@ public class TrainerBoardController {
 	@ResponseBody
 	public String insertTbWrite(HttpServletRequest request, TrainerBoardVO vo) throws Exception {
 
-		// System.out.println("게시글 작성");
-		// System.out.println(vo);
 
 		log.info("게시글 작성");
 		log.info(vo);
@@ -85,6 +82,7 @@ public class TrainerBoardController {
 			System.out.println(fileNameList.get(i));
 		}
 
+		//대표사진
 		vo.setTbImg(mainFileName);
 
 		if (tagList.length == 1) {
@@ -177,8 +175,8 @@ public class TrainerBoardController {
 		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
 		System.out.println(vo.getTno());
 		model.addAttribute("trainerBoardList", boardService.getTbListPaging(vo, cri));
-		
-		//맵 생성 
+
+		// 맵 생성
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("pageNum", cri.getPageNum());
 		paramMap.put("skip", cri.getSkip());
@@ -187,13 +185,13 @@ public class TrainerBoardController {
 		int total = boardService.getTotal(paramMap);
 		// 서비스, 임플, 디에이오 파라미터 타입 Map<String, Object> paramMap
 		// 매퍼 paramterType="hashmap"
-		
-		//int total = boardService.getTotal(cri);
+
+		// int total = boardService.getTotal(cri);
 		model.addAttribute("pageMaker", new TrainerPageDTO(cri, total));
 
 		return "/trainer/tbList";
 	}
-	
+
 	// 목록에서 글 검색
 	@GetMapping("/tbListSearch")
 	public String getTbListsSearch(TrainerCriteria cri, Model model, TrainerBoardVO vo) {
@@ -204,8 +202,8 @@ public class TrainerBoardController {
 		// getTbListPaging은 resultType이 hashmap인 객체들을 담은 List
 		System.out.println(vo.getTno());
 		model.addAttribute("trainerBoardList", boardService.getTbListPaging(vo, cri));
-		
-		//맵 생성 
+
+		// 맵 생성
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("pageNum", cri.getPageNum());
 		paramMap.put("skip", cri.getSkip());
@@ -214,8 +212,8 @@ public class TrainerBoardController {
 		int total = boardService.getTotal(paramMap);
 		// 서비스, 임플, 디에이오 파라미터 타입 Map<String, Object> paramMap
 		// 매퍼 paramterType="hashmap"
-		
-		//int total = boardService.getTotal(cri);
+
+		// int total = boardService.getTotal(cri);
 		model.addAttribute("pageMaker", new TrainerPageDTO(cri, total));
 
 		return "/trainer/tbList";
@@ -236,7 +234,7 @@ public class TrainerBoardController {
 		String imgUploadPath = request.getSession().getServletContext().getRealPath("/");
 		String attachPath = "/resources/imgUpload/";
 		String uploadFolder = imgUploadPath + attachPath;
-		
+
 		File uploadPath = new File(uploadFolder);
 
 		log.info("upload path: " + uploadPath);
@@ -352,10 +350,8 @@ public class TrainerBoardController {
 			String attachPath = "/resources/imgUpload/";
 			String uploadFolder = imgUploadPath + attachPath;
 
-		
 			// session.getServletContext().getRealPath("/resources/assets/images/trainer/");
 			file = new File(uploadFolder + URLDecoder.decode(fileName, "UTF-8"));
-
 
 			file.delete(); // 파일 삭제
 
@@ -377,7 +373,6 @@ public class TrainerBoardController {
 
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
-
 
 	private boolean checkImageType(File file) {
 
@@ -409,7 +404,6 @@ public class TrainerBoardController {
 		String attachPath = "/resources/imgUpload/";
 		String uploadFolder = imgUploadPath + attachPath;
 
-		
 		// session.getServletContext().getRealPath("/resources/assets/images/trainer/");
 		// String uploadFolder = "D:/upload/";
 
@@ -441,7 +435,6 @@ public class TrainerBoardController {
 	@ResponseBody
 	public ResponseEntity<List<TrainerAttachVO>> uploadAjaxPostMain(@RequestParam("tbImg") MultipartFile file,
 			HttpServletRequest request, HttpSession session) throws Exception {
-	
 
 		List<TrainerAttachVO> list = new ArrayList<>();
 
@@ -450,7 +443,6 @@ public class TrainerBoardController {
 		String attachPath = "/resources/imgUpload/";
 		String uploadFolder = imgUploadPath + attachPath;
 
-		
 		// folder 생성 ---------
 		File uploadPath = new File(uploadFolder);
 		log.info("upload path: " + uploadPath);
@@ -478,7 +470,6 @@ public class TrainerBoardController {
 
 		String mainFileName = uploadFileName;
 
-
 		try {
 
 			File saveFile = new File(uploadPath, uploadFileName);
@@ -486,7 +477,6 @@ public class TrainerBoardController {
 
 			attachVO.setUuid(uuid.toString());
 			attachVO.setUploadPath(uploadFolder);
-
 
 			// check image type file
 			if (checkImageType(saveFile)) {
@@ -521,7 +511,6 @@ public class TrainerBoardController {
 
 		File file = new File(fileName);
 
-		System.out.println("여기냐");
 		// File file = new File(("D:/upload") + fileName);
 
 		log.info("file: " + file);
@@ -553,11 +542,10 @@ public class TrainerBoardController {
 		String attachPath = "resources/imgUpload/";
 		String uploadFolder = imgUploadPath + attachPath;
 
-
 		// 타입 상관없이, 원본 파일 삭제
 		log.info("path : " + uploadFolder + fileName.replace('/', File.separatorChar));
 		new File(uploadFolder + fileName.replace('/', File.separatorChar)).delete();
-		
+
 		return new ResponseEntity<>("deleted", HttpStatus.OK);
 	}
 

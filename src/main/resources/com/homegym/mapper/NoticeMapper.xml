@@ -6,7 +6,9 @@
 
 	<!-- 알람 입력 -->
 	<insert id="insertNotify" parameterType="notice">
-		INSERT INTO nTarget, nContent, nTime, nChecked, nType, nUrl
-		VALUES (#{nTarget}, #{nContent}, #{nTime}, #{nChecked}, #{nType}, #{nUrl})
+		INSERT INTO nTarget,
+		nContent, nTime, nChecked, nType, nUrl
+		VALUES (#{nTarget}, #{nContent},
+		#{nTime}, #{nChecked}, #{nType}, #{nUrl})
 	</insert>
 </mapper>

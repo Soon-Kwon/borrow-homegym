@@ -28,8 +28,7 @@ public class TrainerPageDTO {
 		//Math.ceil() => 소수점을 올림으로 처리해준다. 
 		this.endPage = (int) (Math.ceil(cri.getPageNum() /(double)PAGE)) * PAGE;
 		
-		//this.endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
-			this.startPage = this.endPage - 4;
+		this.startPage = this.endPage - 4;
 		int realEnd = (int) (Math.ceil((total * 1.0) / cri.getAmount()));
 
 		if (realEnd < this.endPage) {

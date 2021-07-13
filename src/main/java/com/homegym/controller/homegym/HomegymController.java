@@ -182,23 +182,23 @@ public class HomegymController {
 
 		attachList.forEach(attach -> {
 
-			try {
+		try {
 
-				// java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근)
-				// attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다.
-				Path file = Paths.get(
-						UPLOAD_FOLDER + attach.getUploadPath() + "/" + attach.getUuid() + "_" + attach.getFileName());
+			// java.nio.file.Path 클래스를 활용해서 특정 경로의 파일을 가져온다. (파일 접근)
+			// attach.getUplodaPath()로 해당 날짜 폴더에 존재하는 파일을 찾아간다.
+			Path file = Paths.get(
+					UPLOAD_FOLDER + attach.getUploadPath() + "/" + attach.getUuid() + "_" + attach.getFileName());
 
-				// java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다.
-				Files.deleteIfExists(file);
+			// java.nio.file.Files 클래스를 활용해서 파일이 있으면 지운다.
+			Files.deleteIfExists(file);
 
-				// 이미지 파일이면 섬네일도 지워준다.
-				if (Files.probeContentType(file).startsWith("image")) {
-					Path thumbNail = Paths.get(UPLOAD_FOLDER + attach.getUploadPath() + "/s_" + attach.getUuid() + "_"
-							+ attach.getFileName());
+			// 이미지 파일이면 섬네일도 지워준다.
+			if (Files.probeContentType(file).startsWith("image")) {
+				Path thumbNail = Paths.get(UPLOAD_FOLDER + attach.getUploadPath() + "/s_" + attach.getUuid() + "_"
+						+ attach.getFileName());
 
-					Files.delete(thumbNail);
-				}
+				Files.delete(thumbNail);
+			}
 			} catch (Exception e) {
 				log.error("첨부파일 삭제 오류" + e.getMessage());
 			}

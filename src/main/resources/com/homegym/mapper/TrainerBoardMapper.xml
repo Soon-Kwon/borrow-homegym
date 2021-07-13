@@ -110,74 +110,34 @@
 		
 		]]>
 	</select>
-	
-	<!-- 페이징 처리  -->
+
+	<!-- 게시판 목록/ 페이징 처리 -->
 	<select id="getTbListPaging" resultType="trainer">
 		<![CDATA[
 			SELECT * FROM trainer_board	R1
 			WHERE 1=1
 		]]>
 		<if test="vo.searchKeyword != null and vo.searchKeyword != ''">
-			AND tbActivTag1 like concat('%', #{vo.searchKeyword}, '%') 
-			OR tbActivTag2 like concat('%', #{vo.searchKeyword}, '%') 
-			OR tbActivTag3 like concat('%', #{vo.searchKeyword}, '%') 
+			AND tbActivTag1 like concat('%', #{vo.searchKeyword}, '%')
+			OR tbActivTag2 like concat('%', #{vo.searchKeyword}, '%')
+			OR
+			tbActivTag3 like concat('%', #{vo.searchKeyword}, '%')
 		</if>
-			ORDER BY TNO DESC
-			LIMIT #{cri.amount} OFFSET #{cri.skip}
+		ORDER BY TNO DESC
+		LIMIT #{cri.amount} OFFSET #{cri.skip}
 	</select>
-	
-	<select id="getTotalCount" parameterType="hashmap" resultType="int">
+
+	<select id="getTotalCount" parameterType="hashmap"
+		resultType="int">
 		SELECT COUNT(*) FROM trainer_board
 		WHERE 1=1
 		<if test="searchKeyword != null and searchKeyword != ''">
-			AND tbActivTag1 like concat('%', #{searchKeyword}, '%') 
-			OR tbActivTag2 like concat('%', #{searchKeyword}, '%') 
-			OR tbActivTag3 like concat('%', #{searchKeyword}, '%') 
+			AND tbActivTag1 like concat('%', #{searchKeyword}, '%')
+			OR
+			tbActivTag2 like concat('%', #{searchKeyword}, '%')
+			OR tbActivTag3
+			like concat('%', #{searchKeyword}, '%')
 		</if>
 	</select>
 
-<!-- 	<select id="getTbList2" resultType="trainer">
-	<![CDATA[
-		SELECT * FROM TRAINER_BOARD
-		WHERE 1=1
-		]]>
-		<if test="searchCondition == 'TB_TITLE'">
-			AND TBTITLE LIKE '%' || #{searchKeyword} || '%'
-		</if>
-		<if test="searchCondition == 'TB_CONTENT'">
-			AND TBCONTENT LIKE '%' || #{searchKeyword} || '%'
-		</if>
-		<![CDATA[
-		ORDER BY SEQ DESC
-		]]>
-	</select> -->
-	
-	<!-- 
-	<update id="addFile">	
-		UPDATE TRAINER_BOARD
-		SET 
-			TBPHOTO1 = #{tbPhoto1}
-		  , TBPHOTO2 = #{tbPhoto2}
-		  , TBPHOTO3 = #{tbPhoto3}
-		WHERE TNO = #{tno}
-	</update>
-	 -->
-	 
-	<!-- 
-	<insert id="addFile">
-        INSERT INTO tbl_article_file (
-            file_name
-            , article_no
-        ) VALUES (
-            #{fileName}
-            , LAST_INSERT_ID()
-        )
-    </insert>
-	 
-	<select id="getTno" resultType="int">
-		SELECT MAX(TNO) AS TNO
-		FROM TRAINER_BOARD
-		WHERE MEMBERID = #{memberId}
-	</select> 
-	-->
 </mapper>

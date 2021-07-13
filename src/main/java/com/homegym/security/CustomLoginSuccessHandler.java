@@ -13,6 +13,8 @@
 //
 //import lombok.extern.log4j.Log4j;
 //
+
+//  임시 저장 파일
 //@Log4j
 //public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 //	

@@ -7,13 +7,16 @@
 	<!-- 가장 최신 메세지 내용 담긴 리스트 가져오기 -->
 	<select id="getMessageAll" resultType="message"
 		parameterType="message">
-		SELECT MSGNO, MSGROOMNO, SENDID, RECVID,  MSGCONTENT, MSGSENDTIME, MSGREADTIME, MSGCHK 
+		SELECT MSGNO, MSGROOMNO, SENDID, RECVID, MSGCONTENT,
+		MSGSENDTIME, MSGREADTIME, MSGCHK
 		FROM MESSAGE
 		WHERE MSGNO IN(SELECT MAX(MSGNO)
-		FROM MESSAGE GROUP BY MSGROOMNO)
+		FROM MESSAGE GROUP BY
+		MSGROOMNO)
 		AND (SENDID = #{curId} OR
 		RECVID=#{curId})
-		ORDER BY MSGSENDTIME DESC;
+		ORDER BY
+		MSGSENDTIME DESC;
 	</select>
 
 	<!-- 안읽은 메세지 갯수 가져오기 -->
@@ -21,16 +24,17 @@
 		resultType="int">
 		SELECT COUNT(MSGNO) FROM MESSAGE
 		WHERE RECVID=#{curId}
-		AND MSGCHK = 0 AND MSGROOMNO = #{msgRoomNo}
+		AND
+		MSGCHK = 0 AND MSGROOMNO = #{msgRoomNo}
 	</select>
 
 
 	<!-- 메세지 list에서 상대방 이미지(프로필사진) 경로 가져오기 -->
-	<!-- DB 컬럼인 image는 실제 저장된 경로, MemberVO에서 imagePath와 대응
-			multipart파일은 꺼내올 수 없음  -->
+	<!-- DB 컬럼인 image는 실제 저장된 경로, MemberVO에서 imagePath와 대응 multipart파일은 꺼내올 
+		수 없음 -->
 	<select id="getOtherImage" parameterType="message"
 		resultType="String">
-		SELECT image AS imagePath 
+		SELECT image AS imagePath
 		FROM MEMBER
 		<choose>
 			<!-- 로그인한 유저가 보낸사람일 때, -->
@@ -49,7 +53,8 @@
 		resultType="message">
 		SELECT M.MSGNO, M.MSGROOMNO, M.SENDID, M.RECVID, M.MSGCONTENT,
 		M.MSGSENDTIME, M.MSGREADTIME, M.MSGCHK, U.IMAGE
-		FROM MESSAGE M LEFT OUTER JOIN MEMBER U
+		FROM MESSAGE M LEFT
+		OUTER JOIN MEMBER U
 		ON M.SENDID = U.MEMBERID
 		<choose>
 			<!-- 기존에 있던 방이면 방번호가 일치한 방의 내용 불러오기 -->
@@ -58,9 +63,10 @@
 			</when>
 			<!-- 기존에 없던 방이면 msgRoomNo = 0인 경우 현재 Id -->
 			<otherwise>
-			<!-- 현재 로그인한 Id 보낸Id이거나, 받는 Id일 때 -->
+				<!-- 현재 로그인한 Id 보낸Id이거나, 받는 Id일 때 -->
 				WHERE (RECVID = #{recvId} AND SENDID = #{curId})
-				OR (SENDID = #{sendId} AND RECVID = #{curId})
+				OR (SENDID =
+				#{sendId} AND RECVID = #{curId})
 			</otherwise>
 		</choose>
 	</select>
@@ -76,7 +82,7 @@
 				WHERE MSGROOMNO = #{msgRoomNo} and MSGCHK = 0 AND
 				RECVID = #{curId}
 			</when>
-			<!-- 기존에 방이 없는 경우 ??-->
+			<!-- 기존에 방이 없는 경우 ?? -->
 			<otherwise>
 				WHERE SENDID = #{recvId} AND MSGCHK = 0 AND RECVID =
 				#{curId}
@@ -86,20 +92,21 @@
 
 	<!-- 메세지리스트(왼쪽)에서 메세지 보내기(대화내용 추가) -->
 	<insert id="sendMsgInList" parameterType="message">
-		
-		<choose> 
+
+		<choose>
 			<!-- 기존에 방이 있는 경우 -->
-			<when test="msgRoomNo != 0"> 
-				INSERT INTO MESSAGE 
-				VALUES(NULL, #{msgRoomNo}, #{sendId}, #{recvId}, #{msgContent}, NOW(), NOW(), 0) 
-			</when> 
-			
+			<when test="msgRoomNo != 0">
+				INSERT INTO MESSAGE
+				VALUES(NULL, #{msgRoomNo}, #{sendId}, #{recvId}, #{msgContent}, NOW(), NOW(), 0)
+			</when>
+
 			<!-- 기존에 방이 없는 경우 -->
 			<otherwise>
 				INSERT INTO MESSAGE
 				VALUES(
 				NULL,
-				(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP)  +1,
+				(SELECT MAX(MSGROOMNO) FROM
+				MESSAGE AS TMP) +1,
 				#{sendId},
 				#{recvId},
 				#{msgContent},
@@ -116,7 +123,7 @@
 		SELECT MAX(MSGROOMNO) FROM MESSAGE
 	</select>
 
-	<!-- 메세지 "이력"있는지 검색 : 1이상이면 존재-->
+	<!-- 메세지 "이력"있는지 검색 : 1이상이면 존재 -->
 	<select id="checkMsgHistory" parameterType="message"
 		resultType="int">
 		SELECT COUNT(MSGNO) FROM MESSAGE
@@ -130,52 +137,57 @@
 		resultType="String">
 		SELECT MSGROOMNO FROM MESSAGE
 		WHERE (RECVID = #{recvId}
-		AND SENDID = #{sendId})
+		AND
+		SENDID = #{sendId})
 		OR (RECVID = #{sendId} AND SENDID = #{recvId})
 		LIMIT 0,1
 	</select>
-	
+
 	<!-- 기존 채팅방이 없으면 채팅방 개설하기 -->
-	<insert id="makeNewMsgRoom" >
+	<insert id="makeNewMsgRoom">
 		INSERT INTO MESSAGE
 		VALUES(
-			NULL,
-			(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP)  +1,
-			#{sendId},
-			#{recvId},
-			#{msgContent},
-			NOW(),
-			NOW(),
-			0);
+		NULL,
+		(SELECT MAX(MSGROOMNO) FROM MESSAGE AS TMP) +1,
+		#{sendId},
+		#{recvId},
+		#{msgContent},
+		NOW(),
+		NOW(),
+		0);
 	</insert>
-	
+
 	<!-- navbar에서 보여줄 안읽은 메세지 카운트 -->
 	<select id="unReadCntAll" parameterType="string"
 		resultType="String">
 		SELECT COUNT(MSGNO) FROM MESSAGE
 		WHERE RECVID=#{curId}
-		AND MSGCHK = 0
+		AND
+		MSGCHK = 0
 	</select>
-	
+
 	<!-- 1:1문의) 해당 글을 작성한 번호를 통해 그 글의 memberId가져오기 -->
-	<select id="getBoardWriterId" parameterType="int" resultType="String">
+	<select id="getBoardWriterId" parameterType="int"
+		resultType="String">
 		SELECT MEMBERID FROM HOMEGYM_BOARD
 		WHERE h_id = #{hId}
 	</select>
-	
+
 	<!-- nickname으로 찾고자 하는 memberId가 존재하는지 확인 -->
-	<select id="getMemberInfoByNickname" parameterType="message" resultType="member">
+	<select id="getMemberInfoByNickname" parameterType="message"
+		resultType="member">
 		SELECT memberId
-			 , name
-			 , nickname
-			 , image AS imagePath
-		 FROM MEMBER
-		WHERE nickName = #{findNickname} 
+		, name
+		, nickname
+		, image AS imagePath
+		FROM MEMBER
+		WHERE nickName = #{findNickname}
 		<!-- LIKE CONCAT('%', #{otherId}, '%') -->
 	</select>
-	
+
 	<!-- 상대방 memberId의 정보 가져오기 -->
-	<select id="getMemberInfoById" parameterType="message" resultType="member">
+	<select id="getMemberInfoById" parameterType="message"
+		resultType="member">
 		SELECT * FROM MEMBER
 		WHERE memberId = #{otherId}
 	</select>
