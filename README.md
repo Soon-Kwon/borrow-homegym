@@ -73,7 +73,7 @@
 [빌려줘 홈짐 PPT]
 <br>
 
-[빌려줘 홈짐 영상]:https://www.youtube.com/watch?v=C6Nz9u6wvJQ
+[빌려줘 홈짐 영상]:https://www.youtube.com/watch?v=1Xq7S1EAAXY
 [빌려줘 홈짐 PPT]:https://eunbi99.github.io/borrow-homegym/
 [권순]:https://github.com/Soon-Kwon
 [김신혜]:https://github.com/kduckk00
