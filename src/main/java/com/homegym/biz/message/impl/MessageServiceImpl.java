@@ -1,7 +1,5 @@
 package com.homegym.biz.message.impl;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
