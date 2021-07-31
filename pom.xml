@@ -32,11 +32,11 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-			<dependency>
+<!-- 			<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>Spring-test</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -232,11 +232,11 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency> 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency> 
+		</dependency>  -->
 		
 		<!-- 객체를 JSON/XML로 변환할 때 사용 -->  
 		<dependency>
